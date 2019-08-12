@@ -44,17 +44,37 @@
 
 \section{Introducción}
 
-En el presente informe se quisieron estudiar distintos tipos de filtros con un enfoque analítico teórico, práctico y además computacional, que para facilitar esto último se creó una interfaz gráfica que lograra superponer distintas curvas obtenidas mediante cálculos teóricos de transferencias, mediciones con osciloscopio o simulaciones con LTSpice.
+En el presente informe se estudiaron distintos tipos de filtros con un enfoque analítico teórico, práctico y además computacional. Para facilitar esto último se creó una interfaz gráfica que logra superponer distintas curvas obtenidas mediante cálculos teóricos de transferencias, mediciones con osciloscopio o simulaciones con LTSpice.
 
 \section{Desarrollo}
+
 \subsection{Ejercicio 1: Filtro Notch}
 
 
-\subsection{Ejercicio 2: Filtro RC}
+\subsection{Ejercicio 2: Filtro pasa-bajos RC}
+Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Dicho circuito fue alimentado con una señal cuadrada de $ 10 \ V_{PP} $ con una frecuencia de $ 24 \ kHz $.
+En forma teórica se llegó a ...
+Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}). ...
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{Entrada-Salida.png}
+\caption{Entrada (en azul) y salida (en amarillo) del circuito armado.}
+	\label{fig:simu2}
+\end{figure}
 
-\subsection{Ejercicio 3: GUI}
+Por otro lado, las mediciones permitieron ver ...
+Repitiendo las mediciones con una señal de las mismas características, pero con una frecuencia de $ 480 \ kHz $ se observó ...
 
+Finalmente, se puede observar que dicho circuito puede ser utilizado como un integrador atenuado a muy altas frecuencias, ya qué
+
+\begin{equation}
+	H \left(S \right) = \frac{1}{SRC \ + 1} \approx \frac{1}{RC} \cdot \frac{1}{S}
+\end{equation}
+
+\subsection{Ejercicio 3: Plot Tool 2019}
+Finalmente, en este punto se programó una GUI en Phyton que permite realizar gráficos de diagramas de BODE. Dicho programa permite analizar funciones transferencia analíticas, archivos de LTSpice, ... 
+Ademas de comparar con facilidad varios diagramas de BODE y de diversas fuentes, el programa permite ...
 
 \section{Conclusiones}
 
