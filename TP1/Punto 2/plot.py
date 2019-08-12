@@ -22,7 +22,7 @@ for i in range(0, int(puntos)):
     Fn.append(f0*(2*i+1))
 #comparacion entrada salida
 plt.title("Comparacion de Armonicos")
-plt.xlabel('Frecuencia')
+plt.xlabel('Frecuencia [Hz]')
 plt.ylabel('Magnitud de la componente')
 plt.stem(Fn, Xn, '-', markerfmt='go',linefmt='green',label="Entrada")
 plt.stem(Fn, Yn, '*', markerfmt='ro',linefmt='red',label = "Salida")
@@ -36,9 +36,9 @@ t = np.arange(Fn[0]-Fn[0]/5, Fn[len(Fn)-1] if Fn[len(Fn)-1]>10**6 else 10**6, (F
 Hs = [1/np.sqrt(((R*C*tt)**2+1)) for tt in t]
 Hs = 20*np.log(Hs)
 plt.title("Armonicos vs Transferencia")
-plt.xlabel('Frecuencia')
+plt.xlabel('Frecuencia [Hz]')
 plt.ylabel('Magnitud de la componente/Transferencia')
-plt.plot(t,Hs,"red" , label="Transferencia [dB]")
+plt.plot(t,Hs,"red" , label="Transferencia Teorica [dB]")
 plt.legend()
 plt.show()
 #Solo transferencia
@@ -50,7 +50,7 @@ t = np.arange(Fn[0]-Fn[0]/5, Fn[len(Fn)-1] if Fn[len(Fn)-1]>10**6 else 10**6, (F
 Hs = [1/np.sqrt(((R*C*tt)**2+1)) for tt in t]
 Hs = 20*np.log(Hs)
 plt.title("Comparacion de Modulos")
-plt.xlabel('Frecuencia')
+plt.xlabel('Frecuencia [Hz]')
 plt.ylabel('Transferencia modulo')
 plt.plot(t,Hs,"red" , label="Transferencia [dB]")
 plt.legend()
@@ -63,7 +63,7 @@ faseMed=[]
 t = np.arange((1/(R*C*2*np.pi))-10, (1/(R*C*2*np.pi))+10,1/100 )
 Hf = [-np.arctan(tt-(1/(R*C*2*np.pi)))*180/(np.pi) for tt in t]
 plt.title("Comparacion de Fases")
-plt.xlabel('Frecuencia')
+plt.xlabel('Frecuencia[Hz]')
 plt.ylabel('Transferencia Fase')
 plt.plot(t,Hf,"red" , label="Transferencia [°]")
 plt.legend()
