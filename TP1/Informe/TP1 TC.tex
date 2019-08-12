@@ -80,16 +80,16 @@ Luego, se observa que el circuito puede simplificarse aún mas teniendo en cuent
 
 Realizando los cálculos de la transferencia en el circuito simplificado, se obtiene que
 \[ \frac{Vo}{Vi}=H(S)=\left( \frac{SCR}{1+SCR} \right)^2 \] 
-Por lo que se puede observar que el sistema posee un cero doble en el origen, 
 Luego, la respuesta en frecuencia será
 \[H(j\omega)=\left( \frac{j 2\pi f CR}{1+ j2\pi f CR} \right)^2 \]
 Anti transformando por Fourier, se obtiene la respuesta impulsiva
 \[h(t)=\frac{-2e^{\frac{-t}{CR}}}{CR}+\frac{t}{(CR)^2}e^{\frac{-t}{CR}}\]
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
-Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Dicho circuito fue alimentado con una señal cuadrada de $ 10 \ V_{PP} $ con una frecuencia de $ 24 \ kHz $.
+Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$ y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
+Dicho circuito fue alimentado con una señal cuadrada de $ 10 \ V_{PP} $ con una frecuencia de $ 24 \ kHz $.
 En forma teórica se llegó a ...
-Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}). ...
+Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}).
 
 \begin{figure}[H]
 	\centering
@@ -98,7 +98,16 @@ Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}). ...
 	\label{fig:simu2}
 \end{figure}
 
-Por otro lado, las mediciones permitieron ver ...
+Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth , trim={0.7cm 6.25cm  0 3.5cm},clip]{scope_1}
+	%trim={<left> <lower> <right> <upper>}
+\caption{Entrada (en violeta) y salida (en amarillo) del circuito armado.}
+	\label{fig:medicion2}
+\end{figure}
+
 Repitiendo las mediciones con una señal de las mismas características, pero con una frecuencia de $ 480 \ Hz $ se observó ...
 
 Finalmente, se puede observar que dicho circuito puede ser utilizado como un integrador atenuado a muy altas frecuencias, ya qué
