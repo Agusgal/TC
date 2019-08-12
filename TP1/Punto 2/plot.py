@@ -3,8 +3,8 @@ import numpy as np
 
 #constantes
 f0 = 24*10**3
-R = 660
-C = 5.1*10**(-9)
+R = 705
+C = 4.7*10**(-9)
 #input de ususario
 print("Cuantos puntos desea?")
 puntos = input()
@@ -32,9 +32,10 @@ plt.show()
 plt.xscale("log")
 plt.stem(Fn, Xn, '-', markerfmt='go',linefmt='green',label="Entrada")
 plt.stem(Fn, Yn, '*', markerfmt='ro',linefmt='red',label = "Salida")
-t = np.arange(Fn[0]-Fn[0]/5, Fn[len(Fn)-1] if Fn[len(Fn)-1]>10**6 else 10**6, (Fn[len(Fn)-1]-Fn[0])/len(Fn))
-Hs = [1/np.sqrt(((R*C*tt)**2+1)) for tt in t]
-Hs = 20*np.log(Hs)
+t = np.arange(Fn[0]-Fn[0]/2,  10**6, (Fn[len(Fn)-1]-Fn[0])/1000)
+#t = np.arange(1,  10**6, 10)
+Hs = [1/np.sqrt((((R*C*tt*2*np.pi)**2)+1)) for tt in t]
+Hs = 20*np.log10(Hs)
 plt.title("Armonicos vs Transferencia")
 plt.xlabel('Frecuencia [Hz]')
 plt.ylabel('Magnitud de la componente/Transferencia')
@@ -47,8 +48,8 @@ plt.xscale("log")
 fmed=[]
 modmed=[]
 t = np.arange(Fn[0]-Fn[0]/5, Fn[len(Fn)-1] if Fn[len(Fn)-1]>10**6 else 10**6, (Fn[len(Fn)-1]-Fn[0])/len(Fn))
-Hs = [1/np.sqrt(((R*C*tt)**2+1)) for tt in t]
-Hs = 20*np.log(Hs)
+Hs = [1/np.sqrt((((R*C*tt*2*np.pi)**2)+1)) for tt in t]
+Hs = 20*np.log10(Hs)
 plt.title("Comparacion de Modulos")
 plt.xlabel('Frecuencia [Hz]')
 plt.ylabel('Transferencia modulo')
