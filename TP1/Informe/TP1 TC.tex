@@ -50,37 +50,40 @@ En el presente informe se estudiaron distintos tipos de filtros con un enfoque a
 
 \subsection{Ejercicio 1: Filtro Twin T Notch}
 
-Se diseñó el filtro Twin T Notch mostrado en la Figura (...). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se seleccionaron resistencias de $ 6.8 \ k\Omega $, $ 2.2 \ k\Omega $ y $ 4.7 \ k\Omega $ y capacitores de $ 4,7 \ nF $ y $ 2.2 \ nF $, considerando los valores comerciales.
+Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se seleccionaron resistencias de $ 6.8 \ k\Omega $, $ 2.2 \ k\Omega $ y $ 4.7 \ k\Omega $ y capacitores de $ 4,7 \ nF $ y $ 2.2 \ nF $, considerando los valores comerciales.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{pend.jpg}
 \caption{Filtro Twin T Notch sin simplificar, tomando en consideración las relaciones dadas entre resistores y capacitores.}
-	\label{fig:simu2}
+	\label{fig:filtroinicial}
 \end{figure}
 
-Aplicando el teorema de Kenelly para transformar T a Pi, se obtiene el circuito simplificado de la Figura (...), donde se tiene que
+Aplicando el teorema de Kennelly para transformar T a Pi, se obtiene el circuito simplificado de la Figura (\ref{fig:filtrosimplificado}), donde se tiene que
 \[Z_1=\frac{1+SCR}{SC}\hspace{1em};\hspace{1em} Z_2=2R(1+SCR) \hspace{1em};\hspace{1em} Z'_2=\frac{2(SCR+1)}{R(SC)^2}\]
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{pend.jpg}
 \caption{Filtro Twin T Notch luego de aplicar el teorema de Kenelly.}
-	\label{fig:simu2}
+	\label{fig:filtrosimplificado}
 \end{figure}
-Luego, se observa que el circuito puede simplificarse aún mas teniendo en cuenta las impedancias en paralelo. Finalmente, se obtiene el circuito mostrado en la Figura (...).
+
+Luego, se observa que el circuito puede simplificarse aún mas teniendo en cuenta las impedancias en paralelo. Finalmente, se obtiene el circuito mostrado en la Figura (\ref{fig:filtrofinal}).
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{pend.jpg}
 \caption{Filtro Twin T Notch simplificado.}
-	\label{fig:simu2}
+	\label{fig:filtrofinal}
 \end{figure}
+
 Realizando los cálculos de la transferencia en el circuito simplificado, se obtiene que
 \[ \frac{Vo}{Vi}=H(S)=\left( \frac{SCR}{1+SCR} \right)^2 \] 
 Luego, la respuesta en frecuencia será
 \[H(j\omega)=\left( \frac{j 2\pi f CR}{1+ j2\pi f CR} \right)^2 \]
 Anti transformando por Fourier, se obtiene la respuesta impulsiva
 \[h(t)=\frac{-2e^{\frac{-t}{CR}}}{CR}+\frac{t}{(CR)^2}e^{\frac{-t}{CR}}\]
-
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
 Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Dicho circuito fue alimentado con una señal cuadrada de $ 10 \ V_{PP} $ con una frecuencia de $ 24 \ kHz $.
