@@ -99,7 +99,15 @@ Simulando dicho circuito, se llegan a los resultados mostrados en la Figura (\re
 	\label{fig:simu2}
 \end{figure}
 
-En este se observa que la salida posee un "delay" con respecto a la entrada, es decir, el valor pico de esta última no es alcanzado por la salida sino hasta pasado un tiempo de medio período. Existen dos formas posibles de explicar dicha observación. El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea, demorando así la obtención del valor pico. El segundo se basa en observar los coeficientes de la serie de Fourier del circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas, de esta forma, al eliminar ciertas frecuencias, no se obtiene un cuadro perfecto a la salida.
+En este se observa que la salida posee un ``delay'' con respecto a la entrada, es decir, el valor pico de esta última no es alcanzado por la salida sino hasta pasado un tiempo de medio período. Existen dos formas posibles de explicar dicha observación.
+El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea, demorando así la obtención del valor pico. El segundo se basa en observar los coeficientes de la serie de Fourier del circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas, de esta forma, al eliminarlas, no se obtiene la totalidad de ellas causando que la onda de salida no sea un cuadrado perfecto. Esto se muestra en la Figura (\ref{fig:armonicoscomparacion}), donde se observa como estos se van atenuando en comparación con la entrada.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{ComparacionDeArmionicos}
+\caption{Comparación de armónicos de la entrada (en verde) y salida (en rojo) del circuito armado.}
+	\label{fig:armonicoscomparacion}
+\end{figure}
 
 Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}). Cabe destacar que en dicha figura, la señal cuadrada de la fuente no posee una forma cuadra perfecta debido a la baja impedancia de entrada de la fuente.
 
@@ -107,11 +115,37 @@ Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}). Ca
 	\centering
 	\includegraphics[width=0.9\textwidth , trim={0.7cm 6.25cm  0 3.5cm},clip]{scope_1}
 	%trim={<left> <lower> <right> <upper>}
-\caption{Entrada (en violeta) y salida (en amarillo) del circuito armado.}
+\caption{Entrada (en violeta) y salida (en amarillo) del circuito a $ 24 \ kHz $.}
 	\label{fig:medicion2}
 \end{figure}
 
-Repitiendo las mediciones con una señal de las mismas características, pero con una frecuencia de $ 480 \ Hz $ se observó ...
+De esta forma se puede puede comparar el diagrama de BODE teórico con el real observando las Figuras (\ref{fig:bodecomparacion}) y (\ref{fig:armonicoscomparacion}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{BodeRealVsMedido}
+\caption{Comparación del BODE real (en azul) con el teórico (en rojo).}
+	\label{fig:bodecomparacion}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{FaseRealVsMedido}
+\caption{Comparación de las fases del BODE real (en azul) con el teórico (en rojo).}
+	\label{fig:fasecomparacion}
+\end{figure}
+
+En ambas figuras es posible ver que las mediciones se corresponden a los valores esperados, dejando pasar las frecuencias bajas y atenuando las altas ...
+
+Repitiendo las mediciones con una señal de las mismas características, pero con una frecuencia de $ 480 \ Hz $ se observó que, a diferencia de lo observado en la Figura (\ref{fig:medicion2}), la señal de salida se acopla mejor a la entrada debido a que esta, al ser de baja frecuencia, no es atenuada como en el caso anterior.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth , trim={0.7cm 6.25cm  0 3.5cm},clip]{scope_3}
+	%trim={<left> <lower> <right> <upper>}
+\caption{Entrada (en violeta) y salida (en amarillo) del circuito a $ 480 \ Hz $.}
+	\label{fig:medicion2}
+\end{figure}
 
 Finalmente, se puede observar que dicho circuito puede ser utilizado como un integrador atenuado a muy altas frecuencias, ya qué
 
