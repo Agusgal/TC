@@ -50,7 +50,8 @@ En el presente informe se estudiaron distintos tipos de filtros con un enfoque a
 
 \subsection{Ejercicio 1: Filtro Twin T Notch}
 
-Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ (se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ para obtener los $ 9 \ k\Omega $ y una de $ 4.7 \ k\Omega $ en vez de $ 4.5 \ k\Omega $, debido a la consideración de los valores comerciales) y capacitores de $ 4.7 \ nF $ y $ 2.2 \ nF $. De aquí en más se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
+Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $. Considerando los valores comerciales, se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener los $ 9 \ k\Omega $ y dos resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados.
+De aquí en más se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
 
 \begin{figure}[H]
 	\centering
@@ -83,16 +84,13 @@ Realizando los cálculos de la transferencia en el circuito simplificado, se obt
 Luego, la respuesta en frecuencia será
 \[H(j\omega)=\left( \frac{j 2\pi f CR}{1+ j2\pi f CR} \right)^2 \]
 Antitransformando por Fourier, se obtiene la respuesta impulsiva
-%\[h(t)=\frac{-2}{CR}e^{\frac{-t}{CR}}+\frac{t}{(CR)^2}e^{\frac{-t}{CR}}\]
-
 \[h(t)=\left( -2 + \frac{t}{CR} \right)\frac{e^{\frac{-t}{CR}}}{CR} \]
 
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
-Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$ y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
+Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$, colocadas en serie, y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
 Dicho circuito fue alimentado con una señal cuadrada de $ 10 \ V_{PP} $ con una frecuencia de $ 24 \ kHz $.
-En forma teórica se llegó a ...
-Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}).
+Simulando dicho circuito, se llegan a los resultados mostrados en la Figura (\ref{fig:simu2}).
 
 \begin{figure}[H]
 	\centering
@@ -100,6 +98,8 @@ Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}).
 \caption{Entrada (en azul) y salida (en amarillo) del circuito armado.}
 	\label{fig:simu2}
 \end{figure}
+
+En este se observa que la salida posee un "delay" con respecto a la entrada, es decir, el valor pico de esta última no es alcanzado por la salida sino hasta pasado un tiempo de medio período. Existen dos formas posibles de explicar dicha observación. El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea, demorando así la obtención del valor pico. El segundo se basa en observar los coeficientes de la serie de Fourier del circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas, de esta forma, al eliminar ciertas frecuencias, no se obtiene un cuadro perfecto a la salida.
 
 Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}). Cabe destacar que en dicha figura, la señal cuadrada de la fuente no posee una forma cuadra perfecta debido a la baja impedancia de entrada de la fuente.
 
