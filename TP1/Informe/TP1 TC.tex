@@ -50,7 +50,7 @@ En el presente informe se estudiaron distintos tipos de filtros con un enfoque a
 
 \subsection{Ejercicio 1: Filtro Twin T Notch}
 
-Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se seleccionaron resistencias de $ 6.8 \ k\Omega $, $ 2.2 \ k\Omega $ y $ 4.7 \ k\Omega $ y capacitores de $ 4,7 \ nF $ y $ 2.2 \ nF $, considerando los valores comerciales.
+Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ (se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ para obtener los $ 9 \ k\Omega $ y una de $ 4.7 \ k\Omega $ en vez de $ 4.5 \ k\Omega $, debido a la consideración de los valores comerciales) y capacitores de $ 4.7 \ nF $ y $ 2.2 \ nF $. De aquí en más se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
 
 \begin{figure}[H]
 	\centering
@@ -64,7 +64,7 @@ Aplicando el teorema de Kennelly para transformar T a Pi, se obtiene el circuito
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth, trim={0 0.1cm  0 0.1cm},clip]{ej1kennellly.jpg}
+	\includegraphics[width=0.4\textwidth, trim={0 0.1cm  0 0.1cm},clip]{ej1kennellly.jpg}
 \caption{Filtro Twin T Notch luego de aplicar el teorema de Kenelly.}
 	\label{fig:filtrosimplificado}
 \end{figure}
@@ -82,8 +82,11 @@ Realizando los cálculos de la transferencia en el circuito simplificado, se obt
 \[ \frac{Vo}{Vi}=H(S)=\left( \frac{SCR}{1+SCR} \right)^2 \] 
 Luego, la respuesta en frecuencia será
 \[H(j\omega)=\left( \frac{j 2\pi f CR}{1+ j2\pi f CR} \right)^2 \]
-Anti transformando por Fourier, se obtiene la respuesta impulsiva
-\[h(t)=\frac{-2e^{\frac{-t}{CR}}}{CR}+\frac{t}{(CR)^2}e^{\frac{-t}{CR}}\]
+Antitransformando por Fourier, se obtiene la respuesta impulsiva
+%\[h(t)=\frac{-2}{CR}e^{\frac{-t}{CR}}+\frac{t}{(CR)^2}e^{\frac{-t}{CR}}\]
+
+\[h(t)=\left( -2 + \frac{t}{CR} \right)\frac{e^{\frac{-t}{CR}}}{CR} \]
+
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
 Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$ y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
@@ -98,7 +101,7 @@ Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}).
 	\label{fig:simu2}
 \end{figure}
 
-Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}).
+Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}). Cabe destacar que en dicha figura, la señal cuadrada de la fuente no posee una forma cuadra perfecta debido a la baja impedancia de entrada de la fuente.
 
 \begin{figure}[H]
 	\centering
