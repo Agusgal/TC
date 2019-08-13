@@ -50,7 +50,8 @@ En el presente informe se estudiaron distintos tipos de filtros con un enfoque a
 
 \subsection{Ejercicio 1: Filtro Twin T Notch}
 
-Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se seleccionaron resistencias de $ 6.8 \ k\Omega $, $ 2.2 \ k\Omega $ y $ 4.7 \ k\Omega $ y capacitores de $ 4,7 \ nF $ y $ 2.2 \ nF $, considerando los valores comerciales.
+Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $. Considerando los valores comerciales, se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener los $ 9 \ k\Omega $ y dos resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados.
+De aquí en más se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
 
 \begin{figure}[H]
 	\centering
@@ -64,7 +65,7 @@ Aplicando el teorema de Kennelly para transformar T a Pi, se obtiene el circuito
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth, trim={0 0.1cm  0 0.1cm},clip]{ej1kennellly.jpg}
+	\includegraphics[width=0.4\textwidth, trim={0 0.1cm  0 0.1cm},clip]{ej1kennellly.jpg}
 \caption{Filtro Twin T Notch luego de aplicar el teorema de Kenelly.}
 	\label{fig:filtrosimplificado}
 \end{figure}
@@ -73,7 +74,7 @@ Luego, se observa que el circuito puede simplificarse aún mas teniendo en cuent
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.6\textwidth]{pend.jpg}
+	\includegraphics[width=0.6\textwidth]{ej1simplificado.jpg}
 \caption{Filtro Twin T Notch simplificado.}
 	\label{fig:filtrofinal}
 \end{figure}
@@ -82,14 +83,14 @@ Realizando los cálculos de la transferencia en el circuito simplificado, se obt
 \[ \frac{Vo}{Vi}=H(S)=\left( \frac{SCR}{1+SCR} \right)^2 \] 
 Luego, la respuesta en frecuencia será
 \[H(j\omega)=\left( \frac{j 2\pi f CR}{1+ j2\pi f CR} \right)^2 \]
-Anti transformando por Fourier, se obtiene la respuesta impulsiva
-\[h(t)=\frac{-2e^{\frac{-t}{CR}}}{CR}+\frac{t}{(CR)^2}e^{\frac{-t}{CR}}\]
+Antitransformando por Fourier, se obtiene la respuesta impulsiva
+\[h(t)=\left( -2 + \frac{t}{CR} \right)\frac{e^{\frac{-t}{CR}}}{CR} \]
+
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
-Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$ y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
+Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$, colocadas en serie, y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
 Dicho circuito fue alimentado con una señal cuadrada de $ 10 \ V_{PP} $ con una frecuencia de $ 24 \ kHz $.
-En forma teórica se llegó a ...
-Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}).
+Simulando dicho circuito, se llegan a los resultados mostrados en la Figura (\ref{fig:simu2}).
 
 \begin{figure}[H]
 	\centering
@@ -98,17 +99,62 @@ Por un lado, las simulaciones se muestran en la Figura (\ref{fig:simu2}).
 	\label{fig:simu2}
 \end{figure}
 
-Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}).
+En este se observa que la salida posee un ``delay'' con respecto a la entrada, es decir, el valor pico de esta última no es alcanzado por la salida sino hasta pasado un tiempo de medio período. Existen dos formas posibles de explicar dicha observación.
+El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea, demorando así la obtención del valor pico. El segundo se basa en observar los coeficientes de la serie de Fourier del circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas, de esta forma, al eliminarlas, no se obtiene la totalidad de ellas causando que la onda de salida no sea un cuadrado perfecto. Esto se muestra en la Figura (\ref{fig:armonicoscomparacion}), donde se observa como estos se van atenuando en comparación con la entrada.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{ComparacionDeArmionicos}
+\caption{Comparación de armónicos de la entrada (en verde) y salida (en rojo) del circuito armado.}
+	\label{fig:armonicoscomparacion}
+\end{figure}
+
+Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}). Cabe destacar que en dicha figura, la señal cuadrada de la fuente no posee una forma cuadra perfecta debido a la baja impedancia de entrada de la fuente.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.9\textwidth , trim={0.7cm 6.25cm  0 3.5cm},clip]{scope_1}
 	%trim={<left> <lower> <right> <upper>}
-\caption{Entrada (en violeta) y salida (en amarillo) del circuito armado.}
+\caption{Entrada (en violeta) y salida (en amarillo) del circuito a $ 24 \ kHz $.}
 	\label{fig:medicion2}
 \end{figure}
 
-Repitiendo las mediciones con una señal de las mismas características, pero con una frecuencia de $ 480 \ Hz $ se observó ...
+De esta forma se puede puede comparar el diagrama de BODE teórico con el real observando las Figuras (\ref{fig:bodecomparacion}) y (\ref{fig:armonicoscomparacion}).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{BodeRealVsMedido}
+\caption{Comparación del BODE real (en azul) con el teórico (en rojo).}
+	\label{fig:bodecomparacion}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{FaseRealVsMedido}
+\caption{Comparación de las fases del BODE real (en azul) con el teórico (en rojo).}
+	\label{fig:fasecomparacion}
+\end{figure}
+
+En ambas figuras es posible ver que las mediciones se corresponden a los valores esperados, dejando pasar las frecuencias bajas y atenuando las altas ...
+
+De esta forma, se puede graficar tanto el modulo de la respuesta en frecuencia en decibles y los armónicos simulados,
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{ArmonicosVsTransferencia}
+\caption{Grafico de transferencia y armónicos simulados.}
+	\label{fig:aromincosvstransf}
+\end{figure}
+
+Repitiendo las mediciones con una señal de las mismas características, pero con una frecuencia de $ 480 \ Hz $ se observó que, a diferencia de lo observado en la Figura (\ref{fig:medicion2}), la señal de salida se acopla mejor a la entrada debido a que esta, al ser de baja frecuencia, no es atenuada como en el caso anterior.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth , trim={0.7cm 6.25cm  0 3.5cm},clip]{scope_3}
+	%trim={<left> <lower> <right> <upper>}
+\caption{Entrada (en violeta) y salida (en amarillo) del circuito a $ 480 \ Hz $.}
+	\label{fig:medicion2}
+\end{figure}
 
 Finalmente, se puede observar que dicho circuito puede ser utilizado como un integrador atenuado a muy altas frecuencias, ya qué
 
