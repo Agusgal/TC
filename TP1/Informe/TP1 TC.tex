@@ -50,7 +50,7 @@ En el presente informe se estudiaron distintos tipos de filtros con un enfoque a
 
 \subsection{Ejercicio 1: Filtro Twin T Notch}
 
-Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $. Considerando los valores comerciales, se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener los $ 9 \ k\Omega $ y dos resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados.
+Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $. Considerando los valores comerciales, se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener los $ 9 \ k\Omega $ y  resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados.
 De aquí en más, en las siguientes ecuaciones, se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
 
 \begin{figure}[H]
@@ -100,7 +100,13 @@ Convolucionando con el escalón, se llega a la respuesta al escalón
  y(t) = \frac{2}{\sqrt{3}} \left( e^{-t\frac{2 + \sqrt{3}}{RC}} - e^{t\frac{\sqrt{3} - 2}{RC}} \right) + 1
 \label{equ:h*u}
 \end{equation} 
-
+Luego se simuló y midio la respuesta al escalon con el siguiente grafico siendo la superposicion de los 3
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.9\textwidth]{StepResponse.png}
+\caption{Respuesta al escalon.}
+	\label{fig:stepResponse}
+\end{figure}
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
 Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$, colocadas en serie, y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
@@ -114,7 +120,7 @@ Simulando dicho circuito, se llegan a los resultados mostrados en la Figura (\re
 	\label{fig:simu2}
 \end{figure}
 
-En este se observa que la salida no es igual a la entrada, es decir, el valor pico de esta última no es alcanzado por la salida sino hasta pasado un tiempo aproximado de medio período. Se encuentran dos formas posibles de explicar dicha observación. El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea, demorando así la obtención del valor pico. El segundo se basa en observar los coeficientes de la serie de Fourier del circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas. Una señal cuadrada, idealmente, está compuesta por la suma de infinitas frecuencias, en la practica no son infinitas pero sí se puede asegurar que la conforma una gran suma de armónicos. De esta forma, al eliminarlas, no se obtiene la totalidad de ellas causando que la onda de salida no sea un cuadrado perfecto. La atenuación de los armónicos se muestra en la Figura (\ref{fig:armonicoscomparacion}), donde se son comparados con los de la entrada.
+En este se observa que la salida no es igual a la entrada. Se encuentran dos formas posibles de explicar dicha observación. El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea , demorando así la obtención del valor pico. El segundo se basa en observar como afecta a los coeficientes de fourier de la entrada el circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas. Una señal cuadrada, idealmente, está compuesta por la suma de infinitas frecuencias, en la practica no son infinitas pero sí se puede asegurar que la conforma una gran suma de armónicos. De esta forma, al pasar por el filtro pasa bajos las altas frecuencias se ven atenuadas, lo cual  causa que la onda de salida no sea un cuadrada. La atenuación de los armónicos se muestra en la Figura (\ref{fig:armonicoscomparacion}), donde se son comparados con los de la entrada.
 
 \begin{figure}[H]
 	\centering
@@ -155,7 +161,7 @@ De esta forma se puede comparar el diagrama de BODE teórico con el real observa
 
 En ambas figuras es posible ver que las mediciones se corresponden a los valores esperados, dejando pasar las frecuencias bajas y atenuando las altas. La distorsión entre las fases que se observa en la parte inferior de la Figura (\ref{fig:fasecomparacion}) se atribuye a las altas frecuencias. 
 
-Graficando tanto el modulo de la respuesta en frecuencia en decibles y los armónicos simulados se obtiene la siguiente figura.
+Graficando tanto el modulo de la respuesta en frecuencia en decibles y los armónicos calculados se obtiene la siguiente figura. Se puede apreciar en un  mismo grafico como son los armonicos a la entrada, y el nivel de atenuación causada por la transferencia sobre los armonicos de la salida.  
 
 \begin{figure}[H]
 	\centering
@@ -179,7 +185,14 @@ Finalmente, se puede observar que dicho circuito puede ser utilizado como un int
 \begin{equation}
 	H \left(S \right) = \frac{1}{SRC \ + 1} \approx \frac{1}{RC} \cdot \frac{1}{S}
 \end{equation}
-
+El sistema quedara defindo por 
+\begin{equation}
+	Y \left(S \right) = X \left(S \right) \cdot \frac{1}{S} \cdot \frac{1}{RC}
+\end{equation}
+Al antitransformar la expresión queda 
+\begin{equation}
+	y \left(t \right)=\int_{0}^{t} \frac{1}{RC}\cdot x(\tau) d\tau
+\end{equation}
 \subsection{Ejercicio 3: Plot Tool 2019}
 Finalmente, en este punto se programó una GUI en Phyton que permite realizar gráficos de diagramas de BODE. Dicho programa permite analizar funciones transferencia analíticas, archivos de LTSpice, entre otros tipos de archivos. Esta interfaz facilita el estudio, análisis y comparación de los distintos diagramas.
 
