@@ -27,11 +27,18 @@ plt.ylabel('Magnitud de la componente')
 plt.stem(Fn, Xn, '-', markerfmt='go',linefmt='green',label="Entrada")
 plt.stem(Fn, Yn, '*', markerfmt='ro',linefmt='red',label = "Salida")
 plt.legend()
+plt.xticks(Fn,Fn,rotation=45)
+
 plt.show()
 #Comparacion entrada salido con respuesta en frecuencia
 plt.xscale("log")
 plt.stem(Fn, Xn, '-', markerfmt='go',linefmt='green',label="Entrada")
 plt.stem(Fn, Yn, '*', markerfmt='ro',linefmt='red',label = "Salida")
+
+
+
+
+
 t = np.arange(Fn[0]-Fn[0]/2,  10**6, (Fn[len(Fn)-1]-Fn[0])/1000)
 #t = np.arange(1,  10**6, 10)
 Hs = [1/np.sqrt((((R*C*tt*2*np.pi)**2)+1)) for tt in t]
