@@ -95,6 +95,12 @@ Antitransformando por Fourier, se obtiene la respuesta impulsiva
  \label{equ:hdet}
 \end{equation}
 
+Convolucionando con el escalón, se llega a la respuesta al escalón
+\begin{equation}
+ y(t) = \frac{2}{RC \sqrt{3}} \left( e^{-t\frac{2 + \sqrt{3}}{RC}} - e^{t\frac{\sqrt{3} - 2}{RC}} \right) + \frac{1}{RC}
+\label{equ:h*u}
+\end{equation} 
+
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
 Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$, colocadas en serie, y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
