@@ -108,8 +108,7 @@ Simulando dicho circuito, se llegan a los resultados mostrados en la Figura (\re
 	\label{fig:simu2}
 \end{figure}
 
-En este se observa que la salida posee un ``delay'' con respecto a la entrada, es decir, el valor pico de esta última no es alcanzado por la salida sino hasta pasado un tiempo de medio período. Existen dos formas posibles de explicar dicha observación.
-El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea, demorando así la obtención del valor pico. El segundo se basa en observar los coeficientes de la serie de Fourier del circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas, de esta forma, al eliminarlas, no se obtiene la totalidad de ellas causando que la onda de salida no sea un cuadrado perfecto. Esto se muestra en la Figura (\ref{fig:armonicoscomparacion}), donde se observa como estos se van atenuando en comparación con la entrada.
+En este se observa que la salida no es igual a la entrada, es decir, el valor pico de esta última no es alcanzado por la salida sino hasta pasado un tiempo aproximado de medio período. Se encuentran dos formas posibles de explicar dicha observación. El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sabe que no es instantánea, demorando así la obtención del valor pico. El segundo se basa en observar los coeficientes de la serie de Fourier del circuito. Como se ha dicho previamente, este circuito es un pasa-bajos, por lo tanto, las frecuencias altas son atenuadas. Una señal cuadrada, idealmente, está compuesta por la suma de infinitas frecuencias, en la practica no son infinitas pero sí se puede asegurar que la conforma una gran suma de armónicos. De esta forma, al eliminarlas, no se obtiene la totalidad de ellas causando que la onda de salida no sea un cuadrado perfecto. La atenuación de los armónicos se muestra en la Figura (\ref{fig:armonicoscomparacion}), donde se son comparados con los de la entrada.
 
 \begin{figure}[H]
 	\centering
@@ -118,7 +117,11 @@ El primer enfoque viene dado de la mano de la carga del capacitor, la cual se sa
 	\label{fig:armonicoscomparacion}
 \end{figure}
 
-Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}). Cabe destacar que en dicha figura, la señal cuadrada de la fuente no posee una forma cuadra perfecta debido a la baja impedancia de entrada de la fuente.
+Por otro lado, las mediciones se observan en la Figura (\ref{fig:medicion2}). Cabe destacar que en dicha figura, la señal cuadrada de la fuente no posee una forma cuadra perfecta debido a la baja impedancia de entrada de la fuente. Esta impedancia viene dada por el equivalente en serie de la resitencia y el capacitor
+\[
+	Z_{in} = R \ + \ \frac{1}{SC}
+\]
+donde se observa que es inversamente proporcional a la frecuencia. A altas frecuencias, el modulo de $Z_{in}$ disminuye y se hace mucho mas comparable con el de la fuente. A bajas frecuencias, como se observará en la Figura (\ref{fig:medicion2bajasf}), la impedancia de entrada aumenta, reduciendo la distorsión observada.
 
 \begin{figure}[H]
 	\centering
@@ -162,7 +165,7 @@ Repitiendo las mediciones con una señal de las mismas características, pero co
 	\includegraphics[width=0.9\textwidth , trim={0.7cm 6.25cm  0 3.5cm},clip]{scope_3}
 	%trim={<left> <lower> <right> <upper>}
 \caption{Entrada (en violeta) y salida (en amarillo) del circuito a $ 480 \ Hz $.}
-	\label{fig:medicion2}
+	\label{fig:medicion2bajasf}
 \end{figure}
 
 Finalmente, se puede observar que dicho circuito puede ser utilizado como un integrador atenuado a muy altas frecuencias, ya qué
