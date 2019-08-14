@@ -44,23 +44,23 @@
 
 \section{Introducción}
 
-En el presente informe se estudiaron distintos tipos de filtros con un enfoque analítico teórico, práctico y además computacional. Para facilitar esto último se creó una interfaz gráfica que logra superponer distintas curvas obtenidas mediante cálculos teóricos de transferencias, mediciones con osciloscopio o simulaciones con LTSpice.
+En el presente informe se estudiaron distintos tipos de filtros con un enfoque analítico, teórico, práctico y además computacional. Para facilitar esto último se creó una interfaz gráfica que logra superponer distintas curvas obtenidas mediante cálculos teóricos de transferencias, mediciones con osciloscopio o simulaciones con LTSpice.
 
 \section{Desarrollo}
 
 \subsection{Ejercicio 1: Filtro Twin T Notch}
 
 Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $. Considerando los valores comerciales, se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener los $ 9 \ k\Omega $ y dos resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados.
-De aquí en más se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
+De aquí en más, en las siguientes ecuaciones, se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth ,trim={0 0.1cm  0.5cm 0},clip]{ej1inicial.jpg}
-\caption{Filtro Twin T Notch sin simplificar, tomando en consideración las relaciones dadas entre resistores y capacitores.}
+\caption{Filtro Twin T Notch teórico, sin simplificar.}
 	\label{fig:filtroinicial}
 \end{figure}
 
-Aplicando el teorema de Kennelly para transformar T a Pi, se obtiene el circuito simplificado de la Figura (\ref{fig:filtrosimplificado}), donde se tiene que
+En el circuito se puede observar dos circuitos T conectados en paralelo. Aplicando el teorema de Kennelly para transformar T a Pi, se obtiene el circuito simplificado de la Figura (\ref{fig:filtrosimplificado}), donde se tiene que
 \[Z_1=\frac{1+SCR}{SC}\hspace{1em};\hspace{1em} Z_2=2R(1+SCR) \hspace{1em};\hspace{1em} Z'_2=\frac{2(SCR+1)}{R(SC)^2}\]
 
 \begin{figure}[H]
@@ -70,7 +70,7 @@ Aplicando el teorema de Kennelly para transformar T a Pi, se obtiene el circuito
 	\label{fig:filtrosimplificado}
 \end{figure}
 
-Luego, se observa que el circuito puede simplificarse aún mas teniendo en cuenta las impedancias que las dos impedancias $Z_1$ de la izquierda están en paralelo entre sí, de la misma forma que las $Z_1$ de la derecha y que $Z_2$ con $Z_2'$. Finalmente, se obtiene el circuito mostrado en la Figura (\ref{fig:filtrofinal}).
+Luego, se observa que el circuito puede simplificarse aún mas teniendo en cuenta que las dos impedancias $Z_1$ de la izquierda están en paralelo entre sí, de la misma forma que las $Z_1$ de la derecha y que $Z_2$ con $Z_2'$. Finalmente, se obtiene el circuito mostrado en la Figura (\ref{fig:filtrofinal}).
 
 \begin{figure}[H]
 	\centering
