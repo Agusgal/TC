@@ -80,11 +80,20 @@ Luego, se observa que el circuito puede simplificarse aún mas teniendo en cuent
 \end{figure}
 
 Realizando los cálculos de la transferencia en el circuito simplificado, se obtiene que
-\[ \frac{Vo}{Vi}=H(S)=\frac{ \left( SCR \right)^2 + 1}{\left( SCR \right)^2 + 4SCR + 1} \] 
+\begin{equation}
+ \frac{Vo}{Vi}=H(S)=\frac{ \left( SCR \right)^2 + 1}{\left( SCR \right)^2 + 4SCR + 1}
+ \label{equ:Hhdes}
+\end{equation} 
 Luego, la respuesta en frecuencia será
-\[H(j\omega)=\frac{ \left( j 2\pi f CR \right)^2 + 1}{\left( j 2\pi f CR \right)^2 + j 8\pi fCR + 1} \]
+\begin{equation}
+ H(j\omega)=\frac{ \left( j 2\pi f CR \right)^2 + 1}{\left( j 2\pi f CR \right)^2 + j 8\pi fCR + 1}
+ \label{equ:Hdejomega}
+\end{equation}
 Antitransformando por Fourier, se obtiene la respuesta impulsiva
-\[h(t)=\left( -2 + \frac{t}{CR} \right)\frac{e^{\frac{-t}{CR}}}{CR} \]
+\begin{equation}
+ h(t)=\delta \left( t \right) \ + \ \frac{2}{RC\sqrt{3}} \left[ \left( 2 + \sqrt{3} \right) e^{-t\frac{2 + \sqrt{3}}{RC}} + \left( \sqrt{3} - 2 \right) e^{t\frac{\sqrt{3} - 2}{RC}} \right]
+ \label{equ:hdet}
+\end{equation}
 
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
