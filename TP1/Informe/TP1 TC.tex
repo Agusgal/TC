@@ -96,8 +96,7 @@ Antitransformando por Fourier, se obtiene la respuesta impulsiva
 \end{equation}
 \subsubsection{Elección de componentes.}
  Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 8.9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $.
-Dado a que los componentes vienen limitados por los valores comerciales,  se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener  $ 9 \ k\Omega $ y  resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo para formar $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados. Esto desplaza ligeramente la frecuencia de corte teniendo esta un nuevo valor de $f_c \approx 8.03 KHz$
-De aquí en más, en las siguientes ecuaciones, se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
+Dado a que los componentes vienen limitados por los valores comerciales,  se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener  $ 9 \ k\Omega $ y  resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo para formar $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados. Esto desplaza ligeramente la frecuencia de corte teniendo esta un nuevo valor de $f_c \approx 8.03 KHz$. Por lo tanto, en las ecuaciones mencionadas anteriormente, se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.\\
 Previo a la puesta en practica del circuito se realizó una simulación de montecarlo para corroborar que por la dispersion provocada por las resistencias no haya mucha variacion en la frecuencia de corte; Obteniendo los siguientes gráficos:
 \begin{figure}[H]
 	\centering
@@ -140,7 +139,7 @@ Luego se simuló y midio la respuesta al escalon con el siguiente grafico siendo
 \caption{Respuesta al escalon.}
 	\label{fig:stepResponse}
 \end{figure}
-Si bien lo simulado teórico y medido parece coincidir en la mayoria hay una zona donde no es asi, y esa es la inicial, dado que en el teórico la cuadrada es ideal y esta compuesta por infiinitas frecuencias no hay problema con que llegue a la tensión maxima en el origen, mientras que en el caso real no es así, el generador de funciones no proporciona infinitas frecuencias ademas de que le lleva cierto tiempo transicionar de 0V a 5V .Y por ello no llega 5V en el momento inicial.
+Si bien lo simulado teórico y medido parecen coincidir en la mayoría, hay una zona donde no es así, y eso ocurre en la sección inicial, dado que en el modelo teórico la cuadrada es ideal y está compuesta por infinitas frecuencias, por lo que no hay problema con que llegue a la tensión máxima en el origen, mientras que en el caso real no es así. El generador de funciones no proporciona infinitas frecuencias, ademas de que le lleva cierto tiempo en realizar la transición de $0 \ V$ a $5 \ V$. Es por ello que no se llega a $5 \ V$ en el momento inicial.
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
 Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$, colocadas en serie, y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
