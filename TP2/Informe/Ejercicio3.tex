@@ -1,0 +1,184 @@
+%\documentclass[a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[spanish, es-tabla]{babel}
+
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+
+%\usepackage{float}
+%\usepackage{graphicx}
+%\usepackage{subcaption}
+%\captionsetup{compatibility=false}
+
+%\usepackage{multirow}
+%\setlength{\doublerulesep}{\arrayrulewidth}
+%\usepackage{array}
+%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+%\usepackage[american]{circuitikz}
+%\usepackage{fancyhdr}
+%\usepackage{units} 
+%\pagestyle{fancy}
+%\fancyhf{}
+%\lhead{22.01 Teoría de Circuitos}
+%\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
+%\rfoot{Página \thepage}
+\input{Header.tex}
+
+\begin{document}
+
+\section{Medici\'on corriente de bias y tensi\'on de offset}
+
+\subsection{Introducción}
+Las corrientes de \textbf{bias} son las corrientes de polarización de la electrónica dentro de los amplificadores operacionales, en el informe se analizará 2 operacionales, uno con corrientes de bias atribuidas a la corriente de base de un par diferencial de bjt a la entrada del mismo y otro implementado con jfet que si bien teoricamente no deberia tener corriente de gate realmente la tiene.
+La tension de offset es la diferencia de potencial que se encuentra a la salida del operacional teniendo una tension nula a la entrada.
+Otra corriente de interes es la Corriente de offset.
+Con el modelo del Op Amp que tiene en cuenta estos fenomenos se puede definir.\newline
+ 	
+ $I_{offSet} \ = \ |I_b^{+}-I_b^{+}|$\ y \ $I_{Bias}= \frac{I_b^{++-I_b^{+}}}{2}$
+\begin{figure}[htb]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/opampReal.PNG}
+	\caption{Modelo OpAmp con corriente de bias y tensión de offset.}
+	\label{fig:OpampBias}
+\end{figure}
+
+
+
+Se proporcionó el siguiente circuito para medir las corrientes de bias y la tension de offset.
+
+\begin{figure}[htb]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/CircMedicion.PNG}
+	\caption{Circuito de medición.}
+	\label{fig:CircMedicion}
+\end{figure}
+
+\subsection{Estabilidad}
+Se analizó cada modulo del circuito por separado realizando el diagrama de flujo de señal para el analisis de estabilidad.\\
+Se comenzó por la segunda parte dado que es necesario un resultado de esta parte para realizar la primera
+
+\begin{figure}[htb]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/SegundaEtapa.PNG}
+	\caption{Segunda Etapa.}
+	\label{fig:SegundaEtapa}
+\end{figure}
+La corriente circulara a travez de la resistencia y el capacitor.\\
+\begin{center}
+$ \frac{V_{out_1}-V^-}{R_4} = (V^--V_{out_2})\cdot sc$ \\
+\end{center}
+ Despejando para \ $V^-$ \ se llega a: \\
+\begin{center}
+$V^- = V_{out_1} \cdot \frac{1}{scR_4+1}+V_{out_2} \cdot \frac{scR_4}{scR_4+1}$\\\end{center}
+y utilizando la ecuación del OpAmp:\\
+\begin{center}
+$V_{out_2}=A_0 \cdot (-V^-)$
+\end{center}
+Se llega al siguiente diagrama
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/SegundaEtapaDiagrama.PNG}
+	\caption{Diagrama de flujo de señal de la segunda etapa.}
+	\label{fig:SegundaEtapaDiagrama}
+\end{figure}
+De aqui se puede apreciar que el circuito es estable dado a que la realimentacion es negativa y por lo tanto estable, si se invitiese la entrada, el circuito pasaria a ser inestable\\
+Luego analizando la primer etapa
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/PrimeraEtapa.PNG}
+	\caption{Primer Etapa.}
+	\label{fig:PrimerEtapa}
+\end{figure}
+Sabiendo que la tensión en B sera el resultado de la confiugración inversora de la segunda etapa.\\
+\begin{center}$V_{out_1}=A_0 \cdot (V^+ - V^-)$\\\end{center}
+\begin{center}$V^+= V_{out_1}\cdot \frac{-1}{SCR_4} \cdot \frac{10}{10+R_3} $\\\end{center}
+\begin{center}$V^- = V_+{in}$\\\end{center}
+Se obtiene el diagrama de flujo de señal:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/PrimerEtapaDiagrama.PNG}
+	\caption{Diagrama de flujo de señal de la primer etapa.}
+	\label{fig:PrimerEtapaDiagrama}
+\end{figure}
+El cual tambien se puede notar que es estable dado a la realimentacion negativa, en caso de permutar las entradas cambiarian los signos de los lazos y seria inestable.
+Finalmente si se invierten las entradas de ambas etapas en simultaneo tambien sera inestable dado que la primer etapa todavia estará con una realimentacion positiva.\\
+A modo de conclución se llega a que el la única configuración estable es la original, dado que la permutacion de las entradas lleva a situaciones inestables por la realimentacion positiva.
+\subsection{Deducción de expresiones para medir.}
+
+Teniendo en cuenta el circuito entero de medicion, las corrientes de bias y la tension de offset se lo puede modelar de la siguiente manera
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio3/imagenes/Medicion.PNG}
+	\caption{Circuito de medición.}
+	\label{fig:Medicion}
+\end{figure}
+El Opamp a medir será el OAX-2
+\begin{center}$V_{out_1}=A_0 \cdot (V^+ - V^-)$\\\end{center}
+Dado a que la corriente de bias es unicamente continua para la segunda etapa el opamp es como si estuviese a laso abierto\\
+\begin{center}$V_{out_2}=A_0 \cdot V_{out_1}$\\\end{center}
+\begin{center}$V^-=I_b^- \cdot (R_{s2}+10)$\\\end{center}
+\begin{center}$V^+=I_b^+ \cdot R_{s1} +V_A+V_{off}$\\\end{center}
+\begin{center}$V_A=V_{out_2} \cdot \frac{1}{1+\frac{10}{R_3}}$\\\end{center}
+Despejando para $V_{out_2}$ se llega a:
+\begin{center}$V_{out_2}=A_0^2  \cdot \frac{I_b^+ \ R_{s1} -I_b^-\cdot (R_{s2}+10)+V_{off}}{1-A_0^2 \cdot \frac{1}{1+\frac{10}{R_3}}}$\\\end{center}
+$\lim_{A_0\to\infty} A_0^2  \cdot \frac{I_b^+ \ R_{s1} -I_b^-\cdot (R_{s2}+10)+V_{off}}{1-A_0^2 \cdot \frac{1}{1+\frac{10}{R_3}}}=-(I_b^+ \ R_{s1} -I_b^-\cdot (R_{s2}+10)+V_{off})\cdot \frac{1}{1+\frac{10}{R_3}} $
+Luego cambiando de posicion la llave se va apoder medirlos diferentes observavles de interes del circuito.\\
+La $V_{off}$ se medirá poniendo en corto $R_{s1}$ y $R_{s2}$ y se despreciará la caida sobre el resistor de 10$\omega$ dado a su pequeño valor y que la corriente de bias tambien es muy pequeña.\\
+\begin{center}$V_{off}=V_{out_2} \cdot \frac{10}{10+R_3} $\end{center}
+Ahora que se tiene un valor de $V_{off}$ se  puede poner en corto S1 ó S2 arbitrariamente y se conseguirá una expresión para $ I_b^+ \ o \  I_b^-$ en función de $V_{off} \ y \ V_{out_2}$
+Se tuvo en cuenta elegir un valor de resistecia alto para $R_{s1}$ y $R_{s2}$ talque sea mas apreciable la caida de potencial sobre ellas; se eligió 1 Mega.\\
+\begin{center}$I_b^+=\frac{V_{out_2} \cdot \frac{10}{10+R_3}-V_{off}}{R_{s1}}$\end{center}
+Para esta expresión se desprecio el valor de $I_b^-$
+\begin{center}$I_b^-=\frac{V_{out_2} \cdot \frac{10}{10+R_3}-V_{off}}{R_{s2}+10}$\end{center}
+
+\subsection{Ruido Ambiente.}
+La segunda etapa si bien está a laso abierto para las corrientes de bias dado que es de continua se comporta como un filtro para el ruido ambiente que se encuentra a 50Hz,con los valores actuales de resistencia y capacitor atenuará $\approx$ 0.45dB, aumentando el valor del capacitor a 1$\mu F$ sera de  $\approx$ 20dB.
+Un problema que se presentaria aplicando un capacitor demasiado chico es que el ruido haría mucho mas dificil las mediciones.
+\subsection{Resultados.}
+\subsubsection{Mediciones}
+Se midio el circuito utilizando osciloscopio y un multimetro de banco  obteniendo la siguiente tabla.
+\begin{table}[H]
+\begin{tabular}{cccccc}
+\hline
+\multicolumn{1}{|c|}{\textbf{LF356}}               & \multicolumn{1}{c|}{\textbf{$I_b^+$}} & \multicolumn{1}{c|}{\textbf{$I_b^-$}} & \multicolumn{1}{c|}{\textbf{$V_{off}$}} & \multicolumn{1}{c|}{\textbf{$I_{bias}$}} & \multicolumn{1}{c|}{\textbf{$I_{off}$}} \\ \hline
+\multicolumn{1}{|c|}{\textbf{Osciloscopio}}        & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
+\multicolumn{1}{|c|}{\textbf{Multimetro de banco}} & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
+\multicolumn{1}{|c|}{\textbf{Fabricante}}          & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{10mV}               & \multicolumn{1}{c|}{200pA}               & \multicolumn{1}{c|}{50pA}               \\ \hline
+\textbf{}                                          & \textbf{}                             & \textbf{}                             & \textbf{}                               & \textbf{}                                & \textbf{}                               \\ \hline
+\multicolumn{1}{|c|}{\textbf{TL081}}               & \multicolumn{1}{c|}{\textbf{$I_b^+$}} & \multicolumn{1}{c|}{\textbf{$I_b^-$}} & \multicolumn{1}{c|}{\textbf{$V_{off}$}} & \multicolumn{1}{c|}{\textbf{$I_{bias}$}} & \multicolumn{1}{c|}{\textbf{$I_{off}$}} \\ \hline
+\multicolumn{1}{|c|}{\textbf{Osciloscopio}}        & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
+\multicolumn{1}{|c|}{\textbf{Multimetro de banco}} & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
+\multicolumn{1}{|c|}{\textbf{Fabricante}}          & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{10mV}               & \multicolumn{1}{c|}{400pA}               & \multicolumn{1}{c|}{100pA}              \\ \hline
+\end{tabular}
+\end{table}
+\subsubsection{Analisis de resultados.}
+Esto se va a poner feo
+\subsection{Compensacion de tension de offset y corrientes de bias.}
+\subsubsection{Compensación Bias}
+Para la compensacion de corriente de bias lo que se desea es hacer que la diferencia entre $I_b^+$ y $I_b^-$ sea $\approx$ 0
+Un ejemplo de esto es tomar un Op Amp en configuración inversora  de las sigueintes caracteristicas:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.5\textwidth]{Ejercicio3/imagenes/CompensacionBias.PNG}
+	\caption{Circuito inversor para la compensacion de BIAS.}
+	\label{fig:CompensacionBias}
+\end{figure}
+Asumiendo ya compensada la tension de offset se procede a la deducción de el valor de Rc para minimizar las corrientes de bias.
+\begin{center}$V_{out}=A_0 \cdot (V^+ - V^-)$\\\end{center}
+\begin{center}$V^+=-I_b^+ \cdot R_c$\\\end{center}
+\begin{center}$\frac{V_{in}-V^-}{R_i}=\frac{V^- - V_{out}}{R_f} -I_b^-$\\\end{center}
+Despejando para $V_{out}$ queda:
+\begin{center}$V_{out}=V_{in}\cdot -\frac{R_f}{R_i}+I_b^+ R_f-I_b^- R_c \cdot \frac{R_i+R_f}{R_i R_f}\cdot R_f $\\\end{center}
+Teniendo un valor de $R_c$= $R_i//R_f$ se deberian anular o atenuar significativamente las corrientes de bias.
+\subsubsection{Compensación Tension de Offset}
+Para la compensación de la tension de offset hay varias alternativas. En el caso de los Opamps que fueron usados en este informe cuentan con unos pines para configurar la tension de offset(1 y 5), la forma que se va a desarrollar es un circuito externo que funcione en configuracion inversora.
+El circuito a implementar es el siguiente:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.5\textwidth]{Ejercicio3/imagenes/CompensacionOff.PNG}
+	\caption{Circuito para la compensacion de Tension de Offset.}
+	\label{fig:CompensacionOff}
+\end{figure}
+El potenciometro sera utilizado para variar la tension que se le agrega a $V^+$ a travez del divisor resistivo conformado por $R_C$ y $R_B$ donde Rc podria ser una resistencia para compensar el BIAS. RB debe ser un valor por lo menos 10 veces superior a RC dado que la tension que se quiere corregir es pequeña. el propósito de las 2 resistencias 'R' es aumentar la sensibilidad para elegir la tensión. El valor del potenciometro deberia ser un orden de magnitud menor que $R_B $
+\end{document}
