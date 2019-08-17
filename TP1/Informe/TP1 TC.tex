@@ -49,9 +49,8 @@ En el presente informe se estudiaron distintos tipos de filtros con un enfoque a
 \section{Desarrollo}
 
 \subsection{Ejercicio 1: Filtro Twin T Notch}
-
-Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $. Considerando los valores comerciales, se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener los $ 9 \ k\Omega $ y  resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados.
-De aquí en más, en las siguientes ecuaciones, se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
+\subsubsection{Introddución}
+Se diseñó el filtro Twin T Notch mostrado en la Figura (\ref{fig:filtroinicial}). El cual es implementado a traves de 2 filtros puestos en paralelo siendo uno pasa-Bajos y el otro pasa-Altos .
 
 \begin{figure}[H]
 	\centering
@@ -60,6 +59,7 @@ De aquí en más, en las siguientes ecuaciones, se considera $ R = 9 \ k\Omega $
 	\label{fig:filtroinicial}
 \end{figure}
 
+\subsubsection{Cálculo Analítico}
 En el circuito se puede observar dos circuitos T conectados en paralelo. Aplicando el teorema de Kennelly para transformar T a Pi, se obtiene el circuito simplificado de la Figura (\ref{fig:filtrosimplificado}), donde se tiene que
 \[Z_1=\frac{1+SCR}{SC}\hspace{1em};\hspace{1em} Z_2=2R(1+SCR) \hspace{1em};\hspace{1em} Z'_2=\frac{2(SCR+1)}{R(SC)^2}\]
 
@@ -94,7 +94,40 @@ Antitransformando por Fourier, se obtiene la respuesta impulsiva
  h(t)=\delta \left( t \right) \ + \ \frac{2}{RC\sqrt{3}} \left[ \left( 2 + \sqrt{3} \right) e^{-t\frac{2 + \sqrt{3}}{RC}} + \left( \sqrt{3} - 2 \right) e^{t\frac{\sqrt{3} - 2}{RC}} \right]
  \label{equ:hdet}
 \end{equation}
-
+\subsubsection{Elección de componentes.}
+ Este filtro posee una frecuencia de corte de $ 8.1 \ kHz $. Para eso se requerían resistencias de $ 8.9 \ k\Omega $ y $ 4.5 \ k\Omega $ y capacitores de $ 2.2 \ nF $ y $ 4.4 \ nF $.
+Dado a que los componentes vienen limitados por los valores comerciales,  se seleccionaron resistencias de $ 6.8 \ k\Omega $ y $ 2.2 \ k\Omega $ en serie para obtener  $ 9 \ k\Omega $ y  resistencias de $ 10 \ k\Omega $ y $ 8,2 \ k\Omega $ en paralelo para formar $ 4.5 \ k\Omega $, mientras que para los capacitores, se eligieron 2 de $ 2.2 \ nF $ en paralelo para lograr los $ 4.4 \ nF $ deseados. Esto desplaza ligeramente la frecuencia de corte teniendo esta un nuevo valor de $f_c \approx 8.03 KHz$
+De aquí en más, en las siguientes ecuaciones, se considera $ R = 9 \ k\Omega $ y $ C = 2.2 \ nF $.
+Previo a la puesta en practica del circuito se realizó una simulación de montecarlo para corroborar que por la dispersion provocada por las resistencias no haya mucha variacion en la frecuencia de corte; Obteniendo los siguientes gráficos:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth ]{Montecarlo.PNG}
+\caption{Montecarlo Twin-T Notch Amplitud.}
+	\label{fig:Montecarlo}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{MontecarloPh.PNG}
+\caption{Montecarlo Twin-T Notch Fase.}
+	\label{fig:MontecarloFase}
+\end{figure}
+Se puede observar que la mayoria de las frecuencias de corte se encuentran en un entorno cercano a 8.1KHz
+\subsubsection{Mediciones.}
+Se midió el BODE de el circuito diseñado utilizando un generador de funciones y un osciloscopio, luego se hizo una simulación y se cotejó con el calculo teórico superponiendo los 3 gráficos:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth, trim={0 0.1cm  0 0},clip]{BodeNotchAmp.png}
+\caption{Bode Notch, Amplitud.}
+	\label{fig:BodeNotchAmp}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth, trim={0 0.1cm  0 0},clip]{BodeNotchPhase.png}
+\caption{Bode Nothc, Fase.}
+	\label{fig:BodeNotchPhase}
+\end{figure}
+Se puede apreciar que la frecuencia de corte es de aproximadamente 8.1KHz y que las mediciones coinciden con las simulaciones y las predicciones teoricas.
+\subsubsection{Respuesta al escalon.}
 Convolucionando con el escalón, se llega a la respuesta al escalón
 \begin{equation}
  y(t) = \frac{2}{\sqrt{3}} \left( e^{-t\frac{2 + \sqrt{3}}{RC}} - e^{t\frac{\sqrt{3} - 2}{RC}} \right) + 1
@@ -107,6 +140,7 @@ Luego se simuló y midio la respuesta al escalon con el siguiente grafico siendo
 \caption{Respuesta al escalon.}
 	\label{fig:stepResponse}
 \end{figure}
+Si bien lo simulado teórico y medido parece coincidir en la mayoria hay una zona donde no es asi, y esa es la inicial, dado que en el teórico la cuadrada es ideal y esta compuesta por infiinitas frecuencias no hay problema con que llegue a la tensión maxima en el origen, mientras que en el caso real no es así, el generador de funciones no proporciona infinitas frecuencias ademas de que le lleva cierto tiempo transicionar de 0V a 5V .Y por ello no llega 5V en el momento inicial.
 
 \subsection{Ejercicio 2: Filtro pasa-bajos RC}
 Se simuló y se armó en un protoboard un filtro pasa-bajos RC, seleccionando los valores de los componentes adecuados para lograr que la frecuencia de corte sea de $ 48 \ kHz $. Los componentes utilizados fueron dos resistencias, una de $22 \ \Omega$ y otra de $680 \ \Omega$, colocadas en serie, y un capacitor de $4.7 \ nF$, contemplando los valores comerciales.
@@ -193,10 +227,14 @@ Al antitransformar la expresión queda
 \begin{equation}
 	y \left(t \right)=\int_{0}^{t} \frac{1}{RC}\cdot x(\tau) d\tau
 \end{equation}
+Esto se llevó a la practica y se midio la entrada versus la salida a una frecuencia  de  200KHz , asi concluyendo que realmente actua como integrador.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth,trim={0.7cm 6.25cm  0 3.5cm},clip]{Integrando.png}
+\caption{Filtro pasa bajos actuando como Integrador.}
+	\label{fig:integrand}
+\end{figure}
 \subsection{Ejercicio 3: Plot Tool 2019}
 Finalmente, en este punto se programó una GUI en Phyton que permite realizar gráficos de diagramas de BODE. Dicho programa permite analizar funciones transferencia analíticas, archivos de LTSpice, entre otros tipos de archivos. Esta interfaz facilita el estudio, análisis y comparación de los distintos diagramas.
-
-\section{Conclusiones}
-
 
 \end{document}
