@@ -31,23 +31,27 @@ plt.xticks(Fn,Fn,rotation=45)
 
 plt.show()
 #Comparacion entrada salido con respuesta en frecuencia
+
+
+
+fig = plt.figure()
+ax = fig.add_subplot(111)
 plt.xscale("log")
-plt.stem(Fn, Xn, '-', markerfmt='go',linefmt='green',label="Entrada")
-plt.stem(Fn, Yn, '*', markerfmt='ro',linefmt='red',label = "Salida")
 
-
-
-
-
+ax2 = ax.twinx()
 t = np.arange(Fn[0]-Fn[0]/2,  10**6, (Fn[len(Fn)-1]-Fn[0])/1000)
 #t = np.arange(1,  10**6, 10)
 Hs = [1/np.sqrt((((R*C*tt*2*np.pi)**2)+1)) for tt in t]
 Hs = 20*np.log10(Hs)
 plt.title("Armonicos vs Transferencia")
 plt.xlabel('Frecuencia [Hz]')
-plt.ylabel('Magnitud de la componente/Transferencia')
-plt.plot(t,Hs,"red" , label="Transferencia Teorica [dB]")
+ax.set_ylabel(r"Componentes de la señal")
+ax2.set_ylabel(r"Transferencia [dB]")
+ax2.plot(t,Hs,"blue" , label="Transferencia Teorica [dB]")
+ax.stem(Fn, Xn, '-', markerfmt='go',linefmt='green',label="Entrada")
+ax.stem(Fn, Yn, '*', markerfmt='ro',linefmt='red',label = "Salida")
 plt.legend()
+plt.grid()
 plt.show()
 #Solo transferencia
 plt.xscale("log")

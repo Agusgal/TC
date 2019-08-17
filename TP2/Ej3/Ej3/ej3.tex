@@ -1,30 +1,33 @@
-%\documentclass[a4paper]{article}
-%\usepackage[utf8]{inputenc}
-%\usepackage[spanish, es-tabla]{babel}
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
 
-%\usepackage{amsmath}
-%\usepackage{amsfonts}
-%\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
 
-%\usepackage{float}
-%\usepackage{graphicx}
-%\usepackage{subcaption}
-%\captionsetup{compatibility=false}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
 
-%\usepackage{multirow}
-%\setlength{\doublerulesep}{\arrayrulewidth}
-%\usepackage{array}
-%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-%\usepackage[american]{circuitikz}
-%\usepackage{fancyhdr}
-%\usepackage{units} 
-%\pagestyle{fancy}
-%\fancyhf{}
-%\lhead{22.01 Teoría de Circuitos}
-%\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
-%\rfoot{Página \thepage}
-\input{Header.tex}
+\usepackage{multirow}
+\setlength{\doublerulesep}{\arrayrulewidth}
 
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[american]{circuitikz}
+
+\usepackage{fancyhdr}
+
+\usepackage{units} 
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{22.01 Teoría de Circuitos}
+\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
+\rfoot{Página \thepage}
 \begin{document}
 
 \section{Medici\'on corriente de bias y tensi\'on de offset}
@@ -38,7 +41,7 @@ Con el modelo del Op Amp que tiene en cuenta estos fenomenos se puede definir.\n
  $I_{offSet} \ = \ |I_b^{+}-I_b^{+}|$\ y \ $I_{Bias}= \frac{I_b^{++-I_b^{+}}}{2}$
 \begin{figure}[htb]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/opampReal.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/opampReal.PNG}
 	\caption{Modelo OpAmp con corriente de bias y tensión de offset.}
 	\label{fig:OpampBias}
 \end{figure}
@@ -49,7 +52,7 @@ Se proporcionó el siguiente circuito para medir las corrientes de bias y la ten
 
 \begin{figure}[htb]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/CircMedicion.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/CircMedicion.PNG}
 	\caption{Circuito de medición.}
 	\label{fig:CircMedicion}
 \end{figure}
@@ -60,7 +63,7 @@ Se comenzó por la segunda parte dado que es necesario un resultado de esta part
 
 \begin{figure}[htb]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/SegundaEtapa.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/SegundaEtapa.PNG}
 	\caption{Segunda Etapa.}
 	\label{fig:SegundaEtapa}
 \end{figure}
@@ -78,7 +81,7 @@ $V_{out_2}=A_0 \cdot (-V^-)$
 Se llega al siguiente diagrama
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/SegundaEtapaDiagrama.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/SegundaEtapaDiagrama.PNG}
 	\caption{Diagrama de flujo de señal de la segunda etapa.}
 	\label{fig:SegundaEtapaDiagrama}
 \end{figure}
@@ -86,7 +89,7 @@ De aqui se puede apreciar que el circuito es estable dado a que la realimentacio
 Luego analizando la primer etapa
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/PrimeraEtapa.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/PrimeraEtapa.PNG}
 	\caption{Primer Etapa.}
 	\label{fig:PrimerEtapa}
 \end{figure}
@@ -97,7 +100,7 @@ Sabiendo que la tensión en B sera el resultado de la confiugración inversora d
 Se obtiene el diagrama de flujo de señal:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/PrimerEtapaDiagrama.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/PrimerEtapaDiagrama.PNG}
 	\caption{Diagrama de flujo de señal de la primer etapa.}
 	\label{fig:PrimerEtapaDiagrama}
 \end{figure}
@@ -109,7 +112,7 @@ A modo de conclución se llega a que el la única configuración estable es la o
 Teniendo en cuenta el circuito entero de medicion, las corrientes de bias y la tension de offset se lo puede modelar de la siguiente manera
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio3/imagenes/Medicion.PNG}
+	\includegraphics[width=\textwidth]{imagenes/Medicion.PNG}
 	\caption{Circuito de medición.}
 	\label{fig:Medicion}
 \end{figure}
@@ -160,7 +163,7 @@ Para la compensacion de corriente de bias lo que se desea es hacer que la difere
 Un ejemplo de esto es tomar un Op Amp en configuración inversora  de las sigueintes caracteristicas:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.5\textwidth]{Ejercicio3/imagenes/CompensacionBias.PNG}
+	\includegraphics[width=0.5\textwidth]{imagenes/CompensacionBias.PNG}
 	\caption{Circuito inversor para la compensacion de BIAS.}
 	\label{fig:CompensacionBias}
 \end{figure}
@@ -176,7 +179,7 @@ Para la compensación de la tension de offset hay varias alternativas. En el cas
 El circuito a implementar es el siguiente:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.5\textwidth]{Ejercicio3/imagenes/CompensacionOff.PNG}
+	\includegraphics[width=0.5\textwidth]{imagenes/CompensacionOff.PNG}
 	\caption{Circuito para la compensacion de Tension de Offset.}
 	\label{fig:CompensacionOff}
 \end{figure}

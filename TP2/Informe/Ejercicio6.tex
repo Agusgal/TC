@@ -1,0 +1,45 @@
+\documentclass[a4paper]{article}
+\include{Header.tex}
+
+\begin{document}
+
+En el siguiente punto se propuso como objetivo realizar un sensor de temperatura, valiéndose del uso del transistor LM35. Este dispositivo se caracteriza por entregar a la salida una tensión proporcional a la temperatura siguiendo la ecuación
+\[
+	V_{LM35} = 35 \frac{mV}{^{\circ}C} \ T
+\]
+
+De esta forma, se busca que el circuito diseñado posea una tensión de salida de $ 0 \ V $ A $ 35 ^{\circ}C $ y $ 5 \ V $ A $ 45 ^{\circ}C $. De esta forma, la tensión de salida se encuentra dada por 
+
+\begin{equation}
+	V_{out} = 50V_{LM35} - 17.5 \ V =  1.75 \frac{V}{^{\circ}C} \ T - 17.5 \ V
+	\label{equ:sistema}
+\end{equation}
+
+Para este, se seleccionaron dos amplificadores operacionales TL072 y un diodo zener \textbf{PONER NOMBRE DEL ZENER} basándose en los componentes disponibles en el pañol de electrónica.
+
+Teniendo en cuenta lo ya mencionado, se decidió realizar un circuito con tres etapas que permita realizar lo deseado.
+La primer etapa consiste en un amplificador operacional conectado como un inversor, cuya tensión de entrada es la de salida del transistor. De esta forma se logra que $V_1 = -5 V{LM35}$.
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{}
+%	\caption{}
+%	\label{}
+%\end{figure}
+
+En la segunda etapa se encuentra conformada nuevamente por un operacional, pero en este caso, conectado como un amplificador restador. Se alimenta dicho circuito con la tensión $V_1$, es decir, la salida de la primer etapa, y con una tensión de $- 10 \ V$. Así se consigue que posea la forma final deseada mostrada en la Ecuación (\ref{equ:sistema}).
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{}
+%	\caption{}
+%	\label{}
+%\end{figure}
+
+Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0,7 \ V$ y $5.6 \ V$, cumpliendo con las especificaciones deseadas de que la tensión de salida no sea menor a $-1 \ V$ ni mayor a $6 \ V$.
+
+
+
+
+
+\end{document}
