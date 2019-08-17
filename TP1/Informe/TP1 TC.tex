@@ -107,12 +107,12 @@ Previo a la puesta en practica del circuito se realizó una simulación de monte
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{MontecarloPh.PNG}
-\caption{Montecarlo Twin-T Notch Fase.}
+\caption{Montecarlo Twin-T Notch Fase. Cabe tener en cuenta que el punto donde divergen las curvas se debe a por como grafica el simulador de LTSpice.}
 	\label{fig:MontecarloFase}
 \end{figure}
 Se puede observar que la mayoria de las frecuencias de corte se encuentran en un entorno cercano a 8.1KHz
 \subsubsection{Mediciones.}
-Se midió el BODE de el circuito diseñado utilizando un generador de funciones y un osciloscopio, luego se hizo una simulación y se cotejó con el calculo teórico superponiendo los 3 gráficos:
+Se midió el BODE del circuito diseñado utilizando un generador de funciones y un osciloscopio, luego se hizo una simulación y se cotejó con el calculo teórico superponiendo los 3 gráficos:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth, trim={0 0.1cm  0 0},clip]{BodeNotchAmp.png}
@@ -194,7 +194,7 @@ De esta forma se puede comparar el diagrama de BODE teórico con el real observa
 
 En ambas figuras es posible ver que las mediciones se corresponden a los valores esperados, dejando pasar las frecuencias bajas y atenuando las altas. La distorsión entre las fases que se observa en la parte inferior de la Figura (\ref{fig:fasecomparacion}) se atribuye a las altas frecuencias. 
 
-Graficando tanto el modulo de la respuesta en frecuencia en decibles y los armónicos calculados se obtiene la siguiente figura. Se puede apreciar en un  mismo grafico como son los armonicos a la entrada, y el nivel de atenuación causada por la transferencia sobre los armonicos de la salida.  
+Graficando tanto el modulo de la respuesta en frecuencia en decibeles y los armónicos calculados se obtiene la siguiente figura. Se puede apreciar en un  mismo grafico como son los armonicos a la entrada, y el nivel de atenuación causada por la transferencia sobre los armonicos de la salida.  
 
 \begin{figure}[H]
 	\centering
