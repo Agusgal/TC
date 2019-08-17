@@ -34,7 +34,9 @@ Por último, se llevan los $9V$ de la fuente de alimentación a la entrada de al
 Justo luego de la entrada se encuentra la resistencia $R_8$. Esta resistencia podría situarse en este lugar para atenuar levemente la entrada y ayudar a filtrar pequeños picos muy rápidos de tensión en la entrada. Otra hipótesis es que ayuda a elevar la impedancia de entrada de todo el circuito.\\
 
 El capacitor $C_1$, como ya dicho antes, ofrece gran impedancia a la tensión continua de la alimentación para proteger a la entrada. De otra manera, la señal continua ingresaría por la entrada.
-Lo que se obtiene posterior al capacitor será la señal de entrada levantada tantos voltios como proporcionen el punto medio del divisor resistivo.
+Lo que se obtiene posterior al capacitor será la señal de entrada levantada tantos voltios como proporcionen el punto medio del divisor resistivo.\\
+
+Se contempla además que el circuito base nos permite tener una opción de realizar un bypass total al circuito mediante el uso de una llave de 
 
 \subsubsection{Etapa de Amplificación}
 
@@ -60,16 +62,11 @@ A la salida del operacional se encuentra el capacitor $C_3$. Este capacitor se u
 	\label{fig:circuito_base_ecualizacion}
 \end{figure}
 
-Luego, se encuentran en el circuito una resistencia en serie con un par de diodos en paralelo con polaridad invertida. Estos diodos fijarían la tensión de la señal en $V_{d_{on}}$.
+Luego, se encuentran en el circuito una resistencia en serie con un par de diodos en paralelo con polaridad invertida. Estos diodos fijarían la tensión de la señal en $V_{d_{on}}$ tanto para el semi-ciclo positivo como para el negativo. Esto deformaría mucho a la señal generando un efecto de "clipping". Se presume que esto se apreciaría como una gran distorsión a la hora de conectar una guitarra y escuchar la salida.\\
 
-\subsubsection{Bypass total del circuito}
+Seguido de los diodos se puede encontrar un pequeño circuito R-C cuya finalidad podría ser la de darle un último cambio a la señal. Este circuito estaría atenuando las frecuencias altas. Se deberá comprobar mediante simulaciones y protobordeado el uso de este último tramo.
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/circuito_base_bypass.png}
-	\caption{Bypass del circuito.}
-	\label{fig:circuito_base_bypass}
-\end{figure}
+Finalmente antes de la salida se encuentra un potenciómetro, el cual se presume que se utiliza como control de volumen de salida.
 
 \subsection{Análisis Cuantitativo del Circuito Base}
 
