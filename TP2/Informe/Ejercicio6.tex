@@ -14,17 +14,21 @@ En el siguiente punto se propuso como objetivo realizar un sensor de temperatura
 	V_{LM35} = 35 \frac{mV}{^{\circ}C} \ T
 \]
 
-De esta forma, se busca que el circuito diseñado posea una tensión de salida de $ 0 \ V $ A $ 35 ^{\circ}C $ y $ 5 \ V $ A $ 45 ^{\circ}C $. Es así que se busca que la tensión de salida sea regida por la ecuación
+Como se requiere que el circuito diseñado posea una tensión de salida de $ 0 \ V $ A $ 35 ^{\circ}C $ y $ 5 \ V $ A $ 45 ^{\circ}C $, se busca la ecuación de la recta que atraviese los puntos especificados. Es así que se obtiene que la tensión de salida viene dada por la siguiente ecuación:
 
 \begin{equation}
 	V_{out} = 50V_{LM35} - 17.5 \ V =  1.75 \frac{V}{^{\circ}C} \ T - 17.5 \ V
 	\label{equ:sistema}
 \end{equation}
 
-Para este, se seleccionaron dos amplificadores operacionales TL072 y un diodo zener \textbf{PONER NOMBRE DEL ZENER}.
+Para lograr su funcionamiento, el fabricante especifica que este debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle al circuito $10 \ V$ para utilizarlo.
+Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ y mayor a $6 \ V$. Esto se ahondará con mayor profundidad en los de diseño del modelo.
 
-Teniendo en cuenta lo ya mencionado, se decidió realizar un circuito con tres etapas que permita realizar lo deseado.
-La primer etapa consiste en un amplificador operacional conectado como un inversor, cuya tensión de entrada es la de salida del transistor. De esta forma se logra que $V_1 = -5 V{LM35}$.
+\subsubsection{Primer modelo: inversor y restador}
+
+En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener \textbf{PONER NOMBRE DEL ZENER}. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
+
+La primer etapa dispuso de un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
 
 \begin{figure}[H]
 	\centering
@@ -33,7 +37,12 @@ La primer etapa consiste en un amplificador operacional conectado como un invers
 	\label{fig:cir1-M1}
 \end{figure}
 
-En la segunda etapa se encuentra conformada nuevamente por un operacional, pero en este caso, conectado como un amplificador restador. Se alimenta dicho circuito con la tensión $V_1$, es decir, la salida de la primer etapa, al borne negativo del operacional, y con una tensión de $- 10 \ V$ al positivo.
+De esta forma, y siendo $V_1$ la tensión de salida de esta etapa, se logra
+\[
+	V_1 = -\frac{R_6}{R_5} \ V_{LM35}
+\]
+
+En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne negativo del operacional la tensión $V_1$ y al  una positivo tensión de $- 10 \ V$, reutilizando la alimentación del operacional.
 
 \begin{figure}[H]
 	\centering
@@ -42,7 +51,12 @@ En la segunda etapa se encuentra conformada nuevamente por un operacional, pero 
 	\label{fig:cir2-M1}
 \end{figure}
 
-Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0,7 \ V$ y $5.6 \ V$, cumpliendo con las especificaciones deseadas de que la tensión de salida no sea menor a $-1 \ V$ ni mayor a $6 \ V$. La resistencia de protección colocada a la entrada de esta parte del circuito fue calculada ...
+Aplicando el teorema de superposición, se puede demostrar que
+\[
+	V_2 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( -V_{CC} \right) \ - \ \frac{R_3}{R_1} V_1
+\]
+
+Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0,7 \ V$ y $5.6 \ V$. El objetivo de esta sección es simplemente limitar la tensión de salida, evitando que se encuentre por debajo de $-1 \ V$ y por encima de $6 \ V$.
 
 \begin{figure}[H]
 	\centering
@@ -55,10 +69,157 @@ Es así como se observa al circuito final en la Figura (\ref{fig:cirfin-M1}).
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.9\textwidth]{Ejercicio6/Imagenes/CircuitoFinal-M1.png}
+	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/CircuitoFinal-M1.png}
 	\caption{Modelo final del circuito.}
 	\label{fig:cirfin-M1}
 \end{figure}
+
+Se calcula la transferencia utilizando las ecuaciones parciales mostradas anteriormente. Es así que se llega a
+\begin{equation}
+	V_{out} = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( -V_{CC} \right) \ + \
+	\frac{R_3}{R_1} \frac{R_6}{R_5} \ V_{LM35}
+	\label{equ:transfm1}
+\end{equation}
+
+A la hora de seleccionar los valores de las resistencias, se pide:
+\begin{equation}
+	\frac{R_6}{R_5} = 5
+	\label{equ:condm1-1}
+\end{equation}
+
+\begin{equation}
+	\frac{R_3}{R_1} = 10
+	\label{equ:condm1-2}
+\end{equation}
+
+\begin{equation}
+	\frac{R_3}{R_2} = 1.75
+	\label{equ:condm1-3}
+\end{equation}
+
+\begin{equation}
+	\frac{R_2 // R_4}{R_1 // R_3} = 1
+	\label{equ:condm1-4}
+\end{equation}
+
+Cumpliendo con esto y eligiendo arbitrariamente $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. Y de esta forma se consigue llegar a la Ecuación (\ref{equ:sistema}).
+
+Por otro lado, para $R_7$ y debido a la función que cumple, para seleccionar un valor adecuado, se considera la máxima tensión que puede obtener a la salida el operacional, $13.5 \ V$ en el peor caso, según el fabricante, y se asume una corriente de $0.5 \ mA$ para evitar que se sobre exija al operacional:
+
+\begin{equation}
+	R_7 = \frac{13.5 \ V \ - \ 5.6 \ V}{0.5 \ mA} = 15.8 \ k\Omega
+	\label{equ:condm1-5}
+\end{equation}
+
+Una vez establecido tanto la forma del circuito como sus componentes, se procedió a analizar simulaciones del mismo mediante el uso del programa LTSpice. En este, se valió del comando ``.step'' para analizar cada resistencia con una tolerancia del 5\%. Es por ello que se realiza un detenimiento en las resistencias $R_1$ y $R_4$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/StepR1-M1.png}
+	\caption{Salida del circuito en función de la tensión del transistor variando $R_1$.}
+	\label{fig:r1-M1}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/StepR4-M1.png}
+	\caption{Salida del circuito en función de la tensión del transistor variando $R_4$.}
+	\label{fig:r4-M1}
+\end{figure}
+
+Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía de forma considerable. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por presets. De esta forma, se podrá seleccionar una valor más estable para obtener una salida más estable.
+Este modelo fue descartado ya que se propuso uno mejor. Esto será comparado más adelante.
+
+\subsubsection{Segundo modelo: restador e inversor}
+
+Al igual que el circuito anterior, este está compuesto por las mismas tres etapas, con la única diferencia que se utiliza primero el amplificador restador. No se han variado ni el diodo zener utilizado, ni los modelos de operacionales utilizados, únicamente la tensión de alimentación de ambos operacionales a $12 \ V$ y $-12 \ V$.
+
+En la primer etapa se suministra la tensión brindada por el transistor al borne negativo del operacional, mientras que para el positivo, se busca reducir la tensión de $10 \ V$ de la fuente de alimentación del transistor mediante un divisor resistivo. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/CircuitoEtapa1-M2.png}
+\caption{Primera etapa del circuito.}
+	\label{fig:cir1-M2}
+\end{figure}
+
+De la misma forma que con el primer modelo, se puede demostrar que
+\[
+	V_1 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( V_{CC} \cdot \frac{R_8}{R_7 + R_8} \right) \ - \ \frac{R_3}{R_1} V_{LM35}
+\]
+
+Para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne negativo, mientras que se conectó el positivo a tierra.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/CircuitoEtapa2-M2.png}
+	\caption{Segunda etapa del circuito.}
+	\label{fig:cir2-M2}
+\end{figure}
+
+siendo la transferencia de esta etapa
+\[
+	V_3 = - \frac{R_6}{R_5} \ V_1
+\]
+
+La etapa final, es decir, la protección, no cambia para este circuito. Tanto el diodo zener, como la resistencia seleccionada, son las mismas. De esta forma, la transferencia final queda de la forma
+\begin{equation}
+	V_{out} = - \frac{R_6}{R_5} \left[ \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( V_{CC} \cdot \frac{R_8}{R_7 + R_8} \right) \ - \ \frac{R_3}{R_1} V_{LM35} \right]
+	\label{equ:transfm2}
+\end{equation}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/CircuitoFinal-M2.png}
+	\caption{Modelo final del circuito.}
+	\label{fig:cirfin-M2}
+\end{figure}
+
+Nuevamente, se imponen condiciones para obtener los valores de las resistencias:
+\begin{equation}
+	V_2 = 0.35 \ V
+	\label{equ:condm2-1}
+\end{equation}
+
+\begin{equation}
+	\frac{R_3}{R_1} = 10
+	\label{equ:condm2-2}
+\end{equation}
+
+\begin{equation}
+	\frac{R_2 // R_4}{R_1 // R_3} = 1
+	\label{equ:condm3-3}
+\end{equation}
+
+\begin{equation}
+	\frac{R_3}{R_2} = 10
+	\label{equ:condm2-4}
+\end{equation}
+
+\begin{equation}
+	\frac{R_6}{R_5} = 5
+	\label{equ:condm2-5}
+\end{equation}
+
+Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Nuevamente, se consigue con estos valores llegar a la Ecuación (\ref{equ:sistema}). Cabe recordar que como la tercer etapa no ha sido alterada, el valor de la resistencia, en este caso llamada $R_9$, sigue siendo $15.8 \ k\Omega$.
+
+Se repite el análisis empleado para el primer circuito en LTSpice. En este caso, son las resistencias $R_5$ y $R_8$ las que resaltan.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/StepR5-M2.png}
+	\caption{Salida del circuito en función de la tensión del transistor variando $R_5$.}
+	\label{fig:r5-M2}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/StepR8-M2.png}
+	\caption{Salida del circuito en función de la tensión del transistor variando $R_8$.}
+	\label{fig:r8-M2}
+\end{figure}
+
+La pendiente de la recta que describe la salida varía de con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias presets.
 
 \subsection{Modo de uso}
 %alimentacion, lectura, calibracion
