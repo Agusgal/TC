@@ -5,6 +5,9 @@
 \usepackage{float}
 \usepackage{graphicx}
 
+\usepackage{caption}
+\usepackage{subcaption}
+
 \begin{document}
 
 \subsection{Diseño del circuito}
@@ -128,7 +131,6 @@ Una vez establecido tanto la forma del circuito como sus componentes, se procedi
 \end{figure}
 
 Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía de forma considerable. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por presets. De esta forma, se podrá seleccionar una valor más estable para obtener una salida más estable.
-Este modelo fue descartado ya que se propuso uno mejor. Esto será comparado más adelante.
 
 \subsubsection{Segundo modelo: restador e inversor}
 
@@ -220,6 +222,36 @@ Se repite el análisis empleado para el primer circuito en LTSpice. En este caso
 \end{figure}
 
 La pendiente de la recta que describe la salida varía de con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias presets.
+
+\subsubsection{Selección del modelo más óptimo}
+
+Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos t que ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{Ejercicio6/Imagenes/MC-1M.png}
+  \caption{Primer modelo propuesto.}
+  \label{fig:mcm1}
+\end{subfigure}
+\\
+\begin{subfigure}{\textwidth}
+  \centering
+  \includegraphics[width=.8\linewidth]{Ejercicio6/Imagenes/MC-2M.png}
+  \caption{Segundo modelo propuesto.}
+  \label{fig:mcm2}
+\end{subfigure}
+\caption{Comparación del los análisis de Montecarlo.}
+\label{fig:mccomp}
+\end{figure}
+
+Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos extremos del primer circuito diseñado es mucho mayor que la del segundo, es decir, el primero es mucho más sensible a pequeños cambios componentes existentes. Fue por ello que el primer modelo propuesto fue descartado, mientras que el segundo fue aceptado. 
+
+\begin{center}
+	\textbf{PODRÍA BUSCARA ALGUNA JUSTIFICACIÓN DE PORQUÉ ES ASÍ}
+	\textbf{ESTARÍA BUENO PONER MÁS RAZONES DE PORQUÉ SE ELIGIÓ EL 2 Y NO EL 1}
+\end{center}
 
 \subsection{Modo de uso}
 %alimentacion, lectura, calibracion
