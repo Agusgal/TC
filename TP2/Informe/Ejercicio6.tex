@@ -27,6 +27,17 @@ Como se requiere que el circuito diseñado posea una tensión de salida de $ 0 \
 Para lograr su funcionamiento, el fabricante especifica que este debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle al circuito $10 \ V$ para utilizarlo.
 Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ y mayor a $6 \ V$. Esto se ahondará con mayor profundidad en los de diseño del modelo.
 
+Por lo tanto se requiere que la tensión de salida del circuito responda de la siguiente forma frente a la tensión de salida del transistor.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/SalidaVsVLM35.png}
+\caption{Tensión de salida Vs. Tensión del LM35.}
+	\label{fig:vout}
+\end{figure}
+
+
+
 \subsubsection{Primer modelo: inversor y restador}
 
 En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener \textbf{PONER NOMBRE DEL ZENER}. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
