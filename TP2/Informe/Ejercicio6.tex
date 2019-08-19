@@ -5,6 +5,8 @@
 \usepackage{float}
 \usepackage{graphicx}
 
+\usepackage{xcolor}
+
 \usepackage{caption}
 \usepackage{subcaption}
 
@@ -12,22 +14,21 @@
 
 \subsection{Diseño del circuito}
 
-En el siguiente punto se propuso como objetivo realizar un sensor de temperatura, valiéndose del uso del transistor LM35. Este dispositivo se caracteriza por entregar a la salida una tensión proporcional a la temperatura dada la ecuación
+En el siguiente punto se propuso como objetivo realizar un sensor de temperatura, valiéndose del uso del transistor LM35. Este dispositivo se caracteriza por entregar a la salida una tensión proporcional a la temperatura de la forma
 \[
-	V_{LM35} = 35 \frac{mV}{^{\circ}C} \ T
+	V_{LM35} = 10 \frac{mV}{^{\circ}C} \ T
 \]
 
-Como se requiere que el circuito diseñado posea una tensión de salida de $ 0 \ V $ A $ 35 ^{\circ}C $ y $ 5 \ V $ A $ 45 ^{\circ}C $, se busca la ecuación de la recta que atraviese los puntos especificados. Es así que se obtiene que la tensión de salida viene dada por la siguiente ecuación:
+Como se requiere que el circuito diseñado posea una tensión de salida de $ 0 \ V $ a $ 35 ^{\circ}C $ y $ 5 \ V $ a $ 45 ^{\circ}C $, se busca la ecuación de la recta que atraviese los puntos especificados. Es así que se obtiene que la tensión de salida viene dada por la siguiente ecuación:
 
 \begin{equation}
-	V_{out} = 50V_{LM35} - 17.5 \ V =  1.75 \frac{V}{^{\circ}C} \ T - 17.5 \ V
+	V_{out} = 50V_{LM35} - 17.5 \ V =  0.5 \frac{V}{^{\circ}C} \ T - 17.5 \ V
 	\label{equ:sistema}
 \end{equation}
 
-Para lograr su funcionamiento, el fabricante especifica que este debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle al circuito $10 \ V$ para utilizarlo.
-Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ y mayor a $6 \ V$. Esto se ahondará con mayor profundidad en los de diseño del modelo.
+Para lograr su funcionamiento, el fabricante especifica que el transistor debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle a este dispositivo $10 \ V$ para utilizarlo. Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ y mayor a $6 \ V$. Esto se ahondará con mayor profundidad en los de diseño del modelo.
 
-Por lo tanto se requiere que la tensión de salida del circuito responda de la siguiente forma frente a la tensión de salida del transistor.
+Luego se requiere que la tensión de salida del circuito responda de la siguiente forma frente a la tensión de salida del transistor.
 
 \begin{figure}[H]
 	\centering
@@ -40,9 +41,9 @@ Por lo tanto se requiere que la tensión de salida del circuito responda de la s
 
 \subsubsection{Primer modelo: inversor y restador}
 
-En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener \textbf{PONER NOMBRE DEL ZENER}. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
+En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener \textcolor{red}{\textbf{PONER NOMBRE DEL ZENER}}. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
 
-La primer etapa dispuso de un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
+En la primer etapa se dispuso un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
 
 \begin{figure}[H]
 	\centering
@@ -65,7 +66,7 @@ En la segunda etapa, a diferencia de la primera, se utilizó un amplificador res
 	\label{fig:cir2-M1}
 \end{figure}
 
-Aplicando el teorema de superposición, se puede demostrar que
+Aplicando el teorema de superposición, se puede demostrar que la transferencia de este circuito es
 \[
 	V_2 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( -V_{CC} \right) \ - \ \frac{R_3}{R_1} V_1
 \]
@@ -116,12 +117,12 @@ A la hora de seleccionar los valores de las resistencias, se pide:
 	\label{equ:condm1-4}
 \end{equation}
 
-Cumpliendo con esto y eligiendo arbitrariamente $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. Y de esta forma se consigue llegar a la Ecuación (\ref{equ:sistema}).
+Cumpliendo con esto y eligiendo arbitrariamente $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. De esta forma se consigue llegar a la Ecuación (\ref{equ:sistema}).
 
-Por otro lado, para $R_7$ y debido a la función que cumple, para seleccionar un valor adecuado, se considera la máxima tensión que puede obtener a la salida el operacional, $13.5 \ V$ en el peor caso, según el fabricante, y se asume una corriente de $0.5 \ mA$ para evitar que se sobre exija al operacional:
+Por otro lado, para $R_7$ y debido a la función que cumple, para seleccionar un valor adecuado, se considera la máxima tensión que se puede obtener a la salida el operacional, $13.5 \ V$ en el peor caso, según el fabricante, y se asume una corriente de $0.5 \ mA$ para evitar que se sobre exija al operacional:
 
 \begin{equation}
-	R_7 = \frac{13.5 \ V \ - \ 5.6 \ V}{0.5 \ mA} = 15.8 \ k\Omega
+	R_7 = \frac{13.5 \ V \ - \ 5.6 \ V}{0.5 \ mA} = 15.8 \ k\Omega \approx 16 \ k\Omega
 	\label{equ:condm1-5}
 \end{equation}
 
@@ -141,13 +142,13 @@ Una vez establecido tanto la forma del circuito como sus componentes, se procedi
 	\label{fig:r4-M1}
 \end{figure}
 
-Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía de forma considerable. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por presets. De esta forma, se podrá seleccionar una valor más estable para obtener una salida más estable.
+Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por presets. De esta forma, se podrá seleccionar una valor más adecuado para obtener una salida más estable.
 
 \subsubsection{Segundo modelo: restador e inversor}
 
 Al igual que el circuito anterior, este está compuesto por las mismas tres etapas, con la única diferencia que se utiliza primero el amplificador restador. No se han variado ni el diodo zener utilizado, ni los modelos de operacionales utilizados, únicamente la tensión de alimentación de ambos operacionales a $12 \ V$ y $-12 \ V$.
 
-En la primer etapa se suministra la tensión brindada por el transistor al borne negativo del operacional, mientras que para el positivo, se busca reducir la tensión de $10 \ V$ de la fuente de alimentación del transistor mediante un divisor resistivo. 
+En la primer etapa de este nuevo circuito, se suministra la tensión brindada por el transistor al borne negativo del operacional, mientras que para el positivo, se busca reducir la tensión de $12 \ V$ de la fuente de alimentación mediante un divisor resistivo. Con esto último, se busca tener una tensión menor en el nodo $V_2$, para luego poder amplificarla con mayor grado de libertad.
 
 \begin{figure}[H]
 	\centering
@@ -156,12 +157,12 @@ En la primer etapa se suministra la tensión brindada por el transistor al borne
 	\label{fig:cir1-M2}
 \end{figure}
 
-De la misma forma que con el primer modelo, se puede demostrar que
+De la misma forma que con el primer modelo, se puede demostrar que la transferencia de esta etapa se encuentra dada por
 \[
 	V_1 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( V_{CC} \cdot \frac{R_8}{R_7 + R_8} \right) \ - \ \frac{R_3}{R_1} V_{LM35}
 \]
 
-Para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne negativo, mientras que se conectó el positivo a tierra.
+Luego, para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne negativo, mientras que se conectó el positivo a tierra.
 
 \begin{figure}[H]
 	\centering
@@ -170,7 +171,7 @@ Para la parte del amplificador inversor, simplemente se alimentó con la tensió
 	\label{fig:cir2-M2}
 \end{figure}
 
-siendo la transferencia de esta etapa
+siendo la transferencia de esta última
 \[
 	V_3 = - \frac{R_6}{R_5} \ V_1
 \]
@@ -214,7 +215,7 @@ Nuevamente, se imponen condiciones para obtener los valores de las resistencias:
 	\label{equ:condm2-5}
 \end{equation}
 
-Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Nuevamente, se consigue con estos valores llegar a la Ecuación (\ref{equ:sistema}). Cabe recordar que como la tercer etapa no ha sido alterada, el valor de la resistencia, en este caso llamada $R_9$, sigue siendo $15.8 \ k\Omega$.
+Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Nuevamente, se consigue con estos valores llegar a la Ecuación (\ref{equ:sistema}). Cabe recordar que como la tercer etapa no ha sido alterada, el valor de la resistencia, en este caso llamada $R_9$, sigue siendo $16 \ k\Omega$.
 
 Se repite el análisis empleado para el primer circuito en LTSpice. En este caso, son las resistencias $R_5$ y $R_8$ las que resaltan.
 
@@ -232,24 +233,23 @@ Se repite el análisis empleado para el primer circuito en LTSpice. En este caso
 	\label{fig:r8-M2}
 \end{figure}
 
-La pendiente de la recta que describe la salida varía de con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias presets.
+La pendiente de la recta que describe la salida varía con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias presets.
 
 \subsubsection{Selección del modelo más óptimo}
 
-Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos t que ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
+Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre estas primeras. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
 
 \begin{figure}[H]
 \centering
-\begin{subfigure}{\textwidth}
+\begin{subfigure}{.8\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{Ejercicio6/Imagenes/MC-1M.png}
+  \includegraphics[width=.85\linewidth]{Ejercicio6/Imagenes/MC-1M.png}
   \caption{Primer modelo propuesto.}
   \label{fig:mcm1}
 \end{subfigure}
-\\
 \begin{subfigure}{\textwidth}
   \centering
-  \includegraphics[width=.8\linewidth]{Ejercicio6/Imagenes/MC-2M.png}
+  \includegraphics[width=.7\linewidth]{Ejercicio6/Imagenes/MC-2M.png}
   \caption{Segundo modelo propuesto.}
   \label{fig:mcm2}
 \end{subfigure}
@@ -257,11 +257,11 @@ Se han presentado dos modelos válidos que cumplen con las especificaciones del 
 \label{fig:mccomp}
 \end{figure}
 
-Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos extremos del primer circuito diseñado es mucho mayor que la del segundo, es decir, el primero es mucho más sensible a pequeños cambios componentes existentes. Fue por ello que el primer modelo propuesto fue descartado, mientras que el segundo fue aceptado. 
+Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos extremos del primer circuito diseñado es mucho mayor que la del segundo, es decir, el primero es mucho más sensible a pequeños cambios de los componentes existentes. Fue por ello que el primer modelo propuesto fue descartado, mientras que el segundo fue aceptado. 
 
 \begin{center}
-	\textbf{PODRÍA BUSCARA ALGUNA JUSTIFICACIÓN DE PORQUÉ ES ASÍ}
-	\textbf{ESTARÍA BUENO PONER MÁS RAZONES DE PORQUÉ SE ELIGIÓ EL 2 Y NO EL 1}
+	\textcolor{red}{\textbf{PODRÍA BUSCAR ALGUNA JUSTIFICACIÓN DE PORQUÉ SON ASÍ LOS CIRCUITOS}}\\
+	\textcolor{red}{\textbf{ESTARÍA BUENO PONER MÁS RAZONES DE PORQUÉ SE ELIGIÓ EL 2 Y NO EL 1}}
 \end{center}
 
 \subsection{Modo de uso}
