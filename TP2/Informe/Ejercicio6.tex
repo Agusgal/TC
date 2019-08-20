@@ -38,10 +38,9 @@ Luego se requiere que la tensión de salida del circuito responda de la siguient
 \end{figure}
 
 
-
 \subsubsection{Primer modelo: inversor y restador}
 
-En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener \textcolor{red}{\textbf{PONER NOMBRE DEL ZENER}}. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
+En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener DZ5V6-05. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
 
 En la primer etapa se dispuso un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
 
@@ -142,7 +141,7 @@ Una vez establecido tanto la forma del circuito como sus componentes, se procedi
 	\label{fig:r4-M1}
 \end{figure}
 
-Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por presets. De esta forma, se podrá seleccionar una valor más adecuado para obtener una salida más estable.
+Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por trimmers. De esta forma, se podrá seleccionar una valor más adecuado para obtener una salida más estable.
 
 \subsubsection{Segundo modelo: restador e inversor}
 
@@ -233,11 +232,11 @@ Se repite el análisis empleado para el primer circuito en LTSpice. En este caso
 	\label{fig:r8-M2}
 \end{figure}
 
-La pendiente de la recta que describe la salida varía con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias presets.
+La pendiente de la recta que describe la salida varía con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias trimmers.
 
 \subsubsection{Selección del modelo más óptimo}
 
-Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre estas primeras. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
+Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por trimmers. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre estas primeras. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
 
 \begin{figure}[H]
 \centering
@@ -267,6 +266,25 @@ Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos 
 \subsection{Modo de uso}
 %alimentacion, lectura, calibracion
 
+Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se modeló este último en Altium. Como se mencionó previamente, se colococar dos trimmers para poder calibrar el circuito, los cuales se son representados por las resistencias $R_5$ y $R_8$ en la Figura (\ref{fig:schematic}). Se seleccionó $R_5 = 2 \ k\Omega$ y $R_8 = 5 \ k\Omega$ para poder garantizar que se pueda utilizar el valor necesario de impedancia adecuado (se recuerda que se requiere que $R_5$ sea próximo a $ 1 \ k\Omega$ y $R_8$ a $ 3 \ k\Omega$).
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/Schematic.png}
+	\caption{Esquemático del circuito en Altium.}
+	\label{fig:schematic}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/PCB.png}
+	\caption{PCB del circuito en Altium.}
+	\label{fig:PCB}
+\end{figure}
+
+Para facilitar la calibración se colocó una entrada adicional y un jumper entre esta y el transistor, de forma que se pueda alimentar directamente al circuito con una tensión dada y calibrarlo hasta obtener la tensión de salida adecuada. Por lo tanto, para calibrarlo, la bornera $J4$ debe estar conectada con el jumper $J6$, alimentando por dicha entrada al sistema. En este caso, la bornera $J2$ queda inhabilitada y el transistor sin alimentación.
+Al momento de utilizar el LM35, se debe conectar el jumper con $J2$.
+Finalmente las borneras $J5$ y $J1$ son utilizados para alimentar a los operacionales y como salida del circuito respectivamente.
 
 \subsection{Detalles técnicos}
 %Mediciones, corrientes/tensiones maximas, rango de temperatura, 
