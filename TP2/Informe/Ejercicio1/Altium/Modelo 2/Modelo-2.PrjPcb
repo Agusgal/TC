@@ -52,7 +52,7 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=EKSGYVLI
 
 [Document2]
 DocumentPath=Modelo-2.SchDoc
@@ -69,7 +69,11 @@ ClassGenCCAutoRoomEnabled=1
 ClassGenNCAutoScope=None
 DItemRevisionGUID=
 GenerateClassCluster=0
-DocumentUniqueId=
+DocumentUniqueId=IMGSESGC
+
+[GeneratedDocument1]
+DocumentPath=Project Outputs for Modelo-2\Board Information - Modelo-2.html
+DItemRevisionGUID=
 
 [Configuration1]
 Name=Sources
