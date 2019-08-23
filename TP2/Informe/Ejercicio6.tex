@@ -54,6 +54,7 @@ En la primer etapa se dispuso un amplificador inversor, tomando como tensión de
 De esta forma, y siendo $V_1$ la tensión de salida de esta etapa, se logra
 \[
 	V_1 = -\frac{R_6}{R_5} \ V_{LM35}
+	\label{equ:m1p1}
 \]
 
 En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne negativo del operacional la tensión $V_1$ y al  una positivo tensión de $- 10 \ V$, reutilizando la alimentación del operacional.
@@ -66,9 +67,10 @@ En la segunda etapa, a diferencia de la primera, se utilizó un amplificador res
 \end{figure}
 
 Aplicando el teorema de superposición, se puede demostrar que la transferencia de este circuito es
-\[
+\begin{equation}
 	V_2 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( -V_{CC} \right) \ - \ \frac{R_3}{R_1} V_1
-\]
+	\label{equ:m1p2}
+\end{equation}
 
 Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0,7 \ V$ y $5.6 \ V$. El objetivo de esta sección es simplemente limitar la tensión de salida, evitando que se encuentre por debajo de $-1 \ V$ y por encima de $6 \ V$.
 
@@ -88,7 +90,7 @@ Es así como se observa al circuito final en la Figura (\ref{fig:cirfin-M1}).
 	\label{fig:cirfin-M1}
 \end{figure}
 
-Se calcula la transferencia utilizando las ecuaciones parciales mostradas anteriormente. Es así que se llega a
+Se calcula la transferencia utilizando (\ref{equ:m1p1}) y (\ref{equ:m1p2}). Es así que se llega a
 \begin{equation}
 	V_{out} = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( -V_{CC} \right) \ + \
 	\frac{R_3}{R_1} \frac{R_6}{R_5} \ V_{LM35}
@@ -96,33 +98,29 @@ Se calcula la transferencia utilizando las ecuaciones parciales mostradas anteri
 \end{equation}
 
 A la hora de seleccionar los valores de las resistencias, se pide:
-\begin{equation}
+\[
 	\frac{R_6}{R_5} = 5
-	\label{equ:condm1-1}
-\end{equation}
+\]
 
-\begin{equation}
+\[
 	\frac{R_3}{R_1} = 10
-	\label{equ:condm1-2}
-\end{equation}
+\]
 
-\begin{equation}
+\[
 	\frac{R_3}{R_2} = 1.75
-	\label{equ:condm1-3}
-\end{equation}
+\]
 
-\begin{equation}
+\[
 	\frac{R_2 // R_4}{R_1 // R_3} = 1
-	\label{equ:condm1-4}
-\end{equation}
+\]
 
-Cumpliendo con esto y eligiendo arbitrariamente $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. De esta forma se consigue llegar a la Ecuación (\ref{equ:sistema}).
+Cumpliendo con esto y eligiendo arbitrariamente $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. De esta forma se consigue llegar a (\ref{equ:sistema}).
 
 Por otro lado, para $R_7$ y debido a la función que cumple, para seleccionar un valor adecuado, se considera la máxima tensión que se puede obtener a la salida el operacional, $13.5 \ V$ en el peor caso, según el fabricante, y se asume una corriente de $0.5 \ mA$ para evitar que se sobre exija al operacional:
 
 \begin{equation}
 	R_7 = \frac{13.5 \ V \ - \ 5.6 \ V}{0.5 \ mA} = 15.8 \ k\Omega \approx 16 \ k\Omega
-	\label{equ:condm1-5}
+	\label{equ:rzener}
 \end{equation}
 
 Una vez establecido tanto la forma del circuito como sus componentes, se procedió a analizar simulaciones del mismo mediante el uso del programa LTSpice. En este, se valió del comando ``.step'' para analizar cada resistencia con una tolerancia del 5\%. Es por ello que se realiza un detenimiento en las resistencias $R_1$ y $R_4$.
@@ -141,7 +139,7 @@ Una vez establecido tanto la forma del circuito como sus componentes, se procedi
 	\label{fig:r4-M1}
 \end{figure}
 
-Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por trimmers. De esta forma, se podrá seleccionar una valor más adecuado para obtener una salida más estable.
+Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la salida en función de la tensión del LM35 varía. De igual forma ocurre con $R_4$ y la ordenada al origen de dicha recta. Es por eso que se considera que una solución posible para esto es reemplazando tanto $R_1$ como $R_4$ por presets. De esta forma, se podrá seleccionar una valor más adecuado para obtener una salida más estable.
 
 \subsubsection{Segundo modelo: restador e inversor}
 
@@ -157,9 +155,10 @@ En la primer etapa de este nuevo circuito, se suministra la tensión brindada po
 \end{figure}
 
 De la misma forma que con el primer modelo, se puede demostrar que la transferencia de esta etapa se encuentra dada por
-\[
+\begin{equation}
 	V_1 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( V_{CC} \cdot \frac{R_8}{R_7 + R_8} \right) \ - \ \frac{R_3}{R_1} V_{LM35}
-\]
+	\label{equ:m2p1}
+\end{equation}
 
 Luego, para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne negativo, mientras que se conectó el positivo a tierra.
 
@@ -171,11 +170,12 @@ Luego, para la parte del amplificador inversor, simplemente se alimentó con la 
 \end{figure}
 
 siendo la transferencia de esta última
-\[
+\begin{equation}
 	V_3 = - \frac{R_6}{R_5} \ V_1
-\]
+	\label{equ:m2p2}
+\end{equation}
 
-La etapa final, es decir, la protección, no cambia para este circuito. Tanto el diodo zener, como la resistencia seleccionada, son las mismas. De esta forma, la transferencia final queda de la forma
+La etapa final, es decir, la protección, no cambia para este circuito. Tanto el diodo zener, como la resistencia seleccionada, son las mismas. De esta manera, con el uso de (\ref{equ:m2p1}) y (\ref{equ:m2p2}), la transferencia final queda de la forma
 \begin{equation}
 	V_{out} = - \frac{R_6}{R_5} \left[ \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( V_{CC} \cdot \frac{R_8}{R_7 + R_8} \right) \ - \ \frac{R_3}{R_1} V_{LM35} \right]
 	\label{equ:transfm2}
@@ -183,38 +183,33 @@ La etapa final, es decir, la protección, no cambia para este circuito. Tanto el
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/CircuitoFinal-M2.png}
+	\includegraphics[width=1\textwidth]{Ejercicio6/Imagenes/CircuitoFinal-M2.png}
 	\caption{Modelo final del circuito.}
 	\label{fig:cirfin-M2}
 \end{figure}
 
 Nuevamente, se imponen condiciones para obtener los valores de las resistencias:
-\begin{equation}
+\[
 	V_2 = 0.35 \ V
-	\label{equ:condm2-1}
-\end{equation}
+\]
 
-\begin{equation}
+\[
 	\frac{R_3}{R_1} = 10
-	\label{equ:condm2-2}
-\end{equation}
+\]
 
-\begin{equation}
+\[
 	\frac{R_2 // R_4}{R_1 // R_3} = 1
-	\label{equ:condm3-3}
-\end{equation}
+\]
 
-\begin{equation}
+\[
 	\frac{R_3}{R_2} = 10
-	\label{equ:condm2-4}
-\end{equation}
+\]
 
-\begin{equation}
+\[
 	\frac{R_6}{R_5} = 5
-	\label{equ:condm2-5}
-\end{equation}
+\]
 
-Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Nuevamente, se consigue con estos valores llegar a la Ecuación (\ref{equ:sistema}). Cabe recordar que como la tercer etapa no ha sido alterada, el valor de la resistencia, en este caso llamada $R_9$, sigue siendo $16 \ k\Omega$.
+Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Nuevamente, se consigue con estos valores llegar a (\ref{equ:sistema}). Se destaca que, como la tercer etapa no ha sido alterada, sigue valiendo (\ref{equ:rzener}), por ende el valor de la resistencia, en este caso llamada $R_9$, es de $16 \ k\Omega$.
 
 Se repite el análisis empleado para el primer circuito en LTSpice. En este caso, son las resistencias $R_5$ y $R_8$ las que resaltan.
 
@@ -232,11 +227,11 @@ Se repite el análisis empleado para el primer circuito en LTSpice. En este caso
 	\label{fig:r8-M2}
 \end{figure}
 
-La pendiente de la recta que describe la salida varía con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias trimmers.
+La pendiente de la recta que describe la salida varía con los cambios de $R_5$. Por otro lado, ordenada al origen de esta cambia con $R_4$. Nuevamente se propone como solución para esto reemplazar ambas resistencias presets.
 
 \subsubsection{Selección del modelo más óptimo}
 
-Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por trimmers. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre estas primeras. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
+Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre estas primeras. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
 
 \begin{figure}[H]
 \centering
@@ -259,14 +254,14 @@ Se han presentado dos modelos válidos que cumplen con las especificaciones del 
 Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos extremos del primer circuito diseñado es mucho mayor que la del segundo, es decir, el primero es mucho más sensible a pequeños cambios de los componentes existentes. Fue por ello que el primer modelo propuesto fue descartado, mientras que el segundo fue aceptado. 
 
 \begin{center}
-	\textcolor{red}{\textbf{PODRÍA BUSCAR ALGUNA JUSTIFICACIÓN DE PORQUÉ SON ASÍ LOS CIRCUITOS}}\\
+	\textcolor{red}{\textbf{PODRÍA BUSCAR ALGUNA JUSTIFICACIÓN DE PORQUÉ DAN ASÍ LOS CIRCUITOS}}\\
 	\textcolor{red}{\textbf{ESTARÍA BUENO PONER MÁS RAZONES DE PORQUÉ SE ELIGIÓ EL 2 Y NO EL 1}}
 \end{center}
 
 \subsection{Modo de uso}
 %alimentacion, lectura, calibracion
 
-Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se modeló este último en Altium. Como se mencionó previamente, se colococar dos trimmers para poder calibrar el circuito, los cuales se son representados por las resistencias $R_5$ y $R_8$ en la Figura (\ref{fig:schematic}). Se seleccionó $R_5 = 2 \ k\Omega$ y $R_8 = 5 \ k\Omega$ para poder garantizar que se pueda utilizar el valor necesario de impedancia adecuado (se recuerda que se requiere que $R_5$ sea próximo a $ 1 \ k\Omega$ y $R_8$ a $ 3 \ k\Omega$).
+Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se modeló este último en Altium. Como se mencionó previamente, se colocaron dos presets para poder calibrar el circuito, los cuales son representados por las resistencias $R_5$ y $R_8$ en la Figura (\ref{fig:schematic}). Se seleccionó $R_5 = 2 \ k\Omega$ y $R_8 = 5 \ k\Omega$, ya que ambos poseen la mínima resistencia entre los bornes de los extremos tal que la impedancia adecuada se encuentre dentro de este rango (se recuerda que $R_5$ debe ser próximo a $ 1 \ k\Omega$ y $R_8$ a $ 3 \ k\Omega$).
 
 \begin{figure}[H]
 	\centering
@@ -282,8 +277,13 @@ Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se m
 	\label{fig:PCB}
 \end{figure}
 
-Para facilitar la calibración se colocó una entrada adicional y un jumper entre esta y el transistor, de forma que se pueda alimentar directamente al circuito con una tensión dada y calibrarlo hasta obtener la tensión de salida adecuada. Por lo tanto, para calibrarlo, la bornera $J4$ debe estar conectada con el jumper $J6$, alimentando por dicha entrada al sistema. En este caso, la bornera $J2$ queda inhabilitada y el transistor sin alimentación.
+Para poder calibrar el circuito se colocó una entrada adicional y un jumper entre esta y el transistor, de forma que se pueda alimentar directamente al circuito con una tensión dada y calibrarlo hasta obtener la tensión de salida adecuada. Por lo tanto, para calibrarlo, la bornera $J4$ debe estar conectada con el jumper $J6$, alimentando por dicha entrada al sistema. En este caso, la bornera $J2$ queda inhabilitada y el transistor sin alimentación.
 Al momento de utilizar el LM35, se debe conectar el jumper con $J2$.
+
+Ademas, se colocaron 2 pines en la placa para facilitar la calibración. Se sabe, \textcolor{red}{\textbf{METER ALGÚN CALCULO Y/O SIMULACIÓN}}, la tensión en el pin $TP5$ debe ser de $0 \ V$, mientras que en $TP8$ debe ser de $350 \ mV$. Para poder ajustarlas adecuadamente, se utilizan los presets mencionados anteriormente. El objetivo de estos pines es facilitar la medición de dicha tensión al momento de ajustar las resistencias variables.
+
+Se detalla que, con el mismo objetivo que se colocó un zócalo para el amplificador operacional, se tomó la decisión de soldar tres pines hembra en lugar del transistor LM35, para poder reemplazarlo en caso de fallas.
+
 Finalmente las borneras $J5$ y $J1$ son utilizados para alimentar a los operacionales y como salida del circuito respectivamente.
 
 \subsection{Detalles técnicos}
