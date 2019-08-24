@@ -8,7 +8,7 @@ Las hipótesis realizadas en los siguientes análisis del circuito base se compr
 
 \subsubsection{Etapa de Alimentación}
 
-La alimentación del circuito es una fuente no partida de $9V$. Se observa que el capacitor electrolítico $C_5$ se encuentra justo a la salida de la fuente de alimentación. Se presume que la utilidad de este es para filtrar cualquier ruido que haya montado sobre la continua, ya que por su conexión a tierra, cualquier tensión no contante encontrará un camino de baja impedancia hacia masa.
+La alimentación del circuito es una fuente no partida de $9V$. Se observa que el capacitor electrolítico $C_5$ se encuentra justo a la salida de la fuente de alimentación. Este capacitor no solo filtrará cualquier ruido que haya montado sobre la continua u ocasional \textit{ripple} que pueda hallarse, ya que por su conexión a tierra, cualquier tensión no contante encontrará un camino de baja impedancia hacia masa, sino también que funcionará como capacitor de desacople para el amplificador operacional, siempre y cuando este esté posicionado físicamente lo más cerca posible del integrado, para eliminar inductancias parásitas que no puedan permitir un pico de consumo de corriente.
 
 \begin{figure}[H]
 	\centering
@@ -17,8 +17,8 @@ La alimentación del circuito es una fuente no partida de $9V$. Se observa que e
 	\label{fig:circuito_base_alimentacion}
 \end{figure}
 
-Luego pueden verse dos resistencias $R_1$ y $R_2$, donde $R_1$ está conectada a la señal de entrada y $R_2$ está conectada a la resistencia anterior y a tierra. Este par puede considerarse de manera aproximada como un divisor resistivo, ya que en el punto medio se ofrece gran impedancia por parte tanto del op-amp (despreciando la corriente de entrada) como por el capacitor $C_1$, ya que la tensión de alimentación es constante.
-Este divisor resistivo lo que está haciendo es montando a la señal de entrada sobre la tensión en el punto medio. Es en este punto donde se soluciona el problema de tener una sola fuente no partida ya que, si se cumple que $R_1=R_2$, la señal de entrada quedará levantada $4.5V$, por lo que se podría alimentar al op-amp solo de manera positiva, llevando a tierra la alimentación negativa.\\
+Luego pueden verse dos resistencias $R_1$ y $R_2$, donde $R_1$ está conectada a la señal de entrada y $R_2$ está conectada a la resistencia anterior y a tierra. Este par puede considerarse de manera aproximada como un divisor resistivo, ya que en el punto medio se ofrece gran impedancia por parte tanto del op-amp como por el capacitor $C_1$ (por ser tensión continua) lo que significa que la corriente que fluya por otro medio que no sea la resistencia $R_2$ será despreciable.
+Este divisor resistivo monta a la señal de entrada sobre la tensión en el punto medio. Es en este punto donde se soluciona el problema de tener una sola fuente no partida ya que, si se cumple que $R_1=R_2$, la señal de entrada quedará levantada $4.5V$, por lo que se podría alimentar al op-amp solo de manera positiva, llevando a tierra la alimentación negativa.\\
 
 Por último, se llevan los $9V$ de la fuente de alimentación a la entrada de alimentación positiva del op-amp.
 
@@ -32,7 +32,9 @@ Por último, se llevan los $9V$ de la fuente de alimentación a la entrada de al
 	\label{fig:circuito_base_preamplificacion}
 \end{figure}
 
-Justo luego de la entrada se encuentra la resistencia $R_8$. Investigando sobre posibles aplicaciones de este componente en el circuito, se llegó a la conclusión de que este resistor es utilizado para evitar un ruido de "pop" al conectar la pedalera. \textbf{Preguntar a joaco} \\
+Justo luego de la entrada se encuentra la resistencia $R_8$. En el modo de operación normal del circuito con la guitarra conectada, se polariza el capacitor $C_1$ debido a la continua provista por la alimentación. La finalidad de esta resistencia es de mantener polarizado al capacitor cuando se desconecta el efecto del circuito, es decir, cuando se utiliza la llave de bypass. Si este capacitor se descarga por pérdidas parásitas antes de volver a conectar el efecto, se da a lugar el famoso ruido de 'pop' que puede escucharse.
+
+Para explicar este efecto con mayor detalle, imaginar que no se tiene la resistencia $R_8$ y está conectada la guitarra al circuito. Cuando la 'placa' de la derecha del capacitor $C_1$ está conectada a una tensión de $4,5V$, la 'placa' de la izquierda permanecerá polarizada con $0V$ ya que esta está conectada al pickup de la guitarra que a su vez está conectado a tierra. Al momento de utilizar la llave de bypass, como el capacitor no es ideal, este tendrá pequeñas pérdidas que harán que la tensión con la que está cargado el capacitor disminuya, ya que la 'placa' izquierda no estará conectada a nada. Cuando se decida volver a utilizar la llave de bypass, es decir, utilizar el efecto del circuito, se volverá a cargar al capacitor con la tensión de bias proporcionada por el divisor resistivo, necesitando un rápido flujo de carga, es decir, corriente. Esta descarga de corriente será enviada al parlante, el cual producirá un sonido distintivo. Si se coloca la resistencia $R_8$, la 'placa' izquierda del capacitor permanece siempre a $0V$ y por ende no tomará a lugar el efecto dicho.
 
 El capacitor $C_1$, como ya dicho antes, ofrece gran impedancia a la tensión continua de la alimentación para proteger a la entrada. De otra manera, la señal continua ingresaría por la entrada.
 Lo que se obtiene posterior al capacitor será la señal de entrada levantada tantos voltios como proporcionen el punto medio del divisor resistivo.\\
@@ -41,7 +43,7 @@ Se contempla además que el circuito base nos permite tener una opción de reali
 
 \subsubsection{Etapa de Amplificación}
 
-El operacional se encuentra realimentado negativamente con una configuración no inversora. No es un problema que no este alimentado negativamente, ya que la señal de entrada estará montada sobre una continua.
+El operacional se encuentra realimentado negativamente con una configuración no inversora. El hecho de que la alimentación positiva sea de $9V$ y la negativa de $0V$ significa que la señal de salida del operacional podrá tener un valor mínimo de a lo sumo $0V$ y un valor máximo de a lo sumo $9V$ (dependiendo del operacional utilizado). Como la señal de entrada estará montada sobre una continua, esto no será un problema.
 
 \begin{figure}[H]
 	\centering
@@ -50,7 +52,8 @@ El operacional se encuentra realimentado negativamente con una configuración no
 	\label{fig:circuito_base_amplificacion}
 \end{figure}
 
-Analizando el lazo del op-amp, se puede observar que la realimentación dependerá de la frecuencia. Esto puede observarse ya que para bajas frecuencias el capacitor actúa con gran impedancia, por lo que el operacional amplifica menos. Para las frecuencias altas el operacional amplificará cada vez más la señal hasta llegar al polo dominante. Sin embargo, lo mas importante del posicionamiento de este capacitor en el lazo de realimentación es que impide que el operacional amplifique la continua sobre la cual está montada la señal, ya que en este caso el capacitor se comporta como un circuito abierto. Esto hace que el operacional funcione como un seguidor de tensión, trabajando para fijar la continua de la salida en el mismo valor que la de la referencia. Se observa como es aquí, en el lazo de realimentación, donde se podría controlar la amplificacion de las distintas frecuencias por separado.
+Analizando el lazo del op-amp, se puede observar que la ganancia dependerá de la frecuencia.
+Esto puede contemplarse ya que para bajas frecuencias el capacitor actúa con gran impedancia, por lo que el operacional amplifica menos. Para las frecuencias altas el operacional amplificará idealmente cada vez más la señal. Sin embargo, mas importante es que este capacitor impide que el operacional amplifique la continua sobre la cual está montada la señal, ya que en este caso el capacitor se comporta como un circuito abierto. Esto hace que el operacional funcione como un seguidor de tensión, trabajando para fijar la continua de la salida en el mismo valor que la de la referencia. Se observa como es aquí, en el lazo de realimentación, donde se podría controlar la amplificacion de las distintas frecuencias por separado, si se desease por ejemplo utilizar un potenciómetro más adelante para tener un control de tono.
 
 \subsubsection{Etapa de Ecualización}
 
@@ -63,67 +66,123 @@ A la salida del operacional se encuentra el capacitor $C_3$. Este capacitor se u
 	\label{fig:circuito_base_ecualizacion}
 \end{figure}
 
-Luego, se encuentra en el circuito una resistencia en serie con un par de diodos en paralelo con polaridad invertida. Estos diodos fijarían la tensión de la señal en $V_{d_{on}}$ tanto para el semi-ciclo positivo como para el negativo, deformando la señal generando un efecto de "clipping". La resistencia $R_5$ limita la corriente de los diodos. Se presume que esto se apreciaría como una gran distorsión a la hora de conectar una guitarra y escuchar la salida.\\
+Luego, se encuentra en el circuito una resistencia en serie con un par de diodos en paralelo con polaridad invertida. Estos diodos fijarían la tensión de la señal en $V_{d_{on}}$ tanto para el semi-ciclo positivo como para el negativo, deformando la señal generando un efecto de \textit{clipping}. Esto se aprecia como una gran distorsión a la hora de conectar una guitarra y escuchar la salida. La resistencia $R_5$ limitará la corriente que atraviesa los diodos.  \\
 
-Seguido de los diodos se puede encontrar un pequeño circuito R-C cuya finalidad podría ser la de darle un último cambio a la señal. Este circuito estaría posicionando un polo en la respuesta en frecuencia, atenuando las frecuencias altas. Se deberá comprobar mediante simulaciones y protobordeado el posible uso de este último tramo.
+Seguido de los diodos se puede encontrar un pequeño circuito R-C. Este circuito estaría posicionando un polo en la respuesta en frecuencia, atenuando las frecuencias altas. 
 
 Finalmente antes de la salida se encuentra un potenciómetro, el cual se presume que se utiliza como control de volumen de salida.
 
+\subsubsection{Corriente de Bias y Tensión de Offset}
+La corriente de bias como la tensión de offset pueden ocasionar que la salida del operacional sea distinta de cero aportando una componente de continua aunque la entrada sea nula. En esta aplicación, tanto la corriente de bias como la tensión de offset no son un problema, ya que:
+\begin{itemize}
+\item Se le proporciona a la entrada gracias a la fuente de alimentación la suficiente corriente al operacional para la correcta polarización de todos los elementos que puedan hallarse dentro de este, sin preocupación alguna por la muy pequeña corriente que pueden suministrar los pickups de una guitarra.
+\item Gracias a los capacitores de acople situados en el circuito la componente de continua de la señal de salida del operacional es removida completamente.
+\item Un muy pequeño desbalanceo en la tensión de bias de la señal de entrada al operacional produciría en el peor de los casos una saturación asimétrica que contribuiría a la distorsión alineal total del circuito.
+\end{itemize} 
+
 \subsection{Análisis Cuantitativo del Circuito Base}
 
-Tanto el análisis cuantitativo como el subsiguiente diseño de un nuevo circuito propuesto se harán a partir de lo estudiado en tanto diversas fuentes de internet, como en el libro \textbf{PREGUNTAR NOMBRE DEL LIBRO DE AGUSTIN}.
+Tanto el análisis cuantitativo como el subsiguiente diseño de un nuevo circuito propuesto se harán a partir de lo estudiado en tanto diversas fuentes de internet, como en el libro 'Diseño de Amplificadores Operacionales y Circuitos Integrados Analógicos' de Sergio Franco.
 
 Además, se decidió, para presentar lo realizado de la forma más clara, primero realizar un análisis teórico-analítico del circuito base para luego presentar sólamente los cambios propuestos.
 
 \subsubsection{Componentes}
 
-\textbf{$R_8$:} Se quiere que la impedancia de entrada al circuito sea mucho más grande que la impedancia de salida de una guitarra eléctrica con pick-ups normales, la cual es de aproximadamente $10 \ k\Omega$. Si la impedancia de entrada al circuito fuese del orden de la impedancia de salida de la guitarra, se cargarían los pick-ups y habría un desplazamiento de las frecuencias de resonancia y pérdida de agudos. Por esta razón, se decidió utilizar un valor de $2 \ M\Omega$ para este resistor. Luego en la sección de impedancia de entrada se repasara su efecto. \\
+\textbf{$R_8$:}
+Esta resistencia debe tener un valor alto para no tener perdida substancial de corriente provista por las bobinas de los pickups y no limitar la impedancia de entrada del circuito vista por la guitarra. Además, se puede calcular el tiempo característico del RC (entre $R_8$ y $C_1$) que dirá cuánto tardará el capacitor en descargarse. Sin embargo, esto último no se tomará en cuenta y se utilizará una resistencia de $1M\Omega$, ya que por más que el tiempo característico sea muy lento, de un par de segundos inclusive, para esta aplicación se supone que el usuario no estará conectando y desconectando el efecto cada menos de 5 segundos. \\
 
 \textbf{$R_1$, $R_2$:} Se quiere montar a la señal de entrada sobre una continua de la mitad del valor que la de la alimentación, por esto, se decidió que $R_1=R_2$.
 
-Se utilizaron valores relativamente grandes para las resistencias del divisor de tensión por dos razones:
+Se consideraron los siguientes puntos a la hora de elegir un valor para las resistencias:
 \begin{itemize}
-\item Que la corriente de stand-by no sea muy alta.
-\item Contribuir a la impedancia de entrada total del circuito.
+\item Que la corriente en stand-by no sea muy alta.
+\item No limitar tanto la impedancia de entrada.
 \end{itemize}
-El valor utilizado es de $R_1=R_2=1 \ M\Omega$.\\
+Sin embargo, se debe tener en cuenta también, que al utilizar una gran impedancia se vuelve más significante el ruido. \textbf{REVISAR}
+El valor utilizado es de $R_1=R_2=100 \ k\Omega$.\\
 
-\textbf{$C_1$:} Como este capacitor filtra la continua provista por la alimentación, se decidió utilizar un valor de $15 \ nF$ ya que se quiso que el efecto del filtro pasa-altos que se forma con la resistencia $R_2$ se minimizara dentro de las frecuencias audibles ($20Hz-20kHz$).
-\[ C_1=\frac{1}{2\pi R_2 f_c} = \frac{1}{2\pi 510k\Omega 20Hz} = 15.61nF \approx 15nF\]
+\textbf{$C_1$:} Como este capacitor filtra la continua provista por la alimentación, se decidió utilizar un valor de $330 \ nF$ ya que se quiso que el efecto del filtro pasa-altos que se forma con las resistencias $R_1$ y $R_2$ se minimizara dentro de las frecuencias audibles ($20Hz-20kHz$).
+Si sólamente se tiene en cuenta la componente alterna del circuito, la resistencia $R_1$ pasa a estar conectada a tierra, por lo que se forma el paralelo entre $R_1$ y $R_2$. Finalmente utilizando la técnica del divisor resistivo se tiene que
 
-\textbf{$C_5$:} Este capacitor filtrará el ruido proveniente de la alimentación, por lo que se eligió un valor de $33\mu F$ para presentar baja impedancia al ruido de línea de $50Hz$.
-\[C_5 = \frac{1}{2\pi f X_c} = \frac{1}{2\pi 50Hz 100\Omega} = 31,8\mu F \approx 33\mu F\]
+\begin{equation}
+H(s) = \frac{(R_1//R_2)}{(R_1//R_2) + \frac{1}{SC_1}}
+\end{equation}
 
-\textbf{$R_4, R_3$:} Se eligieron valores de $R_4=50R_3=1k$ para lograr una ganancia máxima en la etapa de amplificación de aproximadamente $34,15 \ dB$.
-\[20log_{10}(1+\frac{R_4}{R_3}) = 34,15 \ dB\]
-Generalmente, se tomaría un especial recaudo al seleccionar la ganancia que se quiere producir utilizando un op-amp, contrastando esta con la ganancia a lazo abierto provista por el fabricante, pero como en este caso se desea llevar al operacional fuera de sus límites de funcionamiento correcto para provocar efectos de distorsión, no se contemplaran dichas condiciones.\\
+\begin{equation}
+H(s) = \frac{SC_1(R_1//R_2)}{SC_1(R_1//R_2) + 1}
+\end{equation}
 
-\textbf{$C_2$:} Este capacitor además de no dejar amplificar la continua maneja cuánto son amplificados los graves. Tras investigar el posible uso de este capacitor, se llegó a la conclusión de que un posible uso es de proteger al operacional de la inestabilidad, atenuando los bajos que pueden sobrecargar al operacional. Se calculó la capacidad analizando el filtro que se forma con $R_3$. Como la capacidad calculada es de $320nF$ 
+donde puede calcularse la capacitancia necesaria como
+\begin{equation}
+C_1=\frac{1}{2\pi (R_1//R_2) f_c} = \frac{1}{2\pi 50k\Omega 10Hz} = 318,3nF \approx 330nF
+\end{equation}
 
-\[ C_2 = \frac{1}{2\pi f_c R_3} = \frac{1}{2\pi 500Hz 1k\Omega} = 318,3nF \approx 320nF \]
+\textbf{$C_5$:} Este capacitor filtrará el ruido proveniente de la alimentación, minimizará el \textit{ripple}, y funcionará como capacitor de desacople para el operacional, por lo que se eligió un valor de $100\mu F$, relativamente alto para lograr tener con seguridad una continua fiable, mientras que también pueda filtrar ruido a lo largo de una gran banda de frecuencias.
 
-\textbf{$C_3$:} Este capacitor está solamente para filtrar la continua de la salida del operacional pero como forma un pasa-altos con la impedancia equivalente de salida del circuito que aproximadamente es de $13,6$, y no se quiere que afecte este capacitor al circuito, su valor será de $1\mu F$ lo que dejaría la frecuencia de corte aproximadamente debajo de los $20Hz$ misma cuenta que para $C_1$.\\
+\textbf{$R_4, R_3, C_2$:} Como ya dicho en la sección de análisis cualitativo, la ganancia de la etapa de amplificación dependerá de la frecuencia, y no solo esto, sino también de la ganancia a lazo abierto del operacional.
 
-\textbf{$R_5, R_6$:} $R_5$ está para limitar la corriente de los diodos, se eligió un valor de $6k8\Omega$. $R_6$ formará un filtro pasabajos con $C_4$, eligió nuevamente un valor de $6k8\Omega$.\\
+\begin{equation}
+	V_{o_{opamp}} = \frac{A_0 V_{i_{opamp}}}{1+A_0 \frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}}}
+\end{equation}
 
-\textbf{$C_4$:} Como este capacitor forma un pasa bajos con la resistencia $R_6$, se eligió un valor inicial de $1,5nF$ de tal manera que su frecuencia de corte se encuentre en $f_c = 15kHz$.
-\[ C_4 = \frac{1}{2\pi 15kHz 6k8} = 1,56nF \approx 1,5nF\]
+Sin embargo, si se cumple en la banda audible de frecuencias que
 
-\textbf{$R_7$:} Este resistor será un potenciómetro logarítmico de $20k\Omega$. Logarítmico ya que de esta manera se acopla mejor a la escucha humana.\\
+\begin{equation}
+\left| A_o\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right| \gg 1
+\label{cond_1/b}
+\end{equation}
 
-\textbf{$LM308$:} Se eligió el amplificador operacional $LM308$ ya que este posee excepcionalmente baja slew rate, lo que contribuye al efecto alineal de distorsión de la señal. Se utilizó un capacitor de compensación de $300pF$ como uno de los recomendados por los fabricantes. 
+se tiene que
+
+\begin{equation}
+V_{o_{opamp}} \approx V_{i_{opamp}}\left( 1 + \frac{R_4}{R_3 + \frac{1}{SC_2}}  \right)
+\end{equation}
+
+\begin{equation}
+	V_{o_{opamp}} \approx V_{i_{opamp}}\left( 1 + \frac{SC_2R_4}{SC_2R_3 + 1}  \right)
+\end{equation}
+
+Se eligieron valores de $R_4=51R_3=1k$ para lograr una ganancia máxima en la etapa de amplificación de $34, 32 \ dB$.
+\[20log_{10}(1+\frac{R_4}{R_3}) = 34,32 \ dB\]
+El capacitor además de no dejar amplificar la continua adjudica cuánto son amplificados los graves. Se utilizó un valor de $330nF$ calculándose la capacidad analizando el filtro que se forma con $R_3$ teniendo un grado de libertad a la hora de darle forma al sonido que se quiere producir. \textbf{Preguntar sobre estabilidad, amplificacion de bajos}
+
+\[ C_2 = \frac{1}{2\pi f_c R_3} = \frac{1}{2\pi 500Hz 1k\Omega} = 318,3nF \approx 330nF \]
+
+Se puede ver que se sigue cumpliendo la condición (\ref{cond_1/b}) ya que
+
+$$ \left| A_o\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right|_{f=20Hz} \approx 0,421A_0 $$
+$$ \left| A_o\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right|_{f=20kHz} \approx 0,019A_0 $$
+
+y la ganancia a lazo abierto suele tener un valor en el orden de $10^5 \ a \ 10^6 $.\\
+
+\textbf{$C_3$:} Este capacitor está solamente para filtrar la continua de la salida del operacional pero como forma un pasa-altos con la impedancia equivalente de salida del circuito que aproximadamente es de $8k\Omega$ \textbf{REVISAR}, y no se quiere que afecte este capacitor al circuito, su valor será de $1\mu F$ lo que dejaría la frecuencia de corte aproximadamente en $20Hz$, realizando la misma cuenta que para $C_1$.\\
+
+\textbf{$R_5, R_6$:} $R_5$ se sitúa para limitar la corriente de los diodos. El fabricante indica que la corriente máxima de continua que soporta el diodo 1N4148 es de $300mA$. Como después del capacitor $C_3$ la tensión máxima que puede haber en el circuito es de $4,5V$ pico, o de $\approx 3,2V_{rms}$, la resistencia mínima que debe colocarse es de $\approx 10\Omega$. Sin embargo, por más que se quiera una impedancia baja de salida del circuito, se seleccionó un valor de $6,8k\Omega$ para tener un gran margen de seguridad. $R_6$ formará un filtro pasabajos con $C_4$, por lo que, con cierto grado libertad, se eligió un valor de $1k\Omega$.\\
+
+\textbf{$C_4$:} Como este capacitor forma un pasa bajos con la resistencia $R_6$, se eligió un valor de $6,8nF$ de tal manera que su frecuencia de corte se encuentre aproximadamente en $f_c = 20kHz$.
+\[ C_4 = \frac{1}{2\pi 20kHz 1,2k} = 6,63nF \approx 6,8nF\]
+
+\textbf{$R_7$:} Este resistor será un potenciómetro logarítmico de $10k\Omega$ si hay disponibilidad en el pañol. El tipo de potenciómetro será logarítmico ya que de esta manera se acopla mejor a la escucha humana.\\
+
+\textbf{$LM308$:} Se eligió el amplificador operacional $LM308$ con una compensación de $30pF$ por las siguientes razones:
+
+\begin{itemize}
+\item Impedancia de entrada relativamente alta ($10M\Omega$) comparada con la contribución del resto de los componentes de los circuitos. Esto permitirá que no se limite la impedancia de entrada posible a causa del amplificador operacional.
+\item Capacidad de compensar el operacional, haciendo tanto el ancho de banda como el slew rate proporcionales a la inversa de la capacitancia de compensación utilizada.
+\item Excepcionalmente baja slew rate, lo que contribuye al efecto alineal de distorsión de la señal.
+\end{itemize}
 
 \subsubsection{Impedancia de Entrada}
 
 Para un circuito con esta aplicación se quiere como ya dicho la mayor impedancia de entrada posible para no perder agudos o armónicos.
-La impedancia de entrada del circuito base puede calcularse como
-\[Z_{in} = (R8//(R1//R2))//Z_{in_{opamp}} = (2M\Omega // 500k\Omega)//40M\Omega \approx 400k\Omega\]
+La impedancia de entrada del circuito base puede calcularse considerando solamente la señal alterna que recorre el circuito. Al hacer esto, se puede observar que la resistencia $R_1$ estará conectada a tierra, por lo que la impedancia de entrada será
+\[Z_{in} = (R8//(R1//R2))//Z_{in_{opamp}} = (1M\Omega // 255k\Omega)//10M\Omega \approx 199k\Omega\]
 
 \subsubsection{Impedancia de Salida}
 
-La impedancia de salida se quiere mantener lo mas baja posible, ya que la impedancia de un parlante común ronda los $8\Omega$.
-La impedancia de salida del circuito base puede calcularse como
-\[ Z_{out} = Z_{out_{opamp}} + 6k8\Omega + 6k8\Omega \approx 13k6\Omega \]
+La impedancia de salida se quiere mantener lo baja. \textbf{por que?}
+Si se desprecia el potenciómetro a la salida para controlar el volúmen, la impedancia de salida del circuito base puede calcularse como
+\[ Z_{out} = Z_{out_{opamp}} + 6k8\Omega + 1,2k\Omega \approx 8k\Omega \]
 
 \subsection{Simulación del Circuito Base}
 
@@ -138,7 +197,7 @@ Se realizaron tres tipos de simulaciones diferentes para visualizar el funcionam
 
 \subsubsection{Análisis de Señal, Transitorio}
 
-Para simular el transitorio y poder observar la señal de entrada, se eligió una frecuencia media de $1kHz$ y una amplitud de $100mV$ emulando una guitarra.
+Para simular el transitorio y poder observar la señal de entrada, se eligió una frecuencia de $1kHz$ y una amplitud de $100mV$ emulando una guitarra.
 Primero se analizó el accionar del divisor resistivo para comprobar la hipótesis de que este levantaría la señal de entrada por $4,5V$.
 \begin{figure}[H]
 	\centering
@@ -159,7 +218,7 @@ Por último, se analizaron los efectos de la etapa de ecualización, contrastand
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_base_tran_voop_vo.png}
+	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_base_tran_vclip_vo.png}
 	\caption{Análisis de la señal de salida del operacional luego de filtrar la continua y señal de salida del circuito.}
 	\label{fig:sim_base}
 \end{figure}
@@ -195,7 +254,131 @@ Se realizó un análisis de Fourier a la salida del circuito donde se pudo compr
 
 \subsection{Diseño propuesto}
 
+\hspace{-4cm}
+\begin{circuitikz}
 
+\draw
 
- 
+(0,0) node[spdt](bypass){}
+	(bypass.in) ++ (-0.3,0) node[]{In}
+	(bypass.out 2) to[short] ++ (0,-4)
+		++ (0,-0.2) node[]{Bypass}
+	(bypass.out 1) to[short] ++ (1,0)
+		node[](n1){}
+		
+(n1) to[R=$1M\Omega$, *-] ++ (0,-3)
+	node[ground]{}
+	
+(n1) to[C=$330nF$] ++ (3,0)
+	node[](bias){}
+	
+(bias) to[R=$1M\Omega$, *-*] ++ (0, 3)
+	node[](powbias){}
+	
+(powbias) to[short, -*] ++ (1,0)
+	node[](aux4){}
+
+(aux4) to[R=$50k\Omega$] ++ (0,-2)
+	++ (0,0.2) node[ground]{}
+	
+(aux4) to[R=$50k\Omega$, -*] ++ (0,2)
+	node[](powerrailmid){}
+	
+(powerrailmid) to[short] ++ (-4,0)
+	to[short] ++ (0,-3)
+	to[short, -o] ++ (-1.3,0)
+	++(-0.4,0) node[]{9V}
+
+(powerrailmid) to[open] ++ (-3,0)
+	to[C=$100\mu F$, *-] ++ (0,-2.5)
+	node[ground]{}
+	
+(powerrailmid) to[short] ++ (1.9,0)
+	to[short] ++ (0,-4.8)
+	++ (0.25, -0.22) node[](opamp_comp1){}
+	
+(opamp_comp1) to[short] ++ (0, 2)
+	to[C=$33pF$] ++ (1,0)
+	to[short] ++ (0,-1)
+	to[short] ++ (-0.5, 0)
+	to[short] ++ (0,-1.25)
+
+(bias) to[short] ++ (2,0)
+	++ (1.15,-0.49) node[op amp, yscale=-1] (opamp){}
+	++ (-0.1,0) node[]{LM308}
+	
+(opamp.-) to[short, -*] ++ (-0.3,0)
+	node[](fbin){}
+	to[open] (bias)
+	to[open] ++ (0,-1)
+	node[](aux1){}
+	to[C=$330nF$] (fbin)
+	(aux1) to[R=$1k\Omega$] ++ (0,-2)
+	node[ground]{}
+
+(fbin) to[short] ++ (0,-2)
+	node[](fbpar1_left){}
+	to[pR=$250k\Omega$, *-*] ++ (3,0)
+	node[](fbpar1_right){}
+	to[short, -*] ++ (0,2.5)
+
+(fbpar1_left) ++ (1.5,0.55) to[short] ++ (1,0)
+	to[short] ++ (0,-0.55)
+	
+(opamp.up) node[ground]{}	
+
+(opamp.out) to[short] ++ (0.3, 0)
+	node[](fbout){}
+
+(fbpar1_left) to[short] ++ (0, -1.5)
+	node[](fbpar2_left){}
+	to[switch] ++ (1,0)
+	node[](aux2){}
+	(aux2) to[short, *-] ++ (0,0.5)
+		to[D] ++ (1,0)
+	(aux2) to[short] ++ (0,-0.5)
+		to[open] ++ (1,0)
+		to[D] ++ (-1,0)
+		to[open] ++ (1,0)
+		to[short] ++ (0,1)
+		to[open] ++ (0,-0.5)
+		to[short, *-] ++ (1, 0)
+		to[short] (fbpar1_right)
+
+(fbout) to[C=$10\mu F$] ++ (1.5,0)
+	to[R=$1k\Omega$] ++ (1.5,0)
+	to[short, -*] ++ (0.5, 0)
+	node[](hardclip){}
+
+(hardclip) to[switch, -*] ++ (0,-1)
+	node[](aux3){}
+	(aux3) to[short] ++ (1,0)
+		to[C=$6.8nF$] ++ (0,-1)
+	(aux3) to[short] ++ (0, 0)
+		to[D] ++ (0, -1)
+	(aux3) to[short] ++ (-1, 0)
+		to[open] ++ (0,-1)
+		to[D] ++ (0,1)
+		to[open] ++ (0,-1)
+		to[short] ++ (2,0)
+		to[open, -*] ++ (-1, 0)
+	(aux3) ++ (0,-1) to[short] ++ (0,-0.5) node[ground]{}
+	
+(hardclip) to[short] ++ (3,0)
+	to[pR=$10k\Omega$] ++ (0,-2.5)
+	node[ground]{}
+	to[open] ++ (1.55,1.25)
+	to[short] ++ (0.5,0)
+	++ (0.3,0) node[]{Out}
+	to[open] ++ (-0.5, 0)
+	to[short, *-] ++ (0, -3)
+	++ (0, -0.2) node[]{Bypass}
+;
+
+\end{circuitikz}
+
+\vspace{1em}
+
+A continuación se detallaran los cambios planteados.
+
 \end{document}
