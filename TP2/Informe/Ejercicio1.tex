@@ -266,6 +266,14 @@ Luego se graficó la maxima tension de entrada en funcion de la ganancia:
 	\caption{Maxima tensión de entrada en funcion de la Ganancia.}
 	\label{fig:MaxVin}
 \end{figure} 
+Tambien se analizó la máxima amplitud de entrada en funcion de la frecuencia tal que no haya slew-rate \footnote{el cual es un efecto que se detallará luego en su propia sección} ni saturación.
+La cual puede ser apreciada en el siguiente gráfico:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/maxvinsr.png}
+	\caption{Maxima tensión de entrada sin saturación ni slew-rate.}
+	\label{fig:MaxVinsr}
+\end{figure} 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Principales Caracteristicas.}
 En el caso que $R_3$ sea igual a 0 a la salida del opamp deberia haber 0V, esto no es la realidad dado a que existe una tensión de offset la cual será analizada en la seccion 3 de este informe.
@@ -285,7 +293,7 @@ $$V_{in}=A\cdot \sin (\omega t)$$
 A partir de la expresión  (\ref{eq:sr}) se llega a una relacion que debe cumplir la señal de entrada para no presentar efectos de slew-rate. Esta limitacion tiene un grado de libertad, por lo tanto se puede elegir un parametro fijo y regular el otro, por ejemplo fijando la frecuencia de entrada se debera cumplir que:
 \begin{align} V_{in}	\leq \frac{SR}{G\cdot \omega_0}\end{align}
 
-\subsubsection{Respueta en frecuencia.}
+\subsubsection{Respuesta en frecuencia.}
 Se midió la respuesta en frecuencia de la configuración en los diversos casos y se grafico junto a simulaciones hechas en spice y el calculo teórico.
 \begin{figure}[H]	
 	\centering
