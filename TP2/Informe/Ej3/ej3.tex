@@ -1,30 +1,33 @@
-%\documentclass[a4paper]{article}
-%\usepackage[utf8]{inputenc}
-%\usepackage[spanish, es-tabla]{babel}
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
 
-%\usepackage{amsmath}
-%\usepackage{amsfonts}
-%\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
 
-%\usepackage{float}
-%\usepackage{graphicx}
-%\usepackage{subcaption}
-%\captionsetup{compatibility=false}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
 
-%\usepackage{multirow}
-%\setlength{\doublerulesep}{\arrayrulewidth}
-%\usepackage{array}
-%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-%\usepackage[american]{circuitikz}
-%\usepackage{fancyhdr}
-%\usepackage{units} 
-%\pagestyle{fancy}
-%\fancyhf{}
-%\lhead{22.01 Teoría de Circuitos}
-%\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
-%\rfoot{Página \thepage}
-\input{Header.tex}
+\usepackage{multirow}
+\setlength{\doublerulesep}{\arrayrulewidth}
 
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[american]{circuitikz}
+
+\usepackage{fancyhdr}
+
+\usepackage{units} 
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{22.01 Teoría de Circuitos}
+\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
+\rfoot{Página \thepage}
 \begin{document}
 
 \section{Medici\'on corriente de bias y tensi\'on de offset}
@@ -35,10 +38,10 @@ La tension de offset es la diferencia de potencial que se encuentra a la salida 
 Otra corriente de interes es la Corriente de offset.
 Con el modelo del Op Amp que tiene en cuenta estos fenomenos se puede definir.\newline
  	
- $I_{offSet} \ = \ |I_b^{+}-I_b^{+}|$\ y \ $I_{Bias}= \frac{I_b^{++-I_b^{+}}}{2}$
+ $I_{offSet} \ = \ |I_b^{-}-I_b^{+}|$\ y \ $I_{Bias}= \frac{I_b^-+I_b^{+}}{2}$
 \begin{figure}[htb]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/opampReal.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/opampReal.PNG}
 	\caption{Modelo OpAmp con corriente de bias y tensión de offset.}
 	\label{fig:OpampBias}
 \end{figure}
@@ -49,7 +52,7 @@ Se proporcionó el siguiente circuito para medir las corrientes de bias y la ten
 
 \begin{figure}[htb]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/CircMedicion.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/CircMedicion.PNG}
 	\caption{Circuito de medición.}
 	\label{fig:CircMedicion}
 \end{figure}
@@ -60,7 +63,7 @@ Se comenzó por la segunda parte dado que es necesario un resultado de esta part
 
 \begin{figure}[htb]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/SegundaEtapa.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/SegundaEtapa.PNG}
 	\caption{Segunda Etapa.}
 	\label{fig:SegundaEtapa}
 \end{figure}
@@ -78,7 +81,7 @@ $V_{out_2}=A_0 \cdot (-V^-)$
 Se llega al siguiente diagrama
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/SegundaEtapaDiagrama.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/SegundaEtapaDiagrama.PNG}
 	\caption{Diagrama de flujo de señal de la segunda etapa.}
 	\label{fig:SegundaEtapaDiagrama}
 \end{figure}
@@ -86,7 +89,7 @@ De aqui se puede apreciar que el circuito es estable dado a que la realimentacio
 Luego analizando la primer etapa
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/PrimeraEtapa.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/PrimeraEtapa.PNG}
 	\caption{Primer Etapa.}
 	\label{fig:PrimerEtapa}
 \end{figure}
@@ -97,7 +100,7 @@ Sabiendo que la tensión en B sera el resultado de la confiugración inversora d
 Se obtiene el diagrama de flujo de señal:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio3/imagenes/PrimerEtapaDiagrama.PNG}
+	\includegraphics[width=0.7\textwidth]{imagenes/PrimerEtapaDiagrama.PNG}
 	\caption{Diagrama de flujo de señal de la primer etapa.}
 	\label{fig:PrimerEtapaDiagrama}
 \end{figure}
@@ -109,13 +112,13 @@ A modo de conclución se llega a que el la única configuración estable es la o
 Teniendo en cuenta el circuito entero de medicion, las corrientes de bias y la tension de offset se lo puede modelar de la siguiente manera
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio3/imagenes/Medicion.PNG}
+	\includegraphics[width=\textwidth]{imagenes/Medicion.PNG}
 	\caption{Circuito de medición.}
 	\label{fig:Medicion}
 \end{figure}
 El Opamp a medir será el OAX-2
 \begin{center}$V_{out_1}=A_0 \cdot (V^+ - V^-)$\\\end{center}
-Dado a que la corriente de bias es unicamente continua para la segunda etapa el opamp es como si estuviese a laso abierto\\
+Dado a que la corriente de bias es unicamente continua para la segunda etapa el opamp es como si estuviese a lazo abierto\\
 \begin{center}$V_{out_2}=A_0 \cdot V_{out_1}$\\\end{center}
 \begin{center}$V^-=I_b^- \cdot (R_{s2}+10)$\\\end{center}
 \begin{center}$V^+=I_b^+ \cdot R_{s1} +V_A+V_{off}$\\\end{center}
@@ -137,30 +140,77 @@ La segunda etapa si bien está a laso abierto para las corrientes de bias dado q
 Un problema que se presentaria aplicando un capacitor demasiado chico es que el ruido haría mucho mas dificil las mediciones.
 \subsection{Resultados.}
 \subsubsection{Mediciones}
-Se midio el circuito utilizando osciloscopio y un multimetro de banco  obteniendo la siguiente tabla.
+Se midio el circuito utilizando osciloscopio y se  obtuvo la siguiente tabla.
 \begin{table}[H]
-\begin{tabular}{cccccc}
+\begin{center}
+\label{tab:vout}
+\caption{Mediciones}
+\begin{tabular}{c|c|c|c|}
 \hline
-\multicolumn{1}{|c|}{\textbf{LF356}}               & \multicolumn{1}{c|}{\textbf{$I_b^+$}} & \multicolumn{1}{c|}{\textbf{$I_b^-$}} & \multicolumn{1}{c|}{\textbf{$V_{off}$}} & \multicolumn{1}{c|}{\textbf{$I_{bias}$}} & \multicolumn{1}{c|}{\textbf{$I_{off}$}} \\ \hline
-\multicolumn{1}{|c|}{\textbf{Osciloscopio}}        & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
-\multicolumn{1}{|c|}{\textbf{Multimetro de banco}} & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
-\multicolumn{1}{|c|}{\textbf{Fabricante}}          & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{10mV}               & \multicolumn{1}{c|}{200pA}               & \multicolumn{1}{c|}{50pA}               \\ \hline
-\textbf{}                                          & \textbf{}                             & \textbf{}                             & \textbf{}                               & \textbf{}                                & \textbf{}                               \\ \hline
-\multicolumn{1}{|c|}{\textbf{TL081}}               & \multicolumn{1}{c|}{\textbf{$I_b^+$}} & \multicolumn{1}{c|}{\textbf{$I_b^-$}} & \multicolumn{1}{c|}{\textbf{$V_{off}$}} & \multicolumn{1}{c|}{\textbf{$I_{bias}$}} & \multicolumn{1}{c|}{\textbf{$I_{off}$}} \\ \hline
-\multicolumn{1}{|c|}{\textbf{Osciloscopio}}        & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
-\multicolumn{1}{|c|}{\textbf{Multimetro de banco}} & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                 & \multicolumn{1}{c|}{}                   & \multicolumn{1}{c|}{}                    & \multicolumn{1}{c|}{}                   \\ \hline
-\multicolumn{1}{|c|}{\textbf{Fabricante}}          & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{-}                & \multicolumn{1}{c|}{10mV}               & \multicolumn{1}{c|}{400pA}               & \multicolumn{1}{c|}{100pA}              \\ \hline
+\multicolumn{4}{|c|}{\textbf{Mediciones Realizadas}} \\ \hline
+ & \multicolumn{3}{c|}{\textbf{Vout}} \\ \cline{2-4} 
+Switches & Rs1 y Rs2=0 & RS2 =0 & RS1 =0 \\ \hline
+\multicolumn{1}{|c|}{\textbf{Osciloscopio}} & -1.3V & -1.4431V & -1.3903V \\ \hline
 \end{tabular}
+\end{center}
 \end{table}
+Si bien estos fueron los resultados finales de la medición, inicialmente se tuvo el inconveniente de que había mucha interferencia de linea y el opamp terminaba saturando dado a la componente no inversora provista por el ruido de linea, el cual invertia el lazo de realimentacion y terminaba oscilando.
+Lo cual daba la siguiente señal.
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.5\textwidth]{imagenes/opmpOscilando.png}
+	\caption{Circuito Oscilando.}
+	\label{fig:oscilando}
+\end{figure}
+Luego se volvio a medir en otro horario para el cual el ruido de linea no era tan intenso y  se pudo realizar una medición certera .Obteniendo para los valores de salida para la medición de $I_b^+$ y $I_b^-$. El aumento en el ruido de linea puede deberse a el instrumental que estaba siendo utilizado en el momento en el laboratorio.
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{imagenes/IB+.png}
+  \captionof{figure}{Medición de Vout para Ib+}
+  \label{fig:ib+}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{imagenes/IB-.png}
+  \captionof{figure}{Medición de Vout para Ib-}
+  \label{fig:ib-}
+\end{minipage}
+\end{figure}
+
+
 \subsubsection{Analisis de resultados.}
-Esto se va a poner feo
+A partir de los valores obtenidos en la   \ref{tab:vout} se pueden calcular las corrientes de offset y bias, al igual que la tension de offset.
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|c|c|l|}
+\hline
+\textbf{$V_{offset}$} & \textbf{$I_b^+$} & \textbf{$I_b^-$} & \textbf{$I_{bias}$} & \textbf{$I_{offset}$} \\ \hline
+-1.44mV & -159pA & -100pA & -130pA & 58.6pA \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+Luego comparandola con la siguiente tabla de valores proporcionada por el fabricante:
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|l|l|c|l|l|}
+\hline
+\multicolumn{6}{|c|}{\textbf{Datos de fabricante}}                                                                                                                                                       \\ \hline
+\multicolumn{3}{|c|}{\textbf{Máximo}}                                                                & \multicolumn{3}{c|}{\textbf{Típico}}                                                              \\ \hline
+\multicolumn{1}{|l|}{\textbf{$V_{offset}$}} & \textbf{$I_{bias}$}        & \textbf{$I_{offset}$}     & \multicolumn{1}{l|}{\textbf{$V_{offset}$}} & \textbf{$I_{bias}$}       & \textbf{$I_{offset}$}    \\ \hline
+10mV                                        & \multicolumn{1}{c|}{200pA} & \multicolumn{1}{c|}{50pA} & 3mV                                        & \multicolumn{1}{c|}{20pA} & \multicolumn{1}{c|}{3pA} \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+Se puede observar que la mayoria de los valores se encuentran dentro de las tolerancias admitidas por el fabricante, el desvio en la corriente de Offset es atribuido a los componentes que su valor no es preciso, que no se tuvo en cuenta a la punta del osciloscopio en el modelo.
 \subsection{Compensacion de tension de offset y corrientes de bias.}
 \subsubsection{Compensación Bias}
 Para la compensacion de corriente de bias lo que se desea es hacer que la diferencia entre $I_b^+$ y $I_b^-$ sea $\approx$ 0
 Un ejemplo de esto es tomar un Op Amp en configuración inversora  de las sigueintes caracteristicas:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.5\textwidth]{Ejercicio3/imagenes/CompensacionBias.PNG}
+	\includegraphics[width=0.5\textwidth]{imagenes/CompensacionBias.PNG}
 	\caption{Circuito inversor para la compensacion de BIAS.}
 	\label{fig:CompensacionBias}
 \end{figure}
@@ -176,7 +226,7 @@ Para la compensación de la tension de offset hay varias alternativas. En el cas
 El circuito a implementar es el siguiente:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.5\textwidth]{Ejercicio3/imagenes/CompensacionOff.PNG}
+	\includegraphics[width=0.5\textwidth]{imagenes/CompensacionOff.PNG}
 	\caption{Circuito para la compensacion de Tension de Offset.}
 	\label{fig:CompensacionOff}
 \end{figure}
