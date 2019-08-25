@@ -5,6 +5,10 @@
 \usepackage{float}
 \usepackage{graphicx}
 
+\usepackage[american voltage]{circuitikz}
+
+\usepackage{amsmath}
+
 \usepackage{xcolor}
 
 \usepackage{caption}
@@ -40,33 +44,80 @@ Luego se requiere que la tensión de salida del circuito responda de la siguient
 
 \subsubsection{Primer modelo: inversor y restador}
 
-En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener DZ5V6-05. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
+En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL082 y la final por un diodo zener DZ5V6-05. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
 
 En la primer etapa se dispuso un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/CircuitoEtapa1-M1.png}
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$, i^<=$I_{R5}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_6$, i<=$I_{R6}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{1}$]{};
+\end{circuitikz}
 \caption{Primera etapa del circuito.}
 	\label{fig:cir1-M1}
+\end{center}
 \end{figure}
 
-De esta forma, y siendo $V_1$ la tensión de salida de esta etapa, se logra
-\[
+Planteando las siguientes ecuaciones:
+
+\begin{equation*}
+\left\{
+\begin{aligned}
+		& V_{LM35} = A_o \left( V^+ - V^- \right) =  A_o V^- \\
+		& V_{LM35} - R_5 I_{R5} = V^- \\
+		& V_1 - R_6 I_{R6} = V^- 
+\end{aligned}
+\right.
+\end{equation*}
+
+y sabiendo que $A_o \gg 1$ y $A_o \gg \frac{R_6}{R_5}$, se obtiene
+
+\begin{equation}
 	V_1 = -\frac{R_6}{R_5} \ V_{LM35}
 	\label{equ:m1p1}
-\]
+\end{equation}
+
+siendo $V_1$ la tensión de salida de esta etapa.
 
 En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne negativo del operacional la tensión $V_1$ y al  una positivo tensión de $- 10 \ V$, reutilizando la alimentación del operacional.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/CircuitoEtapa2-M1.png}
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$, i<_=$I_{R1}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{1}$]{} ++(-1,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i_>=$I_{R4}$] ++(0,-3) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$, i<=$I_{R3}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{2}$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_2$, i<_=$I_{R2}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$-Vcc$]{} ++(-1,0);
+\end{circuitikz}
 	\caption{Segunda etapa del circuito.}
 	\label{fig:cir2-M1}
+\end{center}
 \end{figure}
 
-Aplicando el teorema de superposición, se puede demostrar que la transferencia de este circuito es
+Aplicando el teorema de superposición, se puede obtener la transferencia de este circuito. De esta forma se compone por una parte sumadora y por otra restadora. Mientras que para la restadora, la transferencia se calcula de la misma forma que en (\ref{equ:m1p1}), para la sumadora se deben plantear:
+
+\begin{equation*}
+\left\{
+\begin{aligned}
+  		& V_2 = A_o \left( V^+ - V^- \right) =  A_o V^- \\
+  		& V^- = V_2 \frac{R_1}{R_1 + R_3} \\
+  		& V^+ = -Vcc \frac{R_4}{R_2 + R_4}
+\end{aligned}
+\right.
+\end{equation*}
+
+Es así que, sumando ambos resultados se obtiene
+
 \begin{equation}
 	V_2 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( -V_{CC} \right) \ - \ \frac{R_3}{R_1} V_1
 	\label{equ:m1p2}
@@ -75,17 +126,38 @@ Aplicando el teorema de superposición, se puede demostrar que la transferencia 
 Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0,7 \ V$ y $5.6 \ V$. El objetivo de esta sección es simplemente limitar la tensión de salida, evitando que se encuentre por debajo de $-1 \ V$ y por encima de $6 \ V$.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.6\textwidth]{Ejercicio6/Imagenes/CircuitoEtapa3-M1.png}
+\begin{center}
+\begin{circuitikz}
+	\node [](v2){};
+	\draw (v2) node[label=left:$V_2$]{} to[short, o-] ++ (0.5,0) to[R, l = $R_7$] ++ (2,0) to[open] ++(0,-2) node[ground](gnd){};
+	\draw (gnd) to[zzDo, l_= $D$] ++(0,2);
+	\draw (v2) to[open] ++(2.5,0) to[short, -o] ++(1,0) node[label=right:$V_o$](){};
+	\end{circuitikz}
 	\caption{Tercer etapa del circuito.}
 	\label{fig:cir3}
+\end{center}
 \end{figure}
 
 Es así como se observa al circuito final en la Figura (\ref{fig:cirfin-M1}).
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/CircuitoFinal-M1.png}
+\hspace*{-2cm}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$] ++(-1.5,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_6$] ++(2.5,0) to[short] ++(0,-2);
+
+	\draw (A1.out) to[open] ++(4,-0.5) node [op amp](A2){};	
+	\draw (A2.-) to[short] ++(-0.5,0) to[R, l_=$R_1$] ++(-1.5,0) to[short] (A1.out);
+	\draw (A2.+) to[short] ++(0,0) to[R, l = $R_4$] ++(0,-3) node[ground]{};
+	\draw (A2.-) to[short] ++(0,1.5) to[R, l = $R_3$] ++(2.5,0) to[short] ++(0,-2);
+	\draw (A2.+) to[short] ++(-0.5,0) to[R, l= $R_2$] ++(-1.5,0) to[short, -o] node[ocirc,label=left:$-Vcc$]{} ++(-1,0);
+	\draw (A2.out) to[short] ++ (0.5,0) to[R, l = $R_7$] ++ (1.5,0) to[open] ++(0,-2) node[ground](gnd){};
+	\draw (gnd) to[zzDo, l_= $D$] ++(0,2);
+	\draw (A2.out) to[open] ++(2,0) to[short, -o] ++(1,0) node[label=right:$V_o$](){};
+	
+	\end{circuitikz}
 	\caption{Modelo final del circuito.}
 	\label{fig:cirfin-M1}
 \end{figure}
@@ -98,21 +170,17 @@ Se calcula la transferencia utilizando (\ref{equ:m1p1}) y (\ref{equ:m1p2}). Es a
 \end{equation}
 
 A la hora de seleccionar los valores de las resistencias, se pide:
-\[
-	\frac{R_6}{R_5} = 5
-\]
 
-\[
-	\frac{R_3}{R_1} = 10
-\]
-
-\[
-	\frac{R_3}{R_2} = 1.75
-\]
-
-\[
-	\frac{R_2 // R_4}{R_1 // R_3} = 1
-\]
+\begin{equation*}
+\left\{
+\begin{aligned}
+  		&	\frac{R_6}{R_5} = 5	\\
+  		&	\frac{R_3}{R_1} = 10	\\
+  		&	\frac{R_3}{R_2} = 1.75	\\
+  		&	\frac{R_2 // R_4}{R_1 // R_3} = 1
+\end{aligned}
+\right.
+\end{equation*}
 
 Cumpliendo con esto y eligiendo arbitrariamente $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. De esta forma se consigue llegar a (\ref{equ:sistema}).
 
@@ -148,25 +216,85 @@ Al igual que el circuito anterior, este está compuesto por las mismas tres etap
 En la primer etapa de este nuevo circuito, se suministra la tensión brindada por el transistor al borne negativo del operacional, mientras que para el positivo, se busca reducir la tensión de $12 \ V$ de la fuente de alimentación mediante un divisor resistivo. Con esto último, se busca tener una tensión menor en el nodo $V_2$, para luego poder amplificarla con mayor grado de libertad.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/CircuitoEtapa1-M2.png}
-\caption{Primera etapa del circuito.}
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$, i<_=$I_{R1}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i_>=$I_{R4}$] ++(0,-3) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$, i<=$I_{R3}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{1}$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_2$] ++(-1.5,0) to[short, -*] node[label=north:$V_2$](v2){} ++(-1,0);
+	\draw (v2) to[R, l_=$R_7$, i<=$I_{R7}$] ++(-3,0) node[ocirc,label=left:$Vcc$]{};
+	\draw (v2) to[R, l_=$R_8$, i_>=$I_{R8}$] ++(0,-3) node[ground]{};
+	\draw (v2) to[short, i>_=$I_{R2}$] ++(1,0);
+	
+\end{circuitikz}
+	\caption{Primera etapa del circuito.}
 	\label{fig:cir1-M2}
+\end{center}
 \end{figure}
 
 De la misma forma que con el primer modelo, se puede demostrar que la transferencia de esta etapa se encuentra dada por
 \begin{equation}
-	V_1 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \left( V_{CC} \cdot \frac{R_8}{R_7 + R_8} \right) \ - \ \frac{R_3}{R_1} V_{LM35}
+	V_1 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \ V_2 \ - \ \frac{R_3}{R_1} V_{LM35}
+	\label{equ:m2p1sinsimp}
+\end{equation}
+
+Por otro lado, planteando que
+
+\[
+	I_7 = \frac{Vcc}{R_7 + \left[ R_8 // \left( R_2 + R_4 \right) \right] }
+\]
+
+se obtiene
+
+\[ 
+	V_2 = \frac{Vcc \ \left[ R_8 // \left( R_2 + R_4 \right) \right]}{R_7 + \left[ R_8 // \left( R_2 + R_4 \right) \right]}
+\]
+
+operando de manera algebraica, se llega a 
+
+\[ 
+	V_2 = \frac{R_8 // R_7}{R_7} \cdot \frac{Vcc}{1 + \frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)}}
+\]
+
+Si se consigue que 
+\begin{equation}
+	\frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)} \approx 0
+	\label{equ:condm2}
+\end{equation}
+
+se puede simplificar la ecuación a 
+\begin{equation}
+	V_2 \approx V_{CC} \cdot \frac{R_8}{R_7 + R_8}
+	\label{equ:simpm2}
+\end{equation}
+
+Utilizando (\ref{equ:simpm2}) en (\ref{equ:m2p1sinsimp}) se obtiene
+\begin{equation}
+	V_1 = \frac{R_3}{R_2} \cdot \frac{R_2 // R_4}{R_1 // R_3} \ \left( V_{CC} \cdot \frac{R_8}{R_7 + R_8} \right) \ - \ \frac{R_3}{R_1} V_{LM35}
 	\label{equ:m2p1}
 \end{equation}
 
 Luego, para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne negativo, mientras que se conectó el positivo a tierra.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/CircuitoEtapa2-M2.png}
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{1}$](aux1){} ++(-1,0);
+	\draw (aux1) to[short, i^>=$I_{R5}$] ++(,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_6$, i<=$I_{R6}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(1,0) node[ocirc,label=right:$V_{3}$]{};
+\end{circuitikz}
 	\caption{Segunda etapa del circuito.}
 	\label{fig:cir2-M2}
+\end{center}
 \end{figure}
 
 siendo la transferencia de esta última
@@ -182,34 +310,52 @@ La etapa final, es decir, la protección, no cambia para este circuito. Tanto el
 \end{equation}
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth]{Ejercicio6/Imagenes/CircuitoFinal-M2.png}
-	\caption{Modelo final del circuito.}
-	\label{fig:cirfin-M2}
+\hspace*{-3cm} 
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$] ++(0,-3) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.+) to[short] ++(-1.5,0) to[R, l= $R_2$] ++(-1.5,0) node[](v2){};
+	\draw (v2) to[R, l_=$R_7$] ++(-3,0) node[ocirc,label=left:$Vcc$]{};
+	\draw (v2) to[R, l_=$R_8$] ++(0,-3) node[ground]{};
+	
+	\draw (A1.out) to[open] ++(4,-0.5) node[op amp](A2){};
+	\draw (A2.-) to[short] ++(-0.5,0) to[R, l = $R_5$] ++(-1.5,0) -- (A1.out);
+	\draw (A2.+) to[short] ++(-1,0) node[ground]{};
+	\draw (A2.-) to[short] ++(0,1.5) to[R, l = $R_6$] ++(3,0) to[short] ++(0,-2);
+	\draw (A2.out) to[short] ++(1,0) node[](v2){};
+	\draw (v2) to[R, l = $R_7$] ++ (1.5,0) to[open] ++(0,-2) node[ground](gnd){};
+	\draw (gnd) to[zzDo, l_= $D$] ++(0,2);
+	\draw (v2) to[open] ++(1.5,0) to[short, -o] ++(1,0) node[label=right:$V_o$](){};
+	
+	
+\end{circuitikz}	
+\caption{Modelo final del circuito.}
+\label{fig:cirfin-M2}
 \end{figure}
 
-Nuevamente, se imponen condiciones para obtener los valores de las resistencias:
-\[
-	V_2 = 0.35 \ V
-\]
+Nuevamente, se imponen condiciones para obtener los valores de las resistencias, recordando que también debe cumplirse la condición impuesta en (\ref{equ:condm2}):
+
+\begin{equation*}
+\left\{
+\begin{aligned}
+		&	V_2 = 0.35 \ V	\\
+		&	\frac{R_3}{R_1} = 10	\\
+		&	\frac{R_2 // R_4}{R_1 // R_3} = 1	\\
+		&	\frac{R_3}{R_2} = 10	\\
+		&	\frac{R_6}{R_5} = 5
+\end{aligned}
+\right.
+\end{equation*}
+
+Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Se verifica ademas que con los valores seleccionados se cumpla (\ref{equ:condm2}). De esta forma 
 
 \[
-	\frac{R_3}{R_1} = 10
+	\frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)} = 0.02
 \]
 
-\[
-	\frac{R_2 // R_4}{R_1 // R_3} = 1
-\]
-
-\[
-	\frac{R_3}{R_2} = 10
-\]
-
-\[
-	\frac{R_6}{R_5} = 5
-\]
-
-Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Nuevamente, se consigue con estos valores llegar a (\ref{equ:sistema}). Se destaca que, como la tercer etapa no ha sido alterada, sigue valiendo (\ref{equ:rzener}), por ende el valor de la resistencia, en este caso llamada $R_9$, es de $16 \ k\Omega$.
+Nuevamente, se consigue con estos valores llegar a (\ref{equ:sistema}). Se destaca que, como la tercer etapa no ha sido alterada, sigue valiendo (\ref{equ:rzener}), por ende el valor de la resistencia, en este caso llamada $R_9$, es de $16 \ k\Omega$.
 
 Se repite el análisis empleado para el primer circuito en LTSpice. En este caso, son las resistencias $R_5$ y $R_8$ las que resaltan.
 
