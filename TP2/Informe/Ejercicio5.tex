@@ -162,8 +162,8 @@ y la ganancia a lazo abierto suele tener un valor en el orden de $10^5 \ a \ 10^
 \textbf{$R_5, R_6$:} $R_5$ se sitúa para limitar la corriente de los diodos. El fabricante indica que la corriente máxima de continua que soporta el diodo 1N4148 es de $300mA$. Como después del capacitor $C_3$ la tensión máxima que puede haber en el circuito es de $4,5V$ pico, o de $\approx 3,2V_{rms}$, \textbf{la resistencia mínima que debe colocarse es de $\approx 10\Omega$. Sin embargo, por más que se quiera una impedancia baja de salida del circuito, se seleccionó un valor de $6,8k\Omega$ para tener un gran margen de seguridad.} $R_6$ formará un filtro pasabajos con $C_4$, por lo que, con cierto grado libertad, se eligió un valor de $1k\Omega$.\\
 
 \textbf{$C_4$:} Como este capacitor forma un pasa bajos con la resistencia $R_6$, se eligió un valor de $6,8nF$ de tal manera que su frecuencia de corte se encuentre aproximadamente en $f_c = 20kHz$.
-\[ C_4 = \frac{1}{2\pi 20kHz 1,2k} = 6,63nF \approx 6,8nF\]
-Nuevamente, se realizó una aproximación con mucho error, por la libertad de diseño sonoro que se posee a la hora de posicionar los polos en la trasferencia.
+\[ C_4 = \frac{1}{2\pi 20kHz 1,2k\Omega} = 6,63nF \approx 6,8nF\]
+Nuevamente, se realizó una aproximación con mucho error, por la libertad de diseño sonoro que se posee a la hora de posicionar los polos en la trasferencia. Debido al error cometido, el polo estará situado con una frecuencia de corte de $$ f_c = \frac{1}{2\pi 1,2k\Omega 6,8nF} = 19,5kHz $$
 
 \textbf{$R_7$:} Este resistor será un potenciómetro logarítmico de $10k\Omega$ si hay disponibilidad en el pañol. El tipo de potenciómetro será logarítmico ya que de esta manera se acopla mejor a la escucha humana.\\
 
@@ -271,7 +271,9 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 
 \subsubsection{Esquemático del diseño propuesto}
 
-\hspace{-4cm}
+\vspace{1cm}
+\hspace{-2cm}
+\scalebox{0.7}{
 \begin{circuitikz}
 
 \draw
@@ -296,10 +298,13 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 	node[](aux4){}
 
 (aux4) to[R=$10k\Omega$] ++ (0,-2)
-	++ (0,0.2) node[ground]{}
+	++ (0,0.3) node[ground]{}
 	
 (aux4) to[R=$10k\Omega$, -*] ++ (0,2)
 	node[](powerrailmid){}
+	
+(aux4) to[C=$100pF$] ++ (1.5,0)
+	node[ground]{}
 	
 (powerrailmid) to[short] ++ (-4,0)
 	to[short] ++ (0,-3)
@@ -332,12 +337,12 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 	
 (opamp.-) to[short, -*] ++ (-0.3,0)
 	node[](fbin){}
-	to[open] (bias)
-	to[open] ++ (0,-1)
-	node[](aux1){}
-	to[C=$330nF$] (fbin)
-	(aux1) to[R=$1k\Omega$] ++ (0,-2)
-	node[ground]{}
+	to[short] ++ (-0.5,0)
+	to[C=$1\mu F$] ++ (-1,0)
+	to[C=$560nF$] ++ (-1,0)
+	to[short] ++ (-0.5,0)
+	to[R=$1k\Omega$] ++ (0,-2.235)
+	++ (0, 0.2) node[ground]{}
 
 (fbin) to[short] ++ (0,-2)
 	node[](fbpar1_left){}
@@ -375,19 +380,21 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 
 (hardclip) to[switch, -*] ++ (0,-1)
 	node[](aux3){}
-	(aux3) to[short] ++ (1,0)
-		to[C=$6.8nF$] ++ (0,-1)
-	(aux3) to[short] ++ (0, 0)
+	(aux3) to[short] ++ (0.5,0)
 		to[D] ++ (0, -1)
-	(aux3) to[short] ++ (-1, 0)
+	(aux3) to[short] ++ (-0.5, 0)
 		to[open] ++ (0,-1)
 		to[D] ++ (0,1)
 		to[open] ++ (0,-1)
-		to[short] ++ (2,0)
-		to[open, -*] ++ (-1, 0)
+		to[short] ++ (1,0)
+		to[open, -*] ++ (-0.5, 0)
 	(aux3) ++ (0,-1) to[short] ++ (0,-0.5) node[ground]{}
 	
-(hardclip) to[short] ++ (3,0)
+(hardclip) to[R=$1k\Omega$] ++ (2.5,0)
+	node[](aux6){}
+	to[C=$6.8nF$] ++ (0,-2.745)
+	++ (0,0.2) node[ground]{}
+(aux6) to[short, *-] ++ (2,0)
 	to[pR=$10k\Omega$] ++ (0,-2.5)
 	node[ground]{}
 	to[open] ++ (1.55,1.25)
@@ -400,11 +407,29 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 
 \end{circuitikz}
 
+}
+
 \vspace{1em}
 
 \subsubsection{Análisis del Diseño Propuesto}
 
+A continuación se presentan los cambios propuestos. No todos son cambios en el diseño sino también ajustes a valores de ciertos componentes luego de haber realizado simulaciones y haber prototipado el pedal con los valores calculados anteriormente.
 
+\begin{itemize}
+\item Se cambiaron los valores de las resistencias que generan el bias de la señal de entrada a $10k\Omega$, mientras que el punto medio del divisor resistivo se conecta a una nueva resistencia de $1M\Omega$. Esto permite elevar la impedancia de entrada del circuito con una sola resistencia de gran valor, en vez de proporcionar más ruido con dos resistencias de gran valor, si las resistencias del divisor fueran de $2M\Omega$. La nueva impedancia de entrada se calcularía aproximadamente como $$ 1M\Omega//\approx1M\Omega//10M\Omega $$ en el peor de los casos (con la mínima impedancia de entrada provista por el fabricante del operacional).
+Además, se logra obtener una mucho mayor precisión a la hora de obtener $4,5V$, ya que la corriente que se escapa por el punto medio del divisor resistivo debe pasar por una resistencia de 100 veces el valor de la resistencia que tiene en paralelo.
+\item Se agregó un capacitor en paralelo al punto medio del divisor resistivo para filtrar variaciones en el potencial que puedan hallarse. Se decidió que por más que sea un aumento en el costo final del producto el tener que agregar un componente más, sería a su vez un gran aumento en la calidad final, ya que cualquier pequeña variación en la tensión que se utiliza para levantar a la señal de entrada será amplificado con una muy grande ganancia al pasar por la etapa de amplificación, generando un gran ruido a la salida. La capacitancia fue calculada de tal manera que la frecuencia de corte del filtro pasa-altos que se forma con la resistencia de $10k\Omega$ se sitúe lo más alto posible. $$ f_c = \frac{1}{2\pi 10k\Omega 10pF} = 1.590MHz \approx 1,6MHz$$
+\item Se cambió el valor del capacitor en el lazo de realimentación para favorecer la amplificación (también saturación y clipping) de los graves. El valor anterior se calculó con una frecuencia de corte de $500Hz$. Para el calculo del nuevo valor se posicionó el polo en los $100Hz$. $$C = \frac{1}{2\pi 100Hz 1k\Omega} = 1.591\mu F$$ por lo que se decidió utilizar un valor de $1uF + 560nF$ para ajustar a valores comerciales, posicionando finalmente el polo en una frecuencia de corte de  $$C = \frac{1}{2\pi 1.56\mu F 1k\Omega} = 102.02Hz$$.
+\item Se agregó un diodo LED junto a su resistor para indicar cuándo está alimentado el circuito. También se agregaron dos llaves para activar o desactivar distintos tipos de distorsión. Esto añade mejor aspecto y una mayor funcionalidad al producto final y se justifica el precio de los componentes por esa razón.
+\item Se decidió poner un potenciómetro en el lugar de la resistencia $R_4$ que anteriormente era de $50k\Omega$ para lograr tener una mayor funcionalidad y rangos de ganancia posibles en el circuito. Esto haría que la ganancia ideal de la etapa de amplificación esté aproximadamente entre 0 y 251. 
+\item Se agregaron dos diodos con polaridad invertida en paralelo al potenciómetro en el lazo de realimentación. Este tipo de distorsión se la denomina \textit{soft clipping}, mientras que la distorsión provocada por los diodos a la salida del amplificador operacional se la denomina \textit{hard clipping}. Se decidió agregar este tipo de distorsión junto a una llave para agregar más funcionalidad al pedal. En el \textit{hard clipping} se recorta la señal que sale del operacional y proporciona una señal muy semejante a una cuadrada con gran componente de altas frecuencias, mientras que en el \textit{soft clipping}, como el recortado se realiza en el lazo de realimentación del operacional, se mezclan señales no recortadas con señales recortadas, produciendo una señal recortada mucho mas suave.
+\textbf{pensar si no es mejor utilizar una llave inversora sin distorsion-soft-hard en vez de dos llaves, porque superponer soft con hard quiza no tenga mucho sentido.}
+\item Se cambiaron los valores de las resistencias a la salida por dos resistores de $1k\Omega$. Esto se realizó ya que previamente se dejó un margen muy grande de seguridad al calcular los valores de los resistores y se decidió disminuir aún más la impedancia de salida. 
+\item Se calculó nuevamente el filtro pasa-bajos de la salida. Antes se posicionó el polo en los $20kHz$, mientras que ahora estará situado en  aproximadamente $10kHz$. $$ f_c = \frac{1}{2\pi 2k\Omega 8.2nF} = 9.704kHz \approx 10kHz$$
+
+\textbf{ver si poner el ultimo resistor un pote de 10k y el capacitor de 10nf, haria qeue el polo se corra de 1446,86 minimo a 15915,49 maximo. asi podria justificar porque baje tanto los resistores y en el minimo sigo estando dentro de una resistencia segura. sino otra es poner el primer resistor 100ohm y seguiria siendo 10 veces mas que la corriente maxima de continua que soporta el diodo 1n4148 y le meto un pote de 10k y un capa de 100n, entonces minimo seria 144,68hz y maximo 15,91khz}
+
+\end{itemize}
 
 
 \end{document}
