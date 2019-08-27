@@ -1,12 +1,12 @@
 Board Information Report
 Filename     : C:\Users\Guido\Documents\GitHub\TC\TP2\Ej1\AltiumCircuito2\PCB1.PcbDoc
-Date         : 23-Aug-19
-Time         : 5:41:04 PM
+Date         : 26-Aug-19
+Time         : 11:39:01 AM
 Time Elapsed : 00:00:00
 
 Routing Information
-    Routing completion, 100.00%
-    Connections, 49
-    Connections routed, 49
-    Connections remaining, 0
+    Routing completion, 97.92%
+    Connections, 48
+    Connections routed, 47
+    Connections remaining, 1
 count : 4
