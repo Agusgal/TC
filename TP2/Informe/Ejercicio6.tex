@@ -26,11 +26,11 @@ En el siguiente punto se propuso como objetivo realizar un sensor de temperatura
 Como se requiere que el circuito diseñado posea una tensión de salida de $ 0 \ V $ a $ 35 ^{\circ}C $ y $ 5 \ V $ a $ 45 ^{\circ}C $, se busca la ecuación de la recta que atraviese los puntos especificados. Es así que se obtiene que la tensión de salida viene dada por la siguiente ecuación:
 
 \begin{equation}
-	V_{out} = 50V_{LM35} - 17.5 \ V =  0.5 \frac{V}{^{\circ}C} \ T - 17.5 \ V
+	V_{o} = 50V_{LM35} - 17.5 \ V =  0.5 \frac{V}{^{\circ}C} \ T - 17.5 \ V
 	\label{equ:sistema}
 \end{equation}
 
-Para lograr su funcionamiento, el fabricante especifica que el transistor debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle a este dispositivo $10 \ V$ para utilizarlo. Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ y mayor a $6 \ V$. Esto se ahondará con mayor profundidad en los de diseño del modelo.
+Para lograr su funcionamiento, el fabricante especifica que el transistor debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle a este dispositivo $10 \ V$ para utilizarlo. Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ ni mayor a $6 \ V$. Esto se ahondará con mayor profundidad en los de diseño del modelo.
 
 Luego se requiere que la tensión de salida del circuito responda de la siguiente forma frente a la tensión de salida del transistor.
 
@@ -76,7 +76,7 @@ Planteando las siguientes ecuaciones:
 \right.
 \end{equation*}
 
-y sabiendo que $A_o \gg 1$ y $A_o \gg \frac{R_6}{R_5}$, se obtiene
+y sabiendo que $A_o \gg \frac{R_6}{R_5}$, se obtiene
 
 \begin{equation}
 	V_1 = -\frac{R_6}{R_5} \ V_{LM35}
@@ -85,7 +85,7 @@ y sabiendo que $A_o \gg 1$ y $A_o \gg \frac{R_6}{R_5}$, se obtiene
 
 siendo $V_1$ la tensión de salida de esta etapa.
 
-En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne negativo del operacional la tensión $V_1$ y al  una positivo tensión de $- 10 \ V$, reutilizando la alimentación del operacional.
+En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne inversor del operacional la tensión $V_1$ y al una no inversor tensión de $- 10 \ V$, reutilizando la alimentación del operacional.
 
 \begin{figure}[H]
 \begin{center}
@@ -123,7 +123,7 @@ Es así que, sumando ambos resultados se obtiene
 	\label{equ:m1p2}
 \end{equation}
 
-Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0,7 \ V$ y $5.6 \ V$. El objetivo de esta sección es simplemente limitar la tensión de salida, evitando que se encuentre por debajo de $-1 \ V$ y por encima de $6 \ V$.
+Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0.7 \ V$ y $5.6 \ V$. El objetivo de esta sección es simplemente limitar la tensión de salida, evitando que se encuentre por debajo de $-1 \ V$ y por encima de $6 \ V$.
 
 \begin{figure}[H]
 \begin{center}
@@ -213,7 +213,7 @@ Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la sa
 
 Al igual que el circuito anterior, este está compuesto por las mismas tres etapas, con la única diferencia que se utiliza primero el amplificador restador. No se han variado ni el diodo zener utilizado, ni los modelos de operacionales utilizados, únicamente la tensión de alimentación de ambos operacionales a $12 \ V$ y $-12 \ V$.
 
-En la primer etapa de este nuevo circuito, se suministra la tensión brindada por el transistor al borne negativo del operacional, mientras que para el positivo, se busca reducir la tensión de $12 \ V$ de la fuente de alimentación mediante un divisor resistivo. Con esto último, se busca tener una tensión menor en el nodo $V_2$, para luego poder amplificarla con mayor grado de libertad.
+En la primer etapa de este nuevo circuito, se suministra la tensión brindada por el transistor al borne inversor del operacional, mientras que para el no inversor, se busca reducir la tensión de $12 \ V$ de la fuente de alimentación de forma tal que la tensión en $V_2$ sea lo más próxima a $0.35 \ V$. Con esto se busca que pequeñas tensiones entren por el nodo no inversor del operacional y así evitar posibles saturaciones.
 
 \begin{figure}[H]
 \begin{center}
@@ -243,19 +243,16 @@ De la misma forma que con el primer modelo, se puede demostrar que la transferen
 \end{equation}
 
 Por otro lado, planteando que
-
 \[
 	I_7 = \frac{Vcc}{R_7 + \left[ R_8 // \left( R_2 + R_4 \right) \right] }
 \]
 
 se obtiene
-
 \[ 
 	V_2 = \frac{Vcc \ \left[ R_8 // \left( R_2 + R_4 \right) \right]}{R_7 + \left[ R_8 // \left( R_2 + R_4 \right) \right]}
 \]
 
 operando de manera algebraica, se llega a 
-
 \[ 
 	V_2 = \frac{R_8 // R_7}{R_7} \cdot \frac{Vcc}{1 + \frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)}}
 \]
@@ -266,7 +263,7 @@ Si se consigue que
 	\label{equ:condm2}
 \end{equation}
 
-se puede simplificar la ecuación a 
+se puede afirmar que  
 \begin{equation}
 	V_2 \approx V_{CC} \cdot \frac{R_8}{R_7 + R_8}
 	\label{equ:simpm2}
@@ -278,7 +275,7 @@ Utilizando (\ref{equ:simpm2}) en (\ref{equ:m2p1sinsimp}) se obtiene
 	\label{equ:m2p1}
 \end{equation}
 
-Luego, para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne negativo, mientras que se conectó el positivo a tierra.
+Luego, para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne inversor, mientras que se conectó el no inversor a tierra.
 
 \begin{figure}[H]
 \begin{center}
@@ -297,7 +294,7 @@ Luego, para la parte del amplificador inversor, simplemente se alimentó con la 
 \end{center}
 \end{figure}
 
-siendo la transferencia de esta última
+De la misma forma que se calculó en el modelo anterior, la transferencia de esta etapa es
 \begin{equation}
 	V_3 = - \frac{R_6}{R_5} \ V_1
 	\label{equ:m2p2}
@@ -377,7 +374,7 @@ La pendiente de la recta que describe la salida varía con los cambios de $R_5$.
 
 \subsubsection{Selección del modelo más óptimo}
 
-Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre estas primeras. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
+Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre ellas. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
 
 \begin{figure}[H]
 \centering
@@ -435,16 +432,13 @@ Finalmente las borneras $J5$ y $J1$ son utilizados para alimentar a los operacio
 \subsection{Detalles técnicos}
 %Mediciones, corrientes/tensiones maximas, rango de temperatura, 
 
-%El LM35 es un circuito integrado cuya tensi´on de salida var´ıa linealmente con la temperatura. Se desea que la
-%se~nal pueda ser adquirida por un sistema con (por ejemplo, un conversor anal´ogico/digital) con tensi´on de entrada
-%variable entre 0V y 5V .
-%a. Dise~nar un circuito utilizando el LM35 que adapte la se~nal para que pueda ser adquirida con m´axima excursi´on
-%para temperaturas que var´ıen entre 35◦C y 45◦C (35◦C ! 0V − 45◦C ! 5V ).
+%El LM35 es un circuito integrado cuya tensión de salida varía linealmente con la temperatura. Se desea que la
+%señal pueda ser adquirida por un sistema con (por ejemplo, un conversor analógico/digital) con tensión de entrada variable entre 0V y 5V .
+%a. Diseñar un circuito utilizando el LM35 que adapte la señal para que pueda ser adquirida con máxima excursión para temperaturas que varíen entre 35◦C y 45◦C (35◦C ! 0V − 45◦C ! 5V ).
 %b. Implementar el circuito en placa multiperforada o PCB.
-%c. Dise~nar un m´etodo de calibraci´on del circuito para que se cumpla la especificaci´on.
-%d. El circuito debe contar con una protecci´on de forma tal de que la tensi´on de salida no se encuentre por debajo
-%de −1V ni por encima de 6V .
-%e. Incluir en el informe un datasheet de la implementaci´on final, incluyendo toda la informaci´on relevante.
+%c. Diseñar un método de calibración del circuito para que se cumpla la especificación.
+%d. El circuito debe contar con una protección de forma tal de que la tensión de salida no se encuentre por debajo de −1V ni por encima de 6V .
+%e. Incluir en el informe un datasheet de la implementación final, incluyendo toda la información relevante.
 
 
 \end{document}
