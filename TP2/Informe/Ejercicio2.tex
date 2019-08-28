@@ -1,0 +1,92 @@
+En esta sección del presente informe se analizará el comportamiento de dos modelos diferentes de amplificadores operacionales. Para eso se tendrán en cuenta las características respectivas de cada integrado provistas por los fabricantes. Como objetivo final se propone realizar una descripción completa del funcionamiento de ambos amplificadores, contrastando modelos teóricos, empíricos y simulaciones. 
+
+
+Los modelos de los amplificadores operacionales utilizados y sus características más importantes son los siguientes:
+
+%%Parámetros opamps de datasheets (falta completar)
+\begin{table}[H]
+	\begin{center}
+		\begin{tabular}{c c c c c c}
+		     & $R_0$ & $GBP$ & $I_b$ & $Slew Rate$ & $A_0$ \\
+		\hline
+		LM833 & & & & & \\
+		NE5534 & & & & & 
+		\end{tabular}
+		
+		\caption{Características de opamps provistas por fabricantes}
+	\end{center}
+\end{table}
+
+%%Agregar algún comentario sobre integrados
+
+\subsection{Marco Teórico}
+
+Ambos amplificadores serán probados en la configuración circuital mostrada en la figura %referencia%
+en donde $R_1 = 3k\Omega$, $R_2 = 240k\Omega$ y $R_3 = 220k\Omega$. A continuación, se analizarán la respuesta en frecuencia y la impedancia de entrada teórica vista por el generador.
+
+%%Figura del circuito
+
+\subsection{Modelo teórico}
+
+\subsubsection{Respuesta en frecuencia}
+
+Para describir la respuesta en frecuencia del circuito se desarrollarán tres casos diferentes: el caso ideal con $A_0 = \infty$, el caso real con $A_0 \neq \infty = cte $ y el caso con un polo dominante en el cual $A_0$ varía con la frecuencia.
+
+Agregando el modelo equivalente de un amplificador operacional a la configuración anterior se obtiene el circuito de la figura %referencia
+, en el cual $V_D = V_P - V_N$. 
+
+%%Figura de circuito sacada del Franco pag 32 que esta en mi carpeta de tc con nodos nombrados 
+
+Para el segundo caso, en el cual $A_0$ es distinto a infinito pero constante, se puede suponer que no circula corriente entre los terminales del opamp ya que %%porque?? rd grande?? respecto a  que???
+Entonces tengo que:
+
+\begin{equation}
+	V_P = V_{in} 
+	\label{eq:vp_vin}
+\end{equation} 
+
+Además, debido a que $r_0$ es chico %%respecto a que??
+se que:
+
+\begin{equation}
+	V_{out} = A_0(V_p - V_N)
+	\label{eq:vout}
+\end{equation}
+
+Por otro lado, tengo un divisor resistivo entre $V_{out}$ y $V_N$:
+
+\begin{equation}
+	V_N = \frac{V_{out}R_1}{R_1 + R_2}
+	\label{eq:divisor_resistivo}
+\end{equation}
+
+Reemplazando \ref{eq:vp_vin} y \ref{eq:divisor_resistivo} en \ref{eq:vout} obtengo:
+
+\begin{equation}
+	V_{out} = A_=(V_{in} - \frac{V_{out}R_1}{R_1 + R_2})
+	\label{eq:transfer_real_intermedio}
+\end{equation}
+
+Si reordeno y resuelvo para $\frac{V_{out}}{V_{in}}$ llego a la siguiente expresión:
+
+\begin{equation}
+	\frac{V_{out}}{V_{in}} = \frac{A_0}{1 + \frac{R_1A_0}{R_1 + R_2}}
+	\label{eq:transfer_real}
+\end{equation}
+
+La ecuación \ref{eq:transfer_real} es la función transferencia del circuito cuando $A_0$ es un número real finito. Para llegar a la expresión ideal calculo el límite de $A_0$ tendiendo a infinito y llego a:
+
+\begin{equation}
+	\frac{V_{out}}{V_{in}} = 1 + \frac{R_2}{R_1} = G_i
+	\label{eq:ganancia_ideal}
+\end{equation}
+
+Se llamará a la expresión anterior ganancia ideal.
+
+Por último si tengo en cuenta la respuesta en frecuencia de $A_0$
+
+\begin{equation}
+	A_v(s) = \frac{A_0}{1 + \frac{s}{\omega_p}}
+	\label{eq:rta_frec_Av}
+\end{equation}
+
