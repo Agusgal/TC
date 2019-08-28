@@ -159,7 +159,7 @@ y la ganancia a lazo abierto suele tener un valor en el orden de $10^5 \ a \ 10^
 
 \textbf{$C_3$:} Este capacitor está solamente para filtrar la continua de la salida del operacional pero como forma un pasa-altos con la impedancia equivalente de salida del circuito que aproximadamente es de $8k\Omega$, y no se quiere que afecte este capacitor al circuito, su valor será de $10\mu F$ lo que dejaría la frecuencia de corte en $\approx 2Hz$, realizando la misma cuenta que para $C_1$.\\
 
-\textbf{$R_5, R_6$:} $R_5$ se sitúa para limitar la corriente de los diodos. El fabricante indica que la corriente máxima de continua que soporta el diodo 1N4148 es de $300mA$. Como después del capacitor $C_3$ la tensión máxima que puede haber en el circuito es de $4,5V$ pico, o de $\approx 3,2V_{rms}$, \textbf{la resistencia mínima que debe colocarse es de $\approx 10\Omega$. Sin embargo, por más que se quiera una impedancia baja de salida del circuito, se seleccionó un valor de $6,8k\Omega$ para tener un gran margen de seguridad.} $R_6$ formará un filtro pasabajos con $C_4$, por lo que, con cierto grado libertad, se eligió un valor de $1k\Omega$.\\
+\textbf{$R_5, R_6$:} $R_5$ se sitúa para limitar la corriente de los diodos, y $R_6$ para limitar la corriente de descarga del capacitor. El fabricante indica que la corriente máxima de continua que soporta el diodo 1N4148 es de $300mA$. Como después del capacitor $C_3$ la tensión máxima que puede haber en el circuito es de $4,5V$ pico, o de $\approx 3,2V_{rms}$, \textbf{la resistencia mínima que debe colocarse es de $\approx 10\Omega$. Sin embargo, por más que se quiera una impedancia baja de salida del circuito, se seleccionó un valor de $6,8k\Omega$ para tener un gran margen de seguridad.} $R_6$ formará un filtro pasabajos con $C_4$, por lo que, con cierto grado libertad, se eligió un valor de $1k\Omega$.\\
 
 \textbf{$C_4$:} Como este capacitor forma un pasa bajos con la resistencia $R_6$, se eligió un valor de $6,8nF$ de tal manera que su frecuencia de corte se encuentre aproximadamente en $f_c = 20kHz$.
 \[ C_4 = \frac{1}{2\pi 20kHz 1,2k\Omega} = 6,63nF \approx 6,8nF\]
@@ -339,8 +339,8 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 	node[](fbin){}
 	to[short] ++ (-0.5,0)
 	to[C=$1\mu F$] ++ (-1,0)
-	to[C=$560nF$] ++ (-1,0)
 	to[short] ++ (-0.5,0)
+	to[short] ++ (0,-2)
 	to[R=$1k\Omega$] ++ (0,-2.235)
 	++ (0, 0.2) node[ground]{}
 
@@ -352,6 +352,9 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 
 (fbpar1_left) ++ (1.5,0.55) to[short] ++ (1,0)
 	to[short] ++ (0,-0.55)
+	
+(fbpar1_left) to[open] ++ (0,0)
+	to[C, l_=$560nF$, *-*] ++ (-2,0)
 	
 (opamp.up) node[ground]{}	
 
@@ -390,10 +393,16 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 		to[open, -*] ++ (-0.5, 0)
 	(aux3) ++ (0,-1) to[short] ++ (0,-0.5) node[ground]{}
 	
-(hardclip) to[R=$1k\Omega$] ++ (2.5,0)
+(hardclip) to[pR=$10k\Omega$] ++ (2.5,0)
 	node[](aux6){}
-	to[C=$6.8nF$] ++ (0,-2.745)
+	to[C=$10nF$] ++ (0,-2.745)
 	++ (0,0.2) node[ground]{}
+
+(hardclip) to[open] ++ (1.25, 1.05)
+	to[short] ++ (0, 0.5)
+	to[short] ++ (1.25,0)
+	to[short] ++ (0, -1.55)
+	
 (aux6) to[short, *-] ++ (2,0)
 	to[pR=$10k\Omega$] ++ (0,-2.5)
 	node[ground]{}
