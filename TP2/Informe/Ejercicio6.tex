@@ -420,16 +420,16 @@ Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se m
 	\label{fig:PCB}
 \end{figure}
 
-Para poder calibrar el circuito se colocó una entrada adicional y un jumper entre esta y el transistor, de forma que se pueda alimentar directamente al circuito con una tensión dada y calibrarlo hasta obtener la tensión de salida adecuada. Por lo tanto, para calibrarlo, la bornera $J4$ debe estar conectada con el jumper $J6$, alimentando por dicha entrada al sistema. En este caso, la bornera $J2$ queda inhabilitada y el transistor sin alimentación.
-Al momento de utilizar el LM35, se debe conectar el jumper con $J2$.
+Para poder calibrar el circuito se colocó una entrada adicional y un jumper entre esta y el LM35, de forma que se pueda alimentar directamente al circuito con una tensión dada y calibrarlo hasta obtener la tensión de salida adecuada. Cortocircuitando el pin superior con el del medio, se habilita la entrada adicional, mientras que realizando lo mismo con el inferior y el central, se habilita el uso del transistor. Por lo tanto, para calibrarlo, la bornera $J4$ debe estar conectada con el jumper $J6$, alimentando por dicha entrada al sistema. En este caso, la bornera $J2$ queda inhabilitada y el transistor sin alimentación.
 
-Ademas, se colocaron 2 pines en la placa para facilitar la calibración. Se sabe, \textcolor{red}{\textbf{METER ALGÚN CALCULO Y/O SIMULACIÓN}}, la tensión en el pin $TP5$ debe ser de $0 \ V$, mientras que en $TP8$ debe ser de $350 \ mV$. Para poder ajustarlas adecuadamente, se utilizan los presets mencionados anteriormente. El objetivo de estos pines es facilitar la medición de dicha tensión al momento de ajustar las resistencias variables.
+Ademas, se colocaron pines en la placa para facilitar la calibración de ambos presets. El objetivo de estos es facilitar la medición de sus tensiones al momento de ajustar las resistencias variables. Por ejemplo, se sabe que, por condiciones de fabricación, la tensión en el pin $TP8$ debe ser de $350 \ mV$. Si bien previamente se especificó que ambos operacionales deben ser alimentados con $12 \ V$ y $-12 \ V$, es posible cambiar dicho valor, dentro de las especificaciones del fabricante, y regular la resistencia $R_8$ para conseguir que la tensión en el pin $TP8$ sea la deseada. Cabe aclarar que los valores posibles que pueden tomar $R_8$ cumplen con (\ref{equ:condm2}).
 
 Se detalla que, con el mismo objetivo que se colocó un zócalo para el amplificador operacional, se tomó la decisión de soldar tres pines hembra en lugar del transistor LM35, para poder reemplazarlo en caso de fallas.
 
 Finalmente las borneras $J5$ y $J1$ son utilizados para alimentar a los operacionales y como salida del circuito respectivamente.
 
 \subsection{Detalles técnicos}
+Se suministró a la entrada $J4$ del circuito una rampa que cumplió la función de simular al LM35. Esta rampa barre valores desde $330 \ mV$ hasta $470 \ mV$, lo que permite que, al calibrar el sistema, se pueda observar la recta completa de salida, incluyendo las zonas
 %Mediciones, corrientes/tensiones maximas, rango de temperatura, 
 
 %El LM35 es un circuito integrado cuya tensión de salida varía linealmente con la temperatura. Se desea que la
