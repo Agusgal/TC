@@ -141,19 +141,24 @@ Un problema que se presentaria aplicando un capacitor demasiado chico es que el 
 \subsection{Resultados.}
 \subsubsection{Mediciones}
 Se midio el circuito utilizando osciloscopio y se  obtuvo la siguiente tabla.
+
+
+
 \begin{table}[H]
 \begin{center}
-\label{tab:vout}
-\caption{Mediciones}
-\begin{tabular}{c|c|c|c|}
+\begin{tabular}{|c|c|c|c|}
 \hline
-\multicolumn{4}{|c|}{\textbf{Mediciones Realizadas}} \\ \hline
- & \multicolumn{3}{c|}{\textbf{Vout}} \\ \cline{2-4} 
-Switches & Rs1 y Rs2=0 & RS2 =0 & RS1 =0 \\ \hline
-\multicolumn{1}{|c|}{\textbf{Osciloscopio}} & -1.3V & -1.4431V & -1.3903V \\ \hline
+\multicolumn{4}{|c|}{\textbf{Mediciones}}                                        \\ \hline
+\textbf{LF356}        & \multicolumn{3}{c|}{\textbf{Vout}}                       \\ \hline
+\textbf{Switches}     & $R_{S1}$ y $ R_{S2} = 0$ & $ R_{S2} = 0$ & $ R_{S1} = 0$ \\ \hline
+\textbf{Osciloscopio} & -1.3V                    & -1.4431V      & -1.3903V      \\ \hline
+\textbf{TL081}        & \multicolumn{3}{c|}{\textbf{Vout}}                       \\ \hline
+\textbf{Switches}     & $R_{S1}$ y $ R_{S2} = 0$ & $ R_{S2} = 0$ & $ R_{S1} = 0$ \\ \hline
+\textbf{Osciloscopio} & 0.338V                   & 0.348V        & 0.282V        \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
+
 Si bien estos fueron los resultados finales de la medición, inicialmente se tuvo el inconveniente de que había mucha interferencia de linea y el opamp terminaba saturando dado a la componente no inversora provista por el ruido de linea, el cual invertia el lazo de realimentacion y terminaba oscilando.
 Lo cual daba la siguiente señal.
 \begin{figure}[H]	
@@ -162,7 +167,7 @@ Lo cual daba la siguiente señal.
 	\caption{Circuito Oscilando.}
 	\label{fig:oscilando}
 \end{figure}
-Luego se volvio a medir en otro horario para el cual el ruido de linea no era tan intenso y  se pudo realizar una medición certera .Obteniendo para los valores de salida para la medición de $I_b^+$ y $I_b^-$. El aumento en el ruido de linea puede deberse a el instrumental que estaba siendo utilizado en el momento en el laboratorio.
+Luego se volvio a medir cambiando el capacitor por uno de 1$\mu F$ y  se pudo realizar una medición certera .Obteniendo para los valores de salida para la medición de $I_b^+$ y $I_b^-$. El aumento en el ruido de linea puede deberse a el instrumental que estaba siendo utilizado en el momento en el laboratorio.
 \begin{figure}[H]
 \centering
 \begin{minipage}{.5\textwidth}
@@ -178,28 +183,34 @@ Luego se volvio a medir en otro horario para el cual el ruido de linea no era ta
   \label{fig:ib-}
 \end{minipage}
 \end{figure}
-
+Esto se realizó con ambos operacionales a analizar.
 
 \subsubsection{Analisis de resultados.}
 A partir de los valores obtenidos en la   \ref{tab:vout} se pueden calcular las corrientes de offset y bias, al igual que la tension de offset.
 \begin{table}[H]
 \begin{center}
-\begin{tabular}{|c|c|c|c|l|}
+\begin{tabular}{|c|c|c|c|c|c|}
 \hline
-\textbf{$V_{offset}$} & \textbf{$I_b^+$} & \textbf{$I_b^-$} & \textbf{$I_{bias}$} & \textbf{$I_{offset}$} \\ \hline
--1.44mV & -159pA & -100pA & -130pA & 58.6pA \\ \hline
+\textbf{LF356} & \textbf{$V_{Offset}$} & \textbf{$I_b^+$} & \textbf{$I_b^-$} & \textbf{$I_{bias}$} & \textbf{$I_{Offset}$} \\ \hline
+               & -1.44mV                & -159pA           & -100pA           & -130pA               & 58.6pA                 \\ \hline
+\textbf{TL081} & \textbf{$V_{Offset}$} & \textbf{$I_b^+$} & \textbf{$I_b^-$} & \textbf{$I_{bias}$} & \textbf{$I_{Offset}$} \\ \hline
+\textbf{}      & 0.375mV                & 11.1pA           & 62pA             & 25.5pA               & 73.3pA                 \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
 Luego comparandola con la siguiente tabla de valores proporcionada por el fabricante:
 \begin{table}[H]
 \begin{center}
-\begin{tabular}{|c|l|l|c|l|l|}
+\begin{tabular}{|c|c|c|c|c|c|}
 \hline
-\multicolumn{6}{|c|}{\textbf{Datos de fabricante}}                                                                                                                                                       \\ \hline
-\multicolumn{3}{|c|}{\textbf{Máximo}}                                                                & \multicolumn{3}{c|}{\textbf{Típico}}                                                              \\ \hline
-\multicolumn{1}{|l|}{\textbf{$V_{offset}$}} & \textbf{$I_{bias}$}        & \textbf{$I_{offset}$}     & \multicolumn{1}{l|}{\textbf{$V_{offset}$}} & \textbf{$I_{bias}$}       & \textbf{$I_{offset}$}    \\ \hline
-10mV                                        & \multicolumn{1}{c|}{200pA} & \multicolumn{1}{c|}{50pA} & 3mV                                        & \multicolumn{1}{c|}{20pA} & \multicolumn{1}{c|}{3pA} \\ \hline
+\multicolumn{6}{|c|}{\textbf{Datos fabricante LF356}}                                                                                     \\ \hline
+\multicolumn{3}{|c|}{\textbf{Máximo}}                               & \multicolumn{3}{c|}{\textbf{Típico}}                                \\ \hline
+\textbf{$V_{Offset}$} & \textbf{$I_{bias}$} & \textbf{$I_{offset}$} & \textbf{$V_{Offset}$} & \textbf{$I_{bias}$} & \textbf{$I_{offset}$} \\ \hline
+10mV                  & 200pA               & 50pA                  & 3mV                   & 20pA                & 3pA                   \\ \hline
+\multicolumn{6}{|c|}{\textbf{Datos fabricante TL081}}                                                                                     \\ \hline
+\multicolumn{3}{|c|}{\textbf{Máximo}}                               & \multicolumn{3}{c|}{\textbf{Típico}}                                \\ \hline
+\textbf{$V_{Offset}$} & \textbf{$I_{bias}$} & \textbf{$I_{offset}$} & \textbf{$V_{Offset}$} & \textbf{$I_{bias}$} & \textbf{$I_{offset}$} \\ \hline
+10mV                  & 400pA               & 100pA                 & 3mV                   & 20pA                & 5pA                   \\ \hline
 \end{tabular}
 \end{center}
 \end{table}

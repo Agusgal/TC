@@ -60,6 +60,7 @@ El circuito propuesto por la catedra el cual será trabajado es el siguiente:
 Para este punto se obtuvieron los siguientes datos de la hoja de datos del opamp:
 \begin{table}[H]
 \begin{center}
+\label{tab:datos}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
 \multicolumn{5}{|c|}{\textbf{Datos}}                                      \\ \hline
@@ -214,6 +215,7 @@ Utilizando las ecuaciones (\ref{eq:Zin}), (\ref{eq:nodeInv}), (\ref{eq:thev}) y 
 Se puede llegar a la siguiente expresión:
 \begin{align}
 	Z_{in}(s)=\frac{1+\frac{s}{2\pi f_c}}{(1+\frac{s}{2\pi f_c}) \cdot \left( \frac{1}{R_1} - \frac{1}{(\frac{R_{Th}}{R_2}+1 ) \cdot R_1}\right) + \frac{G_0}{R_{Th}+R_2}}
+	\textbf{TENGO QUE REHACER ESTA CUENTA}
 \end{align}
 Tambien se puede observar en la ecuación (\ref{eq:Zin}) que si $A_{Vol}$ es infinito.
 \begin{align} V^- = V^+=0 \implies Z_{in}=R_1
@@ -282,6 +284,21 @@ El proposito de $R_4$ a primera vista no es evidente dado que la transferencia e
 \subsubsection{DC-Sweep.}
 Se realizó un barrido entre -VCC y VCC utilizando un generador de funciones con una rampa y un circuito inversor para llegar a la tension de salida necesitada dado a que el generador de funciones solo puede entregar 20Vpp.
 El comportamiento del opamp no es lineal para todo el rango de entradas, su comportamiento lineal se puede observar unicamente en el rango entre -Vsat y Vsat, tenienod tensiones de entrada máxima para cada caso las que se observan en la tabla (\ref{tab:maxin})
+Se registraron las siguientes mediciones:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/dc_sweep_c1.png}
+	\caption{DC-sweep Caso 1.}
+	\label{fig:dcc1}
+\end{figure} 
+Se puede observar en este caso como el opamp satura a partir de una rension mayor a 1.35 Volts como se predijo en le punto (a)
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/dc_sweep_c2.png}
+	\caption{DC-sweep Caso 2.}
+	\label{fig:dcc2}
+\end{figure} 
+En esta figura se ve como el comportamiento del opamp es lineal en la mayoria del espectro expeto en las puntas donde alli lo deja de ser como fue predicho en el punto (a) a unos $\approx$ 13.5 V
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Slew-Rate.}
 El slew-rate esta definido como la máxima variación temporal de la salida del opamp. El slew-Rate depende de 3 parametros siendo estos la frecuencia, la amplitud y la ganancia; esto siendo para una senoidal, pero dado que se puede desdcribir cualquier señal como una combinación lineal de senos se puede decir que el slewrate de una señal arbitraria tambien dependerá de estos parametros.
@@ -289,10 +306,24 @@ Si se le demanda a l opamp una tasa de cambio mayor a la soportada por le SR pro
 \begin{align}  SR= Max\left( \frac{\partial V_{Out}}{\partial t}\right)  \end{align}
 Utilizando una entrada senoidal de la forma.
 $$V_{in}=A\cdot \sin (\omega t)$$
-\begin{align}  \label{eq:sr} SR= Max\left( \frac{\partial (G\cdot A\cdot \sin (\omega t))}{\partial t}\right) = A \cdot \omega \cdot G  \end{align}
+\begin{align}   SR= Max\left( \frac{\partial (G\cdot A\cdot \sin (\omega t))}{\partial t}\right) = A \cdot \omega \cdot G  
+\label{eq:sr}
+\end{align}
 A partir de la expresión  (\ref{eq:sr}) se llega a una relacion que debe cumplir la señal de entrada para no presentar efectos de slew-rate. Esta limitacion tiene un grado de libertad, por lo tanto se puede elegir un parametro fijo y regular el otro, por ejemplo fijando la frecuencia de entrada se debera cumplir que:
 \begin{align} V_{in}	\leq \frac{SR}{G\cdot \omega_0}\end{align}
-
+Se midió el Slew-Rate  utilizando como entrada una senoidal obteniendo la siguiente medición:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/slew_rate1.png}
+	\caption{Medición Slew-Rate.}
+	\label{fig:SlewRate}
+\end{figure}
+De aqui utilizando la ecuación (\ref{eq:sr}) se obtiene que:
+\begin{align}
+SR \approx  0.38 \frac{V}{\mu s}
+\end{align}
+lo cual concuerda con lo provisto por el fabricante de la tabla (\ref{tab:datos})
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Respuesta en frecuencia.}
 Se midió la respuesta en frecuencia de la configuración en los diversos casos y se grafico junto a simulaciones hechas en spice y el calculo teórico.
 \begin{figure}[H]	
