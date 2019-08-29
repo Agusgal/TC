@@ -429,7 +429,17 @@ Se detalla que, con el mismo objetivo que se colocó un zócalo para el amplific
 Finalmente las borneras $J5$ y $J1$ son utilizados para alimentar a los operacionales y como salida del circuito respectivamente.
 
 \subsection{Detalles técnicos}
-Se suministró a la entrada $J4$ del circuito una rampa que cumplió la función de simular al LM35. Esta rampa barre valores desde $330 \ mV$ hasta $470 \ mV$, lo que permite que, al calibrar el sistema, se pueda observar la recta completa de salida, incluyendo las zonas
+Se suministró a la entrada $J4$ del circuito una rampa que cumplió la función de simular al LM35. Esta rampa barre valores desde $320 \ mV$ hasta $480 \ mV$, lo que permite que, al calibrar el sistema, se pueda observar la recta completa de salida, incluyendo las zonas donde se activa el diodo zener. De esta forma, se puede comparar la esta salida con la curva teórica mostrada en la Figura (\ref{fig:vout}).
+
+%\begin{figure}[H]
+%	\centering
+%	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/Teovsmed.png}
+%	\caption{Salida medida en comparación con la teórica.}
+%	\label{fig:comp}
+%\end{figure}
+
+Si bien se buscó la mayor calibración posible, es posible observar que existe una diferencia notable entre ambas curvas. Esto se observa en la zona donde las tensiones de salida del LM35 son cercanas a $450 \ mV$.   Dicho corrimiento puede explicarse al observar nuevamente la Figura (\ref{fig:r5-M2}), ya que en la zona previamente menciona es donde se ve mayor variación. Si también se considera las tolerancias de las demás resistencias, es entendible la existencia de dicho desfasaje. Una posible solución a este problema sería reemplazar las resistencias por de metal film por resistencias SMD, las cuales poseen 1\% de tolerancia.
+
 %Mediciones, corrientes/tensiones maximas, rango de temperatura, 
 
 %El LM35 es un circuito integrado cuya tensión de salida varía linealmente con la temperatura. Se desea que la
