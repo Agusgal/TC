@@ -1,12 +1,12 @@
 Board Information Report
-Filename     : C:\Users\Usuario\source\repos\TC\TP2\Ej1\Altium\Circuito2\PCB1.PcbDoc
+Filename     : C:\Users\ellon\source\repos\TC\TP2\Ej1\Altium\Circuito2\PCB1.PcbDoc
 Date         : 27/8/2019
-Time         : 00:22:40
-Time Elapsed : 00:00:00
+Time         : 12:21:00
+Time Elapsed : 00:00:01
 
 Routing Information
     Routing completion, 100,00%
-    Connections, 59
-    Connections routed, 59
+    Connections, 58
+    Connections routed, 58
     Connections remaining, 0
 count : 4

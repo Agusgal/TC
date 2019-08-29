@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : C:\Users\Acer\Desktop\GitHub\TC\TP2\Informe\Ejercicio5\Distortion_pedal\pedal.PcbDoc
+Date         : 27-Aug-19
+Time         : 3:38:24 PM
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100.00%
+    Connections, 50
+    Connections routed, 50
+    Connections remaining, 0
+count : 4
