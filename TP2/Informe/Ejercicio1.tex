@@ -3,7 +3,7 @@
 \begin{document}
 
 
-\section{Comportamiento de Amiplificadores Operacionales.}
+\section{Comportamiento de Amplificadores Operacionales.}
 
 \subsection{Introducción}
 En el presente punto se analizarán las limitaciones del amplificador operacional  \textbf{LM324} en las configuraciones inversora y no inversora.
@@ -328,7 +328,8 @@ La cual puede ser apreciada en el siguiente gráfico:
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Principales Caracteristicas.}
 En el caso que $R_3$ sea igual a 0 a la salida del opamp deberia haber 0V, esto no es la realidad dado a que existe una tensión de offset la cual será analizada en la seccion 3 de este informe.
-El proposito de $R_4$ a primera vista no es evidente dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Obteniendo el valor de la datasheet se sabe que $I_{Max}=20mA$} que puede aportar el opamp se llego a  que el proposito de $R_4$ es limitar la corriente por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$ 
+El proposito de $R_4$ a primera vista no es evidente dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Obteniendo el valor de la datasheet se sabe que $I_{Max}=20mA$} que puede aportar el opamp se llego a  que el proposito de $R_4$ es limitar la corriente por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$ .
+Otra funcion para la $R_4$ es el limitar la corriente del lazo.
 %%%%%%%%%%%%%%%%%%%%
 \subsubsection{DC-Sweep.}
 Se realizó un barrido entre -VCC y VCC utilizando un generador de funciones con una rampa y un circuito inversor para llegar a la tension de salida necesitada dado a que el generador de funciones solo puede entregar 20Vpp.
@@ -355,7 +356,14 @@ En esta figura se ve como el comportamiento del opamp es lineal en la mayoria de
 	\label{fig:dcc3}
 \end{figure} 
 Finalmente en esta figura se ve que el opamp tiene comportamiento lineal para todos los valores de la rampa
-Otro efecto alineal del amplificador operacional que fue observado es el efecto de Cross-over el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional , uno puede evitar tener que lidear con ese problema al agregar una tensión de offset de continua que baste para polarizar los transistores, en este trabajo los valores utilizados fueron 0.7V ó 1.4V.
+Otro efecto alineal del amplificador operacional que fue observado es el efecto de Cross-over el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional , uno puede evitar tener que lidear con ese problema al agregar una tensión de offset de continua que baste para polarizar los transistores, en este trabajo los valores utilizados fueron 0.7V ó 1.4V; Este efecto se hace notar como una desformación a llanura en la transición por 0 V como  se puede apreciar en la figura (\ref{fig:co})
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/CrossOver.png}
+	\caption{Señal con Cross-Over.}
+	\label{fig:co}
+\end{figure} 
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Slew-Rate.}
 El slew-rate esta definido como la máxima variación temporal de la salida del opamp. El slew-Rate depende de 3 parametros siendo estos la frecuencia, la amplitud y la ganancia; esto siendo para una senoidal, pero dado que se puede desdcribir cualquier señal como una combinación lineal de senos se puede decir que el slewrate de una señal arbitraria tambien dependerá de estos parametros.
@@ -422,6 +430,9 @@ Aqui deberia decir algo util
 	\label{fig:BodephC3}
 \end{figure} 
 Para las mediciones del tercer caso se presento el problema de que al estar atenuando y la señal a medir se encontraba cerca del pisod e ruido a altas frecuencias y era complicado realizar las mediciones. Algo que se puede apreciar en esta medicion es la aparición de un sobrepico ne las mediciones. Estas mediciones fueron hechas con una punta \textbf{x10} la cual introdujo un polo mas y se armó un sistema de segundo orden el cual agrega el sobrepico.
-\subsubsection{Concluciones.}
+\subsubsection{Limitaciones.}
+Algunas limitaciones con las cuales se lidaron al utilizar este operacional fueron la intervención del slew-rate, el efecto de cross-over, la saturación del mismo.
+En el caso de que se quiera trabajar con una señal cuadrada  de 1 Vpp en un rango de frecuencias de 0.3MHz~2MHz con un Duty Cycle entre 20\% y 80\% ...
+Viendo que ... Se encontraron 3 amplificadores operacionaes que pueden ser utilizados con una señal de las caracteristicas recien mencionadas, agregandole que tenga un valor medio 0 y un DT de 50\% loa cules son: ...
 \subsection{Configuración No-inversora.}
 \end{document}
