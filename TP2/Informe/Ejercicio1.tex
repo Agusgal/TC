@@ -356,7 +356,7 @@ En esta figura se ve como el comportamiento del opamp es lineal en la mayoria de
 	\label{fig:dcc3}
 \end{figure} 
 Finalmente en esta figura se ve que el opamp tiene comportamiento lineal para todos los valores de la rampa
-Otro efecto alineal del amplificador operacional que fue observado es el efecto de Cross-over el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional , uno puede evitar tener que lidear con ese problema al agregar una tensión de offset de continua que baste para polarizar los transistores, en este trabajo los valores utilizados fueron 0.7V ó 1.4V; Este efecto se hace notar como una desformación a llanura en la transición por 0 V como  se puede apreciar en la figura (\ref{fig:co})
+Otro efecto alineal del amplificador operacional que fue observado es el efecto de Cross-over el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional; uno puede evitar tener que lidear con ese problema al agregar una tensión de offset de continua que baste para polarizar los transistores, en este trabajo los valores utilizados fueron 0.7V ó 1.4V; otra manera es tener una señal con valor medio mayor a $\approx$ 0.7v. Este efecto se hace notar como una desformación a llanura en la transición por 0 V como  se puede apreciar en la figura (\ref{fig:co})
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/CrossOver.png}
@@ -432,7 +432,7 @@ Aqui deberia decir algo util
 Para las mediciones del tercer caso se presento el problema de que al estar atenuando y la señal a medir se encontraba cerca del pisod e ruido a altas frecuencias y era complicado realizar las mediciones. Algo que se puede apreciar en esta medicion es la aparición de un sobrepico ne las mediciones. Estas mediciones fueron hechas con una punta \textbf{x10} la cual introdujo un polo mas y se armó un sistema de segundo orden el cual agrega el sobrepico.
 \subsubsection{Limitaciones.}
 Algunas limitaciones con las cuales se lidaron al utilizar este operacional fueron la intervención del slew-rate, el efecto de cross-over, la saturación del mismo.
-En el caso de que se quiera trabajar con una señal cuadrada  de 1 Vpp en un rango de frecuencias de 0.3MHz~2MHz con un Duty Cycle entre 20\% y 80\% ...
-Viendo que ... Se encontraron 3 amplificadores operacionaes que pueden ser utilizados con una señal de las caracteristicas recien mencionadas, agregandole que tenga un valor medio 0 y un DT de 50\% loa cules son: ...
+En el caso de que se quiera trabajar con una señal cuadrada  de 1 Vpp en un rango de frecuencias de 0.3MHz~2MHz con un Duty Cycle entre 20\% y 80\%  no funcionará dado a que se presentaran problemas de slew-Rate. Se presentarán problemas de Cross-Over cuando la media de la señal no supere los 0.7V.
+Viendo que el opamp LM324 no funcionaría para esta aplicación se encontraron X amplificadores operacionaes que pueden ser utilizados con una señal de las caracteristicas recien mencionadas, agregandole que tenga un valor medio 0 y un DT de 50\% loa cules son: TL084,
 \subsection{Configuración No-inversora.}
 \end{document}
