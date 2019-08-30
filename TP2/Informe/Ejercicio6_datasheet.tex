@@ -1,0 +1,82 @@
+\documentclass[a4paper]{article}
+
+\include{Header.tex}
+
+\usepackage{float}
+\usepackage{graphicx}
+
+%\usepackage{multicol}
+
+\usepackage[american voltage]{circuitikz}
+
+\usepackage{amsmath}
+
+\usepackage{xcolor}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\begin{document}
+
+\twocolumn[
+
+\subsection{Datasheet}
+\begin{center}
+\rule{\textwidth}{1pt}
+\textsc{Sensor de temperatura TCG3 \textsuperscript{\textregistered}}
+\rule{\textwidth}{1pt}
+\end{center}
+]
+
+\begin{enumerate}
+	\item[1] \textbf{Características}
+	\begin{itemize}
+		\item Sistema de calibración en Celsius (Cenrigrados).
+		\item Dependencia lineal con la temperatura.
+		\item Opera entre $32^{\circ}C$ a $48^{\circ}C$.
+		\item Pierde dependencia lineal con temperaturas cercanas a $45^{\circ}C$.
+		\item Salida acotada entre $-0.7 \ V$ y $5.6 \ V$.
+	\end{itemize}
+	
+	\item[2] \textbf{Descripción}\\
+		El \textsc{Sensor de temperatura TCG3~\textsuperscript{\textregistered}} es un circuito que permite la medición de temperatura en un rango de entre $35^{\circ}C$ a $45^{\circ}C$ proporcionando una tensión de salida de linealmente dependiente en dicho intervalo. En rangos mayores de temperatura, la tensión pierde su linealidad saturando la salida. El dispositivo requiere doble fuente de alimentación, una para el funcionamiento del transistor interno (entre $4 \ V$ y $20 \ V$), y otra para los amplificadores operacionales ($\pm 18 \ V$). Posee sistema de calibración que permite ajustar la tensión de salida ante posibles desfases.
+	
+	\item[3] \textbf{Alimentación}\\
+	\begin{table}[H]
+		\begin{tabular}{ccccc}
+			\hline
+			%\textbf{Tensión} & \textbf{Min} & \textbf{Sugerido} & \textbf{Max} & \textbf{Unidad} \\			
+			Tensión & Min & Sugerido & Max & Unidad \\
+			\hline
+			$V_s$       & 4   & 10       & 20  & V      \\
+			$V_in$      & 300 & -        & 500 & mV     \\
+			$Vcc$         & 10  & 12       & 18  & V      \\
+			$-Vcc$        & -10 & -12      & -18 & V	\\
+			\hline
+		\end{tabular}
+	\end{table}
+	
+	\item[4] \textbf{Calibración}\\
+		Es recomendable emplear $J4$ para calibrar el circuito simulando al tensión de salida del transistor a una tensión conocida: $V_{in} = 10 \frac{mV}{^{\circ}C} \ T$. Proporcionar una tensión conocida en $V_{in}$ y calibrar punto a punto la salida. Valerse del uso de $R_5$ y $R_8$ para ajustar la pendiente y el offset de salida respectivamente. Se recomienda utilizar en $Vcc$ y $-Vcc$ los valores indicados de $12 \ V$ y $-12 \ V$ respectivamente, pero pueden variarse en función de la calibración, ya que la tensión de salida depende de $Vcc$. Se puede valer del uso del pin $TP8$ para calibrar el circuito: la tensión en dicho punto debe ser de $350 \ mV$ independientemente de la temperatura. La tensión en dicho pin es proporcional a $Vcc$. Se recomienda ajustar $R_8$ para cambios de $Vcc$.
+
+	\item[5] \textbf{Modelo equivalente}\\
+	
+		$V_{out} = 0.5 \frac{V}{^{\circ}C} \ T - 17.5 \ V$	
+	
+		\begin{figure}[H]
+		\begin{center}
+		\begin{circuitikz}
+		\draw	(0,0) to[short] ++(1,0) to[short, -o] ++ (0,0.5)node[label=north:$Vcc$]{};
+		\draw	(0,0) to[open] ++(1,0) to[short] ++ (1,0) to[short] ++(0,-0.5) to[short, -o] ++(0.5,0)node[label=south:$V_{out}$]{};
+		\draw	(0,0) to[open] ++(2,0) to[open] ++(0,-0.5) to[short] ++(0,-0.75) to[short, -o] ++(0.5,0);
+		\draw	(0,0) to[open] ++(2,0) to[open] ++(0,-0.5) to[open] ++(0,-0.75) to[short] ++(0,-0.5) to[short] ++(-1,0) to[short, -o] ++(0,-0.5)node[label=south:$-Vcc$]{};
+		\draw	(0,0) to[short] ++(0,-0.5) to[short, -o] ++(-0.5,0)node[label=south:$V_{s}$]{};
+		\draw	(0,0) to[open] ++(0,-0.5) to[short] ++(0,-0.75) to[short, -o] ++(-0.5,0);
+		\draw	(0,0) to[open] ++(0,-1.25) to[short] ++(0,-0.5) to[short] ++(1,0);
+		\draw	(0,0) to[open] ++(1,-1.25)node[label=$TCG3$]{};	
+		\end{circuitikz}
+		\end{center}
+		\end{figure}
+\end{enumerate}
+
+\end{document}

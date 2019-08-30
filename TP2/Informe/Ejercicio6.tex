@@ -400,7 +400,6 @@ Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos 
 Una explicación posible a los resultados observados en las Figuras (\ref{fig:mcm1}) y (\ref{fig:mcm2}) es el orden de disposición de los operacionales. En el segundo caso, primero se coloca un restador, el cual amplia las señales introducidas a ambos bornes por un factor de 10 y las resta, para luego ampliar la señal resultante por un factor de 5. La ventaja que presenta este orden es que, al restarlas y amplificarlas primero, se puede eliminar, en cierta parte, el posible ruido existente, ya que se puede afirmar que, a bajas frecuencias (como lo es el ruido ambiente existente, de aproximadamente $50 \ Hz$), las perturbaciones tanto en el borne inversor como en el no inversor, son similares entre sí. Al hacer primero la comparación, se logra minimizar estas variaciones parásitas.
 
 \subsection{Modo de uso}
-%alimentacion, lectura, calibracion
 
 Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se modeló este último en Altium. Como se mencionó previamente, se colocaron dos presets para poder calibrar el circuito, los cuales son representados por las resistencias $R_5$ y $R_8$ en la Figura (\ref{fig:schematic}). Se seleccionó $R_5 = 2 \ k\Omega$ y $R_8 = 5 \ k\Omega$, ya que ambos poseen la mínima resistencia entre los bornes de los extremos tal que la impedancia adecuada se encuentre dentro de este rango (se recuerda que $R_5$ debe ser próximo a $ 1 \ k\Omega$ y $R_8$ a $ 3 \ k\Omega$).
 
@@ -437,14 +436,6 @@ Se suministró a la entrada $J4$ del circuito una rampa que cumplió la función
 \end{figure}
 
 Comparando ambas curvas se puede observar que la mayor discrepancia entre estas, se encuentra en las más altas tensiones. Se observa que la tensión medida posee una ligera diferencia en la pendiente. Además, los efectos del diodo zener comienzan a tener mayor peso antes de lo deseado. Dicho corrimiento puede explicarse al observar nuevamente las Figuras (\ref{fig:r5-M2}) y (\ref{fig:r4-M1}), ya que en la zona previamente menciona es donde se ve mayor variación. Además, es importante considerar las tolerancias de las resistencias, ya que el circuito es sensible a estos cambios. Una posible solución a este problema sería reemplazar las por resistencias SMD, las cuales poseen 1\% de tolerancia, disminuyendo la variación previamente dicha y el uso de un diodo zener diferente, el cuál comience a conducir a tensiones mayores (siempre y cuando, este respete la limitación de los $6 \ V$).
-
-%Mediciones, corrientes/tensiones maximas, rango de temperatura, 
-%El LM35 es un circuito integrado cuya tensión de salida varía linealmente con la temperatura. Se desea que la señal pueda ser adquirida por un sistema con (por ejemplo, un conversor analógico/digital) con tensión de entrada variable entre 0V y 5V .
-%a. Diseñar un circuito utilizando el LM35 que adapte la señal para que pueda ser adquirida con máxima excursión para temperaturas que varíen entre 35◦C y 45◦C (35◦C ! 0V − 45◦C ! 5V ).
-%b. Implementar el circuito en placa multiperforada o PCB.
-%c. Diseñar un método de calibración del circuito para que se cumpla la especificación.
-%d. El circuito debe contar con una protección de forma tal de que la tensión de salida no se encuentre por debajo de −1V ni por encima de 6V .
-%e. Incluir en el informe un datasheet de la implementación final, incluyendo toda la información relevante.
 
 
 \end{document}
