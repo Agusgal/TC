@@ -1,5 +1,11 @@
 \input{Header.tex}
+
 \newcommand\underrel[2]{\mathrel{\mathop{#2}\limits_{#1}}}
+
+\usepackage{circuitikz}
+\usepackage{xcolor}
+\usepackage{amsmath}
+
 \begin{document}
 
 
@@ -8,148 +14,194 @@
 \subsection{Introducción}
 En el presente punto se analizarán las limitaciones del amplificador operacional  \textbf{LM324} en las configuraciones inversora y no inversora.
 
-Un amplificador operacional es un dispositivo electronico el cual dependiendo de la tension de entrada fija una tensión de salida.
-El cual se puede modelar de la siguiente forma:
+Un amplificador operacional es un dispositivo electrónico el cual, dependiendo de la tensión de entrada, fija una tensión de salida. Estos se pueden modelar de la siguiente forma:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{Ejercicio1/Imagenes/Basicopamp.png}
 	\caption{Modelo básico del amplificador operacional.}
 	\label{fig:Basicopamp}
 \end{figure}
-donde típicamente $R_{in}\approx \infty$ y $R_{Out} \approx 0$
-%%%%%%%%%%%%%%
+donde típicamente $R_{in}\approx \infty$ y $R_{out} \approx 0$
+
 \subsubsection{Modelo Ideal}
-En el modelo ideal realimentado las hipotesis con las que se trabaja es que:
-\begin{align}
-V^+ = V^-\end{align}
-
-\begin{align}V_{Out} \underrel{A_{Vol}\to \infty}{=} A_{Vol} \cdot (V^+ - V^-)\end{align}
-
+En el modelo ideal realimentado las hipótesis con las que se trabaja es que:
+\begin{align} V^+ = V^- \end{align}
+\begin{align}V_{Out} \underrel{A_{Vol}\to \infty}{=} A_{Vol} \cdot (V^+ - V^-) \end{align}
 \begin{align} R_{in}=\infty   \thinspace;\thinspace R_{Out} = 0 \end{align}
 %\begin{align}  \end{align}
+
 \subsubsection{Modelo $A_{Vol}$ finito}
 Para este modelo se le agregan idealidades al modelo anterior.
 \begin{align}V_{Out} = A_{Vol} \cdot (V^+ - V^-)
 \label{eq:vout}
 \end{align}
-Si bien la realimentacion negativa intentará hacer que la diferencia entre $V^+ y V^-$ sea 0 no es algo que se va a asumir en este modelo.
+Si bien la realimentación negativa intentará hacer que la diferencia entre $V^+$ y $V^-$ sea 0, no es algo que se asume en este modelo.
+
 \subsubsection{Modelo Polo dominante}
-Este modelo es el mas cercano a la realidad que trataremos, los amplificadores operacionales poseen un polo dominante, el cual está diseñado adrede para cubrir algunos problemas que surgen
-al trabajar con mayores frecuencias. Los amplificadores operacionales tienen una serie de polos debido a capacidades paracitas propias de la construccion, el  polo dominante es introducido para evitar que estos polos des-estabilicen el circuito al introducir una inversión en el lazo de realimentación 
+Este modelo es el más cercano al real que se trata en el presente trabajo. Los amplificadores operacionales poseen un polo dominante, el cual está diseñado intencionalmente por el fabricante, para cubrir algunos problemas que surgen al trabajar con mayores frecuencias. Los amplificadores operacionales tienen una serie de polos debido, a capacidades parásitas propias de la construcción. El polo dominante es introducido para evitar que estos polos des-estabilicen el circuito al introducir una inversión en el lazo de realimentación.
+
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/dompole.png}
 	\caption{Modelo polo dominante.}
 	\label{fig:dompole}
 \end{figure}
-El polo dominante soluciona estos problemas de establidad.Tambien define un Ancho de banda con el cual se puede trabajar; comunmente el dato con el que se trabaja es el GBP (Gain Bandwidth Product) el cual sigue la siguiente relación:
+
+El polo dominante soluciona estos problemas de estabilidad. También se define un ``Ancho de Banda'', con el cual se puede trabajar; comúnmente el dato con el que se trabaja es el conocido como GBP (Gain Bandwidth Product), el cual sigue la siguiente relación:
+
 \begin{align} GBP= A_{Vol} \cdot \omega' \end{align}
-Donde $\omega'$ es la frecuencia del polo dominante a lazo abierto.
-Tambien se cumple que 
+
+donde $\omega'$ es la frecuencia del polo dominante a lazo abierto. También se cumple que 
+
 \begin{align} GBP=\omega \cdot G \end{align}
-Donde $\omega$ es la frecuencia de corte del circuito en el que este aplicado y G la ganancia del mismo.
-Finalmente la ecuación principal que rige este modelo es la ecuación (\ref{eq:vout}) con la singularidad de que:
+
+donde $\omega$ es la frecuencia de corte del circuito en el que esté aplicado y G la ganancia del mismo.
+Finalmente la ecuación principal que rige este modelo es (\ref{eq:vout}) con la singularidad de que:
 \begin{align} A_{Vol} = A_{Vol}(\omega ) = \frac{A_{vol}}{1+\frac{s}{\omega '}} \end{align}
 
-\subsection{Configuración inversora.}
-El circuito propuesto por la catedra el cual será trabajado es el siguiente:
+\subsection{Configuración inversora y no inversora.}
+La cátedra propone dos modelos de circuitos diferentes, ambos son los siguientes:
 
-\begin{figure}[htb]	
-	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio1/Imagenes/Circuitoinversor.PNG}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-3,0) to[R, l = $R_1$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
+	\draw (A1.-) to[open] ++(-2,0) to[R, l_= $R_3$] ++(0,-2) node[ground]{};
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_2$] ++(3,0) to[short] ++(0,-2) to[R, l = $R_4$] ++(0,-1.5) node[ground]{};
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
+	\end{circuitikz}
 	\caption{Configuración inversora.}
 	\label{fig:ConfInv}
+\end{center}
 \end{figure}
-Para este punto se obtuvieron los siguientes datos de la hoja de datos del opamp:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1.5,0) to[R, l_=$R_1$] ++(-1.5,0) to[short] ++(-1,0) node[ground]{};
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_2$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$] ++(0,-3) node[ground]{};
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_3$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
+	\end{circuitikz}
+	\caption{Configuración no inversora.}
+	\label{fig:ConfNoInv}
+\end{center}
+\end{figure}
+
+Para ambos, y debido a que se utiliza el mismo operacional en cada caso, se obtuvieron los siguientes datos de la hoja de datos del fabricante:
 \begin{table}[H]
 \begin{center}
 \label{tab:datos}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-\multicolumn{5}{|c|}{\textbf{Datos}}                                      \\ \hline
-\textbf{$A_{vol}$} & Max$V_{in}$ & $V_{cm}$ & Slew rate             & GBW \\ \hline
-100 k              & 32V         & VCC-1.5  & 0.3 $\frac{V}{\mu s}$ & 1M  \\ \hline
+\multicolumn{5}{|c|}{\textbf{Datos pertinentes al operacional}}                                      \\ \hline
+\textbf{$A_{vol}$} & $Max \ V_{in}$ & $V_{cm}$ & Slew rate             & GBW \\ \hline
+100 k              & $32 \ V$         & $VCC \ - \ 1.5 \ V$  & 0.3 $\frac{V}{\mu s}$ & $1 \ MHz$  \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Calculo Analítico del Circuito.}
-Lo primero que se hizo fue utilizar el equivalente de thevenin.\\
+\subsubsection{Calculo Analítico del Circuito Inversor.}
+Lo primero que se realizó fue utilizar el equivalente de Thevenin para simplificar los cálculos analíticos.
 
-\begin{figure}[htb]	
-	\centering
-	\includegraphics[width=0.7\textwidth]{Ejercicio1/Imagenes/Thevenin.PNG}
-	\caption{Aplicacion teorema de Thevenin.}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_{Thevenin}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{Thevenin}$]{} ++(-0.5,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_2$] ++(3,0) to[short] ++(0,-2) to[R, l = $R_4$] ++(0,-1.5) node[ground]{};
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
+	\end{circuitikz}
+	\caption{Equivalente de Thevenin del circuito inversor.}
 	\label{fig:Thevenin}
+\end{center}
 \end{figure}
 
-Luego de esta transformación es mas sencillo realizar los calculos analíticos.
 Teniendo en cuenta que 
-\begin{align}V_{Thevenin} = V_{in} \cdot \frac{R_3}{R_1+R_3}  \thinspace  R_{Thevenin} = \frac{R_1\cdot R_3}{R_1+R_3}
+\begin{align}
+	V_{Thevenin} = V_{in} \cdot \frac{R_3}{R_1+R_3} \\
+	R_{Thevenin} = \frac{R_1\cdot R_3}{R_1+R_3}
 \label{eq:thev}
 \end{align} 
 
-El cálculo se realizara para el caso generico y una ves terminado el desarrollo se tomaran las aproximaciones para los diversos escenarios pedidos.
+El cálculo es realizado para el caso genérico y una vez terminado el desarrollo se toman las aproximaciones necesarias para los diversos casos pedidos.
 \begin{align}
 V_{Out}= A_{Vol}(\omega) \cdot (V^+ - V^-)
+\label{equ:avoligualvo}
 \end{align}
 \begin{align}
 V^+=0\end{align}
 \begin{align}\frac{V_{Th}-V^-}{R_{Th}}=\frac{V^--V_{Out}}{R_2}
 \label{eq:nodeInv}
 \end{align}
+
 Despejando para $V_{Out}$ se llega a que:
 \begin{align}
 \label{eq:Vout}
 V_{Out}=-V_{in} \cdot \frac{R_3}{R_1+R_3} \cdot \frac{\frac{R_2}{R_{Th}+R_2}\cdot A(\omega)}{1+\frac{R_{Th}}{R_{Th}+R_2}\cdot A(\omega)}
 \end{align}
-Teniendo en cuenta que la transferencia será $ H(s)=\frac{V_{Out}}{V_{in}}$.\\
-Para el caso de $A_{Vol}=\infty$ simplemente bastará con tomar:
-\begin{align}\lim_{A_{Vol}\to\infty} - \cdot \frac{R_3}{R_1+R_3} \cdot \frac{\frac{R_2}{R_{Th}+R_2}\cdot A(\omega)}{1+\frac{R_{Th}}{R_{Th}+R_2}\cdot A(\omega)} = -\frac{R_3}{R_1+R_3}\cdot\frac{R_2}{R_{Th}}=-\frac{R_2}{R_1}\end{align}
 
-Para el caso de $A_{Vol}$ finito solamente se reescribira la ecuación \ref{eq:Vout}.
+Teniendo en cuenta que la transferencia es $ H(s)=\frac{V_{Out}}{V_{in}}$.\\
+Para el caso de $A_{Vol}=\infty$ simplemente basta tomar:
+\begin{align}\lim_{A_{Vol}\to\infty} - \frac{R_3}{R_1+R_3} \cdot \frac{\frac{R_2}{R_{Th}+R_2}\cdot A(\omega)}{1+\frac{R_{Th}}{R_{Th}+R_2}\cdot A(\omega)} = -\frac{R_3}{R_1+R_3}\cdot\frac{R_2}{R_{Th}}=-\frac{R_2}{R_1}\end{align}
+
+Para el caso de $A_{Vol}$ finito solamente se reescribirá (\ref{eq:Vout}).
 
 \begin{align}
 H(s)= -\frac{R_2\cdot A_{Vol}}{R_1\cdot R_3+R_1\cdot R_3 \cdot A_{Vol} +R_2\cdot R_3+R_2\cdot R_1}
 \label{eq:AvolFinite}
 \end{align}
 
-Finalmente el caso el cual incluye el polo dominante bastará con tomar 
+Finalmente el caso el cual incluye el polo dominante alcanza con tomar: 
 
 \begin{align}A_{Vol}(\omega)=A_0 \cdot \frac{1}{1+\frac{s}{\omega'}}
 \label{eq:PoloDom}
 \end{align}
-Donde $\omega'$ es la frecuencia del polo dominante.\\
-Utilizando las ecuaciones (\ref{eq:AvolFinite}) y (\ref{eq:PoloDom})
-Se llega a la expresión:
+
+donde $\omega'$ es la frecuencia del polo dominante. Utilizando (\ref{eq:AvolFinite}) y (\ref{eq:PoloDom}) se llega a la expresión:
 \begin{align}
 \label{eq:polodom}
 H(s)=-\frac{A_0R_2R_3}{A_0R_1R_3+R_1R_2+R_1R_3+R_2R_3} \cdot\frac{1}{1+\frac{s}{\omega' \cdot \frac{A_0R_1R_3+R_1R_2+R_1R_3+R_2R_3}{R_1R_2+R_1R_3+R_2R_3}}}
 \end{align}
 
-De la ecuación \ref{eq:polodom} se obtiene la frecuencia de corte del sistema.
+De (\ref{eq:polodom}) se obtiene la frecuencia de corte del sistema.
 \begin{align}
 f_c=\frac{\omega'}{2\pi} \cdot \frac{A_0R_1R_3+R_1R_2+R_1R_3+R_2R_3}{R_1R_2+R_1R_3+R_2R_3}
 \end{align}
-Teniendo en cuenta que
+Luego, teniendo en cuenta que
 \begin{align}
-\omega'=\frac{GBW}{A_0} = 2 \pi\cdot 10Hz \approx 
+\omega'=\frac{GBW}{A_0} = 2 \pi\cdot 10 \ Hz \approx 62.83 \ Hz
 \end{align}
 
-Para nuestro grupo los valores de resistencias fueron los del siguiente cuadro:
+Para este grupo, los valores de resistencias asignados se presentan a continuación:
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Caso:}              & \textbf{1}               & \textbf{2}               & \textbf{3}                \\ \hline
-$R_1=R_3$                   & 7k5                      & 7k5                      & 75k                       \\ \hline
-$R_2$                       & 75k                      & 7k5                      & 7k5                       \\ \hline
-\multicolumn{1}{|c|}{$R_4$} & \multicolumn{1}{l|}{30k} & \multicolumn{1}{l|}{30k} & \multicolumn{1}{l|}{300k} \\ \hline
+$R_1=R_3$                   & $7.5$                      & $7.5$                      & $75$                       \\ \hline
+$R_2$                       & $75$                       & $7.5$                      & $7.5$                       \\ \hline
+\multicolumn{1}{|c|}{$R_4$} & \multicolumn{1}{l|}{$30$} & \multicolumn{1}{l|}{$30$} & \multicolumn{1}{l|}{$300$} \\ \hline
 \end{tabular}
+\caption{Valores de resistencias en $k\Omega$}
+\label{tabla:resasignadas}
 \end{center}
 \end{table}
-Para lo cual se calculó la ganancia para el caso de $A_{Vol}$ finito e infinito y la frecuencia de corte del sistema para el caso de $A(\omega)$
+
+Para estos casos se calculó la ganancia considerando $A_{Vol}$ finito e infinito. Además, se calculó la frecuencia de corte del sistema para $A(\omega)$.
+
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
@@ -157,35 +209,41 @@ Para lo cual se calculó la ganancia para el caso de $A_{Vol}$ finito e infinito
 \textbf{Caso}            & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
 \textbf{$H(s)_{\infty}$} & 10         & 1          & 0.1        \\ \hline
 \textbf{$H(s)_{Finito}$} & 9.9998     & 0.9999     & 0.0999     \\ \hline
-\textbf{$f_c$}           & 47.62KHz   & 333.34KHz  & 833.34     \\ \hline
+\textbf{$f_c$}           & 47.62 kHz   & 333.34 kHz  & 833.34 kH     \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
-Luego se procedió a realizar los graficos de $A_{Vol(\omega)}$ para cada uno de los 3 casos.
+
+Luego se procedió a realizar los graficos de $A_{Vol}(\omega)$ para cada uno de los 3 casos.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/HCompC1.png}
-	\caption{$A_{Vol(\omega)}$ Caso 1.}
+	\caption{$A_{Vol}(\omega)$ Caso 1.}
 	\label{fig:AvolC1}
 \end{figure}
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/HCompC2.png}
-	\caption{$A_{Vol(\omega)}$ Caso 2.}
+	\caption{$A_{Vol}(\omega)$ Caso 2.}
 	\label{fig:AvolC2}
 \end{figure}
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/HCompC3.png}
-	\caption{$A_{Vol(\omega)}$ Caso 3.}
+	\caption{$A_{Vol}(\omega)$ Caso 3.}
 	\label{fig:AvolC3}
 \end{figure}
-Se puede apreciar que cuanto mas baja la ganancia mayor será el ancho de banda y que a partir de la frecuencia de corte cada sistema el opamp comienza a atenuar.
-El error de utilizar el caso de $A_{Vol}$ ideal en vez del caso con polo dominante se calculo como:
+
+Se puede apreciar que cuanto más baja la gananci, mayor será el ancho de banda, y que a partir de la frecuencia de corte cada sistema el opamp comienza a atenuar.
+
+
+El error de utilizar el caso de $A_{Vol}$ ideal en lugar del caso con polo dominante se calculó como:
 \begin{align}
 	Error = \frac{|A_{Vol}(\omega)-A_{Vol-Ideal}|}{A_{Vol}(\omega)}
 \end{align}
-Obteniendo los siguientes gráficos.
+
+obteniendo los siguientes gráficos:
+
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/error1.png}
@@ -204,24 +262,136 @@ Obteniendo los siguientes gráficos.
 	\caption{Error relativo por aproximar Caso 3.}
 	\label{fig:e3}
 \end{figure}
-de aqui se puede concluir que utilizar la aproximación ideal se puede utilizar siempre que se tengan en cuenta el error que uno este dispuesto a aceptar.
+
+De estos, es posible concluir que se puede utilizar la aproximación ideal siempre y cuando se tengan en cuenta el error que uno comete y sea aceptable.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsubsection{Calculo Analítico del Circuito No Inversor.}
+
+De la misma forma que en el circuito inversor, se decidió aplicar el teorema de Thevenin.
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$] ++(-1.5,0) to[short] ++(-0.5,0) node[ground]{};
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_2$, i<_= $I_f$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_{Thevenin}$] ++(-1.5,0) to[short, -o] node[ocirc,label=left:$V_{Thevenin}$]{} ++(-0.5,0);
+	\end{circuitikz}
+	\caption{Equivalente de Thevenin del circuito inversor.}
+	\label{fig:noinvThevenin}
+\end{center}
+\end{figure}
+
+Siendo 
+\begin{align}
+	V_{Thevenin} = V_{in} \cdot \frac{R_4}{R_4+R_3} \\
+	R_{Thevenin} = \frac{R_4\cdot R_3}{R_4+R_3}
+\label{eq:noinvthev}
+\end{align} 
+
+Utilizando (\ref{equ:avoligualvo}) y planteando además
+
+\begin{equation}
+	V^+ = V_{Thevenin}
+	\label{equ:noinvv+}
+\end{equation}
+
+\begin{equation}
+	V^- = I_f R_1
+\end{equation}
+
+\begin{equation}
+	V_{out} - I_f R_1 = V^-
+\end{equation}
+
+y operando algebraicamente, se puede demostrar que
+
+\begin{equation}
+	H \left(s \right) =\frac{A_{0}}{R_3} \cdot	\frac{R_3 // R_4}{1 \ + \ A_{0} \frac{R_1 // R_2}{R_2} } \cdot \left[ \frac{s}{\omega' \cdot \left( 1 + A_{0} \frac{R_1 // R_2}{R_2} \right)}  \ + \ 1 \right]^{-1}
+	\label{equ:noinvtransferencia}
+\end{equation}
+
+considerando para este caso (\ref{eq:PoloDom}).
+
+Para el caso de $A_{Vol}=\infty$ simplemente basta tomar:
+\begin{align}
+	\lim_{A_{Vol}\to\infty} H \left(s \right) = \frac{R_3 // R_4}{R_3} \cdot \frac{R_2}{R_1 // R_2}
+\end{align}
+
+Por otro lado, para $A_{Vol}$ finito solamente ...
+
+\begin{center}
+\textcolor{red}{\textbf{COMPLETAR}}
+\end{center}
+
+De (\ref{equ:noinvtransferencia}) se tiene que
+
+\begin{equation}
+	f_c = \frac{\omega'}{2 \pi}\cdot \left( 1 + A_{0} \frac{R_1 // R_2}{R_2} \right)
+\end{equation}
+
+Reemplazando con los valores presentados en la Tabla (\ref{tab:datos}), se llega a ...
+
+\begin{center}
+\textcolor{red}{\textbf{COMPLETAR}}
+\end{center}
+
+Nuevamente se calculó la ganancia considerando $A_{Vol}$ finito e infinito. Además, se calculó la frecuencia de corte del sistema para $A(\omega)$.
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Caso}            & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
+\textbf{$H(s)_{\infty}$} & x         & x          & x        \\ \hline
+\textbf{$H(s)_{Finito}$} & x     & x     & x     \\ \hline
+\textbf{$f_c$}           & x kHz   & x kHz  & x kH     \\ \hline
+\end{tabular}
+\end{center}
+\end{table}
+
+\begin{center}
+\textcolor{red}{\textbf{COMPLETAR}}\\
+\textcolor{red}{\textbf{PONER LOS GRÁFICOS}}\\
+\textcolor{red}{\textbf{INCLUYENDO EL ERROR}}
+\end{center}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Impedancia de entrada.}
 
-Para calcular la impedancia de entrada de los tres casos a trabajar se seguirá la misma idea de la primer parte.
+Para calcular la impedancia de entrada de los casos presentados se sigue la misma idea de la primer parte.
+
+Se procede a analizar el caso del inversor.
+
 \begin{align}
 \label{eq:Zin}
 \frac{V_{Th} - V^-}{R_{Th}}=I_{in}
 \end{align}
-Utilizando las ecuaciones (\ref{eq:Zin}), (\ref{eq:nodeInv}), (\ref{eq:thev}) y (\ref{eq:Vout})
-
-Se puede llegar a la siguiente expresión:
+Utilizando (\ref{eq:thev}), (\ref{eq:nodeInv}), (\ref{eq:Vout}) y (\ref{eq:Zin}), se puede llegar a la siguiente expresión:
 \begin{align}
 	Z_{in}(s)=\frac{A_{Vol}R_1R_3+R_1R_2+R_2R_3+R_1R_3}{A_{Vol}R_3+R_2+R_3}\cdot \frac{1+\frac{s\cdot (R_1R_2+R_1R_3+R_2R_3)}{\omega ' \cdot (A_{Vol}R_1R_3+R_1R_2+R_1R_3+R_2R_3)}}{1+\frac{s\cdot (R_2+R_3)}{\omega ' \cdot(A_{Vol}R_3+R_2+R_3)}}
 \end{align}
-Tambien se puede observar en la ecuación (\ref{eq:Zin}) que si $A_{Vol}$ es infinito.
+Tambien se puede observar en (\ref{eq:Zin}) que si $A_{Vol}$ es infinito, se cumple
 \begin{align} V^- = V^+=0 \implies Z_{in}=R_1
 \end{align}
+
+Por otro lado, planteando de forma similar para el no inversor:
+
+\begin{align}
+\label{eq:noinvZin}
+\frac{V_{Th} - V^+}{R_{Th}}=I_{in}
+\end{align}
+
+y valiendose del uso de (\ref{equ:noinvv+}), se llega a
+
+\begin{equation}
+	Z_{in} = R_3 + R_4
+\end{equation}
+
 Las mediciones de la impedancia de entrada se realizaron de la siguiente manera:
 
 \begin{center}
@@ -229,7 +399,7 @@ Las mediciones de la impedancia de entrada se realizaron de la siguiente manera:
   node[draw,minimum width=2cm,minimum height=2.4cm] (load) {Load}
   ($(load.west)!0.75!(load.north west)$) coordinate (la)
   ($(load.west)!0.75!(load.south west)$) coordinate (lb)
-  (lb) to[short,-o] ++(-0.5,0) coordinate (b) node[below] {$GND$}
+  (lb) to[short,-o] ++(-0.5,0) coordinate (b) node[ground]{}
   to[short] ++(-4,0) coordinate (VThb)
   to[sV=$V_{\mathrm{In}}$] (VThb |- la)
   to[R=$R$] ++(2.5,0) coordinate (VTht)
@@ -238,7 +408,7 @@ Las mediciones de la impedancia de entrada se realizaron de la siguiente manera:
   \path (a) node[below] {$+$} -- node {$V$} (b) node[above] {$\vphantom{+}-$};
 \end{circuitikz}
 \end{center}
-Se midio la señal de entrada y la señal en el punto A, luego se utilizó la funcion de resta del modo math del osciloscopio. Se midió el Ratio y la fase de la señal de math y la entrada. asi obteniendo un vector de medidas las cuales corresponden a la siguietne expresión.
+Se midio la señal tanto de entrada y como en el punto A, luego se valió de la función de resta del modo ``math'' del osciloscopio. Luego, se midió la proporción en decibeles y la fase de esta última señal y de la entrada, obteniendo un conjunto de medidas, las cuales corresponden a la siguiente expresión:
 \begin{align}
 20\log\left(\frac{V_{(A-In)}}{V_{in}}\right)
 \end{align}
@@ -248,8 +418,11 @@ A partir de estos valores se puede obtener la impedancia de entrada:
 Z_{In}=20\log\left(\frac{V_{In}}{I_{in}}\right) =20\log\left(\frac{V_{In} \cdot  R}{V_{(A-In)}}\right) = -20\log\left(\frac{V_{(A-In)}}{V_{In} }\right)+20\log (R)
 \end{align}
 
-Luego se realizaron mediciones de la impedancia de entrada y se compararon con simulaciones realizadas en \textbf{LTSpice} y el calculo analítico.
-Algo a notar en los gráficos es que en el calculo analítico no fueron tomadas en cuentas las puntas del osciloscopio las cuales estaban en \textbf{x1} las cuales alteraron la medición, mientras que en las simulaciones con Spice si fueron tomadas en cuenta.
+Luego se realizaron mediciones de la impedancia de entrada y se compararon con simulaciones realizadas en LTSpice y con el calculo analítico.
+Cabe aclarar que para los gráficos, al realizar el calculo analítico, no fueron tomadas en cuentas las puntas del osciloscopio, las cuales se emplearon en modo \textbf{x1}, de forma que alteraron la medición, mientras que en las simulaciones con LTSpice si fueron tomadas en cuenta.
+
+Aquí se presentan las mediciones realizadas para el circuito inversor.
+
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinC1.png}
@@ -288,8 +461,16 @@ Algo a notar en los gráficos es que en el calculo analítico no fueron tomadas 
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/ZinphC3.png}
 	\caption{Impedancia de entrada Caso 3.}
 	\label{fig:CompZinphC3}
-\end{figure} 
-Tambien cabe destacar que en los graficos (\ref{fig:CompZinphC2}) y (\ref{fig:CompZinphC3}) realmente no hay un salto sino que esta desfasado 360=0
+\end{figure}
+
+También cabe destacar que en las Figuras (\ref{fig:CompZinphC2}) y (\ref{fig:CompZinphC3}) realmente no hay un salto, sino que es un cambio de fase de $360^{\circ}$.
+
+Luego se procede a mostrar las mediciones realizadas para el caso del circuito no inversor.
+
+\begin{center}
+\textcolor{red}{\textbf{COMPLETAR}}
+\end{center}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Máximos valores de entrada.}
 El máximo valor de entrada a partir del cual el Opamp satura estará definido por diversas variables, siendo algunas de ellas la amplitud de entrada de la señal, la ganancia del sistema y la frecuencia de entrada.
