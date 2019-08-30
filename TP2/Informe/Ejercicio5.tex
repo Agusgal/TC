@@ -193,7 +193,7 @@ Si se desprecia el potenciómetro a la salida para controlar el volúmen, la imp
 
 \subsection{Simulación del Circuito Base}
 
-Se realizaron tres tipos de simulaciones diferentes para visualizar el funcionamiento del circuito.
+Se realizaron tres tipos de simulaciones diferentes para visualizar el funcionamiento del circuito. Para hacer esto se utilizó el simulador de circuitos \textit{LTSpiceXVII}.
 
 \begin{figure}[H]
 	\centering
@@ -259,6 +259,8 @@ Se realizó además un análisis de la impedancia de entrada del circuito a lo l
 	\label{fig:sim_base}
 \end{figure}
 \end{center}
+
+Cabe notar que la fase de la impedancia de entrada del circuito esta desfasada en $180\deg$ por cómo toma \textit{LTSpice} el sentido de la corriente a través de la fuente que hace ingresar la señal emulada de la guitarra.
 
 \subsubsection{Análisis de Fourier}
 
@@ -448,22 +450,24 @@ Además, se logra obtener una mucho mayor precisión a la hora de obtener $4,5V$
 \item Se decidió poner un potenciómetro en el lugar de la resistencia $R_4$ que anteriormente era de $50k\Omega$ para lograr tener una mayor funcionalidad y rangos de ganancia posibles en el circuito. Esto haría que la ganancia ideal de la etapa de amplificación esté aproximadamente entre 0 y 251. 
 \item Se agregaron dos diodos con polaridad invertida en paralelo al potenciómetro en el lazo de realimentación. Este tipo de distorsión se la denomina \textit{soft clipping}, mientras que la distorsión provocada por los diodos a la salida del amplificador operacional se la denomina \textit{hard clipping}. Se decidió agregar este tipo de distorsión junto a una llave para agregar más funcionalidad al pedal. En el \textit{hard clipping} se recorta la señal que sale del operacional y proporciona una señal muy semejante a una cuadrada con gran componente de altas frecuencias, mientras que en el \textit{soft clipping}, como el recortado se realiza en el lazo de realimentación del operacional, se mezclan señales no recortadas con señales recortadas, produciendo una señal recortada mucho mas suave.
 \item Se cambiaron los valores de las resistencias a la salida por dos resistores de $1k\Omega$. Esto se realizó ya que previamente se dejó un margen muy grande de seguridad al calcular los valores de los resistores y se decidió disminuir aún más la impedancia de salida. 
-\item Se calculó nuevamente el filtro pasa-bajos de la salida. Antes se posicionó el polo en los $20kHz$, mientras que ahora estará situado en  aproximadamente $10kHz$. $$ f_c = \frac{1}{2\pi 2k\Omega 8.2nF} = 9.704kHz \approx 10kHz$$
+\item Se calculó nuevamente el filtro pasa-bajos de la salida. Antes se posicionó el polo en los $20kHz$, mientras que ahora estará situado en  aproximadamente $10kHz$. $$ f_c = \frac{1}{2\pi 2k\Omega 8.2nF} = 9.704kHz \approx 10kHz$$.
 
 \end{itemize}
 
 \subsection{Simulación del Diseño Propuesto}
 
-Se realizaron las mismas simulaciones para el diseño propuesto que las hechas para el diseño base. A continuación se analizarán las diferencias y el funcionamiento del circuito.
+Se realizaron las mismas simulaciones para el diseño propuesto que las hechas para el diseño base. Se utilizó nuevamente el simulador de circuitos \textit{LTSpiceXVII}. A continuación se analizarán las diferencias y el funcionamiento del circuito.
 
 \subsubsection{Análisis de Bode}
-\textbf{HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER }
+Se realizó la simulación del gráfico de Bode para el diseño propuesto. Se puede observar como luego de los cambios propuestos al posicionamiento de los polos, la curva de transferencia sufrió un gran cambio. Se puede contemplar como los graves serán ahora tanto mucho más amplificados como notorios a la salida del circuito. Se logró también, luego de notar tras el primer prototipado del circuito base, que los agudos sean levemente atenuados. 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_bode.png}
 	\caption{Gráfico de Bode para el circuito propuesto.}
 	\label{fig:sim_prop_bode}
 \end{figure}
+
+Se quiso también simular la nueva impedancia de entrada del circuito.
 
 \begin{center}
 \begin{figure}[H]
@@ -474,37 +478,53 @@ Se realizaron las mismas simulaciones para el diseño propuesto que las hechas p
 \end{figure}
 \end{center}
 
+Se puede observar que nuevamente la curva de impedancia de entrada simulada presenta una gran similitud a la impedancia de entrada calculada teóricamente, que era de aproximadamente $50M\Omega$. Cabe notar que la fase de la impedancia de entrada del circuito esta desfasada en $180\deg$ por cómo toma \textit{LTSpiceXVII} el sentido de la corriente a través de la fuente que hace ingresar la señal emulada de la guitarra.
+
 \subsubsection{Análisis de Fourier}
-\textbf{HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER }
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_alone.png}
-	\caption{Análisis de las componentes de fourier y la distorsión armónica total para el circuito propuesto con ambos pares de diodos desconectados.}
-	\label{fig:sim_prop_fourier_alone}
-\end{figure}
+Se realizó nuevamente, como para el circuito base, un análisis de las componentes de Fourier de la señal de salida.\\
+
+En una primera instancia con ambos switch apagados, es decir sin ningún tipo de clippeo, se obtuvo una distorsión armónica total de $\approx 8\%$. Con softclipping se obtiene una distorsión armónica total de $\approx 22\%$ y finalmente con hardclipping se obtiene una distorsión armónica total de $\approx 28\%$.
 
 \begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_soft.png}
-	\caption{Análisis de las componentes de fourier y la distorsión armónica total para el circuito propuesto con el par de diodos en el lazo de realimentación conectado.}
-	\label{fig:sim_prop_fourier_soft}
+     \centering
+     \begin{subfigure}[H]{0.8\textwidth}
+         \centering
+         \includegraphics[width=\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_alone.png}
+         \caption{No clipping}
+         \label{fig:four_alone}
+     \end{subfigure}
+     \hfill
+     \begin{subfigure}[H]{0.8\textwidth}
+         \centering
+         \includegraphics[width=\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_soft.png}
+         \caption{Softclipping}
+         \label{fig:four_soft}
+     \end{subfigure}
+     \hfill\\
+     \begin{subfigure}[H]{0.8\textwidth}
+         \centering
+         \includegraphics[width=\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_hard.png}
+         \caption{Hardclipping}
+         \label{fig:four_hard}
+     \end{subfigure}
+        \caption{Análisis de las componentes de Fourier para los tres casos planteados.}
+        \label{fig:four_anal}
 \end{figure}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_hard.png}
-	\caption{Análisis de las componentes de fourier y la distorsión armónica total para el circuito propuesto con el par de diodos a la salida del operacional conectado.}
-	\label{fig:sim_prop_fourier_hard}
-\end{figure}
-
+Se puede observar que con los dos switches se logra obtener una gran versatilidad a la hora de distorsionar la señal.
+	
 \subsubsection{Análisis de Señal, Transitorio}
-\textbf{HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER HACER }
+
+Como los cambios propuestos no alteran de manera significante el actuar del circuito, se contrastarán solamente las señales de salida con los tres métodos de distorsión del diseño propuesto.
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_salidas.png}
 	\caption{Análisis de la señal de entrada y señal de entrada al operacional.}
 	\label{fig:sim_prop_tran}
 \end{figure}
+
+Se puede observar que tanto \textit{softclipping} como \textit{hardclipping} proporcionan dos tipos de señales distintas, mientras que la señal de salida sin clippear posee una amplitud mucho mayor que el resto y una señal menos distorsionada. Además se puede notar que la señal con \textit{softclipping} posee una amplitud levemente menor que aquella con \textit{hardclipping}. Esto puede deberse a la ganancia de la etapa de amplificación será menor ya que la señal encuentra un camino de menor resistencia que por el potenciómetro. La señal sin clippear es mucho mayor que las demás ya que esta no es recortada hasta un valor máximo.
 
 \subsection{Realización del Diseño Propuesto}
 
