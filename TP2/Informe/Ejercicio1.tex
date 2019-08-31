@@ -12,7 +12,7 @@
 \section{Comportamiento de Amplificadores Operacionales.}
 
 \subsection{Introducción}
-En el presente punto se analizarán las limitaciones del amplificador operacional  \textbf{LM324} en las configuraciones inversora y no inversora.
+En el presente punto se analizarán las limitaciones del amplificador operacional \textbf{LM324} en las configuraciones inversora y no inversora.
 
 Un amplificador operacional es un dispositivo electrónico el cual, dependiendo de la tensión de entrada, fija una tensión de salida. Estos se pueden modelar de la siguiente forma:
 \begin{figure}[H]	
@@ -378,14 +378,12 @@ Utilizando (\ref{eq:thev}), (\ref{eq:nodeInv}), (\ref{eq:Vout}) y (\ref{eq:Zin})
 Tambien se puede observar en (\ref{eq:Zin}) que si $A_{Vol}$ es infinito, se cumple
 \begin{align} V^- = V^+=0 \implies Z_{in}=R_1
 \end{align}
-
 Por otro lado, planteando de forma similar para el no inversor:
 
 \begin{align}
 \label{eq:noinvZin}
 \frac{V_{Th} - V^+}{R_{Th}}=I_{in}
 \end{align}
-
 y valiendose del uso de (\ref{equ:noinvv+}), se llega a
 
 \begin{equation}
@@ -408,7 +406,7 @@ Las mediciones de la impedancia de entrada se realizaron de la siguiente manera:
   \path (a) node[below] {$+$} -- node {$V$} (b) node[above] {$\vphantom{+}-$};
 \end{circuitikz}
 \end{center}
-Se midio la señal tanto de entrada y como en el punto A, luego se valió de la función de resta del modo ``math'' del osciloscopio. Luego, se midió la proporción en decibeles y la fase de esta última señal y de la entrada, obteniendo un conjunto de medidas, las cuales corresponden a la siguiente expresión:
+Se optó por medir la de entrada la señal y la existente en el punto A, para poder emplear la de resta de ellas mediante el modo ``math'' del osciloscopio. Luego, se observó la proporción en decibeles y la fase tanto de la resta como de la entrada, obteniendo las medidas correspondientes a la siguiente expresión:
 \begin{align}
 20\log\left(\frac{V_{(A-In)}}{V_{in}}\right)
 \end{align}
@@ -421,45 +419,48 @@ Z_{In}=20\log\left(\frac{V_{In}}{I_{in}}\right) =20\log\left(\frac{V_{In} \cdot 
 Luego se realizaron mediciones de la impedancia de entrada y se compararon con simulaciones realizadas en LTSpice y con el calculo analítico.
 Cabe aclarar que para los gráficos, al realizar el calculo analítico, no fueron tomadas en cuentas las puntas del osciloscopio, las cuales se emplearon en modo \textbf{x1}, de forma que alteraron la medición, mientras que en las simulaciones con LTSpice si fueron tomadas en cuenta.
 
-Aquí se presentan las mediciones realizadas para el circuito inversor.
+
+Aquí se presentan dichas medidas para el circuito inversor.
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinC1.png}
-	\caption{Impedancia de entrada Caso 1.}
+	\caption{BODE en modulo para el Caso 1 del circuito inversor.}
 	\label{fig:CompZinC1}
 \end{figure} 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/CZinC2.png}
-	\caption{Impedancia de entrada Caso 2.}
-	\label{fig:CompZinC2}
-\end{figure} 
-\begin{figure}[H]	
-	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/CZinC3.png}
-	\caption{Impedancia de entrada Caso 3.}
-	\label{fig:CompZinC3}
-\end{figure} 
-
-\begin{figure}[H]	
-	\centering
 	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinphC1.png}
-	\caption{Impedancia de entrada Caso 1.}
+	\caption{BODE en fase para el Caso 1 del circuito inversor.}
 	\label{fig:CompZinphC1}
 \end{figure} 
 
 \begin{figure}[H]	
 	\centering
+	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/CZinC2.png}
+	\caption{BODE en modulo para el Caso 2 del circuito inversor.}
+	\label{fig:CompZinC2}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
 	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinphC2.png}
-	\caption{Impedancia de entrada Caso 2.}
+	\caption{BODE en fase para el Caso 2 del circuito inversor.}
 	\label{fig:CompZinphC2}
 \end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/CZinC3.png}
+	\caption{BODE en modulo para el Caso 3 del circuito inversor.}
+	\label{fig:CompZinC3}
+\end{figure} 
+
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/ZinphC3.png}
-	\caption{Impedancia de entrada Caso 3.}
+	\caption{BODE en fase para el Caso 3 del circuito inversor.}
 	\label{fig:CompZinphC3}
 \end{figure}
 
@@ -469,36 +470,90 @@ Luego se procede a mostrar las mediciones realizadas para el caso del circuito n
 
 \begin{center}
 \textcolor{red}{\textbf{COMPLETAR}}
+\textcolor{red}{\textbf{MEDIME LAS COSASA ALADDIN}}
 \end{center}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\caption{BODE en modulo para el Caso 1 del circuito no inversor.}
+	\label{fig:NoInvCompZinC1}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\caption{BODE en fase para el Caso 1 del circuito no inversor.}
+	\label{fig:NoInvCompZinphC1}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\caption{BODE en modulo para el Caso 2 del circuito no inversor.}
+	\label{fig:NoInvCompZinC2}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\caption{BODE en fase para el Caso 2 del circuito no inversor.}
+	\label{fig:NoInvCompZinphC2}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{ImagenesAux/pend.jpg}
+	\caption{BODE en modulo para el Caso 3 del circuito no inversor.}
+	\label{fig:NoInvCompZinC3}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{ImagenesAux/pend.jpg}
+	\caption{BODE en fase para el Caso 3 del circuito no inversor.}
+	\label{fig:CompZinphC3}
+\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Máximos valores de entrada.}
-El máximo valor de entrada a partir del cual el Opamp satura estará definido por diversas variables, siendo algunas de ellas la amplitud de entrada de la señal, la ganancia del sistema y la frecuencia de entrada.
 
-Para buscar estos valores nos centraremos en los 3 casos a analizar. 
-Asumiendo el opamp con ganancia ideal y sabiendo que:
+\begin{center}
+\textcolor{red}{\textbf{VER PARA EL NO INVERSOR}}
+\end{center}
+
+El máximo valor de entrada a partir del cual el opamp satura se encuentra definido por diversas variables, siendo algunas de ellas la amplitud de entrada de la señal, la ganancia del sistema y la frecuencia de entrada.
+
+Al momento de definir dichos valores, se realizó un enfoque en las 3 variables previamente mencionadas. Asumiendo el opamp con ganancia ideal y sabiendo que:
 \begin{align} V_{Out}=H(s)\cdot V_{in}\end{align}
-El máximo valor de $V_{in}$ quedará definido por la tensión de saturación del opamp. Que para el \textbf{LM324} es VCC-1.5 lo cual para nuestro caso será 13.5V\footnote{Esta información fue extraida de la hoja de datos}
-Luego utilizando esta relación se realizó el siguiente cuadro para las distintas ganancias que utilizaremos\footnote{Para el caso 3 si bien matemáticamente la máxima $V_{in}$ es 135V en la hoja de datos nos informa que el máximo que soporta el dispositivo sin quemarse es de 32V }.
+
+El máximo valor de $V_{in}$ queda definido por la tensión de saturación del operacional. Para el utilizado en este informe (LM324), dicho valor es de $Vcc - 1.5 \ V$\footnote{Dato extraído de la hoja de datos.}, siendo así, para el caso empleado, equivalente a $13.5 \ V$.
+Luego, utilizando esta relación, se plasmaron los resultados, para las distintas ganancias analizadas, en la Tabla (\ref{tab:gananciaideal}). Cabe descara que para el caso 3 se realiza una excepción, ya que el fabricante informa que la máxima tensión de entrada soportada por el dispositivo sin quemarse es de $32 \ V$.
+
 \begin{table}[H]
 \begin{center}
 \label{tab:maxin}
 \begin{tabular}{|c|c|c|c|}
 \hline
-\textbf{Caso:}        & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
+\textbf{Caso}        & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
 \textbf{Ganancia ideal}     & 10         & 1          & 0.1        \\ \hline
-\textbf{$V_{in-Max}$} & 1.35       & 13.5       & 32         \\ \hline
+\textbf{$V_{in-Max} \ \left[ V \right]$} & 1.35       & 13.5       & 32         \\ \hline
 \end{tabular}
 \end{center}
+\caption{Ganancia ideal para el operacional LM324.}
+\label{tab:gananciaideal}
 \end{table}
-Luego se graficó la maxima tension de entrada en funcion de la ganancia:
+
+
+Luego se graficó la máxima tensión de entrada en función de la ganancia:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/maxvin.png}
-	\caption{Maxima tensión de entrada en funcion de la Ganancia.}
+	\caption{Máxima tensión de entrada en función de la ganancia.}
 	\label{fig:MaxVin}
 \end{figure} 
-Tambien se analizó la máxima amplitud de entrada en funcion de la frecuencia tal que no haya slew-rate \footnote{el cual es un efecto que se detallará luego en su propia sección} ni saturación.
+
+También se analizó la máxima amplitud de entrada en función de la frecuencia tal que no haya slew-rate, el cual es un efecto que se detalla con mayor profundidad en su propia sección, ni saturación.
 La cual puede ser apreciada en el siguiente gráfico:
 \begin{figure}[H]	
 	\centering
@@ -507,37 +562,43 @@ La cual puede ser apreciada en el siguiente gráfico:
 	\label{fig:MaxVinsr}
 \end{figure} 
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Principales Caracteristicas.}
-En el caso que $R_3$ sea igual a 0 a la salida del opamp deberia haber 0V, esto no es la realidad dado a que existe una tensión de offset la cual será analizada en la seccion 3 de este informe.
-El proposito de $R_4$ a primera vista no es evidente dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Obteniendo el valor de la datasheet se sabe que $I_{Max}=20mA$} que puede aportar el opamp se llego a  que el proposito de $R_4$ es limitar la corriente por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$ .
-Otra funcion para la $R_4$ es el limitar la corriente del lazo.
+\subsubsection{Principales Características.}
+En el caso del circuito inversor, considerando la situación en la cual $R_3$ sea igual a 0, la salida del amplificador operacional debería ser de $0 \ V$. Esto no es lo que ocurre dado que existe una tensión de offset, la cual se analiza en la sección 3 de este informe.
+
+
+Por su parte, para el circuito no inversor
+\begin{center}
+\textcolor{red}{\textbf{.................}}
+\end{center}
+
+Por otro lado, se analiza el propósito de $R_4$ en el circuito inversor. A primera vista no es evidente, dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Dato obtenido de la datasheet, $I_{Max}=20 \ mA$} que puede aportar el opamp, se llego a que el propósito de $R_4$ es limitar la corriente, por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$. Otra función que posee $R_4$ es el limitar la corriente del lazo.
 %%%%%%%%%%%%%%%%%%%%
 \subsubsection{DC-Sweep.}
-Se realizó un barrido entre -VCC y VCC utilizando un generador de funciones con una rampa y un circuito inversor para llegar a la tension de salida necesitada dado a que el generador de funciones solo puede entregar 20Vpp.
-El comportamiento del opamp no es lineal para todo el rango de entradas, su comportamiento lineal se puede observar unicamente en el rango entre -Vsat y Vsat, tenienod tensiones de entrada máxima para cada caso las que se observan en la figura (\ref{fig:MaxVinsr})
-Se registraron las siguientes mediciones:
+Se realizó un barrido entre $-Vcc$ y $Vcc$ utilizando un generador de funciones con una rampa y un circuito inversor para llegar a la tensión de salida necesitada, dado que el generador de funciones solo puede entregar hasta $20 \ Vpp$.
+El comportamiento del operacional no es lineal para todo el rango de entradas. Este se puede observar únicamente en el rango entre $-V_{sat}$ y $V_{sat}$. Considerando las tensiones de entrada máxima que se observan en la Figura (\ref{fig:MaxVinsr}), se registraron las siguientes mediciones:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/dc_sweep_c1.png}
 	\caption{DC-sweep Caso 1.}
 	\label{fig:dcc1}
 \end{figure} 
-Se puede observar en este caso como el opamp satura a partir de una rension mayor a 1.35 Volts como se predijo en le punto (a)
+Se puede observar en este caso como el opamp satura a partir de una tensión mayor a 1.35 Volts como se predijo en le punto (a).
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/dc_sweep_c2.png}
 	\caption{DC-sweep Caso 2.}
 	\label{fig:dcc2}
 \end{figure} 
-En esta figura se ve como el comportamiento del opamp es lineal en la mayoria del espectro expeto en las puntas donde alli lo deja de ser como fue predicho en el punto (a) a unos $\approx$ 13.5 V
+En esta figura se ve como el comportamiento del amplificador operacional es lineal en la mayoría del espectro, con la excepción de las puntas, como fue explicado en el punto (a), para tensiones próximas a los $ 13.5 \ V$.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/dc_sweep_c3.png}
 	\caption{DC-sweep Caso 3.}
 	\label{fig:dcc3}
 \end{figure} 
-Finalmente en esta figura se ve que el opamp tiene comportamiento lineal para todos los valores de la rampa
-Otro efecto alineal del amplificador operacional que fue observado es el efecto de Cross-over el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional; uno puede evitar tener que lidear con ese problema al agregar una tensión de offset de continua que baste para polarizar los transistores, en este trabajo los valores utilizados fueron 0.7V ó 1.4V; otra manera es tener una señal con valor medio mayor a $\approx$ 0.7v. Este efecto se hace notar como una desformación a llanura en la transición por 0 V como  se puede apreciar en la figura (\ref{fig:co})
+Finalmente en esta figura se ve que el opamp tiene comportamiento lineal para todos los valores de la rampa. Otro efecto no lineal del amplificador operacional que fue observado es el efecto de Cross-over, el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional. Este efecto se hace notar como una deformación en forma de llanura en la transición por $0 \ V$, como se puede apreciar en la Figura (\ref{fig:co}).
+
+Se puede evitar tener que lidiar con este problema al aplicar una tensión de offset de continua, de forma tal que se consiga polarizar los transistores. Para ello, en este informe, se emplearon valores entre $0.7 \ V$ y $1.4 \ V$. Otra alternativa es valerse de una señal con valor medio mayor a $0.7 \ V$. 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/CrossOver.png}
@@ -547,7 +608,7 @@ Otro efecto alineal del amplificador operacional que fue observado es el efecto 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Slew-Rate.}
-El slew-rate esta definido como la máxima variación temporal de la salida del opamp. El slew-Rate depende de 3 parametros siendo estos la frecuencia, la amplitud y la ganancia; esto siendo para una senoidal, pero dado que se puede desdcribir cualquier señal como una combinación lineal de senos se puede decir que el slewrate de una señal arbitraria tambien dependerá de estos parametros.
+El slew-rate esta definido como la máxima variación temporal de la salida del operacional. El slew-Rate depende de 3 parámetros siendo estos la frecuencia, la amplitud y la ganancia, considerando el caso de que la señal de salida es una senoida. Dado que se puede describir cualquier señal como una combinación lineal de senos, se puede decir que el slew-rate de una señal arbitraria también dependerá de estos parámetros.
 Si se le demanda a l opamp una tasa de cambio mayor a la soportada por le SR procedera a distorcionar la señal.
 \begin{align}  SR= Max\left( \frac{\partial V_{Out}}{\partial t}\right)  \end{align}
 Utilizando una entrada senoidal de la forma.
