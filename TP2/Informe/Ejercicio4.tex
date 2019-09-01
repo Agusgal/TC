@@ -28,14 +28,17 @@ En este caso estudiaremos 2 bloques fundamentales. El circuito integrador y el c
 El amplificador a utilizar es el \textbf{LM833N} de STMicroelectronics. El mismo es un operacional de bajo ruido diseñado para aplicaciones relacionadas al manejo de audio.
 En su datasheet podemos ver que posee un alto nivel Slew Rate de hasta 7 $\frac{V}{s}$, un GBP de 15MHz y una ganancia de tensión 
 a lazo abierto típica de unos 110 dB. Notemos que también se indica que la ganancia mínima es de unos 90 dB. 
- \subsubsection{Cálculo de A_{vol}
+ \subsubsection{Cálculo de $A_{vol}$}
 Para poder realizar los cálculos de transferencia y establecer sus correspondientes transferencias de teóricas primero debemos conocer $A_{vol}$ medido en veces. Para esto basta con tomar el valor de ganancia de tensión típica a veces.
 $$A_{vol} = 10^{\frac{110}{20}}$$
 $$A_{vol} \approx 316227.77$$
 
-\subsubsection{Cálculo de  la \omega_p, polo dominante}
+\subsubsection{Cálculo de  la $f_p$, polo dominante}
 
-Dado el \textbf{GBP}
+Dado el \textbf{GBP} de 15MHz podemos fácilmente calcular la frecuencia de corte a lazo abierto
+
+$$ f_p = \frac{15MHz}{A_{vol}} $$
+$$ f_p \approx 47.44Hz$$
 
 
 
@@ -43,7 +46,7 @@ Dado el \textbf{GBP}
 
  
 \subsection{Circuito Integrador}
-\subsubsection{Integrador Ideal}}
+\subsubsection{Integrador Ideal}
 
 
 \end{document}
