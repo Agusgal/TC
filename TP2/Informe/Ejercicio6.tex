@@ -30,21 +30,23 @@ Como se requiere que el circuito diseñado posea una tensión de salida de $ 0 \
 	\label{equ:sistema}
 \end{equation}
 
-Para lograr su funcionamiento, el fabricante especifica que el transistor debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle a este dispositivo $10 \ V$ para utilizarlo. Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ ni mayor a $6 \ V$. Esto se ahondará con mayor profundidad en los de diseño del modelo.
+Para lograr su funcionamiento, el fabricante especifica que el transistor debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle a este dispositivo $10 \ V$ para utilizarlo. Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ ni mayor a $6 \ V$. Esto se ahondará con mayor profundidad al desarrollar como se obtuvo el diseño de este.
 
 Luego se requiere que la tensión de salida del circuito responda de la siguiente forma frente a la tensión de salida del transistor.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/SalidaVsVLM35.png}
+	\includegraphics[width=0.9\textwidth]{Ejercicio6/Imagenes/SalidaVsVLM35.png}
 \caption{Tensión de salida Vs. Tensión del LM35.}
 	\label{fig:vout}
 \end{figure}
 
+A lo largo del desarrollo del modelo, se optó por tomar diversas configuraciones de amplificadores operacionales, para garantizar su adecuado funcionamiento y evitar posibles saturaciones de los mismos. De esta forma, se dispuso diversas configuraciones de operacionales restadores e inversores.
+
 
 \subsubsection{Primer modelo: inversor y restador}
 
-En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener DZ5V6-05. Cabe destacar que por cuestiones de especificación del fabricante, se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$.
+En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL082 y la final por un diodo zener DZ5V6-05. Cabe destacar que se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$, valores dentro del rango tensiones que aceptan los operacionales, según especifica el fabricante.
 
 En la primer etapa se dispuso un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
 
@@ -69,7 +71,7 @@ Planteando las siguientes ecuaciones:
 \begin{equation*}
 \left\{
 \begin{aligned}
-		& V_{LM35} = A_o \left( V^+ - V^- \right) =  A_o V^- \\
+		& V_{1} = A_o \left( V^+ - V^- \right) =  A_o V^- \\
 		& V_{LM35} - R_5 I_{R5} = V^- \\
 		& V_1 - R_6 I_{R6} = V^- 
 \end{aligned}
@@ -85,7 +87,7 @@ y sabiendo que $A_o \gg \frac{R_6}{R_5}$, se obtiene
 
 siendo $V_1$ la tensión de salida de esta etapa.
 
-En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne inversor del operacional la tensión $V_1$ y al una no inversor tensión de $- 10 \ V$, reutilizando la alimentación del operacional.
+En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne inversor del operacional la tensión $V_1$, mientras que al no inversor $- 10 \ V$, reutilizando la alimentación del operacional.
 
 \begin{figure}[H]
 \begin{center}
@@ -123,7 +125,7 @@ Es así que, sumando ambos resultados se obtiene
 	\label{equ:m1p2}
 \end{equation}
 
-Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0.7 \ V$ y $5.6 \ V$. El objetivo de esta sección es simplemente limitar la tensión de salida, evitando que se encuentre por debajo de $-1 \ V$ y por encima de $6 \ V$.
+Finalmente, la tercer etapa, consiste simplemente en una resistencia con un diodo zener en serie, cumpliendo la función de limitar la salida entre $-0.7 \ V$ y $5.6 \ V$. Si bien los limites que se terminan empleando son menores que los que se requieren, se emplea este mecanismo debido a su simpleza. Ademas, como la importancia de esta etapa es proteger los componentes siguientes al circuito, este diodo permite garantizar que no se obtengan valores cercanos a los limites, evitando así cualquier fallo.
 
 \begin{figure}[H]
 \begin{center}
@@ -182,9 +184,9 @@ A la hora de seleccionar los valores de las resistencias, se pide:
 \right.
 \end{equation*}
 
-Cumpliendo con esto y eligiendo arbitrariamente $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. De esta forma se consigue llegar a (\ref{equ:sistema}).
+Cumpliendo con esto y fijando los valores de $R_6 = 5 \ k\Omega$ y $R_2 = 10 \ k\Omega$ se llega a los siguientes valores: $R_5 = 1 \ k\Omega$, $R_1 = 1.75 \ k\Omega$, $R_3 = 17.5 \ k\Omega$ y $R_4 = \frac{37}{7} \ k\Omega \approx 1.89 \ k\Omega$. De esta forma se consigue llegar a (\ref{equ:sistema}).
 
-Por otro lado, para $R_7$ y debido a la función que cumple, para seleccionar un valor adecuado, se considera la máxima tensión que se puede obtener a la salida el operacional, $13.5 \ V$ en el peor caso, según el fabricante, y se asume una corriente de $0.5 \ mA$ para evitar que se sobre exija al operacional:
+Por otro lado, para $R_7$ y debido a la función que cumple, para seleccionar un valor adecuado, se considera la máxima tensión que se puede obtener a la salida el operacional, $13.5 \ V$ en el peor caso, según el fabricante, y se asume una corriente máxima de $0.5 \ mA$:
 
 \begin{equation}
 	R_7 = \frac{13.5 \ V \ - \ 5.6 \ V}{0.5 \ mA} = 15.8 \ k\Omega \approx 16 \ k\Omega
@@ -196,14 +198,14 @@ Una vez establecido tanto la forma del circuito como sus componentes, se procedi
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/StepR1-M1.png}
-	\caption{Salida del circuito en función de la tensión del transistor variando $R_1$.}
+	\caption{Salida del circuito en función de la tensión del LM35 variando $R_1$.}
 	\label{fig:r1-M1}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.99\textwidth]{Ejercicio6/Imagenes/StepR4-M1.png}
-	\caption{Salida del circuito en función de la tensión del transistor variando $R_4$.}
+	\caption{Salida del circuito en función de la tensión del LM35 variando $R_4$.}
 	\label{fig:r4-M1}
 \end{figure}
 
@@ -263,7 +265,7 @@ Si se consigue que
 	\label{equ:condm2}
 \end{equation}
 
-se puede afirmar que  
+se puede simplificar  
 \begin{equation}
 	V_2 \approx V_{CC} \cdot \frac{R_8}{R_7 + R_8}
 	\label{equ:simpm2}
@@ -346,10 +348,10 @@ Nuevamente, se imponen condiciones para obtener los valores de las resistencias,
 \right.
 \end{equation*}
 
-Es así que, eligiendo arbitrariamente $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Se verifica ademas que con los valores seleccionados se cumpla (\ref{equ:condm2}). De esta forma 
+Es así que, asignando los valores de $R_6 = 5 \ k\Omega$, $R_1 = 10 \ k\Omega$ y $R_7 = 100 \ k\Omega$ y utilizando las condiciones impuestas, se llega a: $R_2 = 10 \ k\Omega$, $R_3 = 100 \ k\Omega$, $R_4 = 100 \ k\Omega$, $R_5 = 1 \ k\Omega$ y $R_8 = \frac{700}{233} \ k\Omega \approx 3 \ k\Omega$. Se verifica ademas que con los valores seleccionados se cumpla (\ref{equ:condm2}). De esta forma 
 
 \[
-	\frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)} = 0.02
+	\frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)} \approx 0.02
 \]
 
 Nuevamente, se consigue con estos valores llegar a (\ref{equ:sistema}). Se destaca que, como la tercer etapa no ha sido alterada, sigue valiendo (\ref{equ:rzener}), por ende el valor de la resistencia, en este caso llamada $R_9$, es de $16 \ k\Omega$.
@@ -374,7 +376,7 @@ La pendiente de la recta que describe la salida varía con los cambios de $R_5$.
 
 \subsubsection{Selección del modelo más óptimo}
 
-Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice. Para este, se considero la tolerancia de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre ellas. Es así que se muestra dicho resultado en la Figura (\ref{fig:mccomp}). 
+Se han presentado dos modelos válidos que cumplen con las especificaciones del circuito. Uno de los dos debe ser descartado. Para tomar dicha decisión se valió de la ayuda del análisis de Montecarlo, que permite realizar el programa LTSpice, y así observar cual de los dos es más sensible a las tolerancias de los componentes. Para este, se considero dichas variaciones de todas las resistencias a excepción de las 4 que fueron reemplazadas por presets. Debido a que los gráficos de dicho análisis que brinda LTSpice pueden llegar a ser confusos y de difícil comparación, se decidió tomar para cada caso las curvas más alejadas de la ideal y mostrar el área encerrada entre ellas. Es así que se plasma dicho resultado en la Figura (\ref{fig:mccomp}). 
 
 \begin{figure}[H]
 \centering
@@ -395,14 +397,9 @@ Se han presentado dos modelos válidos que cumplen con las especificaciones del 
 \end{figure}
 
 Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos extremos del primer circuito diseñado es mucho mayor que la del segundo, es decir, el primero es mucho más sensible a pequeños cambios de los componentes existentes. Fue por ello que el primer modelo propuesto fue descartado, mientras que el segundo fue aceptado. 
-
-\begin{center}
-	\textcolor{red}{\textbf{PODRÍA BUSCAR ALGUNA JUSTIFICACIÓN DE PORQUÉ DAN ASÍ LOS CIRCUITOS}}\\
-	\textcolor{red}{\textbf{ESTARÍA BUENO PONER MÁS RAZONES DE PORQUÉ SE ELIGIÓ EL 2 Y NO EL 1}}
-\end{center}
+Una explicación posible a los resultados observados en las Figuras (\ref{fig:mcm1}) y (\ref{fig:mcm2}) es el orden de disposición de los operacionales. En el segundo caso, primero se coloca un restador, el cual amplia las señales introducidas a ambos bornes por un factor de 10 y las resta, para luego ampliar la señal resultante por un factor de 5. La ventaja que presenta este orden es que, al restarlas y amplificarlas primero, se puede eliminar, en cierta parte, el posible ruido existente, ya que se puede afirmar que, a bajas frecuencias (como lo es el ruido ambiente existente, de aproximadamente $50 \ Hz$), las perturbaciones tanto en el borne inversor como en el no inversor, son similares entre sí. Al hacer primero la comparación, se logra minimizar estas variaciones parásitas.
 
 \subsection{Modo de uso}
-%alimentacion, lectura, calibracion
 
 Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se modeló este último en Altium. Como se mencionó previamente, se colocaron dos presets para poder calibrar el circuito, los cuales son representados por las resistencias $R_5$ y $R_8$ en la Figura (\ref{fig:schematic}). Se seleccionó $R_5 = 2 \ k\Omega$ y $R_8 = 5 \ k\Omega$, ya que ambos poseen la mínima resistencia entre los bornes de los extremos tal que la impedancia adecuada se encuentre dentro de este rango (se recuerda que $R_5$ debe ser próximo a $ 1 \ k\Omega$ y $R_8$ a $ 3 \ k\Omega$).
 
@@ -420,25 +417,25 @@ Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se m
 	\label{fig:PCB}
 \end{figure}
 
-Para poder calibrar el circuito se colocó una entrada adicional y un jumper entre esta y el transistor, de forma que se pueda alimentar directamente al circuito con una tensión dada y calibrarlo hasta obtener la tensión de salida adecuada. Por lo tanto, para calibrarlo, la bornera $J4$ debe estar conectada con el jumper $J6$, alimentando por dicha entrada al sistema. En este caso, la bornera $J2$ queda inhabilitada y el transistor sin alimentación.
-Al momento de utilizar el LM35, se debe conectar el jumper con $J2$.
+Para poder calibrar el circuito se colocó una entrada adicional y un jumper entre esta y el LM35, de forma que se pueda alimentar directamente al circuito con una tensión dada y calibrarlo hasta obtener la tensión de salida adecuada. Cortocircuitando el pin superior con el del medio, se habilita la entrada adicional, mientras que realizando lo mismo con el inferior y el central, se habilita el uso del transistor. Por lo tanto, para calibrarlo, la bornera $J4$ debe estar conectada con el jumper $J6$, alimentando por dicha entrada al sistema. En este caso, la bornera $J2$ queda inhabilitada y el transistor sin alimentación.
 
-Ademas, se colocaron 2 pines en la placa para facilitar la calibración. Se sabe, \textcolor{red}{\textbf{METER ALGÚN CALCULO Y/O SIMULACIÓN}}, la tensión en el pin $TP5$ debe ser de $0 \ V$, mientras que en $TP8$ debe ser de $350 \ mV$. Para poder ajustarlas adecuadamente, se utilizan los presets mencionados anteriormente. El objetivo de estos pines es facilitar la medición de dicha tensión al momento de ajustar las resistencias variables.
+Ademas, se colocaron pines en la placa para facilitar la calibración de ambos presets. El objetivo de estos es facilitar la medición de sus tensiones al momento de ajustar las resistencias variables. Por ejemplo, se sabe que, por condiciones de fabricación, la tensión en el pin $TP8$ debe ser de $350 \ mV$ para cualquier tensión de salida del LM35. Si bien previamente se especificó que ambos operacionales deben ser alimentados con $12 \ V$ y $-12 \ V$, es posible cambiar dicho valor, dentro de las especificaciones del fabricante, y regular la resistencia $R_8$ para conseguir que la tensión en el pin $TP8$ sea la deseada, lo que habilita mayor libertad a la hora de ajustar el sistema. Cabe aclarar que los valores posibles que pueden tomar $R_8$ (máximo de $5 \ k\Omega$) cumplen con (\ref{equ:condm2}).
 
 Se detalla que, con el mismo objetivo que se colocó un zócalo para el amplificador operacional, se tomó la decisión de soldar tres pines hembra en lugar del transistor LM35, para poder reemplazarlo en caso de fallas.
 
 Finalmente las borneras $J5$ y $J1$ son utilizados para alimentar a los operacionales y como salida del circuito respectivamente.
 
 \subsection{Detalles técnicos}
-%Mediciones, corrientes/tensiones maximas, rango de temperatura, 
+Se suministró a la entrada $J4$ del circuito una rampa que cumplió la función de simular al LM35. Esta función barre valores desde $320 \ mV$ hasta $480 \ mV$, lo que permite que, al calibrar el sistema, se pueda observar la recta completa de salida, incluyendo las zonas donde se activa el diodo zener. De esta forma, se puede comparar la salida con la curva teórica mostrada en la Figura (\ref{fig:vout}).
 
-%El LM35 es un circuito integrado cuya tensión de salida varía linealmente con la temperatura. Se desea que la
-%señal pueda ser adquirida por un sistema con (por ejemplo, un conversor analógico/digital) con tensión de entrada variable entre 0V y 5V .
-%a. Diseñar un circuito utilizando el LM35 que adapte la señal para que pueda ser adquirida con máxima excursión para temperaturas que varíen entre 35◦C y 45◦C (35◦C ! 0V − 45◦C ! 5V ).
-%b. Implementar el circuito en placa multiperforada o PCB.
-%c. Diseñar un método de calibración del circuito para que se cumpla la especificación.
-%d. El circuito debe contar con una protección de forma tal de que la tensión de salida no se encuentre por debajo de −1V ni por encima de 6V .
-%e. Incluir en el informe un datasheet de la implementación final, incluyendo toda la información relevante.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/Teovsmed.png}
+	\caption{Salida medida en comparación con la teórica.}
+	\label{fig:comp1}
+\end{figure}
+
+Comparando ambas curvas se puede observar que la mayor discrepancia entre estas, se encuentra en las más altas tensiones. Se observa que la tensión medida posee una ligera diferencia en la pendiente. Además, los efectos del diodo zener comienzan a tener mayor peso antes de lo deseado. Dicho corrimiento puede explicarse al observar nuevamente las Figuras (\ref{fig:r5-M2}) y (\ref{fig:r4-M1}), ya que en la zona previamente menciona es donde se ve mayor variación. Además, es importante considerar las tolerancias de las resistencias, ya que el circuito es sensible a estos cambios. Una posible solución a este problema sería reemplazar las por resistencias SMD, las cuales poseen 1\% de tolerancia, disminuyendo la variación previamente dicha y el uso de un diodo zener diferente, el cuál comience a conducir a tensiones mayores (siempre y cuando, este respete la limitación de los $6 \ V$).
 
 
 \end{document}
