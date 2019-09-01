@@ -2,13 +2,17 @@
 
 \begin{document}
 
-Las hipótesis realizadas en los siguientes análisis del circuito base se comprobarán más adelante a la hora de realizar las simulaciones y el subsiguiente prototipeado.
+Cuando se toca la cuerda de una guitarra, esta vibra en una superposición de varias frecuencias. La frecuencia mas baja se la denomina frecuencia fundamental, mientras que al resto, todas múltiplas de la susodicha, se la denominan armónicos. El efecto de la distorsión se debe a la introducción de armónicos que no pertenecían a la señal de audio original. Si se pudiera tomar la señal de audio producida por una sola cuerda vibrando, y se separase un armónico cualquiera del resto de las frecuencias a la que vibra la cuerda, se tendría una señal correspondiente a un seno con una cierta amplitud, frecuencia y fase. Si se quiere distorsionar esta señal, basta simplemente con introducir sinusoidales de frecuencia múltiplo a la original, en mayor o menor medida.
+
+Se puede definir un parámetro que indica el nivel de distorsión que posee una señal de audio llamado \textit{distorsión armónica total} o THD por sus siglas en inglés, la cual se calcula como la suma de la potencia de los armónicos de la señal a una cierta frecuencia y amplitud dada, sobre la potencia de la frecuencia fundamental. Esto permite dar una idea de los armónicos introducidos a una señal previamente pura, es decir, de un solo tono.
+
+A lo largo de este informe se detallará el diseño, simulado y posterior medido de un circuito cuyo fin es la de dada una señal de audio a la entrada, introducirle armónicos y generar un efecto de distorsión. Para ello, se utilizaron diodos y un amplificador operacional para distorsionar y amplificar la entrada.
 
 \subsection{Análisis Cualitativo del Circuito Base}
 
 \subsubsection{Etapa de Alimentación}
 
-La alimentación del circuito es una fuente no partida de $9V$. Se observa que el capacitor electrolítico $C_5$ se encuentra justo a la salida de la fuente de alimentación. Este capacitor no solo filtrará cualquier ruido que haya montado sobre la continua u ocasional \textit{ripple} que pueda hallarse, ya que por su conexión a tierra, cualquier tensión no contante encontrará un camino de baja impedancia hacia masa, sino también que funcionará como capacitor de desacople para el amplificador operacional, siempre y cuando este esté posicionado físicamente lo más cerca posible del integrado, para eliminar inductancias parásitas que no puedan permitir un pico de consumo de corriente.
+La alimentación del circuito es una fuente no partida de $9V$. Se observa que el capacitor electrolítico $C_5$ se encuentra justo a la salida de la fuente de alimentación. Este capacitor no solo filtrará cualquier ruido que haya montado sobre la continua u ocasional \textit{ripple} que pueda hallarse, ya que por su conexión a tierra, cualquier tensión no contante encontrará un camino de baja impedancia hacia masa, sino también funcionará como capacitor de desacople para el amplificador operacional, siempre y cuando este esté posicionado físicamente lo más cerca posible del integrado, para eliminar inductancias parásitas que no puedan permitir un pico de consumo de corriente.
 
 \begin{figure}[H]
 	\centering
@@ -34,7 +38,7 @@ Por último, se llevan los $9V$ de la fuente de alimentación a la entrada de al
 
 Justo luego de la entrada se encuentra la resistencia $R_8$. En el modo de operación normal del circuito con la guitarra conectada, se polariza el capacitor $C_1$ debido a la continua provista por la alimentación. La finalidad de esta resistencia es de mantener polarizado al capacitor cuando se desconecta el efecto del circuito, es decir, cuando se utiliza la llave de bypass. Si este capacitor se descarga por pérdidas parásitas antes de volver a conectar el efecto, se da a lugar el famoso ruido de 'pop' que puede escucharse.
 
-Para explicar este efecto con mayor detalle, imaginar que no se tiene la resistencia $R_8$ y está conectada la guitarra al circuito. Cuando la 'placa' de la derecha del capacitor $C_1$ está conectada a una tensión de $4,5V$, la 'placa' de la izquierda permanecerá polarizada con $0V$ ya que esta está conectada al pickup de la guitarra que a su vez está conectado a tierra. Al momento de utilizar la llave de bypass, como el capacitor no es ideal, este tendrá pequeñas pérdidas que harán que la tensión con la que está cargado el capacitor disminuya, ya que la 'placa' izquierda no estará conectada a nada. Cuando se decida volver a utilizar la llave de bypass, es decir, utilizar el efecto del circuito, se volverá a cargar al capacitor con la tensión de bias proporcionada por el divisor resistivo, necesitando un rápido flujo de carga, es decir, corriente. Esta descarga de corriente será enviada al parlante, el cual producirá un sonido distintivo. Si se coloca la resistencia $R_8$, la 'placa' izquierda del capacitor permanece siempre a $0V$ y por ende no tomará a lugar el efecto dicho.
+Para explicar este efecto con mayor detalle, imaginar que no se tiene la resistencia $R_8$ y está conectada la guitarra al circuito. Cuando la 'placa' de la derecha del capacitor $C_1$ está conectada a una tensión de $4,5V$, la 'placa' de la izquierda permanecerá polarizada con $0V$ ya que esta está conectada al pickup de la guitarra que a su vez está conectado a tierra. Al momento de utilizar la llave de bypass, como el capacitor no es ideal, este tendrá pequeñas pérdidas que harán que la tensión con la que está cargado el capacitor disminuya, ya que la 'placa' izquierda no estará conectada a nada. Cuando se decida volver a utilizar la llave de bypass, es decir, utilizar el efecto del circuito, se volverá a tratar polarizar al capacitor con la tensión de bias proporcionada por el divisor resistivo, necesitando un rápido flujo de carga, es decir, corriente. Esta descarga de corriente será enviada al parlante, el cual producirá un sonido distintivo. Si se coloca la resistencia $R_8$, la 'placa' izquierda del capacitor tenderá a permanecer a $0V$ y por ende no tomará a lugar el efecto dicho.
 
 El capacitor $C_1$, como ya dicho antes, ofrece gran impedancia a la tensión continua de la alimentación para proteger a la entrada. De otra manera, la señal continua ingresaría por la entrada.
 Lo que se obtiene posterior al capacitor será la señal de entrada levantada tantos voltios como proporcionen el punto medio del divisor resistivo.\\
@@ -77,9 +81,9 @@ La corriente de bias como la tensión de offset pueden ocasionar que la salida d
 \begin{itemize}
 \item Se le proporciona a la entrada gracias a la fuente de alimentación la suficiente corriente al operacional para la correcta polarización de todos los elementos que puedan hallarse dentro de este, sin preocupación alguna por la muy pequeña corriente que pueden suministrar los pickups de una guitarra.
 \item Gracias a los capacitores de acople situados en el circuito la componente de continua de la señal de salida del operacional es removida completamente.
-\item Un muy pequeño desbalanceo en la tensión de bias de la señal de entrada al operacional produciría en el peor de los casos una saturación asimétrica que contribuiría a la distorsión alineal total del circuito.
+\item Un muy pequeño desbalanceo en la tensión de la señal de entrada al operacional produciría en el peor de los casos una saturación asimétrica que contribuiría a la distorsión alineal total del circuito.
 \end{itemize} 
-
+\break
 \subsection{Análisis Cuantitativo del Circuito Base}
 
 Tanto el análisis cuantitativo como el subsiguiente diseño de un nuevo circuito propuesto se harán a partir de lo estudiado en tanto diversas fuentes de internet, como en el libro 'Diseño de Amplificadores Operacionales y Circuitos Integrados Analógicos' de Sergio Franco.
@@ -89,7 +93,7 @@ Además, se decidió, para presentar lo realizado de la forma más clara, primer
 \subsubsection{Componentes}
 
 \textbf{$R_8$:}
-Esta resistencia debe tener un valor alto para no tener perdida substancial de corriente provista por las bobinas de los pickups y no limitar la impedancia de entrada del circuito vista por la guitarra. \textbf{Además, se puede calcular el tiempo característico del RC (entre $R_8$ y $C_1$) que dirá cuánto tardará el capacitor en descargarse. Sin embargo, esto último no se tomará en cuenta y se utilizará una resistencia de $1M\Omega$, ya que por más que el tiempo característico sea muy lento, de un par de segundos inclusive, para esta aplicación se supone que el usuario no estará conectando y desconectando el efecto cada menos de 5 segundos.} \\
+Esta resistencia debe tener un valor alto para no tener perdida substancial de corriente provista por las bobinas de los pickups y no limitar la impedancia de entrada del circuito vista por la guitarra. \\
 
 \textbf{$R_1$, $R_2$:} Se quiere montar a la señal de entrada sobre una continua de la mitad del valor que la de la alimentación, por esto, se decidió que $R_1=R_2$.
 
@@ -97,9 +101,10 @@ Se consideraron los siguientes puntos a la hora de elegir un valor para las resi
 \begin{itemize}
 \item Que la corriente en stand-by no sea muy alta.
 \item No limitar tanto la impedancia de entrada.
+\item Que la corriente que fluye a través del divisor no se haga comparable con la corriente que fluye hacia el operacional.
+\item Como el ruido es proporcional al valor de los resistores usados, se quiso no tener resistencias muy altas.
 \end{itemize}
-\textbf{Sin embargo, se puede demostrar que cuanto más grande sea el valor de los resistores usados, más grande será el ruido, por lo que el valor de estos resistores se sitúan en una situación de compromiso.}
-El valor utilizado es de $R_1=R_2=100 \ k\Omega$.\\
+El valor por el que se optó es de $R_1=R_2=100 \ k\Omega$.\\
 
 \textbf{$C_1$:} Como este capacitor filtra la continua provista por la alimentación, se decidió utilizar un valor de $330 \ nF$ ya que se quiso que el efecto del filtro pasa-altos que se forma con las resistencias $R_1$ y $R_2$ se minimizara dentro de las frecuencias audibles ($20Hz-20kHz$).
 Si sólamente se tiene en cuenta la componente alterna del circuito, la resistencia $R_1$ pasa a estar conectada a tierra, por lo que se forma el paralelo entre $R_1$ y $R_2$. Finalmente utilizando la técnica del divisor resistivo se tiene que
@@ -124,13 +129,13 @@ Cabe notar que el error proporcionado por la aproximación a un valor comercial 
 \textbf{$R_4, R_3, C_2$:} Como ya dicho en la sección de análisis cualitativo, la ganancia de la etapa de amplificación dependerá de la frecuencia, y no solo esto, sino también de la ganancia a lazo abierto del operacional.
 
 \begin{equation}
-	V_{o_{opamp}} = \frac{A_0 V_{i_{opamp}}}{1+A_0 \frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}}}
+	V_{o_{opamp}} = \frac{A_{vol} V_{i_{opamp}}}{1+A_{vol} \frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}}}
 \end{equation}
 
-Sin embargo, si se cumple en la banda audible de frecuencias que
+Sin embargo, si se cumple en la banda audible de frecuencias, y se utiliza el modelo de $A_{vol}$ finito,
 
 \begin{equation}
-\left| A_o\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right| \gg 1
+\left| A_{0}\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right| \gg 1
 \label{cond_1/b}
 \end{equation}
 
@@ -144,22 +149,22 @@ V_{o_{opamp}} \approx V_{i_{opamp}}\left( 1 + \frac{R_4}{R_3 + \frac{1}{SC_2}}  
 	V_{o_{opamp}} \approx V_{i_{opamp}}\left( 1 + \frac{SC_2R_4}{SC_2R_3 + 1}  \right)
 \end{equation}
 
-Se eligieron valores de $R_4=51R_3=1k$ para lograr una ganancia máxima en la etapa de amplificación de $34, 32 \ dB$.
-\[20log_{10}(1+\frac{R_4}{R_3}) = 34,32 \ dB\]
-El capacitor además de no dejar amplificar la continua adjudica cuánto son amplificados los graves. Se utilizó un valor de $330nF$ calculándose la capacidad analizando el filtro que se forma con $R_3$ teniendo un grado de libertad a la hora de darle forma al sonido que se quiere producir. \textbf{Preguntar sobre estabilidad, amplificacion de bajos}
+Se eligieron valores de $R_4=51R_3=1k$ para lograr aproximadamente una ganancia máxima en la etapa de amplificación de $34,35 \ dB$.
+\[G_{max} \approx 20log_{10}(1+\frac{R_4}{R_3}) = 34,35 \ dB\]
+El capacitor además de no dejar amplificar la continua adjudica cuánto son amplificados los graves. Se utilizó un valor de $330nF$ calculándose la capacidad analizando el filtro que se forma con $R_3$ teniendo un grado de libertad a la hora de darle forma al sonido que se quiere producir.
 
 \[ C_2 = \frac{1}{2\pi f_c R_3} = \frac{1}{2\pi 500Hz 1k\Omega} = 318,3nF \approx 330nF \]
 
 Se puede ver que se sigue cumpliendo la condición (\ref{cond_1/b}) ya que
 
-$$ \left| A_o\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right|_{f=20Hz} \approx 0,421A_0 $$
-$$ \left| A_o\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right|_{f=20kHz} \approx 0,019A_0 $$
+$$ \left| A_{0}\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right|_{f=20Hz} \approx 0,421A_0 $$
+$$ \left| A_{0}\frac{R_3 + \frac{1}{SC_2}}{R_4 + R_3 + \frac{1}{SC_2}} \right|_{f=20kHz} \approx 0,019A_0 $$
 
-y la ganancia a lazo abierto suele tener un valor en el orden de $10^5 \ a \ 10^6 $.\\
+y la ganancia del operacional elegido posee como mínimo una ganancia a lazo abierto de $2.5 \cdot 10^4$.
 
 \textbf{$C_3$:} Este capacitor está solamente para filtrar la continua de la salida del operacional pero como forma un pasa-altos con la impedancia equivalente de salida del circuito que aproximadamente es de $8k\Omega$, y no se quiere que afecte este capacitor al circuito, su valor será de $10\mu F$ lo que dejaría la frecuencia de corte en $\approx 2Hz$, realizando la misma cuenta que para $C_1$.\\
 
-\textbf{$R_5, R_6$:} $R_5$ se sitúa para limitar la corriente de los diodos, y $R_6$ para limitar la corriente de descarga del capacitor. El fabricante indica que la corriente máxima de continua que soporta el diodo 1N4148 es de $300mA$. Como después del capacitor $C_3$ la tensión máxima que puede haber en el circuito es de $4,5V$ pico, o de $\approx 3,2V_{rms}$, \textbf{la resistencia mínima que debe colocarse es de $\approx 10\Omega$. Sin embargo, por más que se quiera una impedancia baja de salida del circuito, se seleccionó un valor de $6,8k\Omega$ para tener un gran margen de seguridad.} $R_6$ formará un filtro pasabajos con $C_4$, por lo que, con cierto grado libertad, se eligió un valor de $1k\Omega$.\\
+\textbf{$R_5, R_6$:} $R_5$ se sitúa para limitar la corriente de los diodos, y $R_6$ para limitar la corriente de descarga del capacitor. El fabricante indica que la corriente máxima de continua que soporta el diodo 1N4148 es de $300mA$. Como después del capacitor $C_3$ la tensión máxima que puede haber en el circuito es de $4,5V$ pico, o de $\approx 3,2V_{rms}$, la resistencia mínima que debe colocarse es de $\approx 10\Omega$. Se seleccionó un valor de $6,8k\Omega$ para tener un gran margen de seguridad. $R_6$ formará un filtro pasabajos con $C_4$, por lo que, con cierto grado libertad, se eligió un valor de $1,2k\Omega$.\\
 
 \textbf{$C_4$:} Como este capacitor forma un pasa bajos con la resistencia $R_6$, se eligió un valor de $6,8nF$ de tal manera que su frecuencia de corte se encuentre aproximadamente en $f_c = 20kHz$.
 \[ C_4 = \frac{1}{2\pi 20kHz 1,2k\Omega} = 6,63nF \approx 6,8nF\]
@@ -172,24 +177,34 @@ Nuevamente, se realizó una aproximación con mucho error, por la libertad de di
 \begin{itemize}
 \item Impedancia de entrada relativamente alta ($10M\Omega$ en el peor de los casos) comparada con la contribución del resto de los componentes de los circuitos. Esto permitirá que no se limite la impedancia de entrada posible a causa del amplificador operacional.
 \item Capacidad de compensar el operacional, haciendo tanto el ancho de banda como el slew rate proporcionales a la inversa de la capacitancia de compensación utilizada.
-\item Excepcionalmente baja slew rate, lo que contribuye al efecto alineal de distorsión de la señal.
+\item Excepcionalmente baja slew rate, lo que contribuye al efecto alineal de distorsión de la señal ($\approx 0.3V/\mu s$ para $30pF$ de compensación).
 \end{itemize}
+
+\textbf{$1N4148$:} Se optó por utilizar el diodo $1N4148$ ya que este es muy utilizado en aplicaciones de audio por sus bajos tiempos de transitorio.
 
 \subsubsection{Impedancia de Entrada}
 
-\textbf{Para un circuito con esta aplicación se quiere como ya dicho la mayor impedancia de entrada posible para no perder agudos o armónicos.}
+Para un circuito con esta aplicación se quiere como ya dicho la mayor impedancia de entrada posible para no cambiar la señal que ingresa.
 La impedancia de entrada del circuito base puede calcularse considerando solamente la señal alterna que recorre el circuito. Al hacer esto, se puede observar que la resistencia $R_1$ estará conectada a tierra, por lo que la impedancia de entrada será
-\[Z_{in} = (R8//(R1//R2))//Z_{in_{opamp}} = (1M\Omega // 255k\Omega)//10M\Omega \approx 199k\Omega\]
+\[Z_{in} = (R8//(R1//R2))//Z_{in_{opamp}} = (1M\Omega // 50k\Omega)//10M\Omega \approx 47,4k\Omega\]
 
 \subsubsection{Impedancia de Salida}
 
-\textbf{La impedancia de salida se quiere mantener lo más baja posible.}
+La impedancia de salida se quiere mantener lo más baja posible para no cargar al circuito que se conecte posterior al pedal.
 Si se desprecia el potenciómetro a la salida para controlar el volúmen, la impedancia de salida del circuito base puede calcularse como
 \[ Z_{out} = Z_{out_{opamp}} + 6k8\Omega + 1,2k\Omega \approx 8k\Omega \]
 
+\subsubsection{Rangos Operativos del Operacional}
+
+Estos son los datos recopilados de la hoja de datos del operacional.\\
+\textbf{Tensión de alimentación:} La alimentación del operacional no debe sobrepasar los $\pm 18V$.\\
+\textbf{Tensión de entrada:} La diferencia de potencial entre el borne positivo y negativo del operacional no pueden superar los $\pm 15V$.\\
+Como la alimentación es impuesta por nosotros y generalmente para este tipo de circuitos no suele sobrepasar los $12V-15V$, y una guitarra como máximo puede generar un poco menos de $1V$ dependiendo de la cantidad y tipo de pickups utilizados, no se tomaron muchos más recaudos.
+
+\break
 \subsection{Simulación del Circuito Base}
 
-Se realizaron tres tipos de simulaciones diferentes para visualizar el funcionamiento del circuito.
+Se realizaron tres tipos de simulaciones diferentes para visualizar el funcionamiento del circuito. Para hacer esto se utilizó el simulador de circuitos \textit{LTSpiceXVII}.
 
 \begin{figure}[H]
 	\centering
@@ -201,7 +216,7 @@ Se realizaron tres tipos de simulaciones diferentes para visualizar el funcionam
 \subsubsection{Análisis de Señal, Transitorio}
 
 Para simular el transitorio y poder observar la señal de entrada, se eligió una frecuencia de $1kHz$ y una amplitud de $100mV$ emulando una guitarra.
-Primero se analizó el accionar del divisor resistivo para comprobar que este levantaría la señal de entrada por $4,5V$.
+Primero se analizó el accionar del divisor resistivo para generar un bias, es decir, levantar la señal de entrada por $4,5V$.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_base_tran_vi_viop.png}
@@ -216,7 +231,7 @@ Luego, se analizó la señal de salida del opamp justo antes del capacitor de ac
 	\caption{Análisis de la señal de entrada al operacional y señal de salida del operacional. }
 	\label{fig:sim_base}
 \end{figure}
-Se puede observar como están presentes efectos distorsivos no lineales por culpa de la baja slew rate del operacional y por la saturación de este mismo, además de una gran amplificación.
+Se puede observar como están presentes efectos distorsivos no lineales por culpa de la saturación de este mismo, además de una gran amplificación.
 Por último, se analizaron los efectos de la etapa de ecualización, contrastando la señal justo después del capacitor de acople a la salida del operacional, con la señal a la salida del circuito.
 
 \begin{figure}[H]
@@ -235,7 +250,7 @@ Finalmente, para visualizar el funcionamiento total, se contrastaron las señale
 \end{figure}
 Contrastando ambas señales se puede observar el correcto funcionamiento calculado del circuito total.
 \subsubsection{Análisis de Bode}
-A continuación se simuló el gráfico de Bode de la transferencia de tensión entre la entrada y la salida del circuito.
+A continuación se simuló el gráfico de Bode de la transferencia de tensión entre la entrada y la salida del circuito obviando los diodos ya que estos no son componentes lineales.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_base_bode.png}
@@ -245,9 +260,22 @@ A continuación se simuló el gráfico de Bode de la transferencia de tensión e
 
 Se puede ver como hay un pico en la ganancia de $\approx 30dB$ alrededor de $1kHz$, mientras que los bajos y agudos son amplificados en menor medida. Se puede observar también como no habrán problemas de inestabilidad cuando el desfase introducido sea mayor de $180\deg$ ya que la atencuación ya será mayor a cero.
 
+Se realizó además un análisis de la impedancia de entrada del circuito a lo largo de las frecuencias del rango audible. Se puede observar que los cálculos teóricos que predecían una impedancia de entrada de aproximadamente $47,4k\Omega$ son muy similares a los de la simulación
+
+\begin{center}
+\begin{figure}[H]
+	\hspace{-5em}
+	\includegraphics[width=1.3\textwidth, trim={0 0 0 0}, clip, scale=2]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_base_zin.png}
+	\caption{Análisis de la impedancia de entrada del circuito base.}
+	\label{fig:sim_base}
+\end{figure}
+\end{center}
+
+Cabe notar que la fase de la impedancia de entrada del circuito esta desfasada en $180\deg$ por cómo toma \textit{LTSpice} el sentido de la corriente a través de la fuente que hace ingresar la señal emulada de la guitarra.
+
 \subsubsection{Análisis de Fourier}
 
-Se realizó un análisis de Fourier a la salida del circuito donde se pudo comprobar que hay un $29.76\%$ de distorsión armónica a la salida. La distorsión armónica es un parámetro para definir las señales de audio, en este caso nos está proporcionando una idea de los armónicos introducidos por la distorsión del circuito. Es calculado como el cociente entre el valor cuadrático medio de los armónicos de la señal empezando desde el segundo sobre el valor del primer armónico de la señal.
+Se realizó un análisis de Fourier a la salida del circuito donde se pudo comprobar que hay un $29.76\%$ de distorsión armónica a la salida.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/sim_base_fourier.JPG}
@@ -257,19 +285,18 @@ Se realizó un análisis de Fourier a la salida del circuito donde se pudo compr
 También se puede contemplar que los armónicos tienen un gran parecido con las componentes de fourier de una cuadrada, ya que los armónicos pares se ven más atenuados que los impares.
 
 \subsection{Prototipo del Circuito Base}
-Se realizó un prototipo del circuito base en un \textit{protoboard} con dos cambios: se suplantó la resistencia fija $R_4$ de un valor de $50k\Omega$ por un potenciómetro lineal de $250k\Omega$ y se agregó un diodo LED desde la alimentación de 9V hasta tierra, para indicar cuándo el circuito está alimentado. Luego, se quiso probar el circuito armado conectado con una guitarra a la entrada, y un amplificador de guitarra a la salida. Se utilizó una fuente de tensión continua no partida de 9V como alimentación. Por favor, referirse a los archivos 'ej5protobaseon.mp4' y 'ej5protobaseoff.mp4' para poder ver el resultado.
+Se realizó un prototipo del circuito base en un \textit{protoboard} con dos cambios: se suplantó la resistencia fija $R_4$ de un valor de $51k\Omega$ por un potenciómetro lineal de $250k\Omega$ y se agregó un diodo LED desde la alimentación de 9V hasta tierra, para indicar cuándo el circuito está alimentado. Luego, se quiso probar el circuito armado conectado con una guitarra a la entrada, y un amplificador de guitarra a la salida. Se utilizó una fuente de tensión continua no partida de 9V como alimentación. Por favor, referirse a los archivos 'ej5protobaseon.mp4' y 'ej5protobaseoff.mp4' para poder ver el resultado.
+\subsubsection{Resultados del Prototipado}
 A lo largo de la prueba, se constataron dos puntos importantes:
 \begin{itemize}
-\item Se tuvo que utilizar el potenciómetro de $250k\Omega$ en el rango de aproximadamente $200k\Omega$ y $250k\Omega$ para obtener un nivel de saturación satisfactorio.
+\item Se tuvo que utilizar el potenciómetro de $250k\Omega$ en el rango de aproximadamente $200k\Omega$ y $250k\Omega$ para obtener un nivel de saturación satisfactorio al oído.
 \item Los medios y agudos obtenían una buena distorsión, pero los bajos no lograban ser distorsionados del todo.
 \end{itemize}
 Estos dos puntos fueron gran causa de cambios en valores de resistores y capacitancias en el diseño propuesto.
 
-\subsection{Diseño propuesto}
+\subsection{Esquemático del diseño propuesto}
 
 A continuación se presenta el diseño propuesto junto a un análisis de los componentes añadidos.
-
-\subsubsection{Esquemático del diseño propuesto}
 
 \vspace{1cm}
 \hspace{-2cm}
@@ -420,25 +447,128 @@ A continuación se presenta el diseño propuesto junto a un análisis de los com
 
 \vspace{1em}
 
-\subsubsection{Análisis del Diseño Propuesto}
+\subsection{Análisis del Diseño Propuesto}
 
 A continuación se presentan los cambios propuestos. No todos son cambios en el diseño sino también ajustes a valores de ciertos componentes luego de haber realizado simulaciones y haber prototipado el pedal con los valores calculados anteriormente.
 
+\subsubsection{Componentes}
 \begin{itemize}
-\item Se cambiaron los valores de las resistencias que generan el bias de la señal de entrada a $10k\Omega$, mientras que el punto medio del divisor resistivo se conecta a una nueva resistencia de $1M\Omega$. Esto permite elevar la impedancia de entrada del circuito con una sola resistencia de gran valor, en vez de proporcionar más ruido con dos resistencias de gran valor, si las resistencias del divisor fueran de $2M\Omega$. La nueva impedancia de entrada se calcularía aproximadamente como $$ 1M\Omega//\approx1M\Omega//10M\Omega $$ en el peor de los casos (con la mínima impedancia de entrada provista por el fabricante del operacional).
-Además, se logra obtener una mucho mayor precisión a la hora de obtener $4,5V$, ya que la corriente que se escapa por el punto medio del divisor resistivo debe pasar por una resistencia de 100 veces el valor de la resistencia que tiene en paralelo.
+\item Se cambiaron los valores de las resistencias que generan el bias de la señal de entrada a $10k\Omega$, mientras que el punto medio del divisor resistivo se conecta a una nueva resistencia de $1M\Omega$. Esto permite elevar la impedancia de entrada del circuito con una sola resistencia de gran valor, en vez de proporcionar más ruido con dos resistencias de gran valor, si las resistencias del divisor fueran de $2M\Omega$. La nueva impedancia de entrada se calcularía aproximadamente como $$ 1M\Omega//1,005M\Omega//10M\Omega \approx 0,5M\Omega$$ en el peor de los casos (con la mínima impedancia de entrada provista por el fabricante del operacional).
+Además, se logra obtener una mucho mayor precisión a la hora de obtener $4,5V$, ya que la corriente que se escapa por el punto medio del divisor resistivo debe pasar por una resistencia de 100 veces el valor de la resistencia puesta a tierra.
 \item Se agregó un capacitor en paralelo al punto medio del divisor resistivo para filtrar variaciones en el potencial que puedan hallarse. Se decidió que por más que sea un aumento en el costo final del producto el tener que agregar un componente más, sería a su vez un gran aumento en la calidad final, ya que cualquier pequeña variación en la tensión que se utiliza para levantar a la señal de entrada será amplificado con una muy grande ganancia al pasar por la etapa de amplificación, generando un gran ruido a la salida. La capacitancia fue calculada de tal manera que la frecuencia de corte del filtro pasa-altos que se forma con la resistencia de $10k\Omega$ se sitúe lo más alto posible. $$ f_c = \frac{1}{2\pi 10k\Omega 10pF} = 1.590MHz \approx 1,6MHz$$
 \item Se cambió el valor del capacitor en el lazo de realimentación para favorecer la amplificación (también saturación y clipping) de los graves. El valor anterior se calculó con una frecuencia de corte de $500Hz$. Para el calculo del nuevo valor se posicionó el polo en los $100Hz$. $$C = \frac{1}{2\pi 100Hz 1k\Omega} = 1.591\mu F$$ por lo que se decidió utilizar un valor de $1uF + 560nF$ para ajustar a valores comerciales, posicionando finalmente el polo en una frecuencia de corte de  $$C = \frac{1}{2\pi 1.56\mu F 1k\Omega} = 102.02Hz$$.
 \item Se agregó un diodo LED junto a su resistor para indicar cuándo está alimentado el circuito. También se agregaron dos llaves para activar o desactivar distintos tipos de distorsión. Esto añade mejor aspecto y una mayor funcionalidad al producto final y se justifica el precio de los componentes por esa razón.
-\item Se decidió poner un potenciómetro en el lugar de la resistencia $R_4$ que anteriormente era de $50k\Omega$ para lograr tener una mayor funcionalidad y rangos de ganancia posibles en el circuito. Esto haría que la ganancia ideal de la etapa de amplificación esté aproximadamente entre 0 y 251. 
-\item Se agregaron dos diodos con polaridad invertida en paralelo al potenciómetro en el lazo de realimentación. Este tipo de distorsión se la denomina \textit{soft clipping}, mientras que la distorsión provocada por los diodos a la salida del amplificador operacional se la denomina \textit{hard clipping}. Se decidió agregar este tipo de distorsión junto a una llave para agregar más funcionalidad al pedal. En el \textit{hard clipping} se recorta la señal que sale del operacional y proporciona una señal muy semejante a una cuadrada con gran componente de altas frecuencias, mientras que en el \textit{soft clipping}, como el recortado se realiza en el lazo de realimentación del operacional, se mezclan señales no recortadas con señales recortadas, produciendo una señal recortada mucho mas suave.
-\textbf{pensar si no es mejor utilizar una llave inversora sin distorsion-soft-hard en vez de dos llaves, porque superponer soft con hard quiza no tenga mucho sentido.}
+\item Se decidió poner un potenciómetro en el lugar de la resistencia $R_4$ que anteriormente era de $51k\Omega$ para lograr tener una mayor funcionalidad y rangos de ganancia posibles en el circuito. Esto haría que la ganancia ideal de la etapa de amplificación esté aproximadamente entre 0 y 251. 
+\item Se agregaron dos diodos con polaridad invertida en paralelo al potenciómetro en el lazo de realimentación. Este tipo de distorsión se la denomina \textit{soft clipping}, mientras que la distorsión provocada por los diodos a la salida del amplificador operacional se la denomina \textit{hard clipping}\footnote{Cabe notar que los términos de 'hard clipping' y 'soft clipping' utilizados a lo largo del informe se refieren solamente a la jerga utilizada en el diseño de pedales de guitarra, ya que a causa del capacitor a la salida del circuito cualquier tipo de recorte nunca será abrupto. Se denomina en la jerga a hard clipping a la distorsión generada por diodos a la salida del operacional mientras que se denomida soft clipping a la distorsión generada por diodos en el lazo de realimentación del operacional.}. Se decidió agregar este tipo de distorsión junto a una llave para agregar más funcionalidad al pedal. En el \textit{hard clipping} se recorta la señal que sale del operacional y proporciona una señal muy semejante a una cuadrada con gran componente de altas frecuencias, mientras que en el \textit{soft clipping}, como el recortado se realiza en el lazo de realimentación del operacional, se mezclan señales no recortadas con señales recortadas, produciendo una señal recortada mucho mas suave.
 \item Se cambiaron los valores de las resistencias a la salida por dos resistores de $1k\Omega$. Esto se realizó ya que previamente se dejó un margen muy grande de seguridad al calcular los valores de los resistores y se decidió disminuir aún más la impedancia de salida. 
-\item Se calculó nuevamente el filtro pasa-bajos de la salida. Antes se posicionó el polo en los $20kHz$, mientras que ahora estará situado en  aproximadamente $10kHz$. $$ f_c = \frac{1}{2\pi 2k\Omega 8.2nF} = 9.704kHz \approx 10kHz$$
-
-\textbf{ver si poner el ultimo resistor un pote de 10k y el capacitor de 10nf, haria qeue el polo se corra de 1446,86 minimo a 15915,49 maximo. asi podria justificar porque baje tanto los resistores y en el minimo sigo estando dentro de una resistencia segura. sino otra es poner el primer resistor 100ohm y seguiria siendo 10 veces mas que la corriente maxima de continua que soporta el diodo 1n4148 y le meto un pote de 10k y un capa de 100n, entonces minimo seria 144,68hz y maximo 15,91khz}
+\item Se calculó nuevamente el filtro pasa-bajos de la salida. Antes se posicionó el polo en los $20kHz$, mientras que ahora estará situado en  aproximadamente $10kHz$. $$ f_c = \frac{1}{2\pi 2k\Omega 8.2nF} = 9.704kHz \approx 10kHz$$.
 
 \end{itemize}
 
+\subsection{Simulación del Diseño Propuesto}
+
+Se realizaron las mismas simulaciones para el diseño propuesto que las hechas para el diseño base. Se utilizó nuevamente el simulador de circuitos \textit{LTSpiceXVII}. A continuación se analizarán las diferencias y el funcionamiento del circuito.
+
+\subsubsection{Análisis de Bode}
+Se realizó la simulación del gráfico de Bode para el diseño propuesto. Se puede observar como luego de los cambios propuestos al posicionamiento de los polos, la curva de transferencia sufrió un gran cambio. Se puede contemplar como los graves serán ahora tanto mucho más amplificados como notorios a la salida del circuito.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_base_prop_bode.png}
+	\caption{Gráfico de Bode para el circuito propuesto.}
+	\label{fig:sim_prop_bode}
+\end{figure}
+
+Se quiso también simular la nueva impedancia de entrada del circuito.
+
+\begin{center}
+\begin{figure}[H]
+	\hspace{-6em}
+	\includegraphics[width=1.4\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_zin.png}
+	\caption{Impedancia de entrada del circuito propuesto.}
+	\label{fig:sim_prop_zin}
+\end{figure}
+\end{center}
+
+Se puede observar que nuevamente la curva de impedancia de entrada simulada presenta una gran similitud a la impedancia de entrada calculada teóricamente, que era de aproximadamente $50M\Omega$. Cabe notar que la fase de la impedancia de entrada del circuito esta desfasada en $180$ grados por cómo toma {\textit{LTSpiceXVII}} el sentido de la corriente a través de la fuente que hace ingresar la señal emulada de la guitarra.
+
+\subsubsection{Análisis de Fourier}
+Se realizó nuevamente, como para el circuito base, un análisis de las componentes de Fourier de la señal de salida.\\
+
+En una primera instancia con ambos switch apagados, es decir sin ningún tipo de clippeo, se obtuvo una distorsión armónica total de $\approx 8\%$. Con softclipping se obtiene una distorsión armónica total de $\approx 22\%$ y finalmente con hardclipping se obtiene una distorsión armónica total de $\approx 28\%$.
+
+     \begin{figure}[H]
+         \centering
+         \includegraphics[width=0.8\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_alone.png}
+         \caption{Análisis de las componentes de Fourier de la salida sin clipping.}
+         \label{fig:four_alone}
+     \end{figure}
+
+
+     \begin{figure}[H]
+         \centering
+         \includegraphics[width=0.8\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_soft.png}
+         \caption{Análisis de las componentes de Fourier de la salida con soft clipping.}
+         \label{fig:four_soft}
+     \end{figure}
+
+
+     \begin{figure}[H]
+         \centering
+         \includegraphics[width=0.8\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_fourier_hard.png}
+         \caption{Análisis de las componentes de Fourier de la salida con hard clipping.}
+         \label{fig:four_hard}
+     \end{figure}
+
+Se pueden observar tres niveles distintos de distorsión que pueden lograrse mediante el accionar de las llaves. Cabe notar cómo están compuestos los armónicos de los distintos tipos de distorsión. Los armónicos de la distorsión tanto por soft clipping como por hard clipping se asemejan a aquellos de una señal cuadrada. Sin embargo, la distorsión por soft clipping atenúa más los armónicos pares que la distorsión por hard clipping, lo que proporciona una distorsión mucho más notoria al oído.
+	
+\subsubsection{Análisis de Señal, Transitorio}
+
+Como los cambios propuestos no alteran de manera significante el actuar del circuito, se contrastarán solamente las señales de salida con los tres métodos de distorsión del diseño propuesto.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/circuito_propuesto_salidas.png}
+	\caption{Análisis de la señal de entrada y señal de entrada al operacional.}
+	\label{fig:sim_prop_tran}
+\end{figure}
+
+Se puede observar que tanto soft clipping como hard clipping proporcionan dos tipos de señales distintas, mientras que la señal de salida sin clippear posee una amplitud mucho mayor que el resto y una señal menos distorsionada. Además se puede notar que la señal con soft clipping posee una amplitud levemente menor que aquella con hard clipping. Esto puede deberse a la ganancia de la etapa de amplificación será menor ya que la señal encuentra un camino de menor resistencia que por el potenciómetro. La señal sin clippear es mucho mayor que las demás ya que esta no es recortada hasta un valor máximo.
+
+\subsection{Realización y Medición del Diseño Propuesto}
+
+Antes de diseñar una placa para el diseño propuesto se realizó nuevamente un prototipado en un \textit{protoboard} y se comprobó nuevamente el correcto funcionamiento del circuito junto a los cambios propuestos. Por favor, referirse al archivo 'ej5protopropuesto.mp4' para ver el resultado.
+
+
+Luego se diseñó un PCB en \textit{Altium}. Se optó por una placa de 10x5 y de no soldar los controles a esta, sino de usar pines y soldar los potenciómetros, switches, etc. a estos, por si se decidiera eventualmente utilizar un gabinete para situar al circuito.
+Se optó por realizar el diseño de las rutas de cobre con plano de masa, eliminando manualmente luego del procesado de la placa los lazos que forma este para no inyectar ruido al circuito.\\
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Circuito_base/Sim/pcb.png}
+	\caption{Diseño del PCB del pedal de distorsión.}
+	\label{fig:pcb}
+\end{figure}
+
+Se probó el circuito armado con una guitarra y un amplificador de guitarra y se comprobaron que los cambios al posicionamiento de los polos, los niveles de ganancia, el control de tono y los diodos en el lazo de realimentación fueron exitosos. Sin embargo, el circuito con los niveles de ganancia y volúmen al máximo, si es conectado a un amplificador de guitarra con un volúmen alto, logra sintonizar frecuencias de radio. Esto y demás problemas encontrados serán abarcados en la sección de conclusiones. \\
+
+Se cometió un error al diseñar la placa que se notó luego de ya haber realizado la placa y las mediciones, y es que se confundió el posicionamiento próximo del capacitor de desacople (C1) con el capacitor de compensación (C8), sin embargo, como no se consideraba un error crítico se decidió no realizar nuevamente la placa.
+
+Tras el armado de la placa se decidió medir el gráfico de Bode y hacer un análisis de las señales de salida y de entrada.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{ImagenesAux/pend.jpg}
+	\caption{Mediciones de la placa.}
+	\label{fig:sim_prop_tran}
+\end{figure}
+
+\subsection{Conclusiones}
+
+Se logró un funcionamiento correcto y una distorsión no solo satisfactoria al oído sino también una gran versatilidad a la hora de seleccionar un nivel de distorsión deseado. Con las dos llaves se pueden lograr tres tipos distintos de distorsión, cada uno con un sonido diferente, mientras que con el potenciómetro de ganancia y de tono se puede manipular el nivel de distorsión generado. Con la llave inversora se tiene la opción de realizar un \textit{true bypass}, poniendo en corto la entrada con la salida del circuito.
+
+Sin embargo, el pedal posee también efectos no deseados. Con el volúmen y ganancia al máximo, se pueden llegar a escuchar frecuencias de radio con un volúmen en el amplificador de guitarra lo suficientemente alto. Además, como el potenciómetro de tono afecta la impedancia de salida del circuito, se observa un efecto que al utilizar el control de tono aumenta o disminuye levemente el volúmen de la señal de salida.\\
+
+En retrospectiva, se podría haber utilizado cable mallado para realizar los componentes entre los controles y la placa para reducir interferencia electromagnética. Se presentará al pedal dentro de un gabinete cuyo interior será cubierto de papel aluminio y aislante para eliminar ruido, ya que generalmente las pedaleras de guitarras poseen un gabinete de metal para que interferencia no sea inyectada al circuito.
+Lo que se podría haber hecho para solucionar el problema con el control de tono es haber utilizado otro operacional en configuración de buffer con un divisor resistivo conectado a la alimentación y capacitores de filtrado de continua, o haber utilizado un transistor para adaptar la salida de tal manera que un cambio en la impedancia del filtro pasa-bajos no influya en la impedancia de salida del circuito.
 
 \end{document}
