@@ -22,12 +22,23 @@
 \section{Circuitos integradores y derivadores}
 \subsection{Introducción}
 Los circuitos implementados con amplificadores operacionales permiten la implementación de diferentes configuraciones que resuelven problemas matemáticos. Con el diseño adecuado pueden usarse para resolver sistemas de ecuaciones diferenciales.
-En este caso estudiaremos 2 bloques fundamentales. El circuito integrador y el circuito derivador. Se analizaran sus características más relevantes así como también sus límites de uso y como extenderlos para aprovecharlos al máximo.
+En este caso estudiaremos 2 bloques fundamentales. El circuito integrador y el derivador. Se analizaran sus características más relevantes así como también sus límites de uso y como extenderlos para aprovecharlos al máximo.
 
-\subsection{Análisis previo del \textbf{LM833N} }
+\begin{figure}[hbt!]
+	\includegraphics[scale=1]{Ejercicio4/integrador.png}
+	\caption{Circuito integrador} 
+	
+	\includegraphics{Ejercicio4/derivador}
+	\caption{Circuito Derivador} 
+	
+\end{figure}
+
+\subsection{Análisis previo del \textbf{LM833N}}
 El amplificador a utilizar es el \textbf{LM833N} de STMicroelectronics. El mismo es un operacional de bajo ruido diseñado para aplicaciones relacionadas al manejo de audio.
 En su datasheet podemos ver que posee un alto nivel Slew Rate de hasta 7 $\frac{V}{s}$, un GBP de 15MHz y una ganancia de tensión 
 a lazo abierto típica de unos 110 dB. Notemos que también se indica que la ganancia mínima es de unos 90 dB. 
+
+
  \subsubsection{Cálculo de $A_{vol}$}
 Para poder realizar los cálculos de transferencia y establecer sus correspondientes transferencias de teóricas primero debemos conocer $A_{vol}$ medido en veces. Para esto basta con tomar el valor de ganancia de tensión típica a veces.
 $$A_{vol} = 10^{\frac{110}{20}}$$
@@ -40,13 +51,28 @@ Dado el \textbf{GBP} de 15MHz podemos fácilmente calcular la frecuencia de cort
 $$ f_p = \frac{15MHz}{A_{vol}} $$
 $$ f_p \approx 47.44Hz$$
 
+\section{Ganancia bajo diferentes condiciones de $A_{vol}$}
+En esta sección analizaremos las características de la ganancia de tensión brindad por ambos circuitos bajo diferentes condiciones.
+
+\subsection{$A_{vol}$ infinito}
+En un circuito con amplificadores operacionales es deseable utilizar dispositivos con $A_{vol}$(ganancia a lazo abierto) lo más alto posible para que los modelos teóricos se aproximen a su implementación física.
+
+Ambos circuitos adoptan la configuración de un circuito inversor y sus transferencias pueden ser descritas mediante
+$$H(s)_{inv} = \frac{-\frac{Z_{Feed}}{Z_{in}}}
+{1+\frac{1+\frac{Z_{Feed}}{Z_{in}}}{A_{vol}}} $$
+
+Si consideramos $A_{vol}$ infinito obtenemos la transferencia para el inversor ideal:
+
+$$H(s)_{ideal} = -\frac{Z_{Feed}}{Z_{in}}$$
+
+Entonces para el circuito integrador obtenemos:
+$$H(s)_{\int_{}{}} = \frac{-1}{sCR} $$
+
+Por otro lado para el circuito derivador:
+$$H(s)_{\frac{d}{dt}}=-sCR$$
 
 
 
-
- 
-\subsection{Circuito Integrador}
-\subsubsection{Integrador Ideal}
 
 
 \end{document}
