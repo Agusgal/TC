@@ -24,7 +24,7 @@ Un amplificador operacional es un dispositivo electrónico el cual, dependiendo 
 donde típicamente $R_{in}\approx \infty$ y $R_{out} \approx 0$
 
 \subsubsection{Modelo Ideal}
-En el modelo ideal realimentado las hipótesis con las que se trabaja es que:
+En el modelo ideal realimentado las hipótesis con las que se trabaja son:
 \begin{align} V^+ = V^- \end{align}
 \begin{align}V_{Out} \underrel{A_{Vol}\to \infty}{=} A_{Vol} \cdot (V^+ - V^-) \end{align}
 \begin{align} R_{in}=\infty   \thinspace;\thinspace R_{Out} = 0 \end{align}
@@ -99,13 +99,14 @@ La cátedra propone dos modelos de circuitos diferentes, ambos son los siguiente
 Para ambos, y debido a que se utiliza el mismo operacional en cada caso, se obtuvieron los siguientes datos de la hoja de datos del fabricante:
 \begin{table}[H]
 \begin{center}
-\label{tab:datos}
 \begin{tabular}{|c|c|c|c|c|}
 \hline
-\multicolumn{5}{|c|}{\textbf{Datos pertinentes al operacional}}                                      \\ \hline
+%\multicolumn{5}{|c|}{}                                      \\ \hline
 \textbf{$A_{vol}$} & $Max \ V_{in}$ & $V_{cm}$ & Slew rate             & GBW \\ \hline
 100 k              & $32 \ V$         & $VCC \ - \ 1.5 \ V$  & 0.3 $\frac{V}{\mu s}$ & $1 \ MHz$  \\ \hline
 \end{tabular}
+\caption{Datos pertinentes al operacional.}
+\label{tab:datos}
 \end{center}
 \end{table}
 
@@ -524,7 +525,7 @@ Luego se procede a mostrar las mediciones realizadas para el caso del circuito n
 
 El máximo valor de entrada a partir del cual el opamp satura se encuentra definido por diversas variables, siendo algunas de ellas la amplitud de entrada de la señal, la ganancia del sistema y la frecuencia de entrada.
 
-Al momento de definir dichos valores, se realizó un enfoque en las 3 variables previamente mencionadas. Asumiendo el opamp con ganancia ideal y sabiendo que:
+Al momento de definir dichos valores, se realizó un enfoque en las 3 previamente mencionadas. Asumiendo el opamp con ganancia ideal y sabiendo que:
 \begin{align} V_{Out}=H(s)\cdot V_{in}\end{align}
 
 El máximo valor de $V_{in}$ queda definido por la tensión de saturación del operacional. Para el utilizado en este informe (LM324), dicho valor es de $Vcc - 1.5 \ V$\footnote{Dato extraído de la hoja de datos.}, siendo así, para el caso empleado, equivalente a $13.5 \ V$.
@@ -558,7 +559,7 @@ La cual puede ser apreciada en el siguiente gráfico:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/maxvinsr.png}
-	\caption{Maxima tensión de entrada sin saturación ni slew-rate.}
+	\caption{Máxima tensión de entrada sin saturación ni slew-rate.}
 	\label{fig:MaxVinsr}
 \end{figure} 
 %%%%%%%%%%%%%%%%%%
@@ -566,9 +567,24 @@ La cual puede ser apreciada en el siguiente gráfico:
 En el caso del circuito inversor, considerando la situación en la cual $R_3$ sea igual a 0, la salida del amplificador operacional debería ser de $0 \ V$. Esto no es lo que ocurre dado que existe una tensión de offset, la cual se analiza en la sección 3 de este informe.
 
 
-Por su parte, para el circuito no inversor
+Por su parte, para el circuito no inversor,
+%si se calcula nuevamente (\ref{equ:noinvtransferencia}), se obtiene
+%\[
+%	H \left( s \right) = \frac{1}{\frac{R_1}{R_1 + R_2} + \frac{1}{A_o \left( \omega \right)}}
+%\]
+se obtendría que $V^+ = V_{in}$. Luego, se sabe que $R_3$ no es necesaria considerando $I_{in}$ constante frente a cambios en la temperatura. Además, este circuito se caracteriza por poder ser sustentado con una sola fuente de alimentación, siendo esta referenciada a $\frac{V^+}{2}$\footnote{Datos obtenidos de la hoja de datos.}. Es así que recalculando la ganancia para esta disposición, se obtiene que 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.4\textwidth]{Ejercicio1/Imagenes/VinvsVoR3.png}
+	\caption{$V_{out}$ en función de $V_{in}$ con $R_4$ en el caso ideal.}
+	\label{fig:VinvsVoR3}
+\end{figure} 
+
 \begin{center}
-\textcolor{red}{\textbf{.................}}
+\textcolor{red}{\textbf{REVISAR ANÁLISIS.}}
+\textcolor{red}{\textbf{BUSCAR UNA MEJOR IMAGEN, EN ESTA SE TOMA VCC = 5}}
+\textcolor{red}{\textbf{CAMBIAR ESO EN LA OTRA IMAGEN.}}
 \end{center}
 
 Por otro lado, se analiza el propósito de $R_4$ en el circuito inversor. A primera vista no es evidente, dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Dato obtenido de la datasheet, $I_{Max}=20 \ mA$} que puede aportar el opamp, se llego a que el propósito de $R_4$ es limitar la corriente, por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$. Otra función que posee $R_4$ es el limitar la corriente del lazo.
@@ -582,7 +598,7 @@ El comportamiento del operacional no es lineal para todo el rango de entradas. E
 	\caption{DC-sweep Caso 1.}
 	\label{fig:dcc1}
 \end{figure} 
-Se puede observar en este caso como el opamp satura a partir de una tensión mayor a 1.35 Volts como se predijo en le punto (a).
+Se puede observar en este caso como el opamp satura a partir de una tensión mayor a $1.35 V$ como se predijo en le punto (a).
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/dc_sweep_c2.png}
@@ -596,7 +612,9 @@ En esta figura se ve como el comportamiento del amplificador operacional es line
 	\caption{DC-sweep Caso 3.}
 	\label{fig:dcc3}
 \end{figure} 
-Finalmente en esta figura se ve que el opamp tiene comportamiento lineal para todos los valores de la rampa. Otro efecto no lineal del amplificador operacional que fue observado es el efecto de Cross-over, el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional. Este efecto se hace notar como una deformación en forma de llanura en la transición por $0 \ V$, como se puede apreciar en la Figura (\ref{fig:co}).
+Finalmente en esta figura se muestra que el opamp tiene comportamiento lineal para todos los valores de la rampa.
+
+Otro efecto no lineal del amplificador operacional que fue observado es el efecto de Cross-Over, el cual es introducido dado a la polarización de los transistores que tiene por dentro el operacional. Este efecto se hace notar como una deformación en forma de llanura en la transición por $0 \ V$, como se puede apreciar en la Figura (\ref{fig:co}).
 
 Se puede evitar tener que lidiar con este problema al aplicar una tensión de offset de continua, de forma tal que se consiga polarizar los transistores. Para ello, en este informe, se emplearon valores entre $0.7 \ V$ y $1.4 \ V$. Otra alternativa es valerse de una señal con valor medio mayor a $0.7 \ V$. 
 \begin{figure}[H]	
@@ -608,73 +626,93 @@ Se puede evitar tener que lidiar con este problema al aplicar una tensión de of
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Slew-Rate.}
-El slew-rate esta definido como la máxima variación temporal de la salida del operacional. El slew-Rate depende de 3 parámetros siendo estos la frecuencia, la amplitud y la ganancia, considerando el caso de que la señal de salida es una senoida. Dado que se puede describir cualquier señal como una combinación lineal de senos, se puede decir que el slew-rate de una señal arbitraria también dependerá de estos parámetros.
-Si se le demanda a l opamp una tasa de cambio mayor a la soportada por le SR procedera a distorcionar la señal.
+El Slew-Rate esta definido como la máxima variación temporal de la salida del operacional. Este efecto depende de 3 parámetros siendo estos la frecuencia, la amplitud y la ganancia, considerando el caso de que la señal de salida es una senoidal. Dado que se puede describir cualquier señal como una combinación lineal de senos, se puede decir que el Slew-Rate de una señal arbitraria también dependerá de estos parámetros.
+Si se le demanda al opamp una tasa de cambio mayor a la soportada, este procederá a distorsionar la señal.
 \begin{align}  SR= Max\left( \frac{\partial V_{Out}}{\partial t}\right)  \end{align}
-Utilizando una entrada senoidal de la forma.
-$$V_{in}=A\cdot \sin (\omega t)$$
+Utilizando una entrada senoidal de la forma $V_{in}=A\cdot \sin (\omega t)$:
 \begin{align}   SR= Max\left( \frac{\partial (G\cdot A\cdot \sin (\omega t))}{\partial t}\right) = A \cdot \omega \cdot G  
 \label{eq:sr}
 \end{align}
-A partir de la expresión  (\ref{eq:sr}) se llega a una relacion que debe cumplir la señal de entrada para no presentar efectos de slew-rate. Esta limitacion tiene un grado de libertad, por lo tanto se puede elegir un parametro fijo y regular el otro, por ejemplo fijando la frecuencia de entrada se debera cumplir que:
+A partir de (\ref{eq:sr}) se llega a una relación que debe cumplir la señal de entrada para no presentar efectos de Slew-Rate. Esta limitación tiene un grado de libertad, por lo tanto se puede elegir un parámetro fijo y regular el otro, por ejemplo, fijando la frecuencia de entrada, se deberá cumplir que:
 \begin{align} V_{in}	\leq \frac{SR}{G\cdot \omega_0}\end{align}
-Se midió el Slew-Rate  utilizando como entrada una senoidal obteniendo la siguiente medición:
+
+Es así que se midió el Slew-Rate utilizando como entrada una senoidal, obteniendo la siguiente medición:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/slew_rate1.png}
 	\caption{Medición Slew-Rate.}
 	\label{fig:SlewRate}
 \end{figure}
-De aqui utilizando la ecuación (\ref{eq:sr}) se obtiene que:
+De aqui utilizando (\ref{eq:sr}) se obtiene que:
 \begin{align}
 SR \approx  0.38 \frac{V}{\mu s}
 \end{align}
-lo cual concuerda con lo provisto por el fabricante de la tabla (\ref{tab:datos})
+lo cual concuerda con lo provisto por el fabricante en la Tabla (\ref{tab:datos}).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Respuesta en frecuencia.}
-Se midió la respuesta en frecuencia de la configuración en los diversos casos y se grafico junto a simulaciones hechas en spice y el calculo teórico.
+Se midió la respuesta en frecuencia de las configuraciones en los diversos casos y se graficaron junto a las simulaciones hechas en LTSpice y los cálculos teóricos.
+
+Primero se presentan los casos para el circuito inverso.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodeC1.png}
-	\caption{Diagrama de Bode Amplitud Caso 1.}
+	\caption{Diagrama de Bode en amplitud Caso 1.}
 	\label{fig:BodeC1}
 \end{figure} 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodephC1.png}
-	\caption{Diagrama de Bode fase Caso 1.}
+	\caption{Diagrama de Bode en fase Caso 1.}
 	\label{fig:BodephC1}
 \end{figure} 
-En estas mediciones el principal problema que se presento fue el hecho de que habia que lidear con que el opamp saturaba, se hacian evidentes los efectos del slew-rate  dado a que esta configuracion amplifica y efecto de  Cross-over. Tambien un problema fue que dada que la tensiond e entrada era tan pequeña como se puede apreciar en la figura (\ref{fig:MaxVinsr}), la señal se encontraba con ruido el cual era amplificado y se obtenia mayor ruido a la salida.
+
+En estas mediciones el principal problema que se presentó fue la saturación propia del operacional. También se evidenciaron los efectos del Slew-Rate dado a que esta configuración amplifica y efecto de Cross-Over. Además, se observó que, dado que la tensión de entrada era tan pequeña, como se puede apreciar en la Figura (\ref{fig:MaxVinsr}), la señal era comparable con ruido, el cual a su vez era amplificado y obteniendo uno mucho mayor a la salida.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodeC2.png}
-	\caption{Diagrama de Bode Amplitud Caso 2.}
+	\caption{Diagrama de Bode en amplitud Caso 2.}
 	\label{fig:BodeC2}
 \end{figure} 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodephC2.png}
-	\caption{Diagrama de Bode fase Caso 2.}
+	\caption{Diagrama de Bode en fase Caso 2.}
 	\label{fig:BodephC2}
 \end{figure} 
-Aqui deberia decir algo util
+
+\begin{center}
+\textcolor{red}{\textbf{AQUÍ DEBERÍA DECIR ALGO ÚTIL.}}
+\end{center}
+
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodeC3.png}
-	\caption{Diagrama de Bode Amplitud Caso 3.}
+	\caption{Diagrama de Bode en amplitud Caso 3.}
 	\label{fig:BodeC3}
 \end{figure} 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodephC3.png}
-	\caption{Diagrama de Bode fase Caso 3.}
+	\caption{Diagrama de Bode en fase Caso 3.}
 	\label{fig:BodephC3}
 \end{figure} 
-Para las mediciones del tercer caso se presento el problema de que al estar atenuando y la señal a medir se encontraba cerca del pisod e ruido a altas frecuencias y era complicado realizar las mediciones. Algo que se puede apreciar en esta medicion es la aparición de un sobrepico ne las mediciones. Estas mediciones fueron hechas con una punta \textbf{x10} la cual introdujo un polo mas y se armó un sistema de segundo orden el cual agrega el sobrepico.
+
+Para las mediciones del tercer caso, se presentó el problema de que se dificultó la toma de mediciones, debido a que, se estaba atenuando la señal a medir, por lo tanto se encontraba cerca del piso de ruido a altas frecuencias. Algo que se puede apreciar en esta medición es la aparición de un sobrepico. Las mismas fueron hechas con una punta \textbf{x10}, la cual introdujo un polo adicional, generando un sistema de segundo orden, justificando la aparición de dicho sobrepico.
+
+Por otro lado, a continuación se presentan las mediciones realizadas para el circuito no inversor.
+
+\begin{center}
+\textcolor{red}{\textbf{AGREGAR MEDICIONES NO INVERSOR.}}
+\end{center}
+
 \subsubsection{Limitaciones.}
-Algunas limitaciones con las cuales se lidaron al utilizar este operacional fueron la intervención del slew-rate, el efecto de cross-over, la saturación del mismo.
-En el caso de que se quiera trabajar con una señal cuadrada  de 1 Vpp en un rango de frecuencias de 0.3MHz~2MHz con un Duty Cycle entre 20\% y 80\%  no funcionará dado a que se presentaran problemas de slew-Rate. Se presentarán problemas de Cross-Over cuando la media de la señal no supere los 0.7V.
-Viendo que el opamp LM324 no funcionaría para esta aplicación se encontraron X amplificadores operacionaes que pueden ser utilizados con una señal de las caracteristicas recien mencionadas, agregandole que tenga un valor medio 0 y un DT de 50\% loa cules son: TL084,
-\subsection{Configuración No-inversora.}
+Algunas limitaciones con las cuales se lidiaron al utilizar este operacional fueron la intervención del Slew-Rate, el efecto de Cross-Over y la saturación del mismo.
+
+En el caso de que se quiera trabajar con una señal cuadrada de $1 \ Vpp$, en un rango de frecuencias de $0.3 \ MHz \sim 2 \ MHz$, con un Duty Cycle entre 20\% y 80\%, no será posible, dado que se presentaran problemas de Slew-Rate. Por otro lado, se observarán problemas de Cross-Over cuando la media de la señal no supere los $0.7 \ V$.
+Viendo que el operacional LM324 no funciona para dichas aplicaciones, se encontraron X amplificadores operacionales que pueden ser utilizados con una señal de las características mencionadas. Considerando que posean un valor medio de $0 \ V$ y un DT de 50\% los cuales son: TL084,
+
+\begin{center}
+\textcolor{red}{\textbf{BUSCAR OPERACIONALES.}}
+\end{center}
+
 \end{document}
