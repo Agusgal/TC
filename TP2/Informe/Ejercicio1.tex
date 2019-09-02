@@ -209,7 +209,7 @@ Para estos casos se calculó la ganancia considerando $A_{Vol}$ finito e infinit
 \textbf{Caso}            & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
 \textbf{$H(s)_{\infty}$} & 10         & 1          & 0.1        \\ \hline
 \textbf{$H(s)_{Finito}$} & 9.9998     & 0.9999     & 0.0999     \\ \hline
-\textbf{$f_c$}           & 47.62 kHz   & 333.34 kHz  & 833.34 kH     \\ \hline
+\textbf{$f_c$}           & 47.62 kHz   & 333.34 kHz  & 833.34 kHz     \\ \hline
 \end{tabular}
 \end{center}
 \end{table}
@@ -415,6 +415,8 @@ A partir de estos valores se puede obtener la impedancia de entrada:
 \begin{align}
 Z_{In}=20\log\left(\frac{V_{In}}{I_{in}}\right) =20\log\left(\frac{V_{In} \cdot  R}{V_{(A-In)}}\right) = -20\log\left(\frac{V_{(A-In)}}{V_{In} }\right)+20\log (R)
 \end{align}
+para la fase con medir simplemente con medir la diferencia de fase entre la señal de entrada y la que cae sobre la resistencia es equivalente a medir la de la corriente  de entrada y la tensión de entrada dado a que la corriente sobre la resistencia y la caida de tensión sobre ella tienen la misma fase.
+
 
 Luego se realizaron mediciones de la impedancia de entrada y se compararon con simulaciones realizadas en LTSpice y con el calculo analítico.
 Cabe aclarar que para los gráficos, al realizar el calculo analítico, no fueron tomadas en cuentas las puntas del osciloscopio, las cuales se emplearon en modo \textbf{x1}, de forma que alteraron la medición, mientras que en las simulaciones con LTSpice si fueron tomadas en cuenta.
