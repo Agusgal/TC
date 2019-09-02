@@ -308,10 +308,10 @@ Utilizando (\ref{equ:avoligualvo}) y planteando además
 y operando algebraicamente, se puede demostrar que
 
 \begin{equation}
-	H \left(s \right) =\frac{A_{0}}{R_3} \cdot	\frac{R_3 // R_4}{1 \ + \ A_{0} \frac{R_1 // R_2}{R_2} } \cdot \left[ \frac{s}{\omega' \cdot \left( 1 + A_{0} \frac{R_1 // R_2}{R_2} \right)}  \ + \ 1 \right]^{-1}
+		PONER A_{VOL} FINITO
 	\label{equ:noinvtransferencia}
 \end{equation}
-considerando para este caso (\ref{eq:PoloDom}).
+
 
 Para el caso de $A_{Vol}=\infty$ simplemente basta tomar:
 \begin{equation}
@@ -324,35 +324,9 @@ Por otro lado, para $A_{Vol}$ finito, se toma lo obtenido en (\ref{equ:noinvtran
 Finalmente, para incluir la consideración del polo dominante, basta con utilizar nuevamente lo establecido en (\ref{eq:PoloDom}). 
 
 \begin{equation}
-	H \left( s \right) =\frac{A_{0}}{R_3 \cdot \left(1 + s/\omega' \right)} \cdot \frac{R_3 // R_4}{1 \ + \ A_{0} \frac{R_1 // R_2}{R_2 \cdot \left(1 + s/\omega' \right)} } \cdot \left[ s \left\lbrace \omega' \cdot \left( 1 + A_{0} \frac{R_1 // R_2}{R_2 \cdot \left(1 + s/\omega' \right)} \right) \right]^{-1} \ + \ 1 \right\rbrace^{-1}
+		H \left(s \right) =\frac{A_{0}}{R_3} \cdot	\frac{R_3 // R_4}{1 \ + \ A_{0} \frac{R_1 // R_2}{R_2} } \cdot \left[ \frac{s}{\omega' \cdot \left( 1 + A_{0} \frac{R_1 // R_2}{R_2} \right)}  \ + \ 1 \right]^{-1}
 	\label{noinvtransferenciaaw}
 \end{equation}
-
-Para el caso de $A_{Vol}$ finito simplemente basta tomar:
-
-\begin{equation}
-	\lim_{\omega'\to\infty} H \left(s \right) =\frac{A_{0}}{R_3} \cdot	\frac{R_3 // R_4}{1 \ + \ A_{0} \frac{R_1 // R_2}{R_2} } \cdot \left[ \frac{s}{\omega' \cdot \left( 1 + A_{0} \frac{R_1 // R_2}{R_2} \right)}  \ + \ 1 \right]^{-1}
-\end{equation}
-
-Resultando en:
-
-\begin{equation}
-	H_{A_{vol}\space fin}\left(s \right) =\frac{A_{0}}{R_3} \cdot	\frac{R_3 // R_4}{1 \ + \ A_{0} \frac{R_1 // R_2}{R_2} }
-	\label{equ:noinvtransferencia_avolfinito}
-\end{equation}
-
-Por otro lado, para $A_{Vol}$ finito se considera:
-
-\begin{align}
-	\lim_{A_{vol}\to\infty} H_{A_{vol}=\infty} \left(s \right) = \frac{R_3 // R_4}{R_3} \cdot \frac{R_2}{R_1 // R_2}
-\end{align}
-
-Resultando en:
-
-\begin{align}
-	H_{A_{vol}=\infty} \left(s \right) = \frac{R_3 // R_4}{R_3} \cdot \frac{R_2}{R_1 // R_2}
-		\label{equ:noinvtransferencia_ideal}
-\end{align}
 
 De (\ref{equ:noinvtransferencia}) se tiene que
 
@@ -720,13 +694,13 @@ Se midió la respuesta en frecuencia de las configuraciones en los diversos caso
 Primero se presentan los casos para el circuito inverso.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodeC1.png}
+	\includegraphics[width=0.8\textwidth]{Ejercicio1/Imagenes/BodeC1.png}
 	\caption{Diagrama de Bode en amplitud Caso 1.}
 	\label{fig:BodeC1}
 \end{figure} 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodephC1.png}
+	\includegraphics[width=0.8\textwidth]{Ejercicio1/Imagenes/BodephC1.png}
 	\caption{Diagrama de Bode en fase Caso 1.}
 	\label{fig:BodephC1}
 \end{figure} 
@@ -734,13 +708,13 @@ Primero se presentan los casos para el circuito inverso.
 En estas mediciones el principal problema que se presentó fue la saturación propia del operacional. También se evidenciaron los efectos del Slew-Rate dado a que esta configuración amplifica y efecto de Cross-Over. Además, se observó que, dado que la tensión de entrada era tan pequeña, como se puede apreciar en la Figura (\ref{fig:MaxVinsr}), la señal era comparable con ruido, el cual a su vez era amplificado y obteniendo uno mucho mayor a la salida.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodeC2.png}
+	\includegraphics[width=0.8\textwidth]{Ejercicio1/Imagenes/BodeC2.png}
 	\caption{Diagrama de Bode en amplitud Caso 2.}
 	\label{fig:BodeC2}
 \end{figure} 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodephC2.png}
+	\includegraphics[width=0.8\textwidth]{Ejercicio1/Imagenes/BodephC2.png}
 	\caption{Diagrama de Bode en fase Caso 2.}
 	\label{fig:BodephC2}
 \end{figure} 
@@ -751,23 +725,62 @@ En estas mediciones el principal problema que se presentó fue la saturación pr
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodeC3.png}
+	\includegraphics[width=0.8\textwidth]{Ejercicio1/Imagenes/BodeC3.png}
 	\caption{Diagrama de Bode en amplitud Caso 3.}
 	\label{fig:BodeC3}
 \end{figure} 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/BodephC3.png}
+	\includegraphics[width=0.8\textwidth]{Ejercicio1/Imagenes/BodephC3.png}
 	\caption{Diagrama de Bode en fase Caso 3.}
 	\label{fig:BodephC3}
 \end{figure} 
 
 Para las mediciones del tercer caso, se presentó el problema de que se dificultó la toma de mediciones, debido a que, se estaba atenuando la señal a medir, por lo tanto se encontraba cerca del piso de ruido a altas frecuencias. Algo que se puede apreciar en esta medición es la aparición de un sobrepico. Las mismas fueron hechas con una punta \textbf{x10}, la cual introdujo un polo adicional, generando un sistema de segundo orden, justificando la aparición de dicho sobrepico.
 
-Por otro lado, a continuación se presentan las mediciones realizadas para el circuito no inversor.
+A continuación se presentan las mediciones realizadas para el circuito no inversor.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.8\textwidth, trim = {0 0 2cm 0},clip]{Ejercicio1/Imagenes/BodeC1_noinv.png}
+	\caption{Diagrama de Bode en amplitud Caso 1.}
+	\label{fig:BodeC1_noinv}
+\end{figure} 
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.8\textwidth, trim = {2.2cm 0 0 0},clip]{Ejercicio1/Imagenes/BodephC1_noinv.png}
+	\caption{Diagrama de Bode en fase Caso 1.}
+	\label{fig:BodephC1_noinv}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.8\textwidth, trim = {0 0 2cm 0},clip]{Ejercicio1/Imagenes/BodeC2_noinv.png}
+	\caption{Diagrama de Bode en amplitud Caso 2.}
+	\label{fig:BodeC2_noinv}
+\end{figure} 
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.8\textwidth, trim = {2.2cm 0 0 0},clip]{Ejercicio1/Imagenes/BodephC2_noinv.png}
+	\caption{Diagrama de Bode en fase Caso 2.}
+	\label{fig:BodephC2_noinv}
+\end{figure} 
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.8\textwidth, trim = {0 0 2cm 0},clip]{Ejercicio1/Imagenes/BodeC3_noinv.png}
+	\caption{Diagrama de Bode en amplitud Caso 3.}
+	\label{fig:BodeC3_noinv}
+\end{figure} 
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.8\textwidth, trim = {2.2cm 0 0 0},clip]{Ejercicio1/Imagenes/BodephC3_noinv.png}
+	\caption{Diagrama de Bode en fase Caso 3.}
+	\label{fig:BodephC3_noinv}
+\end{figure} 
 
 \begin{center}
-\textcolor{red}{\textbf{AGREGAR MEDICIONES NO INVERSOR.}}
+\textcolor{red}{\textbf{AQUÍ DEBERÍA DECIR ALGO ÚTIL JUSTIFICANDO LAS DIFERENCIAS.}}
 \end{center}
 
 \subsubsection{Limitaciones.}
