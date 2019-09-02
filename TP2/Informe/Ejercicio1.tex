@@ -192,7 +192,7 @@ $R_1=R_3$                   & $7.5$                      & $7.5$                
 $R_2$                       & $75$                       & $7.5$                      & $7.5$                       \\ \hline
 \multicolumn{1}{|c|}{$R_4$} & \multicolumn{1}{l|}{$30$} & \multicolumn{1}{l|}{$30$} & \multicolumn{1}{l|}{$300$} \\ \hline
 \end{tabular}
-\caption{Valores de resistencias en $k\Omega$}
+\caption{Valores de resistencias en $k\Omega$.}
 \label{tabla:resasignadas}
 \end{center}
 \end{table}
@@ -208,7 +208,8 @@ Para estos casos se calculó la ganancia considerando $A_{Vol}$ finito e infinit
 \textbf{$H(s)_{Finito}$} & 9.9998     & 0.9999     & 0.0999     \\ \hline
 \textbf{$f_c$}           & 47.62 kHz   & 333.34 kHz  & 833.34 kH     \\ \hline
 \end{tabular}
-\caption{Ganancias de los circuitos inversores.}
+\caption{Ganancias y frecuencias de corte de los circuitos inversores.}
+\label{tabla:gananciasinv}
 \end{center}
 \end{table}
 
@@ -346,24 +347,18 @@ De (\ref{equ:noinvtransferencia}) se tiene que
 	f_c = \frac{\omega'}{2 \pi}\cdot \left( 1 + A_{0} \frac{R_1 // R_2}{R_2} \right)
 \end{equation}
 
-Reemplazando con los valores presentados en la Tabla (\ref{tabla:resasignadas}), se llega a ...
-
-\begin{center}
-\textcolor{red}{\textbf{COMPLETAR REEMPLAZANDO LOS VALORES DE R}}
-\textcolor{red}{\textbf{Y COMPLETAR LA TABLA QUE VIENE}}
-\end{center}
-
-Nuevamente se calculó la ganancia considerando $A_{Vol}$ finito e infinito. Además, se calculó la frecuencia de corte del sistema para $A(\omega)$.
+Reemplazando con los valores presentados en la Tabla (\ref{tabla:resasignadas}), se puede recrear la Tabla (\ref{tabla:gananciasinv}) para el caso del circuito no inversor.
 
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
 \hline
 \textbf{Caso}            & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
-\textbf{$H(s)_{\infty}$} & x         & x          & x        \\ \hline
-\textbf{$H(s)_{Finito}$} & x     & x     & x     \\ \hline
+\textbf{$H(s)_{\infty}$} & $8.8$         & $1.6$          & $0.88$        \\ \hline
+\textbf{$H(s)_{Finito}$} & $329.96$     & $60$     & $330$     \\ \hline
 \textbf{$f_c$}           & $14.47 \ kHz$   & $79.58 \ kHz$  & $144.69 \ kHz$     \\ \hline
 \end{tabular}
+\caption{Ganancias y frecuencias de corte de los circuitos no inversores.}
 \end{center}
 \end{table}
 
