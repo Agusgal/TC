@@ -121,5 +121,37 @@ Ahora podemos volver a mirar a la función transferencia del inversor no ideal p
 $$H(s)_{inv} = \frac{-\frac{Z_{Feed}}{Z_{in}}}
 {1+\frac{1+\frac{Z_{Feed}}{Z_{in}}}{A_{vol}}} $$
 
+AÑADIR TRANSFERENCIAS!!
+
+\subsubsection{Diagramas de Bode con $A_{vol}$ finito}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-MAGNITUD-INTEGRADOR}
+	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-MAGNITUD-DERIVADOR}
+	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
+\end{figure}
+
+Al considerar que $A_{vol}$ no tiene un valor infinitamente grande observamos que el circuito integrador se comporta como un filtro pasabajos cuya frecuencia de corte se encuentra a muy baja frecuencia lo cual no permitiría hacer uso del mismo con señales de frecuencia media-alta.
+Tambien cabe destacar la gran ganancia que obtienen las señales de baja frecuencia, este es un problema dado que señales parásitas de baja frecuencia consiguen saturar al operacional con facilidad no permitiendo lograr el efecto deseado.
+
+En el caso del derivador ocurre lo contrario, es necesario alcanzar frecuencias en el orden de los $100KHz$ para poder ver una señal sin tanta atenuación. Pero tampoco sera posible y mucho más allá dado que la ganancia brindada rápidamente saturara al opamp lo cual nuevamente limita el rango de operación del circuito. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-FASE-INTEGRADOR}
+	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-FASE-DERIVADOR}
+	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
+\end{figure}
+
 
 \end{document}
