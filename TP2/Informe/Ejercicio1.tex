@@ -213,7 +213,7 @@ Para estos casos se calculó la ganancia considerando $A_{Vol}$ finito e infinit
 \end{center}
 \end{table}
 
-Luego se procedió a realizar los gráficos de $A_{Vol}(\omega)$ para cada uno de los 3 casos.
+Luego se procedió a realizar los gráficos de $H(s)$ cpn las distintas consideraciones de $A_{Vol}$ para cada uno de los 3 casos.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/HCompC1.png}
@@ -616,18 +616,13 @@ Luego, se sabe que $R_3$ no es necesaria considerando $I_{in}$ constante frente 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.4\textwidth]{Ejercicio1/Imagenes/VinvsVoR3.png}
-	\caption{$V_{out}$ en función de $V_{in}$ con $R_4$ en el caso ideal.}
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/VinvsVoR3.png}
+	\caption{$V_{out}$ en función de $V_{in}$ con $R_3 = 0 \ \Omega$ con $A_{vol \infty}$.}
 	\label{fig:VinvsVoR3}
 \end{figure} 
 
+Es así que la transferencia del circuito, mostrada en la Figura (\ref{fig:VinvsVoR3}) para cada caso, diferencia dos situaciones, una donde la relación entre la salida y la entrada es lineal, con una pendiente de $1 + \frac{R_2}{R_1}$ en el caso ideal, por lo visto en (\ref{equ:noinvtransferencia_ideal}), y otra zona donde la tensión es constante debido a la saturación propia del operacional.
 Además, se observa en (\ref{equ:zinnoinv}) que la impedancia de entrada decae, lo cual puede llegar a provocar que esta sea comparable con la de la fuente, generando problemas de medición.
-
-\begin{center}
-\textcolor{red}{\textbf{REVISAR ANÁLISIS.}}
-\textcolor{red}{\textbf{BUSCAR UNA MEJOR IMAGEN, EN ESTA SE TOMA VCC = 5}}
-\textcolor{red}{\textbf{CAMBIAR ESO EN LA OTRA IMAGEN.}}
-\end{center}
 
 Por otro lado, se analiza el propósito de $R_4$ en el circuito inversor. A primera vista no es evidente, dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Dato obtenido de la datasheet, $I_{Max}=20 \ mA$} que puede aportar el opamp, se llego a que el propósito de $R_4$ es limitar la corriente, por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$. Otra función que posee $R_4$ es el limitar la corriente del lazo.
 %%%%%%%%%%%%%%%%%%%%
@@ -814,7 +809,7 @@ A continuación se presentan las mediciones realizadas para el circuito no inver
 	\label{fig:BodephC3_noinv}
 \end{figure} 
 
-Se puede observar en todos los casos como la frecuencia de corte de las transferencias son iguales, mientras que la pendiente en las transferencias medidas y simuladas difieren de la teórica. Esto se debe a las puntas del osciloscopio cuyas capacitancias son de $\approx80pF$. Al pasar a las altas frecuencias, el capacitor presenta cada vez menor impedancia, atenuando la tensión de salida del circuito y generando en consecuencia un filtro de segundo orden con el polo ya existente.
+Se puede observar en todos los casos como la frecuencia de corte de las transferencias son próximas, mientras que las transferencias medidas y simuladas difieren de la teórica. Esto es más evidente al observar las discrepancias en (\ref{fig:BodephC1_noinv}), (\ref{fig:BodephC2_noinv}) y (\ref{fig:BodephC3_noinv}) a altas frecuencias. Esto se debe a las puntas del osciloscopio cuyas capacitancias son de aproximadamente $80 \ pF$. Al pasar a las altas frecuencias, este capacitor genera un filtro de segundo orden con el polo ya existente, atenuando la tensión de salida del circuito y generando en consecuencia que esta sea comparable con el ruido existente y dificultando las mediciones.
 
 \subsubsection{Limitaciones.}
 Algunas limitaciones con las cuales se lidiaron al utilizar este operacional fueron la intervención del Slew-Rate, el efecto de Cross-Over y la saturación del mismo.
