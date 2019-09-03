@@ -1,0 +1,17 @@
+{
+    "A1(w)": {
+        "num": [0.87999],
+        "den": [1.751E-7, 1],
+	"legend": "A(w)"
+    },
+    "H A finito": {
+        "num": [0.88],
+        "den": [1],
+	"legend": "A finito"
+    },
+    "A infinito": {
+        "num": [0.88],
+        "den": [1],
+	"legend": "A infinito"
+    }
+}
