@@ -236,9 +236,10 @@ Luego se procedió a realizar los gráficos de $A_{Vol}(\omega)$ para cada uno d
 Se puede apreciar que cuanto más baja sea la ganancia, mayor será el ancho de banda, y que a partir de la frecuencia de corte cada sistema el opamp comienza a atenuar.
 
 El error de utilizar el caso de $A_{Vol}$ ideal en lugar del caso con polo dominante se calculó como:
-\begin{align}
+\begin{equation}
 	Error = \frac{|A_{Vol}(\omega)-A_{Vol-Ideal}|}{A_{Vol}(\omega)}
-\end{align}
+	\label{equ:error}
+\end{equation}
 
 obteniendo los siguientes gráficos:
 
@@ -355,17 +356,44 @@ Reemplazando con los valores presentados en la Tabla (\ref{tabla:resasignadas}),
 \hline
 \textbf{Caso}            & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
 \textbf{$H(s)_{\infty}$} & $8.8$         & $1.6$          & $0.88$        \\ \hline
-\textbf{$H(s)_{Finito}$} & $329.96$     & $60$     & $330$     \\ \hline
+\textbf{$H(s)_{Finito}$} & $8.8$     & $1.6$     & $0.88$     \\ \hline
 \textbf{$f_c$}           & $90.92 \ kHz$   & $500.01 \ kHz$  & $909.1 \ kHz$     \\ \hline
 \end{tabular}
 \caption{Ganancias y frecuencias de corte de los circuitos no inversores.}
 \end{center}
 \end{table}
 
-\begin{center}
-\textcolor{red}{\textbf{PONER LOS GRÁFICOS DE $A_o(\omega)$}}\\
-\textcolor{red}{\textbf{INCLUYENDO EL ERROR.}}
-\end{center}
+De esta forma, se procede a comparar la transferencia para cada una de las consideraciones tenias en cuenta.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth, trim = {0 0 2.2cm 0},clip]{Ejercicio1/Imagenes/HCompC1_noinv.png}
+	\caption{$H(s)$ para el Caso 1.}
+	\label{fig:AvolC1_noinv}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth, trim = {0 0 2.2cm 0},clip]{Ejercicio1/Imagenes/HCompC2_noinv.png}
+	\caption{$H(s)$ para el Caso 2.}
+	\label{fig:AvolC2_noinv}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth, trim = {0 0 2.1cm 0},clip]{Ejercicio1/Imagenes/HCompC3_noinv.png}
+	\caption{$H(s)$ para el Caso 3.}
+	\label{fig:AvolC3_noinv}
+\end{figure}
+
+%De igual forma que se realizó con el circuito inversor, se emplea (\ref{equ:error}) para calcular el error al considerar $A_{vol} (s)$ frente a $A_{vol \infty}$.
+%
+%\begin{figure}[H]	
+%	\centering
+%	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/errornoinv.png}
+%	\caption{Error relativo por aproximar $A_{vol}(s)$ para los distintos casos.}
+%	\label{fig:enoinv}
+%\end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Impedancia de entrada.}
@@ -534,7 +562,7 @@ Luego se procede a mostrar las mediciones realizadas para el caso del circuito n
 \textcolor{red}{\textbf{HACER LAS CUENTAS Y LOS GRÁFICOS.}}
 \end{center}
 
-El máximo valor de entrada a partir del cual el opamp satura se encuentra definido por diversas variables, siendo algunas de ellas la ganancia del sistema, la amplitud y la frecuencia de dicha señal.
+El máximo valor de entrada a partir del cual el opamp satura se encuentra definido por diversas variables, siendo algunas de ellas la ganancia del sistema, la amplitud y la frecuencia de la entrada.
 
 Al momento de definir los valores posibles, se realizó un enfoque en las tres variables previamente mencionadas y se asumió el opamp con ganancia ideal. Cabe recordar que se empleó la formula $ V_{Out}=H(s)\cdot V_{in} $.
 
