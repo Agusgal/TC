@@ -535,7 +535,7 @@ Como los cambios propuestos no alteran de manera significante el actuar del circ
 
 Se puede observar que tanto soft clipping como hard clipping proporcionan dos tipos de señales distintas, mientras que la señal de salida sin clippear posee una amplitud mucho mayor que el resto y una señal menos distorsionada. Además se puede notar que la señal con soft clipping posee una amplitud levemente menor que aquella con hard clipping. Esto puede deberse a la ganancia de la etapa de amplificación será menor ya que la señal encuentra un camino de menor resistencia que por el potenciómetro. La señal sin clippear es mucho mayor que las demás ya que esta no es recortada hasta un valor máximo.
 
-\subsection{Realización y Medición del Diseño Propuesto}
+\subsection{Realización del Diseño Propuesto}
 
 Antes de diseñar una placa para el diseño propuesto se realizó nuevamente un prototipado en un \textit{protoboard} y se comprobó nuevamente el correcto funcionamiento del circuito junto a los cambios propuestos. Por favor, referirse al archivo 'ej5protopropuesto.mp4' para ver el resultado.
 
@@ -554,20 +554,177 @@ Se probó el circuito armado con una guitarra y un amplificador de guitarra y se
 
 Se cometió un error al diseñar la placa que se notó luego de ya haber realizado la placa y las mediciones, y es que se confundió el posicionamiento próximo del capacitor de desacople (C1) con el capacitor de compensación (C8), sin embargo, como no se consideraba un error crítico se decidió no realizar nuevamente la placa.
 
-Tras el armado de la placa se decidió medir el gráfico de Bode y hacer un análisis de las señales de salida y de entrada.
+\subsection{Mediciones del Diseño Propuesto}
+
+Tras el armado de la placa se decidió medir tanto el gráfico de Bode como hacer un análisis de las señales de salida y de entrada del circuito en sus distintas configuraciónes.
+
+\subsubsection{Análisis de Bode}
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{ImagenesAux/pend.jpg}
+	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/bode_comp.png}
 	\caption{Mediciones de la placa.}
-	\label{fig:sim_prop_tran}
+	\label{fig:prop_bode}
 \end{figure}
+
+El gráfico medido de Bode se asemeja mucho al gráfico simulado. Las asíntotas tienen misma pendiente y las frecuencias de corte del filtro pasabanda son iguales. La única discrepancia se encuentra en que la simulación se realizó con una resistencia en el lazo de realimentación de $50k\Omega$ mientras que el potenciómetro se colocó aproximadamente a un quinto de su recorrido. Se eligió este valor para el potenciómetro ya que, como el operacional no saturaba, no se presentaron alinealidades en la salida. No se presentaron mayores discrepancias ni dificultades a la hora de realizar la medicion. La transferencia del circuito logró ser como se diseñó.
+
+\subsubsection{Análsis de Señal, Transitorio}
+
+A continuación se analizarán tanto las señales de entrada y salida como la FFT (Fast Fourier Transform) proporcionada por el osciloscopio, ya que el analizador de espectros aún no se ha estudiado. Para esto, se utilizó una señal de $200mV_{pp}$ y $1kHz$.
+
+Para empezar, se quiso demostrar la acción del control de bypass.
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/bypass.png}
+		\label{fig:prop_by}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/bypassfft.png}
+		\centering
+		\label{fig:prop_byfft}
+	\end{subfigure}
+	\caption{Circuito con bypass activado.}
+\end{figure}
+
+La FFT logra mostrar como hay una distorsión casi nula en la señal de salida. Esto se puede observar ya que el resultado de este algoritmo presenta un pico de gran tamaño en la frecuencia fundamental de $1kHz$, con otros picos despreciables. Se puede observar además como la señal de salida es idéntica a la señal de entrada, excepto por un pequeño offset de unos $\approx 20mV_{pp}$. Este error no ha podido ser explicado ya que al accionar la llave de bypass, se conecta el conector de entrada directamente con el conector de salida. Se cree que el osciloscopio puede haber estado mostrando la señal con un pequeño offset configurado de mediciones anteriores, ya que a $1kHz$ tanto el modelo equivalente de las puntas del osciloscopio como la impedancia de las pistas y la llave se consideran despreciables.
+
+
+Luego, se quiso analizar el efecto del circuito con las llaves de ambos pares de diodos apagadas, es decir, sin la acción de estos. Para esto, se tomaron tres mediciones, cada una con el control de ganancia en distintas posiciones, ya que en este modo se puede controlar finamente el nivel de distorsión alineal que tendrá la salida, haciendo saturar al operacional en mayor o menor medida.
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/alone1.png}
+		\label{fig:prop_alone1}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/alone1fft.png}
+		\centering
+		\label{fig:prop_alone1fft}
+	\end{subfigure}
+	\caption{No clipping con la ganancia al 30\%.}
+\end{figure}
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/alone2.png}
+		\label{fig:prop_alone2}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/alone2fft.png}
+		\centering
+		\label{fig:prop_alone2fft}
+	\end{subfigure}
+	\caption{No clipping con la ganancia al 60\%.}
+\end{figure}
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/alone3.png}
+		\label{fig:prop_alone3}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/alone3fft.png}
+		\centering
+		\label{fig:prop_alone3fft}
+	\end{subfigure}
+	\caption{No clipping con la ganancia al 100\%.}
+\end{figure}
+
+Se puede observar en la FFT proporcionada por el osciloscopio como aumenta la distorsión, es decir, los armónicos introducidos, mediante se aumenta el control de ganancia y se hace saturar al operacional. Esto brinda al usuario del pedal una gran versatilidad a la hora de querer elegir un nivel de saturación sastisfactorio.
+Luego, se procedió a medir la salida del circuito con el par de diodos de hard clipping.
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/hard1.png}
+		\label{fig:prop_hard}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/hardfft1.png}
+		\centering
+		\label{fig:prop_hardfft}
+	\end{subfigure}
+	\caption{Hard clipping.}
+\end{figure}
+
+Se puede observar como este es el modo de distorsión del pedal que asemeja más la salida del circuito a la de una señal cuadrada. Se contempla además como los armónicos se asemejan a los de una función sinc.
+
+Posteriormente, se midió la salida del circuito con distorsión por soft clipping, es decir, con el par de diodos en el lazo de realimentación.
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/soft1.png}
+		\label{fig:prop_soft1}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/softfft1.png}
+		\centering
+		\label{fig:prop_soft1fft}
+	\end{subfigure}
+	\caption{Soft clipping.}
+\end{figure}
+
+Se puede apreciar con este tipo de distorsión una señal mucho más suave y redondeada que con la distorsión por hard clipping.
+
+Finalmente, se analizará el efecto que posee el control de tono en la señál de salida con ambos pares de diodos en acción.
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/hard_soft1.png}
+		\label{fig:prop_alone3}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/hard_softfft1.png}
+		\centering
+		\label{fig:prop_alone3fft}
+	\end{subfigure}
+	\caption{Hard clipping y soft clipping favoreciendo agudos con el control de tono.}
+\end{figure}
+
+\begin{figure}[H]
+\hspace{-7.5em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/hard_soft_tone1.png}
+		\label{fig:prop_alone3}
+	\end{subfigure}
+	\hspace{6em}
+	\begin{subfigure}{0.5\textwidth}
+		\includegraphics[width=1.5\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/hard_soft_tonefft1.png}
+		\centering
+		\label{fig:prop_alone3fft}
+	\end{subfigure}
+	\caption{Hard clipping y soft clipping favoreciendo graves con el control de tono.}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=1\textwidth, trim={0 0 0 0}, clip]{Ejercicio5/Imagenes/Propuesto/Mediciones/tono_en_hardsoft.png}
+	\caption{Armónicos de la señal de salida utilizando el control de tono en sus dos límites.}
+	\label{fig:control_tono}
+\end{figure}
+
+Se puede contemplar con esta configuración de distorsión una señal de salida completamente redondeada. Experimentalmente se comprobó que esta forma de señal produce un efecto de distorsión mucho más \textit{fat} y grueso. Además se puede observar como el accionar del control de tono deforma la señal de $1kHz$ al posicionar al polo del pasa bajos en alrededor de los $146Hz$. Si se observa la Figura (\ref{fig:control_tono}) se puede observar, aparte de una atenuación lineal por parte de una falla del diseño, como los armónicos de frecuencias más agudas son más atenuados.
 
 \subsection{Conclusiones}
 
 Se logró un funcionamiento correcto y una distorsión no solo satisfactoria al oído sino también una gran versatilidad a la hora de seleccionar un nivel de distorsión deseado. Con las dos llaves se pueden lograr tres tipos distintos de distorsión, cada uno con un sonido diferente, mientras que con el potenciómetro de ganancia y de tono se puede manipular el nivel de distorsión generado. Con la llave inversora se tiene la opción de realizar un \textit{true bypass}, poniendo en corto la entrada con la salida del circuito.
 
-Sin embargo, el pedal posee también efectos no deseados. Con el volúmen y ganancia al máximo, se pueden llegar a escuchar frecuencias de radio con un volúmen en el amplificador de guitarra lo suficientemente alto. Además, como el potenciómetro de tono afecta la impedancia de salida del circuito, se observa un efecto que al utilizar el control de tono aumenta o disminuye levemente el volúmen de la señal de salida.\\
+Sin embargo, el pedal posee también efectos no deseados. Con el volúmen y ganancia al máximo, se pueden llegar a escuchar frecuencias de radio con un volúmen en el amplificador de guitarra lo suficientemente alto. Además, como el potenciómetro de tono afecta la impedancia de salida del circuito, se observa un efecto que al utilizar el control de tono aumenta o disminuye levemente el volúmen de la señal de salida.
 
 En retrospectiva, se podría haber utilizado cable mallado para realizar los componentes entre los controles y la placa para reducir interferencia electromagnética. Se presentará al pedal dentro de un gabinete cuyo interior será cubierto de papel aluminio y aislante para eliminar ruido, ya que generalmente las pedaleras de guitarras poseen un gabinete de metal para que interferencia no sea inyectada al circuito.
 Lo que se podría haber hecho para solucionar el problema con el control de tono es haber utilizado otro operacional en configuración de buffer con un divisor resistivo conectado a la alimentación y capacitores de filtrado de continua, o haber utilizado un transistor para adaptar la salida de tal manera que un cambio en la impedancia del filtro pasa-bajos no influya en la impedancia de salida del circuito.
