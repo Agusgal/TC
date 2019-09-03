@@ -16,6 +16,10 @@
 
 \begin{document}
 
+\tableofcontents
+
+\newpage
+
 \subsection{Diseño del circuito}
 
 En el siguiente punto se propuso como objetivo realizar un sensor de temperatura, valiéndose del uso del transistor LM35. Este dispositivo se caracteriza por entregar a la salida una tensión proporcional a la temperatura de la forma
@@ -46,7 +50,7 @@ A lo largo del desarrollo del modelo, se optó por tomar diversas configuracione
 
 \subsubsection{Primer modelo: inversor y restador}
 
-En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL082 y la final por un diodo zener DZ5V6-05. Cabe destacar que se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$, valores dentro del rango tensiones que aceptan los operacionales, según especifica el fabricante.
+En un principio, se decidió armar un circuito compuesto por tres diferentes etapas, las dos primeras compuestas cada una por un amplificador operacional TL072 y la final por un diodo zener DZ5V6-05. Cabe destacar que se decidió alimentar a ambos operacionales con $10 \ V$ y $-10 \ V$, valores dentro del rango tensiones que aceptan los operacionales, según especifica el fabricante.
 
 En la primer etapa se dispuso un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
 
@@ -397,7 +401,7 @@ Se han presentado dos modelos válidos que cumplen con las especificaciones del 
 \end{figure}
 
 Como se observa en la Figura (\ref{fig:mccomp}), el área encerrada entre ambos extremos del primer circuito diseñado es mucho mayor que la del segundo, es decir, el primero es mucho más sensible a pequeños cambios de los componentes existentes. Fue por ello que el primer modelo propuesto fue descartado, mientras que el segundo fue aceptado. 
-Una explicación posible a los resultados observados en las Figuras (\ref{fig:mcm1}) y (\ref{fig:mcm2}) es el orden de disposición de los operacionales. En el segundo caso, primero se coloca un restador, el cual amplia las señales introducidas a ambos bornes por un factor de 10 y las resta, para luego ampliar la señal resultante por un factor de 5. La ventaja que presenta este orden es que, al restarlas y amplificarlas primero, se puede eliminar, en cierta parte, el posible ruido existente, ya que se puede afirmar que, a bajas frecuencias (como lo es el ruido ambiente existente, de aproximadamente $50 \ Hz$), las perturbaciones tanto en el borne inversor como en el no inversor, son similares entre sí. Al hacer primero la comparación, se logra minimizar estas variaciones parásitas.
+Una explicación a los resultados observados en las Figuras (\ref{fig:mcm1}) y (\ref{fig:mcm2}) es el orden de disposición de los operacionales. En el segundo caso, primero se coloca un restador, el cual amplia la diferencia de las señales introducidas a ambos bornes por un factor de 10, para luego ampliar la señal resultante por un factor de 5. La ventaja que presenta este modelo es que, al aplicar la resta primero, se puede eliminar, en cierta parte, el ruido existente, ya que se puede afirmar que, a bajas frecuencias (como lo es el ruido ambiente existente, de aproximadamente $50 \ Hz$), las perturbaciones, tanto en el borne inversor como en el no inversor, son similares entre sí. Al hacer primero la comparación, se logra minimizar estas variaciones parásitas.
 
 \subsection{Modo de uso}
 
@@ -425,6 +429,13 @@ Se detalla que, con el mismo objetivo que se colocó un zócalo para el amplific
 
 Finalmente las borneras $J5$ y $J1$ son utilizados para alimentar a los operacionales y como salida del circuito respectivamente.
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Ejercicio6/Imagenes/SDT-TCG3.jpg}
+	\caption{Placa finalizada.}
+	\label{fig:placa}
+\end{figure}
+
 \subsection{Detalles técnicos}
 Se suministró a la entrada $J4$ del circuito una rampa que cumplió la función de simular al LM35. Esta función barre valores desde $320 \ mV$ hasta $480 \ mV$, lo que permite que, al calibrar el sistema, se pueda observar la recta completa de salida, incluyendo las zonas donde se activa el diodo zener. De esta forma, se puede comparar la salida con la curva teórica mostrada en la Figura (\ref{fig:vout}).
 
@@ -435,7 +446,6 @@ Se suministró a la entrada $J4$ del circuito una rampa que cumplió la función
 	\label{fig:comp1}
 \end{figure}
 
-Comparando ambas curvas se puede observar que la mayor discrepancia entre estas, se encuentra en las más altas tensiones. Se observa que la tensión medida posee una ligera diferencia en la pendiente. Además, los efectos del diodo zener comienzan a tener mayor peso antes de lo deseado. Dicho corrimiento puede explicarse al observar nuevamente las Figuras (\ref{fig:r5-M2}) y (\ref{fig:r4-M1}), ya que en la zona previamente menciona es donde se ve mayor variación. Además, es importante considerar las tolerancias de las resistencias, ya que el circuito es sensible a estos cambios. Una posible solución a este problema sería reemplazar las por resistencias SMD, las cuales poseen 1\% de tolerancia, disminuyendo la variación previamente dicha y el uso de un diodo zener diferente, el cuál comience a conducir a tensiones mayores (siempre y cuando, este respete la limitación de los $6 \ V$).
-
+Se buscó conseguir la mejor condición de calibración del circuito. Para ello, se utilizaron tensiones de alimentación de $10 \ V$ para los operacionales, y luego ajustando los presets, como ya se ha explicado previamente. Comparando ambas curvas se puede observar que la mayor discrepancia entre estas, se encuentra en las más altas tensiones. Se observa que la tensión medida posee una ligera diferencia en la pendiente. Además, los efectos del diodo zener comienzan a tener mayor peso antes de lo deseado. Dicho corrimiento puede explicarse al observar nuevamente las Figuras (\ref{fig:r5-M2}) y (\ref{fig:r4-M1}), ya que en la zona previamente menciona es donde se ve mayor variación. Además, es importante considerar las tolerancias de las resistencias, ya que el circuito es sensible a estos cambios. Una posible solución a este problema sería reemplazar las resistencias por otras de tecnología SMD, las cuales poseen 1\% de tolerancia, disminuyendo la variación previamente dicha, y el uso de un diodo zener diferente, el cuál comience a conducir a tensiones mayores (siempre y cuando, este respete la limitación de los $6 \ V$).
 
 \end{document}
