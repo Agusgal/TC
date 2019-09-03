@@ -507,49 +507,44 @@ También cabe destacar que en las Figuras (\ref{fig:CompZinphC2inv}) y (\ref{fig
 
 Luego se procede a mostrar las mediciones realizadas para el caso del circuito no inversor.
 
-\begin{center}
-\textcolor{red}{\textbf{COMPLETAR}}\\
-\textcolor{red}{\textbf{BODE IMPEDANCIA DE ENTRADA}}
-\end{center}
-
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinC1_Noinv.png}
 	\caption{BODE en modulo para el Caso 1 del circuito no inversor.}
 	\label{fig:NoInvCompZinC1}
 \end{figure} 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinphC1_Noinv.png}
 	\caption{BODE en fase para el Caso 1 del circuito no inversor.}
 	\label{fig:NoInvCompZinphC1}
 \end{figure} 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinC2_Noinv.png}
 	\caption{BODE en modulo para el Caso 2 del circuito no inversor.}
 	\label{fig:NoInvCompZinC2}
 \end{figure} 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.9\textwidth]{ImagenesAux/pend.jpg}
+	\includegraphics[width=0.9\textwidth]{Ejercicio1/Imagenes/ZinphC2_Noinv.png}
 	\caption{BODE en fase para el Caso 2 del circuito no inversor.}
 	\label{fig:NoInvCompZinphC2}
 \end{figure} 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesAux/pend.jpg}
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/ZinC3_Noinv.png}
 	\caption{BODE en modulo para el Caso 3 del circuito no inversor.}
 	\label{fig:NoInvCompZinC3}
 \end{figure} 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesAux/pend.jpg}
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/ZinphC3_Noinv.png}
 	\caption{BODE en fase para el Caso 3 del circuito no inversor.}
 	\label{fig:CompZinphC3}
 \end{figure}
@@ -622,6 +617,7 @@ Luego, se sabe que $R_3$ no es necesaria considerando $I_{in}$ constante frente 
 \end{figure} 
 
 Es así que la transferencia del circuito, mostrada en la Figura (\ref{fig:VinvsVoR3}) para cada caso, diferencia dos situaciones, una donde la relación entre la salida y la entrada es lineal, con una pendiente de $1 + \frac{R_2}{R_1}$ en el caso ideal, por lo visto en (\ref{equ:noinvtransferencia_ideal}), y otra zona donde la tensión es constante debido a la saturación propia del operacional.
+
 Además, se observa en (\ref{equ:zinnoinv}) que la impedancia de entrada decae, lo cual puede llegar a provocar que esta sea comparable con la de la fuente, generando problemas de medición.
 
 Por otro lado, se analiza el propósito de $R_4$ en el circuito inversor. A primera vista no es evidente, dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Dato obtenido de la datasheet, $I_{Max}=20 \ mA$} que puede aportar el opamp, se llego a que el propósito de $R_4$ es limitar la corriente, por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$. Otra función que posee $R_4$ es el limitar la corriente del lazo.
