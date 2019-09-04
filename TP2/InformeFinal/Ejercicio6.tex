@@ -33,21 +33,21 @@ En un principio, se decidió armar un circuito compuesto por tres diferentes eta
 
 En la primer etapa se dispuso un amplificador inversor, tomando como tensión de entrada la de salida del transistor.
 
-%\begin{figure}[H]
-%\begin{center}
-%\begin{circuitikz}
-%	\node [op amp](A1){};
-%	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$, i^<=$I_{R5}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
-%	\draw (A1.-) node[label=south:$V^-$]{};
-%	\draw (A1.+) node[label=south:$V^+$]{};
-%	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
-%	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_6$, i<=$I_{R6}$] ++(3,0) to[short] ++(0,-2);
-%	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{1}$]{};
-%\end{circuitikz}
-%\caption{Primera etapa del circuito.}
-%	\label{fig:cir1-M1}
-%\end{center}
-%\end{figure}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$, i^<=$I_{R5}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_6$, i<=$I_{R6}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{1}$]{};
+\end{circuitikz}
+\caption{Primera etapa del circuito.}
+	\label{fig:cir1-M1}
+\end{center}
+\end{figure}
 
 Planteando las siguientes ecuaciones:
 
@@ -72,22 +72,22 @@ siendo $V_1$ la tensión de salida de esta etapa.
 
 En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne inversor del operacional la tensión $V_1$, mientras que al no inversor $- 10 \ V$, reutilizando la alimentación del operacional.
 
-%\begin{figure}[H]
-%\begin{center}
-%\begin{circuitikz}
-%	\node [op amp](A1){};
-%	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$, i<_=$I_{R1}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{1}$]{} ++(-1,0);
-%	\draw (A1.-) node[label=south:$V^-$]{};
-%	\draw (A1.+) node[label=south:$V^+$]{};
-%	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i_>=$I_{R4}$] ++(0,-3) node[ground]{};
-%	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$, i<=$I_{R3}$] ++(3,0) to[short] ++(0,-2);
-%	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{2}$]{};
-%	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_2$, i<_=$I_{R2}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$-Vcc$]{} ++(-1,0);
-%\end{circuitikz}
-%	\caption{Segunda etapa del circuito.}
-%	\label{fig:cir2-M1}
-%\end{center}
-%\end{figure}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$, i<_=$I_{R1}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{1}$]{} ++(-1,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i_>=$I_{R4}$] ++(0,-3) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$, i<=$I_{R3}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{2}$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_2$, i<_=$I_{R2}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$-Vcc$]{} ++(-1,0);
+\end{circuitikz}
+	\caption{Segunda etapa del circuito.}
+	\label{fig:cir2-M1}
+\end{center}
+\end{figure}
 
 Aplicando el teorema de superposición, se puede obtener la transferencia de este circuito. De esta forma se compone por una parte sumadora y por otra restadora. Mientras que para la restadora, la transferencia se calcula de la misma forma que en (\ref{equ:m1p1}), para la sumadora se deben plantear:
 
@@ -200,26 +200,26 @@ Al igual que el circuito anterior, este está compuesto por las mismas tres etap
 
 En la primer etapa de este nuevo circuito, se suministra la tensión brindada por el transistor al borne inversor del operacional, mientras que para el no inversor, se busca reducir la tensión de $12 \ V$ de la fuente de alimentación de forma tal que la tensión en $V_2$ sea lo más próxima a $0.35 \ V$. Con esto se busca que pequeñas tensiones entren por el nodo no inversor del operacional y así evitar posibles saturaciones.
 
-%\begin{figure}[H]
-%\begin{center}
-%\begin{circuitikz}
-%	\node [op amp](A1){};
-%	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$, i<_=$I_{R1}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
-%	\draw (A1.-) node[label=south:$V^-$]{};
-%	\draw (A1.+) node[label=south:$V^+$]{};
-%	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i_>=$I_{R4}$] ++(0,-3) node[ground]{};
-%	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$, i<=$I_{R3}$] ++(3,0) to[short] ++(0,-2);
-%	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{1}$]{};
-%	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_2$] ++(-1.5,0) to[short, -*] node[label=north:$V_2$](v2){} ++(-1,0);
-%	\draw (v2) to[R, l_=$R_7$, i<=$I_{R7}$] ++(-3,0) node[ocirc,label=left:$Vcc$]{};
-%	\draw (v2) to[R, l_=$R_8$, i_>=$I_{R8}$] ++(0,-3) node[ground]{};
-%	\draw (v2) to[short, i>_=$I_{R2}$] ++(1,0);
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$, i<_=$I_{R1}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i_>=$I_{R4}$] ++(0,-3) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$, i<=$I_{R3}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{1}$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_2$] ++(-1.5,0) to[short, -*] node[label=north:$V_2$](v2){} ++(-1,0);
+	\draw (v2) to[R, l_=$R_7$, i<=$I_{R7}$] ++(-3,0) node[ocirc,label=left:$Vcc$]{};
+	\draw (v2) to[R, l_=$R_8$, i_>=$I_{R8}$] ++(0,-3) node[ground]{};
+	\draw (v2) to[short, i>_=$I_{R2}$] ++(1,0);
 	
-%\end{circuitikz}
-%	\caption{Primera etapa del circuito.}
-%	\label{fig:cir1-M2}
-%\end{center}
-%\end{figure}
+\end{circuitikz}
+	\caption{Primera etapa del circuito.}
+	\label{fig:cir1-M2}
+\end{center}
+\end{figure}
 
 De la misma forma que con el primer modelo, se puede demostrar que la transferencia de esta etapa se encuentra dada por
 \begin{equation}
@@ -262,22 +262,22 @@ Utilizando (\ref{equ:simpm2}) en (\ref{equ:m2p1sinsimp}) se obtiene
 
 Luego, para la parte del amplificador inversor, simplemente se alimentó con la tensión de salida de la etapa previa al borne inversor, mientras que se conectó el no inversor a tierra.
 
-%\begin{figure}[H]
-%\begin{center}
-%\begin{circuitikz}
-%	\node [op amp](A1){};
-%	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{1}$](aux1){} ++(-1,0);
-%	\draw (aux1) to[short, i^>=$I_{R5}$] ++(,0);
-%	\draw (A1.-) node[label=south:$V^-$]{};
-%	\draw (A1.+) node[label=south:$V^+$]{};
-%	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
-%	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_6$, i<=$I_{R6}$] ++(3,0) to[short] ++(0,-2);
-%	\draw (A1.out) to[short, -o] ++(1,0) node[ocirc,label=right:$V_{3}$]{};
-%\end{circuitikz}
-%	\caption{Segunda etapa del circuito.}
-%	\label{fig:cir2-M2}
-%\end{center}
-%\end{figure}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{1}$](aux1){} ++(-1,0);
+	\draw (aux1) to[short, i^>=$I_{R5}$] ++(,0);
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_6$, i<=$I_{R6}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.out) to[short, -o] ++(1,0) node[ocirc,label=right:$V_{3}$]{};
+\end{circuitikz}
+	\caption{Segunda etapa del circuito.}
+	\label{fig:cir2-M2}
+\end{center}
+\end{figure}
 
 De la misma forma que se calculó en el modelo anterior, la transferencia de esta etapa es
 \begin{equation}
@@ -291,31 +291,31 @@ La etapa final, es decir, la protección, no cambia para este circuito. Tanto el
 	\label{equ:transfm2}
 \end{equation}
 
-%\begin{figure}[H]
-%\hspace*{-3cm} 
-%\begin{circuitikz}
-%	\node [op amp](A1){};
-%	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
-%	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$] ++(0,-3) node[ground]{};
-%	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$] ++(3,0) to[short] ++(0,-2);
-%	\draw (A1.+) to[short] ++(-1.5,0) to[R, l= $R_2$] ++(-1.5,0) node[](v2){};
-%	\draw (v2) to[R, l_=$R_7$] ++(-3,0) node[ocirc,label=left:$Vcc$]{};
-%	\draw (v2) to[R, l_=$R_8$] ++(0,-3) node[ground]{};
+\begin{figure}[H]
+\hspace*{-3cm} 
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$] ++(0,-3) node[ground]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.+) to[short] ++(-1.5,0) to[R, l= $R_2$] ++(-1.5,0) node[](v2){};
+	\draw (v2) to[R, l_=$R_7$] ++(-3,0) node[ocirc,label=left:$Vcc$]{};
+	\draw (v2) to[R, l_=$R_8$] ++(0,-3) node[ground]{};
 	
-%	\draw (A1.out) to[open] ++(4,-0.5) node[op amp](A2){};
-%	\draw (A2.-) to[short] ++(-0.5,0) to[R, l = $R_5$] ++(-1.5,0) -- (A1.out);
-%	\draw (A2.+) to[short] ++(-1,0) node[ground]{};
-%	\draw (A2.-) to[short] ++(0,1.5) to[R, l = $R_6$] ++(3,0) to[short] ++(0,-2);
-%	\draw (A2.out) to[short] ++(1,0) node[](v2){};
-%	\draw (v2) to[R, l = $R_7$] ++ (1.5,0) to[open] ++(0,-2) node[ground](gnd){};
-%	\draw (gnd) to[zzDo, l_= $D$] ++(0,2);
-%	\draw (v2) to[open] ++(1.5,0) to[short, -o] ++(1,0) node[label=right:$V_o$](){};
+	\draw (A1.out) to[open] ++(4,-0.5) node[op amp](A2){};
+	\draw (A2.-) to[short] ++(-0.5,0) to[R, l = $R_5$] ++(-1.5,0) -- (A1.out);
+	\draw (A2.+) to[short] ++(-1,0) node[ground]{};
+	\draw (A2.-) to[short] ++(0,1.5) to[R, l = $R_6$] ++(3,0) to[short] ++(0,-2);
+	\draw (A2.out) to[short] ++(1,0) node[](v2){};
+	\draw (v2) to[R, l = $R_7$] ++ (1.5,0) to[open] ++(0,-2) node[ground](gnd){};
+	\draw (gnd) to[zzDo, l_= $D$] ++(0,2);
+	\draw (v2) to[open] ++(1.5,0) to[short, -o] ++(1,0) node[label=right:$V_o$](){};
 	
 	
-%\end{circuitikz}	
-%\caption{Modelo final del circuito.}
-%\label{fig:cirfin-M2}
-%\end{figure}
+\end{circuitikz}	
+\caption{Modelo final del circuito.}
+\label{fig:cirfin-M2}
+\end{figure}
 
 Nuevamente, se imponen condiciones para obtener los valores de las resistencias, recordando que también debe cumplirse la condición impuesta en (\ref{equ:condm2}):
 

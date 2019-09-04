@@ -31,10 +31,10 @@ Dado el \textbf{GBP} de 15MHz podemos fácilmente calcular la frecuencia de cort
 $$ f_p = \frac{15MHz}{A_{vol}} $$
 $$ f_p \approx 47.44Hz$$
 
-\subsection{Ganancia bajo diferentes condiciones de $A_{vol}$}
+\section{Ganancia bajo diferentes condiciones de $A_{vol}$}
 En esta sección analizaremos las características de la ganancia de tensión brindad por ambos circuitos bajo diferentes condiciones.
 
-\subsubsection{$A_{vol}$ infinito}
+\subsection{$A_{vol}$ infinito}
 En un circuito con amplificadores operacionales es deseable utilizar dispositivos con $A_{vol}$(ganancia a lazo abierto) lo más alto posible para que los modelos teóricos se aproximen a su implementación física.
 
 Ambos circuitos adoptan la configuración de un circuito inversor y sus transferencias pueden ser descritas mediante
@@ -95,7 +95,7 @@ En cuanto a la fase en ambos casos podemos observar como ver cómo las operacion
 	\caption{Fase Ideal Circuito Derivador}
 \end{figure}
 
-\subsubsection{$A_{vol}$ finito}
+\subsection{$A_{vol}$ finito}
 La ganancia a lazo abierto nunca es infinita en los amplificadores operacionales aunque por cuestiones de simplicidad podemos tratarlo como así fuese. En la introducción calculamos el $A_{vol}$ del \textbf{LM833} a partir de los datos brindados por el fabricante en la hoja de datos y encontramos que este valor se encuentra aproximadamente en $31.6227,77$.
 Ahora podemos volver a mirar a la función transferencia del inversor no ideal presentada al comienzo.
 $$H(s)_{inv} = \frac{-\frac{Z_{Feed}}{Z_{in}}}
@@ -133,5 +133,5 @@ En el caso del derivador ocurre lo contrario, es necesario alcanzar frecuencias 
 	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
 \end{figure}
 
-\subsubsection{Análisis con Polo Dominante}
+\subsection{Análisis con Polo Dominante}
 Con la finalidad de obtener resultados predecibles e independizarse los más posible de las capacidades parasitas del amplificador operacional, los fabricantes añaden el llamado \textbf{polo dominante}. Este polo tiene como finalidad evitar inversiones inesperadas.
