@@ -606,28 +606,12 @@ La cual puede ser apreciada en el siguiente gráfico:
 \subsubsection{Principales Características.}
 En el caso del circuito inversor, considerando la situación en la cual $R_3$ sea igual a 0, la salida del amplificador operacional debería ser de $0 \ V$. Esto no es lo que ocurre dado que existe una tensión de offset, la cual se analiza en la sección 3 de este informe.
 
-Por su parte, para el circuito no inversor,
-%si se calcula nuevamente (\ref{equ:noinvtransferencia}), se obtiene
-%\[
-%	H \left( s \right) = \frac{1}{\frac{R_1}{R_1 + R_2} + \frac{1}{A_o \left( \omega \right)}}
-%\]
-se obtendría que $V^+ = V_{in}$. Este circuito se caracteriza por poder ser sustentado con una sola fuente de alimentación, siendo esta referenciada a $V^+/2$ \footnote{Caracterización brindada por el fabricante.}. Es así que recalculando la ganancia para esta disposición, se obtiene que 
+Por su parte, para el circuito no inversor, se obtendría que $V^+ = V_{in}$. Este circuito se caracteriza por poder ser sustentado con una sola fuente de alimentación, siendo esta referenciada a $V^+/2$ \footnote{Caracterización brindada por el fabricante.}. Es así que recalculando la ganancia para esta disposición, se obtiene que 
 \[
 	H \left(s \right) = \left( \frac{R_1}{R_1 + R_2} + A_o\left( \omega \right) \right)^{-1}
 \]
 
-Luego, se sabe que $R_3$ no es necesaria considerando $I_{in}$ constante frente a cambios en la temperatura\footnote{Dato obtenido de la hoja de datos}.
-
-\begin{figure}[H]	
-	\centering
-	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/VinvsVoR3.png}
-	\caption{$V_{out}$ en función de $V_{in}$ con $R_3 = 0 \ \Omega$ con $A_{vol \infty}$.}
-	\label{fig:VinvsVoR3}
-\end{figure} 
-
-Es así que la transferencia del circuito, mostrada en la Figura (\ref{fig:VinvsVoR3}) para cada caso, diferencia dos situaciones, una donde la relación entre la salida y la entrada es lineal, con una pendiente de $1 + \frac{R_2}{R_1}$ en el caso ideal, por lo visto en (\ref{equ:noinvtransferencia_ideal}), y otra zona donde la tensión es constante debido a la saturación propia del operacional.
-
-Además, se observa en (\ref{equ:zinnoinv}) que la impedancia de entrada decae, lo cual puede llegar a provocar que esta sea comparable con la de la fuente, generando problemas de medición.
+Luego, se sabe que $R_3$ no es necesaria considerando $I_{in}$ constante frente a cambios en la temperatura\footnote{Dato obtenido de la hoja de datos}. Además, se observa en (\ref{equ:zinnoinv}) que la impedancia de entrada decae, lo cual puede llegar a provocar que esta sea comparable con la de la fuente, generando problemas de medición.
 
 Por otro lado, se analiza el propósito de $R_4$ en el circuito inversor. A primera vista no es evidente, dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Dato obtenido de la datasheet, $I_{Max}=20 \ mA$} que puede aportar el opamp, se llego a que el propósito de $R_4$ es limitar la corriente, por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$. Otra función que posee $R_4$ es el limitar la corriente del lazo.
 %%%%%%%%%%%%%%%%%%%%
