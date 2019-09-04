@@ -37,7 +37,7 @@ En la primer etapa se dispuso un amplificador inversor, tomando como tensión de
 \begin{circuitikz}[american currents]
 	\node [op amp](A1){};
 %	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$, i<=$I_{R6}$] ++(-2,0) to[short, -o] node[ocirc, label=left:$V_{LM35}$]{} ++(-1,0);
-	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$, i<=$I_{R6}$] ++(-2,0) to[short, -o] node[ocirc, label=left:$V_{LM35}$]{} ++(-1,0);
+	\draw (A1.-) to[short] ++(-1,0) to[R, l = $R_5$] ++(-2,0) to[short, -o] node[ocirc, label=left:$V_{LM35}$]{} ++(-1,0);
 	\draw (A1.-) node[label=south:$V^-$]{};
 	\draw (A1.+) node[label=south:$V^+$]{};
 	\draw (A1.+) to[short] ++(-1,0) node[ground]{};
