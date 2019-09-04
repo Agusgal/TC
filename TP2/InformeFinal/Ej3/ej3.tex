@@ -3,7 +3,7 @@
 
 \subsection{Introducción}
 Las corrientes de \textbf{bias} son las corrientes de polarización de la electrónica dentro de los amplificadores operacionales, en el informe se analizará 2 operacionales, uno con corrientes de bias atribuidas a la corriente de base de un par diferencial de bjt a la entrada del mismo y otro implementado con jfet que si bien teoricamente no deberia tener corriente de gate realmente la tiene.
-La tension de offset es la diferencia de potencial que se encuentra a la salida del operacional teniendo una tension nula a la entrada.
+La tensión de offset es la diferencia de potencial que se encuentra a la salida del operacional teniendo una tensión nula a la entrada.
 Otra corriente de interes es la Corriente de offset.
 Con el modelo del Op Amp que tiene en cuenta estos fenomenos se puede definir.\newline
  	
@@ -17,7 +17,7 @@ Con el modelo del Op Amp que tiene en cuenta estos fenomenos se puede definir.\n
 
 
 
-Se proporcionó el siguiente circuito para medir las corrientes de bias y la tension de offset.
+Se proporcionó el siguiente circuito para medir las corrientes de bias y la tensión de offset.
 
 \begin{figure}[htb]	
 	\centering
@@ -36,7 +36,7 @@ Se comenzó por la segunda parte dado que es necesario un resultado de esta part
 	\caption{Segunda Etapa.}
 	\label{fig:SegundaEtapa}
 \end{figure}
-La corriente circulara a travez de la resistencia y el capacitor.\\
+La corriente circulará a travez de la resistencia y el capacitor.\\
 \begin{center}
 $ \frac{V_{out_1}-V^-}{R_4} = (V^--V_{out_2})\cdot sc$ \\
 \end{center}
@@ -73,12 +73,12 @@ Se obtiene el diagrama de flujo de señal:
 	\caption{Diagrama de flujo de señal de la primer etapa.}
 	\label{fig:PrimerEtapaDiagrama}
 \end{figure}
-El cual tambien se puede notar que es estable dado a la realimentacion negativa, en caso de permutar las entradas cambiarian los signos de los lazos y seria inestable.
+El cual tambien se puede notar que es estable dado a la realimentacion negativa, en caso de permutar las entradas cambiarían los signos de los lazos y seria inestable.
 Finalmente si se invierten las entradas de ambas etapas en simultaneo tambien sera inestable dado que si en un sistema uno de los sub-sistema es inestable el sistema será inestable.\\
 A modo de conclución se llega a que el la única configuración estable es la original, dado que la permutacion de las entradas lleva a situaciones inestables por la realimentacion positiva.
 \subsection{Deducción de expresiones para medir.}
 
-Teniendo en cuenta el circuito entero de medicion, las corrientes de bias y la tension de offset se lo puede modelar de la siguiente manera
+Teniendo en cuenta el circuito entero de medición, las corrientes de bias y la tensión de offset se lo puede modelar de la siguiente manera
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{imagenes/Medicion.PNG}
@@ -87,7 +87,7 @@ Teniendo en cuenta el circuito entero de medicion, las corrientes de bias y la t
 \end{figure}
 El Opamp a medir será el OAX-2
 \begin{center}$V_{out_1}=A_0 \cdot (V^+ - V^-)$\\\end{center}
-Dado a que la corriente de bias es unicamente continua para la segunda etapa el opamp es como si estuviese a lazo abierto\\
+Dado a que la corriente de bias es únicamente continua para la segunda etapa el opamp es como si estuviese a lazo abierto\\
 \begin{center}$V_{out_2}=A_0 \cdot V_{out_1}$\\\end{center}
 \begin{center}$V^-=I_b^- \cdot (R_{s2}+10)$\\\end{center}
 \begin{center}$V^+=I_b^+ \cdot R_{s1} +V_A+V_{off}$\\\end{center}
@@ -95,11 +95,11 @@ Dado a que la corriente de bias es unicamente continua para la segunda etapa el 
 Despejando para $V_{out_2}$ se llega a:
 \begin{center}$V_{out_2}=A_0^2  \cdot \frac{I_b^+ \ R_{s1} -I_b^-\cdot (R_{s2}+10)+V_{off}}{1-A_0^2 \cdot \frac{1}{1+\frac{10}{R_3}}}$\\\end{center}
 $\lim_{A_0\to\infty} A_0^2  \cdot \frac{I_b^+ \ R_{s1} -I_b^-\cdot (R_{s2}+10)+V_{off}}{1-A_0^2 \cdot \frac{1}{1+\frac{10}{R_3}}}=-(I_b^+ \ R_{s1} -I_b^-\cdot (R_{s2}+10)+V_{off})\cdot \frac{1}{1+\frac{10}{R_3}} $
-Luego cambiando de posicion la llave se va apoder medirlos diferentes observavles de interes del circuito.\\
+Luego cambiando de posición la llave se va apoder medirlos diferentes observables de interes del circuito.\\
 La $V_{off}$ se medirá poniendo en corto $R_{s1}$ y $R_{s2}$ y se despreciará la caida sobre el resistor de 10$\Omega$ dado a su pequeño valor y que la corriente de bias tambien es muy pequeña.\\
 \begin{center}$V_{off}=V_{out_2} \cdot \frac{10}{10+R_3} $\end{center}
 Ahora que se tiene un valor de $V_{off}$ se  puede poner en corto S1 ó S2 arbitrariamente y se conseguirá una expresión para $ I_b^+ \ o \  I_b^-$ en función de $V_{off} \ y \ V_{out_2}$
-Se tuvo en cuenta elegir un valor de resistecia alto para $R_{s1}$ y $R_{s2}$ talque sea mas apreciable la caida de potencial sobre ellas; se eligió 1 Mega dado a que siendo un valor muy grande se podrá despreciar la caida de potencial sobre $R_{s2}$  cuando se mida $I_b^+$.\\
+Se tuvo en cuenta elegir un valor de resistecia alto para $R_{s1}$ y $R_{s2}$ talque sea mas apreciable la caída de potencial sobre ellas; se eligió 1 Mega dado a que siendo un valor muy grande se podrá despreciar la caida de potencial sobre $R_{s2}$  cuando se mida $I_b^+$.\\
 \begin{center}$I_b^+=\frac{V_{out_2} \cdot \frac{10}{10+R_3}-V_{off}}{R_{s1}}$\end{center}
 \begin{center}$I_b^-=\frac{V_{out_2} \cdot \frac{10}{10+R_3}-V_{off}}{R_{s2}+10}$\end{center}
 
@@ -128,7 +128,7 @@ Se midio el circuito utilizando osciloscopio y se  obtuvo la siguiente tabla.
 \end{center}
 \end{table}
 
-Si bien estos fueron los resultados finales de la medición, inicialmente se tuvo el inconveniente de que había mucha interferencia de linea y el opamp terminaba saturando dado a la componente no inversora provista por el ruido de linea, el cual invertia el lazo de realimentacion y terminaba oscilando.
+Si bien estos fueron los resultados finales de la medición, inicialmente se tuvo el inconveniente de que había mucha interferencia de linea y el opamp terminaba saturando dado a la componente no inversora provista por el ruido de linea, el cual invertia el lazo de realimentación y terminaba oscilando.
 Lo cual daba la siguiente señal.
 \begin{figure}[H]	
 	\centering
