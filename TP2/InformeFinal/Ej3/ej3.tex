@@ -8,7 +8,7 @@ Otra corriente de interés es la Corriente de offset.
 Con el modelo del Op Amp que tiene en cuenta estos fenómenos se puede definir.\newline
  	
  $I_{offSet} \ = \ |I_b^{-}-I_b^{+}|$\ y \ $I_{Bias}= \frac{I_b^-+I_b^{+}}{2}$
-\begin{figure}[htb]	
+\begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{Ej3/imagenes/opampReal.PNG}
 	\caption{Modelo OpAmp con corriente de bias y tensión de offset.}
@@ -19,7 +19,7 @@ Con el modelo del Op Amp que tiene en cuenta estos fenómenos se puede definir.\
 
 Se proporcionó el siguiente circuito para medir las corrientes de bias y la tension de offset.
 
-\begin{figure}[htb]	
+\begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{Ej3/imagenes/CircMedicion.PNG}
 	\caption{Circuito de medición.}
@@ -74,7 +74,7 @@ Se obtiene el diagrama de flujo de señal:
 	\label{fig:PrimerEtapaDiagrama}
 \end{figure}
 El cual también se puede notar que es estable dado a la realimentación negativa, en caso de permutar las entradas cambiarían los signos de los lazos y seria inestable.
-Finalmente si se invierten las entradas de ambas etapas en simultaneo también sera inestable dado que la primer etapa todavía estará con una realimentación positiva.\\
+Finalmente si se invierten las entradas de ambas etapas en simultaneo también sera inestable dado que si un sub-sistema dentro de un sistema es inestable, el sistema entero lo será.\\
 A modo de conclusión se llega a que el la única configuración estable es la original, dado que la permutación de las entradas lleva a situaciones inestables por la realimentación positiva.
 \subsection{Deducción de expresiones para medir.}
 
@@ -107,6 +107,7 @@ Para esta expresión se desprecio el valor de $I_b^-$
 \subsection{Ruido Ambiente.}
 La segunda etapa si bien está a laso abierto para las corrientes de bias dado que es de continua se comporta como un filtro para el ruido ambiente que se encuentra a 50Hz,con los valores actuales de resistencia y capacitor atenuará $\approx$ 0.45dB, aumentando el valor del capacitor a 1$\mu F$ será de  $\approx$ 20dB.
 Un problema que se presentaría aplicando un capacitor demasiado chico es que el ruido haría mucho mas difícil las mediciones.
+El ruido que es introducido por el terminal no inversor del Opamp utilizando superposición se encuentra en una configuración no inversora, que dependiendo de la intensidad del ruido puede invertir el lazo y hacer que el circuito oscile.
 \subsection{Resultados.}
 \subsubsection{Mediciones}
 Se midió el circuito utilizando osciloscopio y se  obtuvo la siguiente tabla.
