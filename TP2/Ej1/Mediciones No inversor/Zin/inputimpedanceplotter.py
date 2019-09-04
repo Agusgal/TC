@@ -4,8 +4,8 @@ import pandas as pd
 
 
 
-med = pd.read_excel("Caso3.xlsx")
-teo = pd.read_excel("Caso3Teo.xlsx")
+med = pd.read_excel("Caso1.xlsx")
+teo = pd.read_excel("Caso1Teo.xlsx")
 
 frequencymed=[]
 magmed=[]
@@ -90,7 +90,7 @@ def read_file_spice(filename):
         data["pha"].append(c3)
 
     return data
-data = read_file_spice("Caso3enOHM.txt")
+data = read_file_spice("Caso1enOHM.txt")
 print(data["pha"])
 magsim=[]
 for abbs in data["abs"]:
@@ -101,22 +101,22 @@ for phha in data["pha"]:
     phha=(-1)*phha+180
     phasim.append(phha)
 
-plt.title("Modulo de la Impedancia de Entrada (No Inversor Caso 3)")
+plt.title("Modulo de la Impedancia de Entrada (No Inversor Caso 1)")
 plt.xlabel("Frecuencia (Hz)")
 plt.ylabel("Impedancia (Ohm)")
 plt.xscale("log")
 plt.grid(b=True)
-plt.plot(frequencymed, magmed, label="Medido")
+plt.plot(frequencymed, magmed, marker='o', label="Medido")
 plt.plot(frequencyteo, magteo, label="Teorico")
 plt.plot(data["f"], magsim, label="Simulado")
 plt.legend()
 plt.show()
-plt.title("Fase de la Impedancia de Entrada (No Inversor Caso 3)")
+plt.title("Fase de la Impedancia de Entrada (No Inversor Caso 1)")
 plt.xlabel("Frecuencia (Hz)")
 plt.ylabel("Grados (º)")
 plt.xscale("log")
 plt.grid(b=True)
-plt.plot(frequencymed, phamed, label="Medido")
+plt.plot(frequencymed, phamed, marker='o', label="Medido")
 plt.plot(frequencyteo, phateo, label="Teorico")
 plt.plot(data["f"], phasim, label="Simulado")
 plt.legend()

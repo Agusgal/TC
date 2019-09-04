@@ -551,16 +551,11 @@ Luego se procede a mostrar las mediciones realizadas para el caso del circuito n
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Máximos valores de entrada.}
 
-\begin{center}
-\textcolor{red}{\textbf{VER PARA EL NO INVERSOR.}}
-\textcolor{red}{\textbf{HACER LAS CUENTAS Y LOS GRÁFICOS.}}
-\end{center}
-
 El máximo valor de entrada a partir del cual el opamp satura se encuentra definido por diversas variables, siendo algunas de ellas la ganancia del sistema, la amplitud y la frecuencia de la entrada.
 
 Al momento de definir los valores posibles, se realizó un enfoque en las tres variables previamente mencionadas y se asumió el opamp con ganancia ideal. Cabe recordar que se empleó la formula $ V_{Out}=H(s)\cdot V_{in} $.
 
-De esta forma, el máximo valor de $V_{in}$ queda definido por la tensión de saturación del operacional. Para el utilizado en este informe (LM324), dicho valor es de $Vcc - 1.5 \ V$\footnote{Dato extraído de la hoja de datos.}, siendo así, para el caso empleado, equivalente a $13.5 \ V$. Luego, utilizando esta relación, se plasmaron los resultados, para las distintas ganancias analizadas, en la Tabla (\ref{tab:gananciaideal}). Cabe descara que para el caso 3 se realiza una excepción, ya que el fabricante informa que la máxima tensión de entrada soportada por el dispositivo sin quemarse es de $32 \ V$.
+De esta forma, el máximo valor de $V_{in}$ queda definido por la tensión de saturación del operacional. Para el utilizado en este informe (LM324), dicho valor es de $Vcc - 1.5 \ V$\footnote{Dato extraído de la hoja de datos.}, siendo así, para el caso empleado, equivalente a $13.5 \ V$. Luego, utilizando esta relación, se plasmaron los resultados, para las distintas ganancias analizadas, en la Tabla (\ref{tab:gananciaideal}). Cabe destacar que para el caso 3 se realiza una excepción, ya que el fabricante informa que la máxima tensión de entrada soportada por el dispositivo sin quemarse es de $32 \ V$.
 
 \begin{table}[H]
 \begin{center}
@@ -572,8 +567,22 @@ De esta forma, el máximo valor de $V_{in}$ queda definido por la tensión de sa
 \textbf{$V_{in-Max} \ \left[ V \right]$} & 1.35       & 13.5       & 32         \\ \hline
 \end{tabular}
 \end{center}
-\caption{Ganancia ideal para el operacional LM324.}
+\caption{Ganancia ideal para el operacional LM324 con los casos del circuito inversor.}
 \label{tab:gananciaideal}
+\end{table}
+
+\begin{table}[H]
+\begin{center}
+\label{tab:maxin}
+\begin{tabular}{|c|c|c|c|}
+\hline
+\textbf{Caso}        & \textbf{1} & \textbf{2} & \textbf{3} \\ \hline
+\textbf{Ganancia ideal}     & 8.8         & 1.6          & 0.88        \\ \hline
+\textbf{$V_{in-Max} \ \left[ V \right]$} & 1.53       & 8.43       & 15.34         \\ \hline
+\end{tabular}
+\end{center}
+\caption{Ganancia ideal para el operacional LM324 con los casos del circuito no inversor.}
+\label{tab:gananciaidealnoinv}
 \end{table}
 
 Luego se graficó la máxima tensión de entrada en función de la ganancia:
@@ -585,12 +594,19 @@ Luego se graficó la máxima tensión de entrada en función de la ganancia:
 \end{figure} 
 
 También se analizó la máxima amplitud de entrada en función de la frecuencia tal que no haya Slew-Rate, el cual es un efecto que se detalla con mayor profundidad en su propia sección, ni saturación.
-La cual puede ser apreciada en el siguiente gráfico:
+La cual puede ser apreciada en el siguiente gráfico para el circuito inversor:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/maxvinsr.png}
-	\caption{Máxima tensión de entrada sin saturación ni Slew-Rate.}
+	\caption{Máxima tensión de entrada sin saturación ni Slew-Rate para el circuito inversor.}
 	\label{fig:MaxVinsr}
+\end{figure} 
+A continuación, la máxima amplitud de entrada en función de la frecuencia para el circuito no inversor:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio1/Imagenes/maxvinsr_noinv.png}
+	\caption{Máxima tensión de entrada sin saturación ni Slew-Rate para el circuito no inversor.}
+	\label{fig:MaxVinsrnoinv}
 \end{figure} 
 %%%%%%%%%%%%%%%%%%
 \subsubsection{Principales Características.}
