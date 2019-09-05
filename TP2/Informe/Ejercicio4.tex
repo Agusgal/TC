@@ -116,43 +116,94 @@ En cuanto a la fase en ambos casos podemos observar como ver cómo las operacion
 \end{figure}
 
 \subsection{$A_{vol}$ finito}
-La ganancia a lazo abierto nunca es infinita en los amplificadores operacionales aunque por cuestiones de simplicidad podemos tratarlo como así fuese. En la introducción calculamos el $A_{vol}$ del \textbf{LM833} a partir de los datos brindados por el fabricante en la hoja de datos y encontramos que este valor se encuentra aproximadamente en $31.6227,77$.
+La ganancia a lazo abierto nunca es infinita en los amplificadores operacionales aunque por cuestiones de simplicidad podemos tratarlo como así fuese. En la introducción calculamos el $A_{vol}$ del \textbf{LM833} a partir de los datos brindados por el fabricante en la hoja de datos y encontramos que este valor se encuentra aproximadamente en $316.227,77$.
 Ahora podemos volver a mirar a la función transferencia del inversor no ideal presentada al comienzo.
 $$H(s)_{inv} = \frac{-\frac{Z_{Feed}}{Z_{in}}}
 {1+\frac{1+\frac{Z_{Feed}}{Z_{in}}}{A_{vol}}} $$
 
-AÑADIR TRANSFERENCIAS!!
 
 \subsubsection{Diagramas de Bode con $A_{vol}$ finito}
+Considerando $A_{vol}$ finito obtenemos las siguientes transferencias modificadas.
+
+Para el \textbf{integrador} tenemos que $Z_{in}=R$, $Z_{feed}=\frac{1}{sCR}$
+$$H(s)=\frac{-A_{vol}}{sCR(A_{vol}+1)+1}$$
+
+Por otro lado para \textbf{derivador} las impendancias de entrada y feedback seran $Z_{in} = \frac{1}{sC}$ y $Z_{feed}  = R$
+$$H(s) = - \frac{A_{vol} C R s \omega_p}{A_{vol} \omega_p + \left(s + \omega_p\right) \left(C R s + 1\right)}$$
+Y se obtienen las siguientes diagramas de Bode Teóricos 
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-MAGNITUD-INTEGRADOR}
 	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
 \end{figure}
-
+El tipo de integrador analizado aquí comienza a integrar aproximadamente para señales de 5$mHz$ en adelante. Sin embargo su alta ganancia hace que una señal de 150 $mV$ a 1$mHz$ sature la salida del opamp. Veremos más adelante como esta característica afecta significativamente el desempeño del este circuito.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-MAGNITUD-DERIVADOR}
 	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
 \end{figure}
 
-Al considerar que $A_{vol}$ no tiene un valor infinitamente grande observamos que el circuito integrador se comporta como un filtro pasabajos cuya frecuencia de corte se encuentra a muy baja frecuencia lo cual no permitiría hacer uso del mismo con señales de frecuencia media-alta.
-Tambien cabe destacar la gran ganancia que obtienen las señales de baja frecuencia, este es un problema dado que señales parásitas de baja frecuencia consiguen saturar al operacional con facilidad no permitiendo lograr el efecto deseado.
-
-En el caso del derivador ocurre lo contrario, es necesario alcanzar frecuencias en el orden de los $100KHz$ para poder ver una señal sin tanta atenuación. Pero tampoco sera posible y mucho más allá dado que la ganancia brindada rápidamente saturara al opamp lo cual nuevamente limita el rango de operación del circuito. 
+En el caso del derivador ocurre lo contrario, es necesario alcanzar frecuencias en el orden de los $100KHz$ para poder ver una señal sin tanta atenuación. Pero tampoco sera posible y mucho más allá dado que la ganancia brindada rápidamente saturara al operacional lo cual nuevamente limita el rango de operación del circuito. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-FASE-INTEGRADOR}
-	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
+	\caption{Fase con $A_{vol}$ finito Circuito Integrador}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOL-FINITO-FASE-DERIVADOR}
-	\caption{Ganancia con $A_{vol}$ finito Circuito Integrador}
+	\caption{Fase con $A_{vol}$ finito Circuito Integrador}
 \end{figure}
 
 \subsection{Análisis con Polo Dominante}
-Con la finalidad de obtener resultados predecibles e independizarse los más posible de las capacidades parasitas del amplificador operacional, los fabricantes añaden el llamado \textbf{polo dominante}. Este polo tiene como finalidad evitar inversiones inesperadas.
+Con la finalidad de obtener resultados más predecible y garantizar la estabilidad del opamp, los fabricantes añaden el llamado \textbf{polo dominante}.
+Por lo tanto ahora consideraremos:
+$$A(s)=\frac{A_{vol}}{1+\frac{s}{\omega_p}}$$
+
+Reemplazando en las expresiones de la sección anterior obtenemos
+$$H(s)_{\int}=- \frac{\omega_p A_{vol}}{\left(s + \omega_p\right) \left(s c r{\left (\frac{s + \omega_p A_{vol} + \omega_p}{s + \omega_p} \right )} + 1\right)}$$
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOLW-MAGNITUD-INTEGRADO}
+	\caption{Ganancia con $A_{vol}(s)$ Polo Dominante Circuito Integrador}
+\end{figure}
+Notamos que no hay grandes diferencias en cuanto a su comportamiento al añadir el polo dominante. Sin embargo, se observa que para frecuencias de más de $1GHz$ comienzan a afectar los demás polos presentes en el opamps
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOLW-MAGNITUD-DERIVADOR}
+	\caption{Ganancia con $A_{vol}(s)$ Polo Dominante Circuito Derivador}
+\end{figure}
+El caso del derivador en más interesante ya que al contrario de la sección anterior, aquí se nos presentan de manera evidente las limitaciones practicas de este circuito. 
+En el rango de frecuencias bajas esta configuración presenta una atenuación significante por lo que la amplitud de entrada sera un factor critico. 
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOLW-FASE-INTEGRADO}
+	\caption{Fase con $A_{vol}(s)$ Polo Dominante Circuito Integrador}
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/BODE-AVOLW-FASE-DERIVADOR}
+	\caption{Fase con $A_{vol}(s)$ Polo Dominante Circuito Derivador}
+\end{figure}
+
+\section{Respuesta en frecuencia}
+El circuito integrador no compensado presenta una muy alta ganancia a bajas frecuencia lo cual produce saturación a la salida. Se utilizaron señales del orden de los 150 $mV$ para poder realizar las mediciones 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-BODE-INTEGRADOR-NO-COMPENSADO}
+	\caption{Fase con $A_{vol}(s)$ Polo Dominante Circuito Derivador}
+\end{figure}
+
+
+
 \end{document}
