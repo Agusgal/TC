@@ -8,7 +8,7 @@ Otra corriente de interes es la Corriente de offset.
 Con el modelo del Op Amp que tiene en cuenta estos fenomenos se puede definir.\newline
  	
  $I_{offSet} \ = \ |I_b^{-}-I_b^{+}|$\ y \ $I_{Bias}= \frac{I_b^-+I_b^{+}}{2}$
-\begin{figure}[htb]	
+\begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{imagenes/opampReal.PNG}
 	\caption{Modelo OpAmp con corriente de bias y tensión de offset.}
@@ -19,7 +19,7 @@ Con el modelo del Op Amp que tiene en cuenta estos fenomenos se puede definir.\n
 
 Se proporcionó el siguiente circuito para medir las corrientes de bias y la tensión de offset.
 
-\begin{figure}[htb]	
+\begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{imagenes/CircMedicion.PNG}
 	\caption{Circuito de medición.}
@@ -30,7 +30,7 @@ Se proporcionó el siguiente circuito para medir las corrientes de bias y la ten
 Se analizó cada modulo del circuito por separado realizando el diagrama de flujo de señal para el analisis de estabilidad.\\
 Se comenzó por la segunda parte dado que es necesario un resultado de esta parte para realizar la primera
 
-\begin{figure}[htb]	
+\begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{imagenes/SegundaEtapa.PNG}
 	\caption{Segunda Etapa.}
@@ -111,7 +111,12 @@ Vale la pena tambien mencionar que el ruido introducido a travez del terminal no
 \subsubsection{Mediciones}
 Se midio el circuito utilizando osciloscopio y se  obtuvo la siguiente tabla.
 
-
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{imagenes/Medicion.PNG}
+	\caption{Medición Vout.}
+	\label{fig:vout}
+\end{figure}
 
 \begin{table}[H]
 \begin{center}
@@ -136,9 +141,8 @@ Lo cual daba la siguiente señal.
 	\caption{Circuito Oscilando.}
 	\label{fig:oscilando}
 \end{figure}
-Luego se volvio a medir cambiando el capacitor por uno de 1$\mu F$ 
-y  se pudo realizar una medición certera .Obteniendo para los valores de salida para la medición de $I_b^+$ y $I_b^-$. El aumento en el ruido de linea puede deberse a el instrumental que estaba siendo utilizado en el momento en el laboratorio.
-Estas fueron las mediciones realizadas previo a el cambio del capacitor:
+Obteniendo para los valores de salida para la medición de $I_b^+$ y $I_b^-$. El aumento en el ruido de linea puede deberse a el instrumental que estaba siendo utilizado en el momento en el laboratorio.
+Estas fueron las mediciones realizadas previo a el cambio del capacitor para el LF356:
 \begin{figure}[H]
 \centering
 \begin{minipage}{.5\textwidth}
@@ -155,38 +159,7 @@ Estas fueron las mediciones realizadas previo a el cambio del capacitor:
 \end{minipage}
 \end{figure}
 
-\begin{figure}[H]
-\centering
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=.99\linewidth]{imagenes/RS2CORTO.png}
-  \captionof{figure}{Medición de Vout para Ib+  TL081}
-  \label{fig:ib+TL}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=.99\linewidth]{imagenes/RS1CORTO.png}
-  \captionof{figure}{Medición de Vout para Ib- TL081}
-  \label{fig:ib-TL}
-\end{minipage}
-\end{figure}
 Luego del cambio del capacitor  se obtuvieron las siguientes mediciones, las cuales son en su mayoria libres de ruido.
-
-\begin{figure}[H]
-\centering
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=.99\linewidth]{imagenes/RS2CORTOLF356capa.png}
-  \captionof{figure}{Medición de Vout para Ib+  LF356 con capacitor}
-  \label{fig:ib+}
-\end{minipage}%
-\begin{minipage}{.5\textwidth}
-  \centering
-  \includegraphics[width=.99\linewidth]{imagenes/RS1CORTOLF356capa.png}
-  \captionof{figure}{Medición de Vout para Ib- LF356 con capacitor}
-  \label{fig:ib-}
-\end{minipage}
-\end{figure}
 
 \begin{figure}[H]
 \centering
@@ -194,15 +167,32 @@ Luego del cambio del capacitor  se obtuvieron las siguientes mediciones, las cua
   \centering
   \includegraphics[width=.99\linewidth]{imagenes/RS2CORTOTL081.png}
   \captionof{figure}{Medición de Vout para Ib+  TL081 con capacitor}
-  \label{fig:ib+TL}
+  \label{fig:ib+TLl}
 \end{minipage}%
 \begin{minipage}{.5\textwidth}
   \centering
   \includegraphics[width=.99\linewidth]{imagenes/RS1CORTOTL081.png}
   \captionof{figure}{Medición de Vout para Ib- TL081 con capacitor}
-  \label{fig:ib-TL}
+  \label{fig:ib-TLl}
 \end{minipage}
 \end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{imagenes/RS1YRS2CORTOLF356capa.png}
+  \captionof{figure}{Medición de Vout para Voff  LF356 con capacitor}
+  \label{fig:voutcapaLF356}
+\end{minipage}%
+\begin{minipage}{.5\textwidth}
+  \centering
+  \includegraphics[width=.99\linewidth]{imagenes/RS1Y2CortoCapaTL081.png}
+  \captionof{figure}{Medición de Vout para Voff TL081 con capacitor}
+  \label{fig:voutcapaTL081}
+\end{minipage}
+\end{figure}
+
 Obteniendo con el nuevo capacitor las siguientes mediciones:
 
 \begin{table}[H]
@@ -218,10 +208,12 @@ Obteniendo con el nuevo capacitor las siguientes mediciones:
 \textbf{Osciloscopio} & 0.332V                   & 0.203V        & 0.138V        \\ \hline
 \end{tabular}
 \end{center}
+\caption{Tabla de mediciones.}
+\label{tab:vout}
 \end{table}
 
 \subsubsection{Analisis de resultados.}
-A partir de los valores obtenidos en la   \ref{tab:vout} se pueden calcular las corrientes de offset y bias, al igual que la tension de offset previo al cambio de capacitor:
+A partir de los valores obtenidos en la tabla  (\ref{tab:vout}) se pueden calcular las corrientes de offset y bias, al igual que la tension de offset previo al cambio de capacitor:
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|c|c|}
@@ -263,6 +255,7 @@ Luego comparandola con la siguiente tabla de valores proporcionada por el fabric
 \end{table}
 Se puede observar que la mayoria de los valores se encuentran dentro de las tolerancias admitidas por el fabricante, el desvio en la corriente de Offset es atribuido a los componentes que su valor no es preciso, que no se tuvo en cuenta a la punta del osciloscopio en el modelo.
 Tambien se le atribuye la diferencia en valores en particualr en la corriente  de bias del TL081 entre las medidciones sin cambiar el capacitor y las hechas con el capacitor a el ruido que se tenia en el sistema.
+
 \subsection{Compensacion de tension de offset y corrientes de bias.}
 \subsubsection{Compensación Bias}
 Para la compensacion de corriente de bias lo que se desea es hacer que la diferencia entre $I_b^+$ y $I_b^-$ sea $\approx$ 0
