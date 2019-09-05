@@ -12,7 +12,7 @@ Como se requiere que el circuito diseñado posea una tensión de salida de $ 0 \
 	\label{equ:sistema}
 \end{equation}
 
-Para lograr su funcionamiento, el fabricante especifica que el transistor debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle a este dispositivo $10 \ V$ para utilizarlo. Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ ni mayor a $6 \ V$. Esto se ahondará con mayor profundidad al desarrollar como se obtuvo el diseño de este.
+Para lograr su funcionamiento, el fabricante especifica que el transistor debe ser alimentado con una tensión de entre $4 \ V$ y $20 \ V$. Es por ello que se decidió suministrarle a este dispositivo $6 \ V$ para utilizarlo. Además, por cuestiones de seguridad, se desea que el circuito no brinde una tensión de salida menor a $-1 \ V$ ni mayor a $6 \ V$. Esto se ahondará con mayor profundidad al desarrollar como se obtuvo el diseño de este.
 
 Luego se requiere que la tensión de salida del circuito responda de la siguiente forma frente a la tensión de salida del transistor.
 
@@ -59,14 +59,11 @@ Planteando las siguientes ecuaciones:
 \end{aligned}
 \right.
 \end{equation*}
-
 y sabiendo que $A_o \gg \frac{R_6}{R_5}$, se obtiene
-
 \begin{equation}
 	V_1 = -\frac{R_6}{R_5} \ V_{LM35}
 	\label{equ:m1p1}
 \end{equation}
-
 siendo $V_1$ la tensión de salida de esta etapa.
 
 En la segunda etapa, a diferencia de la primera, se utilizó un amplificador restador. Se decidió conectar al borne inversor del operacional la tensión $V_1$, mientras que al no inversor $- 10 \ V$, reutilizando la alimentación del operacional.
@@ -195,7 +192,7 @@ Ante pequeñas variaciones en $R_1$, la pendiente de la recta que describe la sa
 
 \subsubsection{Segundo modelo: restador e inversor}
 
-Al igual que el circuito anterior, este está compuesto por las mismas tres etapas, con la única diferencia que se utiliza primero el amplificador restador. No se han variado ni el diodo zener utilizado, ni los modelos de operacionales utilizados, únicamente la tensión de alimentación de ambos operacionales a $12 \ V$ y $-12 \ V$.
+Al igual que el circuito anterior, este está compuesto por las mismas tres etapas, con la única diferencia que se utiliza primero la configuración restadora. No se han variado ni el diodo zener, ni los modelos de operacionales utilizados, únicamente la tensión de alimentación de ambos operacionales a $12 \ V$ y $-12 \ V$.
 
 En la primer etapa de este nuevo circuito, se suministra la tensión brindada por el transistor al borne inversor del operacional, mientras que para el no inversor, se busca reducir la tensión de $12 \ V$ de la fuente de alimentación de forma tal que la tensión en $V_2$ sea lo más próxima a $0.35 \ V$. Con esto se busca que pequeñas tensiones entren por el nodo no inversor del operacional y así evitar posibles saturaciones.
 
@@ -206,7 +203,7 @@ En la primer etapa de este nuevo circuito, se suministra la tensión brindada po
 	\draw (A1.-) to[short] ++(-1,0) to[R, l_=$R_1$, i<_=$I_{R1}$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{LM35}$]{} ++(-1,0);
 	\draw (A1.-) node[label=south:$V^-$]{};
 	\draw (A1.+) node[label=south:$V^+$]{};
-	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i>_=$I^{R4}$] ++(0,-3) node[ground]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$, i>^=$I_{R4}$] ++(0,-3) node[ground]{};
 	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_3$, i<_=$I_{R3}$] ++(3,0) to[short] ++(0,-2);
 	\draw (A1.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{1}$]{};
 	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_2$] ++(-1.5,0) to[short, -*] node[label=north:$V_2$](v2){} ++(-1,0);
@@ -230,12 +227,10 @@ Por otro lado, planteando que
 \[
 	I_7 = \frac{Vcc}{R_7 + \left[ R_8 // \left( R_2 + R_4 \right) \right] }
 \]
-
 se obtiene
 \[ 
 	V_2 = \frac{Vcc \ \left[ R_8 // \left( R_2 + R_4 \right) \right]}{R_7 + \left[ R_8 // \left( R_2 + R_4 \right) \right]}
 \]
-
 operando de manera algebraica, se llega a 
 \[ 
 	V_2 = \frac{R_8 // R_7}{R_7} \cdot \frac{Vcc}{1 + \frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)}}
@@ -246,7 +241,6 @@ Si se consigue que
 	\frac{R_7 R_8}{\left(R_2 + R_4 \right)\left(R_7 + R_8 \right)} \approx 0
 	\label{equ:condm2}
 \end{equation}
-
 se puede simplificar  
 \begin{equation}
 	V_2 \approx V_{CC} \cdot \frac{R_8}{R_7 + R_8}
@@ -385,7 +379,7 @@ Una explicación a los resultados observados en las Figuras (\ref{fig:mcm1}) y (
 
 \subsection{Modo de uso}
 
-Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se modeló este último en Altium. Como se mencionó previamente, se colocaron dos presets para poder calibrar el circuito, los cuales son representados por las resistencias $R_5$ y $R_8$ en la Figura (\ref{fig:schematic}). Se seleccionó $R_5 = 2 \ k\Omega$ y $R_8 = 5 \ k\Omega$, ya que ambos poseen la mínima resistencia entre los bornes de los extremos tal que la impedancia adecuada se encuentre dentro de este rango (se recuerda que $R_5$ debe ser próximo a $ 1 \ k\Omega$ y $R_8$ a $ 3 \ k\Omega$).
+Una vez analizado el circuito en LTSpice y seleccionado el modelo adecuado, se diseñó este último en Altium. Como se mencionó previamente, se colocaron dos presets para poder calibrar el circuito, los cuales son representados por las resistencias $R_5$ y $R_8$ en la Figura (\ref{fig:schematic}). Se seleccionó $R_5 = 2 \ k\Omega$ y $R_8 = 5 \ k\Omega$, ya que ambos poseen la mínima resistencia entre los bornes de los extremos tal que la impedancia adecuada se encuentre dentro de este rango (se recuerda que $R_5$ debe ser próximo a $ 1 \ k\Omega$ y $R_8$ a $ 3 \ k\Omega$).
 
 \begin{figure}[H]
 	\centering

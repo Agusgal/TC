@@ -1,7 +1,7 @@
 
-\section{Comportamiento de Amplificadores Operacionales.}
+\section{Comportamiento de Amplificadores Operacionales}
 
-\subsection{Introducción y modelos.}
+\subsection{Introducción y modelos}
 En el presente punto se analizan las limitaciones del amplificador operacional \textbf{LM324} en las configuraciones inversora y no inversora.
 
 Un amplificador operacional es un dispositivo electrónico el cual, dependiendo de la tensión de entrada, fija una tensión de salida. Estos se pueden modelar de la siguiente forma:
@@ -13,14 +13,14 @@ Un amplificador operacional es un dispositivo electrónico el cual, dependiendo 
 \end{figure}
 donde típicamente $R_{in}\approx \infty$ y $R_{out} \approx 0$
 
-\subsubsection{Modelo ideal.}
+\subsubsection{Modelo ideal}
 En el modelo ideal realimentado por el borne inversor ($V^-$), las hipótesis con las que se trabaja son:
 \begin{align} V^+ = V^- \end{align}
 \begin{align}V_{Out} \underrel{A_{Vol}\to \infty}{=} A_{Vol} \cdot (V^+ - V^-) \end{align}
 \begin{align} R_{in}=\infty   \thinspace;\thinspace R_{Out} = 0 \end{align}
 
 
-\subsubsection{Modelo $A_{Vol}$ finito.}
+\subsubsection{Modelo $A_{Vol}$ finito}
 Para este modelo se le agregan idealidades al modelo anterior.
 \begin{align}V_{Out} = A_{Vol} \cdot (V^+ - V^-)
 \label{eq:vout}
@@ -28,7 +28,7 @@ Para este modelo se le agregan idealidades al modelo anterior.
 
 Si bien la realimentación negativa intentará hacer que la diferencia entre $V^+$ y $V^-$ sea 0, no es algo que se asume en este modelo.
 
-\subsubsection{Modelo polo dominante.}
+\subsubsection{Modelo polo dominante}
 Este modelo es el más cercano al real que se trata en el presente trabajo. Los amplificadores operacionales poseen un polo dominante, el cual está diseñado intencionalmente por el fabricante, para cubrir algunos problemas que surgen al trabajar con mayores frecuencias. Estos dispositivos cuentan con una serie de polos debido a capacidades parásitas propias de la construcción. El polo dominante es introducido para evitar que estos polos desestabilicen el circuito al introducir una inversión en el lazo de realimentación, a altas frecuencias.
 
 \begin{figure}[H]	
@@ -51,7 +51,7 @@ Finalmente la ecuación principal que rige este modelo es (\ref{eq:vout}) con la
 	\label{eq:PoloDom}
 \end{equation}  
 
-\subsection{Configuración inversora y no inversora.}
+\subsection{Configuración inversora y no inversora}
 La cátedra propone dos modelos de circuitos diferentes para analizar. Estos son los presentados a continuación:
 
 \begin{figure}[H]
@@ -103,7 +103,7 @@ Para ambos, y debido a que se utiliza el mismo operacional en cada caso, se obtu
 \end{table}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Calculo Analítico del Circuito Inversor.}
+\subsubsection{Calculo Analítico del Circuito Inversor}
 Lo primero que se realizó fue utilizar el equivalente de Thevenin para simplificar los cálculos analíticos.
 
 \begin{figure}[H]
@@ -255,7 +255,7 @@ obteniendo los siguientes gráficos:
 De estos, es posible concluir que se puede utilizar la aproximación ideal siempre y cuando se tengan en cuenta la frecuencia de trabajo, y en caso de serlo necesario, el error que uno comete.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Calculo Analítico del Circuito No Inversor.}
+\subsubsection{Calculo Analítico del Circuito No Inversor}
 
 De la misma forma que en el circuito inversor, se decidió aplicar el teorema de Thevenin.
 
@@ -395,7 +395,7 @@ De igual forma que se realizó con el circuito inversor, se emplea (\ref{equ:err
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Impedancia de entrada.}
+\subsubsection{Impedancia de entrada}
 
 Para calcular la impedancia de entrada de los casos presentados se sigue la misma idea de la primer parte.
 
@@ -549,7 +549,7 @@ Luego se procede a mostrar las mediciones realizadas para el caso del circuito n
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Máximos valores de entrada.}
+\subsubsection{Máximos valores de entrada}
 
 El máximo valor de entrada a partir del cual el opamp satura se encuentra definido por diversas variables, siendo algunas de ellas la ganancia del sistema, la amplitud y la frecuencia de la entrada.
 
@@ -609,7 +609,7 @@ A continuación, la máxima amplitud de entrada en función de la frecuencia par
 	\label{fig:MaxVinsrnoinv}
 \end{figure} 
 %%%%%%%%%%%%%%%%%%
-\subsubsection{Principales Características.}
+\subsubsection{Principales Características}
 En el caso del circuito inversor, considerando la situación en la cual $R_3$ sea igual a 0, la salida del amplificador operacional debería ser de $0 \ V$. Esto no es lo que ocurre dado que existe una tensión de offset, la cual se analiza en la sección 3 de este informe.
 
 Por su parte, para el circuito no inversor, se obtendría que $V^+ = V_{in}$. Este circuito se caracteriza por poder ser sustentado con una sola fuente de alimentación, siendo esta referenciada a $V^+/2$ \footnote{Caracterización brindada por el fabricante.}. Es así que recalculando la ganancia para esta disposición, se obtiene que 
@@ -622,7 +622,7 @@ Luego, se sabe que $R_3$ no es necesaria considerando $I_{in}$ constante frente 
 Por otro lado, se analiza el propósito de $R_4$ en el circuito inversor. A primera vista no es evidente, dado que la transferencia es independiente de ella, pero observando que existe una corriente máxima\footnote{Dato obtenido de la datasheet, $I_{Max}=20 \ mA$} que puede aportar el opamp, se llego a que el propósito de $R_4$ es limitar la corriente, por lo tanto su valor debe ser $R_4>\frac{V_{Out}}{I_{Max}}$. Otra función que posee $R_4$ es el limitar la corriente del lazo.
 %%%%%%%%%%%%%%%%%%%%
 
-\subsubsection{DC-Sweep.}
+\subsubsection{DC-Sweep}
 Se realizó un barrido entre $-Vcc$ y $Vcc$, utilizando un generador de funciones con una rampa y un circuito inversor para llegar a la tensión de salida necesitada, dado que el generador de funciones solo puede entregar hasta $20 \ Vpp$.
 El comportamiento del operacional no es lineal para todo el rango de entradas. Este se puede observar únicamente en el rango entre $-V_{sat}$ y $V_{sat}$. Considerando las tensiones de entrada máxima que se observan en la Figura (\ref{fig:MaxVinsr}), se registraron las siguientes mediciones para el circuito inversor:
 
@@ -685,7 +685,7 @@ Se puede evitar tener que lidiar con este problema al aplicar una tensión de of
 \end{figure} 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Slew-Rate.}
+\subsubsection{Slew-Rate}
 El Slew-Rate está definido como la máxima variación temporal de la salida del amplificador operacional. Este efecto depende de 3 parámetros siendo estos la frecuencia, la amplitud y la ganancia, considerando el caso de que la salida sea una senoidal. Dado que se puede describir cualquier señal como una combinación lineal de senos, se puede decir que el Slew-Rate de una señal arbitraria también dependerá de estos parámetros. Si se le demanda al operacional una tasa de cambio mayor a la soportada, este procederá a distorsionar la señal.
 \begin{align}
 	SR= Max\left( \frac{\partial V_{Out}}{\partial t}\right)
@@ -713,7 +713,7 @@ SR \approx  0.38 \frac{V}{\mu s}
 \end{align}
 lo cual concuerda con lo provisto por el fabricante en la Tabla (\ref{tab:datos}).
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsubsection{Respuesta en frecuencia.}
+\subsubsection{Respuesta en frecuencia}
 Se midió la respuesta en frecuencia de las configuraciones en los diversos casos y se graficaron junto a las simulaciones hechas en LTSpice y los cálculos teóricos.
 
 Primero se presentan los casos para el circuito inverso.
@@ -803,7 +803,7 @@ A continuación se presentan las mediciones realizadas para el circuito no inver
 
 Se puede observar en todos los casos como la frecuencia de corte de las transferencias son próximas, mientras que las transferencias medidas y simuladas difieren de la teórica. Esto es más evidente al observar las discrepancias en (\ref{fig:BodephC1_noinv}), (\ref{fig:BodephC2_noinv}) y (\ref{fig:BodephC3_noinv}) a altas frecuencias. Esto se debe a las puntas del osciloscopio cuyas capacitancias son de aproximadamente $80 \ pF$. Al pasar a las altas frecuencias, este capacitor genera un filtro de segundo orden con el polo ya existente, atenuando la tensión de salida del circuito y generando en consecuencia que esta sea comparable con el ruido existente y dificultando las mediciones.
 
-\subsubsection{Limitaciones.}
+\subsubsection{Limitaciones}
 Algunas limitaciones con las cuales se lidiaron al utilizar este operacional fueron la intervención del Slew-Rate, el efecto de Cross-Over y la saturación del mismo.
 
 En el caso de que se quiera trabajar con una señal cuadrada de $1 \ Vpp$, en un rango de frecuencias de $0.3 \ MHz \sim 2 \ MHz$, con un Duty Cycle entre 20\% y 80\%, no será posible, dado que se presentaran problemas de Slew-Rate. Por otro lado, se observarán problemas de Cross-Over cuando la media de la señal no supere los $0.7 \ V$.
