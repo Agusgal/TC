@@ -2,39 +2,45 @@
 \subsection{Introducción teórica}
 
 
-El objetivo de esta sección es comparar el comportamiento de dos amplificadores operacionales diferentes, analizando sus caracteírsticas principales, contrastando sus respectivos modelos teóricos, simulaciones y mediciones.
+El objetivo de esta sección es comparar el comportamiento de dos amplificadores operacionales diferentes, analizando sus características principales, contrastando sus respectivos modelos teóricos, simulaciones y mediciones.
 
 En la siguiente tabla se presentan algunas características otorgadas por los fabricantes sobre ambos integrados que serán de importancia en el  análisis que sigue:
 
-%%%Esta tabla esta rota
-
 \begin{table}[H]
-\begin{center}
+\hspace*{-2cm} 
 \begin{tabular}{|c|c|c|c|c|c|c|}
 \hline
-Amplificador   & $A_{vol}$ (dB)   & GBP (MHz)   & Slew Rate ($\frac{V}{\mu s}$)   & V offset (mV)  & I bias (nA)  & $r_d$ \\ %k\Omega \\ \hline
+Amplificador   & $A_{vol}$ (dB)   & GBP (MHz)   & Slew-Rate ($\frac{V}{\mu s}$)   & V offset (mV)  & I bias (nA)  & $r_d$ \\ %k\Omega \\ \hline
 $LM833$ & $110$ & $10-15$ & $7$   & $0,3$  & $300$ & no especifica \\ \hline
-$NE5534$ & $25-100$    & $10$  & $7.5$   & $0,5-4$  & $500-1500$ &  $100k\Omega$
+$NE5534$ & $25-100$    & $10$  & $7.5$   & $0,5-4$  & $500-1500$ &  $100 \ k\Omega$
 \\ \hline
 \end{tabular}
 \caption{Datos op-amps}
 \label{tabla:caracteristicas_amps}
-\end{center}
 \end{table}
 
-El circuito a trabajar es la configuración no inversora dada en la figura \ref{fig:consigna}, en la cual $R_1 = 3k \Omega$, $R_2 = 240k \Omega$ y $R_3 = 220k \Omega$. Se utilizó esta misma configuración para ambos integrados.  
+El circuito a trabajar es la configuración no inversora dada en la Figura (\ref{fig:consigna}), en la cual $R_1 = 3 \ k\Omega$, $R_2 = 240 \ k\Omega$ y $R_3 = 220 \ k\Omega$. Se utilizó esta misma configuración para ambos integrados.  
 
-
-\begin{figure}[H]	
-	\centering
-	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/circuito_consigna.png}
-	\caption{Configuración no inversora}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A1){};
+	\draw (A1.-) to[short] ++(-1.5,0) to[R, l_=$R_1$] ++(-1.5,0) to[short] ++(-1,0) node[ground]{};
+	\draw (A1.-) node[label=south:$V^-$]{};
+	\draw (A1.+) node[label=south:$V^+$]{};
+	\draw (A1.-) to[short] ++(0,1.5) to[R, l = $R_2$] ++(3,0) to[short] ++(0,-2);
+	\draw (A1.+) to[short] ++(-1,0) to[R, l = $R_4$] ++(0,-1.5) node[ground]{};
+	\draw (A1.out) to[short, -o] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (A1.+) to[short] ++(-1,0) to[R, l= $R_3$] ++(-2,0) to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
+	\end{circuitikz}
+	\caption{Configuración no inversora.}
 	\label{fig:consigna}
+\end{center}
 \end{figure}
 
 \subsubsection{Respuesta en frecuencia}
 
-Un amplificadores operacional puede describrise mediante diferentes modelos. Un análisis inicial fue hecho en la sección anterior, no obstante aquí se profundizará más al respecto. Un esquema de la configuración no inversora completa puede verse en la figura \ref{fig:esquema_no_inversor}. 
+Un amplificadores operacional puede describrise mediante diferentes modelos. Un análisis inicial fue hecho en la sección anterior, no obstante aquí se profundizará más al respecto. Un esquema de la configuración no inversora completa puede verse en la Figura (\ref{fig:esquema_no_inversor}). 
 
 \begin{figure}[H]	
 	\centering
@@ -43,12 +49,11 @@ Un amplificadores operacional puede describrise mediante diferentes modelos. Un 
 	\label{fig:esquema_no_inversor}
 \end{figure}
 
-Para el modelo ideal la resistencia $r_d$ es igual a infinito, mientras que $r_0$ es igual a cero y la ganancia es por ende, infinita. No obstante el caso analizado y medido dista mucho del ideal. En realidad se puede considerar a $A_0$ como un número muy grande, pero finito, al igual que $r_d$. En ese caso se considera que casi no circula corriente por $r_d$ y por ende la tension en el nodo N ($v_N$), es igual a $V_in$. La tension a la salida es a su vez:
+Para el modelo ideal la resistencia $r_d$ es igual a infinito, mientras que $r_0$ es igual a cero y la ganancia es por ende, infinita. No obstante el caso analizado y medido dista mucho del ideal. En realidad se puede considerar a $A_0$ como un número muy grande, pero finito, al igual que $r_d$. En ese caso se considera que casi no circula corriente por $r_d$ y por ende la tension en el nodo N ($v_N$), es igual a $V_{in}$. La tension a la salida es a su vez:
 
 \begin{equation}\label{eq:ganancia}
 V_{out} = A_{vol}(v_D)
 \end{equation}
-
 con $v_D$ igual a la diferencia de tension entre el borne positivo y el negativo. 
 
 Es posible también, realizar un divisor resistivo entre $R_2$ y $R_1$:
@@ -57,7 +62,7 @@ Es posible también, realizar un divisor resistivo entre $R_2$ y $R_1$:
 V_N = \frac{V_{out}R_1}{R_1 + R_2}
 \end{equation}
 
-Reemplazando en \ref{eq:ganancia}:
+Reemplazando en (\ref{eq:ganancia}):
 
 \begin{equation}
 V_{out} = A_{vol}(V_{in} - \frac{V_{out}R_1}{R_1 + R_2})
@@ -86,7 +91,7 @@ A_{vol} = \frac{A_0}{1 + \frac{s}{\omega_p}}
 \end{equation}
 
 en el cual $\omega_p$ es del orden de los Herzs.
-Si se reemplaza \ref{eq:polo_dominante} y \ref{eq:ganancia_ideal} en \ref{eq:transferencia_real}, con un poco de trabajo matemático se llega a la siguiente fórmula normalizada:
+Si se reemplaza (\ref{eq:ganancia_ideal}) y (\ref{eq:polo_dominante}) en (\ref{eq:transferencia_real}), con un poco de trabajo matemático se llega a la siguiente fórmula normalizada:
 
 \begin{equation}\label{eq:ganancia_completa_normalizada}
 \frac{V_{out}}{V_{in}} = \frac{\frac{G_iA_0}{A_0 + G_i}}{1 + \frac{s}{\omega_p(1 + \frac{A_0}{G_i})}}
@@ -97,13 +102,12 @@ Por último, un parámetro de vital importancia para el análsis de un amplifica
 \begin{equation}\label{eq:GBP}
 GBP = A_0\omega_p = G_{real}\omega_c
 \end{equation}
-
 con $\omega_c$ el polo del circuito completo.
 
 
 \subsubsection{Impedancia de entrada}
 
-Para analizar la impedancia de entrada teórica del circuito se utilizó el modelo completo con polo sominante del op-amp. Todo el análisis siguiente se hará a partir de la figura \ref{fig:esquema_no_inversor}, con la única diferencia de que se considerará además una resistencia en la entrada no inversora del circuito ($R_3$). La impedancia de entrada del circuito puede obtenerse poniendo una fuente de prueba $v$ a la entrada del circuito para luego usar la relación:
+Para analizar la impedancia de entrada teórica del circuito se utilizó el modelo completo con polo sominante del op-amp. Todo el análisis siguiente se hará a partir de la Figura (\ref{fig:esquema_no_inversor}), con la única diferencia de que se considerará además una resistencia en la entrada no inversora del circuito ($R_3$). La impedancia de entrada del circuito puede obtenerse poniendo una fuente de prueba $v$ a la entrada del circuito para luego usar la relación:
 
 \begin{equation}\label{eq:zin}
 Z_{in} = \frac{v}{i}
@@ -121,28 +125,28 @@ Se por inspección que:
 v - v_D = v_N = v - r_di
 \end{equation}
 
-Reemplazando \ref{eq:v_N} en \ref{eq:corrientes_N} y simplificando:
+Reemplazando (\ref{eq:v_N}) en (\ref{eq:corrientes_N}) y simplificando:
 
 \begin{equation}
-\frac{r_di}{R_3 + r_d} - \frac{v}{R_1} + \frac{r_di}{R_1} +\frac{A_{vol}r_di - v + r_di}{r_0 + R_2} = 0
+\frac{r_{di}}{R_3 + r_d} - \frac{v}{R_1} + \frac{r_{di}}{R_1} +\frac{A_{vol}r_{di} - v + r_{di}}{r_0 + R_2} = 0
 \end{equation}
 
 Si se factoriza la expresión anterior de un lado por i y del otro por v:
 
 \begin{equation}
-i(\frac{r_d}{r_d + R3} + \frac{r_d}{R_1} + \frac{A_{vol}r_d}{r_0 + R_2}) = v(\frac{1}{R_1} + \frac{1}{r_0 + R_2})
+i \left(\frac{r_d}{r_d + R3} + \frac{r_d}{R_1} + \frac{A_{vol}r_d}{r_0 + R_2}\right) = v\left(\frac{1}{R_1} + \frac{1}{r_0 + R_2}\right)
 \end{equation}
 
-Si se reemplaza \ref{eq:zin} en la ecuación anterior se cancelan las corrientes. Luego resuelvo para $Z_i$ y después de reordenar la expresión resultante es la siguiente:
+Si se reemplaza (\ref{eq:zin}) en la ecuación anterior se cancelan las corrientes. Luego resuelvo para $Z_i$ y después de reordenar la expresión resultante es la siguiente:
 
 \begin{equation}\label{eq:zin_real}
-Z_i = r_d(\frac{R_1 // (r_0 + R_2)}{r_d + R_3} + 1 + \frac{A_{vol}}{1 + \frac{r_0 + R_2}{R_1})})
+Z_i = r_d \left(\frac{R_1 // (r_0 + R_2)}{r_d + R_3} + 1 + \frac{A_{vol}}{1 + \frac{r_0 + R_2}{R_1}} \right)
 \end{equation}
 
 Si se reemplaza $A_{vol}$ por su modelo de polo dominante y se reordena se llega a lo siguiente:
 
 \begin{equation}\label{eq:zin_completa}
-Z_i = r_d(1 + \frac{R_1 // (r_0 + R_2)}{r_d + R_3} + \frac{\frac{A_0}{1 + \frac{r_0 + R_2}{R_1}}}{1 + \frac{s}{\omega_p}}
+Z_i = r_d \left(1 + \frac{R_1 // (r_0 + R_2)}{r_d + R_3} + \frac{\frac{A_0}{1 + \frac{r_0 + R_2}{R_1}}}{1 + \frac{s}{\omega_p}}\right)
 \end{equation}
 
 Por último es importante mencionar el método de medición de $Z_i$. Para eso se modeló el circuito como si fuera un divisor resistivo, es decir, se colocó una resistencia extra de $1k\Omega$ a la entrada del circuito y se midió cuanta tensión caía sobre dicha resistencia con el osciloscopio. Se hizo lo mismo para la fase, aunque los resultados finales pueden mejorarse. 
@@ -150,7 +154,7 @@ Por último es importante mencionar el método de medición de $Z_i$. Para eso s
 
 \subsection{Resultados experimentales LM833}
 
-Con los valores de resistencias utilizados la ganancia ideal tiene un valor de 81, \ref{eq:ganancia_ideal}, valor a tener en cuenta a la hora de medir, para evitar tener problemas con el slew rate o que el amplificador sature. Por lo anterior se utilizaron tensiones del orden de los milivoltios para medir la respuesta en frecuencia. De \ref{eq:GBP}, considerando el peor caso para el GBP brindado por el fabricante $(10 Mhz)$, se obtiene que:
+Con los valores de resistencias utilizados la ganancia ideal tiene un valor de 81, (\ref{eq:ganancia_ideal}), valor a tener en cuenta a la hora de medir, para evitar tener problemas con el slew rate o que el amplificador sature. Por lo anterior se utilizaron tensiones del orden de los milivoltios para medir la respuesta en frecuencia. De (\ref{eq:GBP}), considerando el peor caso para el GBP brindado por el fabricante $(10 \ Mhz)$, se obtiene que:
 
 \begin{equation}\label{eq:frecuencia_corte_LM833}
 f_c = \frac{GBP}{2\pi G_i} = 19649 Hz
@@ -159,7 +163,7 @@ f_c = \frac{GBP}{2\pi G_i} = 19649 Hz
 Se toma $G_i$ ya que $A_0$ es considerablemente grande y por ende $G_i$ es cercano a $G_{real}$. 
 
 
-Por último antes de pasar al análisis de la respuesta en frecuencia del circuito con el LM833, al realizarse las mediciones se observó que a medida que la frecuencia de la señal de entrada aumentaba aparecía un offset en la señal de salida. En otras palabras, había una componente de continua montada sobre la señal de salida, por ende el valor medio de la salida es diferente a $0 V$. A pesar de lo anterior, este fenómeno solo se pudo apreciar a frecuencias relativimante altas (orden de los Megahertz). Debido a que el LM833 tiene una impedancia entre sus bornes muy grande (orden de los Megaohm), a frecuencias bajas no se observa un offset en la salida. Pero a medida que la frecuencia aumenta, a su vez disminuye la impedancia de entrada del circuito y así, se hace comparable el valor de $R_3$ con el de $Z_i$. Lo anterior ocasiona que haya una corriente entrando al amplificador, llámese Input Bias Current, que haya una caída de tensión no deseada a la entrada y se degrade la condicón de Tierra virtual. 
+Por último antes de pasar al análisis de la respuesta en frecuencia del circuito con el LM833, al realizarse las mediciones se observó que a medida que la frecuencia de la señal de entrada aumentaba aparecía un offset en la señal de salida. En otras palabras, había una componente de continua montada sobre la señal de salida, por ende el valor medio de la salida es diferente a $0 \ V$. A pesar de lo anterior, este fenómeno solo se pudo apreciar a frecuencias relativimante altas (orden de los Megahertz). Debido a que el LM833 tiene una impedancia entre sus bornes muy grande (orden de los Megaohm), a frecuencias bajas no se observa un offset en la salida. Pero a medida que la frecuencia aumenta, a su vez disminuye la impedancia de entrada del circuito y así, se hace comparable el valor de $R_3$ con el de $Z_i$. Lo anterior ocasiona que haya una corriente entrando al amplificador, llámese Input Bias Current, que haya una caída de tensión no deseada a la entrada y se degrade la condicón de Tierra virtual. 
 
 \subsubsection{Respuesta en frecuencia}
 
@@ -171,24 +175,24 @@ Ya habiendo descrito los modelos teóricos y su respectivo método de medición,
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Bode_Amp_LM833.png}
 	\caption{Diagram de Bode en amplitud para LM833}
-	\label{fig:bode_amp_LM833}
+	\label{fig:bode_amp_LM833.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Bode_Fase_LM833.png}
 	\caption{Diagram de Bode en fase para LM833}
-	\label{fig:bode_fase_LM833}
+	\label{fig:bode_fase_LM833.}
 \end{figure}
 
 %%NO salieron colores, agregar despues
 
 
-En primer lugar puede verse en el gráfico \ref{fig:bode_amp_LM833} que la frecuencia de corte obtenida en \ref{eq:frecuencia_corte_LM833} concuerda con el modelo simulado. Lo que no concuerda con el modelo simualdo y menos aún con el teórico es el sobrepico medido. El resultado esperado era un circuito que se asemeje a un pasa-bajos de primer orden, no obstante el sobrepico indica que el circuito real obedece a un modelo de segundo orden. Se pueden buscar razones para explicar este resultado. Por el solo acto de medir se esta agregando una capacitancia de $11pF$ debido a las puntas, además se tiene que tener en cuenta la capacitancia de las patas de los componentes y que el circuito fue medido en un protoboard, el cual agrega aproximadamente $2pF$ por cada conexión hecha. El pico observado en un principio fue un problema para las mediciones, ya que el amplificador llegaba a su punto de saturación cerca del máximo. Más allá de esta anomalía el resto del gráfico es acorde a las simulaciones y la teoría. 
+En primer lugar puede verse en el gráfico (\ref{fig:bode_amp_LM833}) que la frecuencia de corte obtenida en (\ref{eq:frecuencia_corte_LM833}) concuerda con el modelo simulado. Lo que no concuerda con el modelo simualdo y menos aún con el teórico es el sobrepico medido. El resultado esperado era un circuito que se asemeje a un pasa-bajos de primer orden, no obstante el sobrepico indica que el circuito real obedece a un modelo de segundo orden. Se pueden buscar razones para explicar este resultado. Por el solo acto de medir se esta agregando una capacitancia de $11 \ pF$ debido a las puntas, además se tiene que tener en cuenta la capacitancia de las patas de los componentes y que el circuito fue medido en un protoboard, el cual agrega aproximadamente $2 \ pF$ por cada conexión hecha. El pico observado en un principio fue un problema para las mediciones, ya que el amplificador llegaba a su punto de saturación cerca del máximo. Más allá de esta anomalía el resto del gráfico es acorde a las simulaciones y la teoría. 
 
 Por otro lado puede hacerse el mismo análisis con la fase del circuito. Teoricamente uno esperaría medir un circuito de primer orden, en el cual es desfase máximo es de 90 grados, pero las evidencias empíricas demuestran lo contrario, se esta trabajando con un circuito de segundo orden y un desfase de 180 grados. Incluso puede observarse a que a altas frecuencias hay un salto en la fase simulada, comportamiento que no logró medirse en el laboratorio.
 
-Un primer paso para mejorar las mediciones es realizar el circuito en una PCB y asi disminuir las capacidades parásitas. Agregado a lo anterior, una solución al problema de las capacidades parásitas es incluir algún tipo de circuito de compensación, similar a lo que hacen los fabricantes al agregar un capacitor dentro del op-amp para evitar la inversión del feedback. El fabricante no incluyó ningún tipo de circuito de compensación recomendado en el caso del LM833 
+Un primer paso para mejorar las mediciones es realizar el circuito en una PCB y asi disminuir las capacidades parásitas. Agregado a lo anterior, una solución al problema de las capacidades parásitas es incluir algún tipo de circuito de compensación, similar a lo que hacen los fabricantes al agregar un capacitor dentro del op-amp para evitar la inversión del feedback. El fabricante no incluyó ningún tipo de circuito de compensación recomendado en el caso del LM833 .
 
 \subsubsection{Impedancia de entrada}
 
@@ -197,25 +201,25 @@ Para graficar la impedancia de entrada teórica hacen falta datos respecto de la
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_LM833_Simulado.png}
-	\caption{Impedancia de entrada LM833 en amplitud simulada}
+	\caption{Impedancia de entrada LM833 en amplitud simulada.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_LM833_Simulado.png}
-	\caption{Impedancia de entrada LM833 en fase simulada}
+	\caption{Impedancia de entrada LM833 en fase simulada.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_LM833_Medido.png}
-	\caption{Impedancia de entrada LM833 en amplitud medida}
+	\caption{Impedancia de entrada LM833 en amplitud medida.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_LM833_Medido.png}
-	\caption{Impedancia de entrada LM833 en fase medida}
+	\caption{Impedancia de entrada LM833 en fase medida.}
 \end{figure}
 
 Es importante destacar que a frecuencias menores a los $100 Hz$ fue imposible la medir una caida de tension en la resistencia colocada en serie delante del circuito. Es importante observar la expresion obtenida en \ref{eq:zin_completa} y ver como se comporta a medida que varía la frecuencia. A frecuencias bajas la resistencia tiende $r_d$, es decir un valor muy grande, razón por la cual fue imposible medir caidas de tensión. Luego lo esperado es que el modulo de la impedancia baje hasta llegar a un valor constante, comportamiento que se evidencia en los gráficos anteriores. En resumen, se puede observar una linea de tendencia en las mediciones que concuerdan con el modelo, para mejorar las mediciones una posibilidad es utilizar el analizador de impedancias en vez del osciloscopio.
@@ -228,12 +232,12 @@ Debido a que el dato de GBP dado por el fabricante es el mismo que el valor mín
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/ruido.png}
-	\caption{Ruido medido en NE5534}
+	\includegraphics[width=\textwidth, trim = {0 3.3cm 0 2cm},clip]{Ejercicio2/Imagenes/ruido.png}
+	\caption{Ruido medido en NE5534.}
 	\label{fig:ruido}
 \end{figure}
 
-Para evitar lo anterior, se reemplazó la resistencia $R_3$ por una igual a $22k\Omega$. El segundo efecto visto fue el de un offset en la señal de salida. Para este operacionale el offset sí podía apreciarse a bajas frecuencias y era muy notorio a medida que éstas aumentaban. Para evitar lo anterior el fabricante ofrece un circuito de compensación en su datasheet, en el cual se le agrega un capacitor adicional al circuito. A pesar de eso las mediciones fueron realizadas sin el circuito de compensación.
+Para evitar lo anterior, se reemplazó la resistencia $R_3$ por una igual a $22 \ k\Omega$. El segundo efecto visto fue el de un offset en la señal de salida. Para este operacionale el offset sí podía apreciarse a bajas frecuencias y era muy notorio a medida que éstas aumentaban. Para evitar lo anterior el fabricante ofrece un circuito de compensación en su datasheet, en el cual se le agrega un capacitor adicional al circuito. A pesar de eso las mediciones fueron realizadas sin el circuito de compensación.
 
 \subsubsection{Respuesta en frecuencia}
 Los resultados obtenidos se presentan en los gráficos a continuación:
