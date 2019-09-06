@@ -15,7 +15,7 @@ $LM833$ & $110$ & $10-15$ & $7$   & $0,3$  & $300$ & no especifica \\ \hline
 $NE5534$ & $25-100$    & $10$  & $7.5$   & $0,5-4$  & $500-1500$ &  $100 \ k\Omega$
 \\ \hline
 \end{tabular}
-\caption{Datos op-amps}
+\caption{Datos op-amps.}
 \label{tabla:caracteristicas_amps}
 \end{table}
 
@@ -40,12 +40,12 @@ El circuito a trabajar es la configuración no inversora dada en la Figura (\ref
 
 \subsubsection{Respuesta en frecuencia}
 
-Un amplificadores operacional puede describrise mediante diferentes modelos. Un análisis inicial fue hecho en la sección anterior, no obstante aquí se profundizará más al respecto. Un esquema de la configuración no inversora completa puede verse en la Figura (\ref{fig:esquema_no_inversor}). 
+Un amplificadores operacional puede describirse mediante diferentes modelos. Un análisis inicial fue hecho en la sección anterior, no obstante aquí se profundizará más al respecto. Un esquema de la configuración no inversora completa puede verse en la Figura (\ref{fig:esquema_no_inversor}). 
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Rin_no_inversor.png}
-	\caption{Esquema configuración no inversora completa}
+	\caption{Esquema configuración no inversora completa.}
 	\label{fig:esquema_no_inversor}
 \end{figure}
 
@@ -90,14 +90,14 @@ El modelo de polo dominante utilizado es el siguiente:
 A_{vol} = \frac{A_0}{1 + \frac{s}{\omega_p}}
 \end{equation}
 
-en el cual $\omega_p$ es del orden de los Herzs.
+en el cual $\omega_p$ es del orden de los Hertz.
 Si se reemplaza (\ref{eq:ganancia_ideal}) y (\ref{eq:polo_dominante}) en (\ref{eq:transferencia_real}), con un poco de trabajo matemático se llega a la siguiente fórmula normalizada:
 
 \begin{equation}\label{eq:ganancia_completa_normalizada}
 \frac{V_{out}}{V_{in}} = \frac{\frac{G_iA_0}{A_0 + G_i}}{1 + \frac{s}{\omega_p(1 + \frac{A_0}{G_i})}}
 \end{equation}
 
-Por último, un parámetro de vital importancia para el análsis de un amplificador operacional es su GBP, o el producto entre el ancho de banda del amplificador y la gananci a la cual es medido. Para cualquier op-amp con polo dominante esta cantidad es una constante independiente de la ganancia a la cual es medida. El gain-bandwidth product, es importante ya que, da una idea de la máxima ganancia que se puede extraer de un dispositivo a una frecuencia dada. El GBP para un amplificador operacional con polo dominante es igual a la siguiente expresión:
+Por último, un parámetro de vital importancia para el análisis de un amplificador operacional es su GBP, o el producto entre el ancho de banda del amplificador y la ganancia a la cual es medido. Para cualquier op-amp con polo dominante esta cantidad es una constante independiente de la ganancia a la cual es medida. El gain-bandwidth product, es importante ya que, da una idea de la máxima ganancia que se puede extraer de un dispositivo a una frecuencia dada. El GBP para un amplificador operacional con polo dominante es igual a la siguiente expresión:
 
 \begin{equation}\label{eq:GBP}
 GBP = A_0\omega_p = G_{real}\omega_c
@@ -107,7 +107,7 @@ con $\omega_c$ el polo del circuito completo.
 
 \subsubsection{Impedancia de entrada}
 
-Para analizar la impedancia de entrada teórica del circuito se utilizó el modelo completo con polo sominante del op-amp. Todo el análisis siguiente se hará a partir de la Figura (\ref{fig:esquema_no_inversor}), con la única diferencia de que se considerará además una resistencia en la entrada no inversora del circuito ($R_3$). La impedancia de entrada del circuito puede obtenerse poniendo una fuente de prueba $v$ a la entrada del circuito para luego usar la relación:
+Para analizar la impedancia de entrada teórica del circuito se utilizó el modelo completo con polo dominante del op-amp. Todo el análisis siguiente se hará a partir de la Figura (\ref{fig:esquema_no_inversor}), con la única diferencia de que se considerará además una resistencia en la entrada no inversora del circuito ($R_3$). La impedancia de entrada del circuito puede obtenerse poniendo una fuente de prueba $v$ a la entrada del circuito para luego usar la relación:
 
 \begin{equation}\label{eq:zin}
 Z_{in} = \frac{v}{i}
@@ -149,7 +149,7 @@ Si se reemplaza $A_{vol}$ por su modelo de polo dominante y se reordena se llega
 Z_i = r_d \left(1 + \frac{R_1 // (r_0 + R_2)}{r_d + R_3} + \frac{\frac{A_0}{1 + \frac{r_0 + R_2}{R_1}}}{1 + \frac{s}{\omega_p}}\right)
 \end{equation}
 
-Por último es importante mencionar el método de medición de $Z_i$. Para eso se modeló el circuito como si fuera un divisor resistivo, es decir, se colocó una resistencia extra de $1k\Omega$ a la entrada del circuito y se midió cuanta tensión caía sobre dicha resistencia con el osciloscopio. Se hizo lo mismo para la fase, aunque los resultados finales pueden mejorarse. 
+Por último es importante mencionar el método de medición de $Z_i$. Para eso se modeló el circuito como si fuera un divisor resistivo, es decir, se colocó una resistencia extra de $1 \ k\Omega$ a la entrada del circuito y se midió cuanta tensión caía sobre dicha resistencia con el osciloscopio. Se hizo lo mismo para la fase, aunque los resultados finales pueden mejorarse. 
 
 
 \subsection{Resultados experimentales LM833}
@@ -157,31 +157,29 @@ Por último es importante mencionar el método de medición de $Z_i$. Para eso s
 Con los valores de resistencias utilizados la ganancia ideal tiene un valor de 81, (\ref{eq:ganancia_ideal}), valor a tener en cuenta a la hora de medir, para evitar tener problemas con el slew rate o que el amplificador sature. Por lo anterior se utilizaron tensiones del orden de los milivoltios para medir la respuesta en frecuencia. De (\ref{eq:GBP}), considerando el peor caso para el GBP brindado por el fabricante $(10 \ Mhz)$, se obtiene que:
 
 \begin{equation}\label{eq:frecuencia_corte_LM833}
-f_c = \frac{GBP}{2\pi G_i} = 19649 Hz
+f_c = \frac{GBP}{2\pi G_i} = 19649 \ Hz
 \end{equation} 
 
 Se toma $G_i$ ya que $A_0$ es considerablemente grande y por ende $G_i$ es cercano a $G_{real}$. 
 
 
-Por último antes de pasar al análisis de la respuesta en frecuencia del circuito con el LM833, al realizarse las mediciones se observó que a medida que la frecuencia de la señal de entrada aumentaba aparecía un offset en la señal de salida. En otras palabras, había una componente de continua montada sobre la señal de salida, por ende el valor medio de la salida es diferente a $0 \ V$. A pesar de lo anterior, este fenómeno solo se pudo apreciar a frecuencias relativimante altas (orden de los Megahertz). Debido a que el LM833 tiene una impedancia entre sus bornes muy grande (orden de los Megaohm), a frecuencias bajas no se observa un offset en la salida. Pero a medida que la frecuencia aumenta, a su vez disminuye la impedancia de entrada del circuito y así, se hace comparable el valor de $R_3$ con el de $Z_i$. Lo anterior ocasiona que haya una corriente entrando al amplificador, llámese Input Bias Current, que haya una caída de tensión no deseada a la entrada y se degrade la condicón de Tierra virtual. 
+Por último antes de pasar al análisis de la respuesta en frecuencia del circuito con el LM833, al realizarse las mediciones se observó que a medida que la frecuencia de la señal de entrada aumentaba aparecía un offset en la señal de salida. En otras palabras, había una componente de continua montada sobre la señal de salida, por ende el valor medio de la salida es diferente a $0 \ V$. A pesar de lo anterior, este fenómeno solo se pudo apreciar a frecuencias relativamente altas (orden de los Megahertz). Debido a que el LM833 tiene una impedancia entre sus bornes muy grande (orden de los Megaohm), a frecuencias bajas no se observa un offset en la salida. Pero a medida que la frecuencia aumenta, a su vez disminuye la impedancia de entrada del circuito y así, se hace comparable el valor de $R_3$ con el de $Z_i$. Lo anterior ocasiona que haya una corriente entrando al amplificador, llámese Input Bias Current, que haya una caída de tensión no deseada a la entrada y se degrade la condición de Tierra virtual. 
 
 \subsubsection{Respuesta en frecuencia}
 
-Ya habiendo descrito los modelos teóricos y su respectivo método de medición, se procede a presentar los gráficos obtenidos en los cuales se superpone el modelo teórico, las simualciones realizadas en LTSpice y los datos medidos:
-
-
+Ya habiendo descrito los modelos teóricos y su respectivo método de medición, se procede a presentar los gráficos obtenidos en los cuales se superpone el modelo teórico, las simulaciones realizadas en LTSpice y los datos medidos:
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Bode_Amp_LM833.png}
-	\caption{Diagram de Bode en amplitud para LM833}
+	\caption{Diagram de Bode en amplitud para LM833.}
 	\label{fig:bode_amp_LM833.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Bode_Fase_LM833.png}
-	\caption{Diagram de Bode en fase para LM833}
+	\caption{Diagram de Bode en fase para LM833.}
 	\label{fig:bode_fase_LM833.}
 \end{figure}
 
@@ -196,7 +194,7 @@ Un primer paso para mejorar las mediciones es realizar el circuito en una PCB y 
 
 \subsubsection{Impedancia de entrada}
 
-Para graficar la impedancia de entrada teórica hacen falta datos respecto de las resistencias internas del aplificador que no fueron dados por el fabricante. Por lo tanto se limita a presentar los gráficos correspondientes a las mediciones y las simulaciones:
+Para graficar la impedancia de entrada teórica hacen falta datos respecto de las resistencias internas del amplificador que no fueron dados por el fabricante. Por lo tanto se limita a presentar los gráficos correspondientes a las mediciones y las simulaciones:
 
 \begin{figure}[H]	
 	\centering
@@ -222,7 +220,7 @@ Para graficar la impedancia de entrada teórica hacen falta datos respecto de la
 	\caption{Impedancia de entrada LM833 en fase medida.}
 \end{figure}
 
-Es importante destacar que a frecuencias menores a los $100 Hz$ fue imposible la medir una caida de tension en la resistencia colocada en serie delante del circuito. Es importante observar la expresion obtenida en \ref{eq:zin_completa} y ver como se comporta a medida que varía la frecuencia. A frecuencias bajas la resistencia tiende $r_d$, es decir un valor muy grande, razón por la cual fue imposible medir caidas de tensión. Luego lo esperado es que el modulo de la impedancia baje hasta llegar a un valor constante, comportamiento que se evidencia en los gráficos anteriores. En resumen, se puede observar una linea de tendencia en las mediciones que concuerdan con el modelo, para mejorar las mediciones una posibilidad es utilizar el analizador de impedancias en vez del osciloscopio.
+Es importante destacar que a frecuencias menores a los $100 Hz$ fue imposible la medir una caída de tension en la resistencia colocada en serie delante del circuito. Es importante observar la expresión obtenida en \ref{eq:zin_completa} y ver como se comporta a medida que varía la frecuencia. A frecuencias bajas la resistencia tiende $r_d$, es decir un valor muy grande, razón por la cual fue imposible medir caídas de tensión. Luego lo esperado es que el modulo de la impedancia baje hasta llegar a un valor constante, comportamiento que se evidencia en los gráficos anteriores. En resumen, se puede observar una linea de tendencia en las mediciones que concuerdan con el modelo, para mejorar las mediciones una posibilidad es utilizar el analizador de impedancias en vez del osciloscopio.
 
 
 \subsection{Resultados experimentales NE5534}
@@ -237,7 +235,7 @@ Debido a que el dato de GBP dado por el fabricante es el mismo que el valor mín
 	\label{fig:ruido}
 \end{figure}
 
-Para evitar lo anterior, se reemplazó la resistencia $R_3$ por una igual a $22 \ k\Omega$. El segundo efecto visto fue el de un offset en la señal de salida. Para este operacionale el offset sí podía apreciarse a bajas frecuencias y era muy notorio a medida que éstas aumentaban. Para evitar lo anterior el fabricante ofrece un circuito de compensación en su datasheet, en el cual se le agrega un capacitor adicional al circuito. A pesar de eso las mediciones fueron realizadas sin el circuito de compensación.
+Para evitar lo anterior, se reemplazó la resistencia $R_3$ por una igual a $22 \ k\Omega$. El segundo efecto visto fue el de un offset en la señal de salida. Para este operacional el offset sí podía apreciarse a bajas frecuencias y era muy notorio a medida que éstas aumentaban. Para evitar lo anterior el fabricante ofrece un circuito de compensación en su datasheet, en el cual se le agrega un capacitor adicional al circuito. A pesar de eso las mediciones fueron realizadas sin el circuito de compensación.
 
 \subsubsection{Respuesta en frecuencia}
 Los resultados obtenidos se presentan en los gráficos a continuación:
@@ -267,25 +265,25 @@ El análisis de la impedancia de entrada para el NE5534 es idéntico al chip ant
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_NE5534_Simulado.png}
-	\caption{Impedancia de entrada NE5534 en amplitud simulada}
+	\caption{Impedancia de entrada NE5534 en amplitud simulada.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_NE5534_Simulado.png}
-	\caption{Impedancia de entrada NE5534 en fase simulada}
+	\caption{Impedancia de entrada NE5534 en fase simulada.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_NE5534_Medido.png}
-	\caption{Impedancia de entrada NE5534 en amplitud medida}
+	\caption{Impedancia de entrada NE5534 en amplitud medida.}
 \end{figure}
 
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_NE5534_Medido.png}
-	\caption{Impedancia de entrada LM833 en fase medida}
+	\caption{Impedancia de entrada LM833 en fase medida.}
 \end{figure}
 
 Al igual que en el integrado anterior, se observa una tendencia que concuerda entre la simulación y las mediciones. A pesar de lo anterior, más mediciones con una mayor precisión son requeridas para sacar mejores conclusiones al respecto.
