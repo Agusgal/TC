@@ -40,7 +40,7 @@ El circuito a trabajar es la configuración no inversora dada en la Figura (\ref
 
 \subsubsection{Respuesta en frecuencia}
 
-Un amplificadores operacional puede describirse mediante diferentes modelos. Un análisis inicial fue hecho en la sección anterior, no obstante aquí se profundizará más al respecto. Un esquema de la configuración no inversora completa puede verse en la Figura (\ref{fig:esquema_no_inversor}). 
+Un amplificador operacional puede describirse mediante diferentes modelos. Un análisis inicial fue hecho en la sección anterior, no obstante aquí se profundizará más al respecto. Un esquema de la configuración no inversora completa puede verse en la Figura (\ref{fig:esquema_no_inversor}). 
 
 \begin{figure}[H]	
 	\centering
@@ -80,7 +80,7 @@ Cuando se realiza el límite de $A_vol$ tendiendo a infinito se llega a la expre
 G_i = 1 + \frac{R_2}{R_1}
 \end{equation}
 
-El último modelo utilizado es el del polo dominante o compensación por frecuencia. Debido a que la mayoría de los amplificadores utilizan el feedback negativo como método para alcanzar altas ganancias, es posible que a altas frecuencias, imperfecciones dentro del chip generen que este feedback se de vuelta, causado que elamplificador oscile. 
+El último modelo utilizado es el del polo dominante o compensación por frecuencia. Debido a que la mayoría de los amplificadores utilizan el feedback negativo como método para alcanzar altas ganancias, es posible que a altas frecuencias, imperfecciones dentro del chip generen que este feedback se de vuelta, causando que el amplificador oscile. 
 
 %%Se puede incluir mñas teoría sobre compensación de polos
 
@@ -97,7 +97,7 @@ Si se reemplaza (\ref{eq:ganancia_ideal}) y (\ref{eq:polo_dominante}) en (\ref{e
 \frac{V_{out}}{V_{in}} = \frac{\frac{G_iA_0}{A_0 + G_i}}{1 + \frac{s}{\omega_p(1 + \frac{A_0}{G_i})}}
 \end{equation}
 
-Por último, un parámetro de vital importancia para el análisis de un amplificador operacional es su GBP, o el producto entre el ancho de banda del amplificador y la ganancia a la cual es medido. Para cualquier op-amp con polo dominante esta cantidad es una constante independiente de la ganancia a la cual es medida. El gain-bandwidth product, es importante ya que, da una idea de la máxima ganancia que se puede extraer de un dispositivo a una frecuencia dada. El GBP para un amplificador operacional con polo dominante es igual a la siguiente expresión:
+Por último, un parámetro de vital importancia para el análisis de un amplificador operacional es su GBP, o el producto entre el ancho de banda del amplificador y la ganancia a la cual es medido. Para cualquier op-amp con polo dominante esta cantidad es una constante independiente de la ganancia a la cual es medida. El gain-bandwidth-product, es importante ya que, da una idea de la máxima ganancia que se puede extraer de un dispositivo a una frecuencia dada. El GBP para un amplificador operacional con polo dominante es igual a la siguiente expresión:
 
 \begin{equation}\label{eq:GBP}
 GBP = A_0\omega_p = G_{real}\omega_c
@@ -186,7 +186,7 @@ Ya habiendo descrito los modelos teóricos y su respectivo método de medición,
 %%NO salieron colores, agregar despues
 
 
-En primer lugar puede verse en el gráfico (\ref{fig:bode_amp_LM833}) que la frecuencia de corte obtenida en (\ref{eq:frecuencia_corte_LM833}) concuerda con el modelo simulado. Lo que no concuerda con el modelo simualdo y menos aún con el teórico es el sobrepico medido. El resultado esperado era un circuito que se asemeje a un pasa-bajos de primer orden, no obstante el sobrepico indica que el circuito real obedece a un modelo de segundo orden. Se pueden buscar razones para explicar este resultado. Por el solo acto de medir se esta agregando una capacitancia de $11 \ pF$ debido a las puntas, además se tiene que tener en cuenta la capacitancia de las patas de los componentes y que el circuito fue medido en un protoboard, el cual agrega aproximadamente $2 \ pF$ por cada conexión hecha. El pico observado en un principio fue un problema para las mediciones, ya que el amplificador llegaba a su punto de saturación cerca del máximo. Más allá de esta anomalía el resto del gráfico es acorde a las simulaciones y la teoría. 
+En primer lugar puede verse en el gráfico (\ref{fig:bode_amp_LM833}) que la frecuencia de corte obtenida en (\ref{eq:frecuencia_corte_LM833}) concuerda con el modelo simulado. Lo que no concuerda con el modelo simualdo y menos aún con el teórico es el sobrepico medido. El resultado esperado era un circuito que se asemeje a un pasa-bajos de primer orden, no obstante el sobrepico indica que el circuito real obedece a un modelo de segundo orden. Se pueden buscar razones para explicar este resultado. Por el solo acto de medir se esta agregando una capacitancia de $11 \ pF$ debido a las puntas, además se tiene que tener en cuenta la capacitancia de los terminales de los componentes y que el circuito fue medido en un protoboard, el cual agrega aproximadamente $2 \ pF$ por cada conexión hecha. El pico observado en un principio fue un problema para las mediciones, ya que el amplificador llegaba a su punto de saturación cerca del máximo. Más allá de esta anomalía el resto del gráfico es acorde a las simulaciones y la teoría. 
 
 Por otro lado puede hacerse el mismo análisis con la fase del circuito. Teoricamente uno esperaría medir un circuito de primer orden, en el cual es desfase máximo es de 90 grados, pero las evidencias empíricas demuestran lo contrario, se esta trabajando con un circuito de segundo orden y un desfase de 180 grados. Incluso puede observarse a que a altas frecuencias hay un salto en la fase simulada, comportamiento que no logró medirse en el laboratorio.
 
