@@ -192,11 +192,33 @@ Un primer paso para mejorar las mediciones es realizar el circuito en una PCB y 
 
 \subsubsection{Impedancia de entrada}
 
-Para graficar la impedancia de entrada teórica hacen falta datos respecto de las resistencias internas del aplificador que no fueron dados por el fabricante. Para poder tener una comparación con los datos medidos, se propone una $r_d = 2,5M\Omega$ y una $r_0 = 20 \Omega$. 
+Para graficar la impedancia de entrada teórica hacen falta datos respecto de las resistencias internas del aplificador que no fueron dados por el fabricante. Por lo tanto se limita a presentar los gráficos correspondientes a las mediciones y las simulaciones:
 
-%%bode impedancia entrada LM833
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_LM833_Simulado.png}
+	\caption{Impedancia de entrada LM833 en amplitud simulada}
+\end{figure}
 
-Es importante destacar que a frecuencias menores a los $100 Hz$ fue imposible la medir una caida de tension en la resistencia colocada en serie delante del circuito. Es importante observar la expresion obtenida en \ref{eq:zin_completa} y ver como se comporta a medida que varía la frecuencia. A frecuencias bajas la resistencia tiende $r_d$, es decir un valor muy grande, razón por la cual fue imposible medir caidas de tensión. Luego lo esperado es que el modulo de la impedancia baje hasta llegar a un valor constante, comportamiento que se evidencia en los gráficos anteriores.  
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_LM833_Simulado.png}
+	\caption{Impedancia de entrada LM833 en fase simulada}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_LM833_Medido.png}
+	\caption{Impedancia de entrada LM833 en amplitud medida}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_LM833_Medido.png}
+	\caption{Impedancia de entrada LM833 en fase medida}
+\end{figure}
+
+Es importante destacar que a frecuencias menores a los $100 Hz$ fue imposible la medir una caida de tension en la resistencia colocada en serie delante del circuito. Es importante observar la expresion obtenida en \ref{eq:zin_completa} y ver como se comporta a medida que varía la frecuencia. A frecuencias bajas la resistencia tiende $r_d$, es decir un valor muy grande, razón por la cual fue imposible medir caidas de tensión. Luego lo esperado es que el modulo de la impedancia baje hasta llegar a un valor constante, comportamiento que se evidencia en los gráficos anteriores. En resumen, se puede observar una linea de tendencia en las mediciones que concuerdan con el modelo, para mejorar las mediciones una posibilidad es utilizar el analizador de impedancias en vez del osciloscopio.
 
 
 \subsection{Resultados experimentales NE5534}
@@ -237,8 +259,32 @@ Además de lo anteriormente descrito las mediciones concuerdan bastante bien con
 \subsubsection{Impedancia de entrada}
 El análisis de la impedancia de entrada para el NE5534 es idéntico al chip anterior, con la salvedad de que si pudieron medirse impedancias a menores frecuencias gracias a que la impedancia de entrada del circuito es muchísimo menor para este operacional. Para realizar estas mediciones tampoco se recurrió al circuito de compensación.
 
-%%Inserto gráficos impedancia de entrada
 
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_NE5534_Simulado.png}
+	\caption{Impedancia de entrada NE5534 en amplitud simulada}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_NE5534_Simulado.png}
+	\caption{Impedancia de entrada NE5534 en fase simulada}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_A_NE5534_Medido.png}
+	\caption{Impedancia de entrada NE5534 en amplitud medida}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio2/Imagenes/Zin_F_NE5534_Medido.png}
+	\caption{Impedancia de entrada LM833 en fase medida}
+\end{figure}
+
+Al igual que en el integrado anterior, se observa una tendencia que concuerda entre la simulación y las mediciones. A pesar de lo anterior, más mediciones con una mayor precisión son requeridas para sacar mejores conclusiones al respecto.
 \subsection{Aplicaciones}
 Los dos amplificadores aquí tratados poseen características que los hacen deseables para cierto tipo de aplicaciones. Ambos poseen un $A_{vol}$, y por consiguiente, una ganancia relativamente grande en un ancho de banda amplio. Lo anterior hace que ambos amplificadores sean útiles en aplicaciones de Audio y preamplificación, ya que el rango de frecuencias en el que se manejan concuerda con ese tipo de aplicaciones. Además, el LM833 posee una impedancia de entrada muy grande y una impedancia de salida muy chica, lo que lo convierte en un gran adaptador de impedancias, no así el otro op-amp analizado. Una desventaja del LM833 es que no hay una manera de integrar un circuito de balance al mismo, al contrario que con el NE5534. 
 
