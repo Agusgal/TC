@@ -197,6 +197,7 @@ En el rango de frecuencias bajas esta configuración presenta una atenuación si
 \end{figure}
 
 \section{Respuesta en frecuencia}
+\subsubsection{Integrador NO Compensado}
 El circuito integrador no compensado presenta una muy alta ganancia a bajas frecuencia lo cual produce saturación a la salida. Se utilizaron señales del orden de los 150 $mV$ para poder realizar las mediciones a bajas frecuencias.
 %Bode integrador 
 \begin{figure}[H]
@@ -220,7 +221,12 @@ Se intento reducir la amplitud de la señal de entrada pero los defectos del cir
 \end{figure}
 
 Podemos observar que el osciloscopio nos indica una ganancia de 54.4 $dB$. Sin embargo, si vemos con mayor detenimiento la señal de salida tiene su mínimo ubicado en -15V. Lo cual se corresponde con la tensión $V-$ provista a la alimentación del operacional y la cual define el mayor nivel de tensión a la que se puede amplificar.
-Este desplazamiento se debe a que el circuito integrador otorga una ganancia muy alta a la componentes de baja frecuencia de la señal. Entre ellas se encuentra la tensión de offset del  propio operacional en adición a las componentes de baja frecuencia de la entrada. Para que ocurra este desplazamiento el circuito integra esa componente constante y no nula. Al integrarlo la señal de baja frecuencia crece como si fuese una rampa  
+Este desplazamiento se debe a que el circuito integrador otorga una ganancia muy alta a la componentes de baja frecuencia de la señal. Entre ellas se encuentra la tensión de offset del  propio operacional en adición a las componentes de baja frecuencia de la entrada. Para que ocurra este desplazamiento el circuito integra esa componente constante y no nula. Al integrarlo la señal de baja frecuencia crece como si fuese una rampa hasta llegar a la saturación donde se convierte en una constante. El hecho de que se encuentre en el limito inferior de tensión se debe a la naturaleza inversora del circuito. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FOTOS-TP2-TC-EJ4/piso}
+	\caption{Medición a 10Hz 41mVpp}
+\end{figure}
 
 \begin{figure}[H]
 	\centering
@@ -228,4 +234,13 @@ Este desplazamiento se debe a que el circuito integrador otorga una ganancia muy
 	\caption{Medición a 10Hz 41mVpp}
 \end{figure}
 
+Por las mismas razones de falta de precisión no se presenta el Bode de Fase.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FASE-SIMULADO-INTEGRADOR-NO-COMPENSADO}
+	\caption{Medición a 10Hz 41mVpp}
+\end{figure}
+
+
+\subsubsection{Derivador No Compensado}
 \end{document}
