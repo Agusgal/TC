@@ -64,11 +64,16 @@ primero observaremos que en utilizando (\ref{eq:1}) y (\ref{eq:2}) se llega a qu
 Donde GBP es un parámetro propio del operacional y suele ser del orden de los MHz. Por lo tanto este termino sería desprecianle siempre que el rango de frecuencias en los cuales se trabaje sea menor a... \center \textcolor{red}{Obtener algun valor significativo}
 , teniendo en cuenta esa aproximacion se pueden llegar a las siguientes expresiones:
 \begin{align}H(s)= \frac{R_g}{R_g+\frac{1}{sC_g}} \end{align}
+
+
 \begin{align}Z_{In}=\frac{R_LR_gC_gs+R_L}{sC_gR_L+1}\underset{C_gR_gR_Ls << 1}{\approx}R_gC_gR_L \cdot s + R_g \end{align}
 
 Bajo estos supuestos se puede considerar la impedancia de entrada como una bobina con $L=R_gC_gR_L $ y $R_g$ siendo esta R la parte resistiva de la inductancia.
+\subsubsection{Gyrator vs Inductor}
 
+\subsubsection{Impedancia de entrada.}
 
+\subsubsection{Elección operacional.}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \flushleft
@@ -106,7 +111,25 @@ Q:          & Selectividad del sistema                             & =$\frac{1}{
 \subsection{High Pass.}
 \subsubsection{Circuito utilizando inductor.}
 El circuito propuesto para realizar un filtro pasa altos clasicamente es el siguiente:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{basicHP.PNG}
+	\caption{Filtro High-Pass básico.}
+	\label{fig:basHP}
+\end{figure}
+Para este circuito es sumamente facil obtener la transferencia, basta con plantear un divisor resistivo, con lo cual se llega a:
+\begin{align} 
+H(s)=\frac{s^2LC}{s^2LC+sRC+1}
+ \end{align}
+
 \subsubsection{Circuito utilizando Gyrator.}
+Para la implementación de este filtro utilizando un Gyrator dado a que este usualmente esta referenciado a tierra  se optó por el siguiente diseño:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{gyrHP.PNG}
+	\caption{Filtro High-Pass implementado con Gyrator.}
+	\label{fig:gyrHP}
+\end{figure}
 \subsubsection{Comparación de modelos.}
 \subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
@@ -116,7 +139,22 @@ El circuito propuesto para realizar un filtro pasa altos clasicamente es el sigu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Low Pass.}
 \subsubsection{Circuito utilizando inductor.}
+El circuito propuesto para realizar un filtro pasa bajos clasicamente es el siguiente:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{basicLP.PNG}
+	\caption{Filtro Low-Pass básico.}
+	\label{fig:basLP}
+\end{figure}
+
 \subsubsection{Circuito utilizando Gyrator.}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{gyrLP.PNG}
+	\caption{Filtro Low-Pass implementado con Gyrator.}
+	\label{fig:gyrLP}
+\end{figure}
+\begin{equation} H(s)= \frac{\left(Cg Rl s + 1\right)}{C Cg R Rl s^{2} + C Cg Rg Rl s^{2} + C R s + C Rl s + Cg Rl s + 1} \end{equation}
 \subsubsection{Comparación de modelos.}
 \subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
@@ -125,7 +163,21 @@ El circuito propuesto para realizar un filtro pasa altos clasicamente es el sigu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Band Pass.}
 \subsubsection{Circuito utilizando inductor.}
+El circuito propuesto para realizar un filtro pasa banda clasicamente es el siguiente:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{basicBP.PNG}
+	\caption{Filtro Band-Pass básico.}
+	\label{fig:basBP}
+\end{figure}
+
 \subsubsection{Circuito utilizando Gyrator.}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{gyrBP.PNG}
+	\caption{Filtro Band-Pass implementado con Gyrator.}
+	\label{fig:gyrBP}
+\end{figure}
 \subsubsection{Comparación de modelos.}
 \subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
@@ -134,7 +186,21 @@ El circuito propuesto para realizar un filtro pasa altos clasicamente es el sigu
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Band Reject.}
 \subsubsection{Circuito utilizando inductor.}
+El circuito propuesto para realizar un filtro rechaza banda clasicamente es el siguiente:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{basicBR.PNG}
+	\caption{Filtro Band-Reject básico.}
+	\label{fig:basBR}
+\end{figure}
 \subsubsection{Circuito utilizando Gyrator.}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{gyrBR.PNG}
+	\caption{Filtro Band-Reject implementado con Gyrator.}
+	\label{fig:gyrBR}
+\end{figure}
+
 \subsubsection{Comparación de modelos.}
 \subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
