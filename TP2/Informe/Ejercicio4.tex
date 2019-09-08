@@ -243,4 +243,119 @@ Por las mismas razones de falta de precisión no se presenta el Bode de Fase.
 
 
 \subsubsection{Derivador No Compensado}
+Se midió la respuesta en frecuencia del derivador sin resistencia de compensación alguna.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-BODE-DERIVADOR-NO-COMPENSADO}
+	\caption{Respuesta en Frecuencia del Circuito Derivador no compensado}
+\end{figure}
+El circuito derivador, al contrario del integrador, no es capaz de mantener sus capacidades de derivación a lo largo del espectro de frecuencias. Cuando nos aproximamos a frecuencias cercanas a los $140Hz$ el mismo pierde sus propiedades para poder obtener la derivada de la señal de entrada y comienza a comportarse como un integrador. 
+El sobre-pico observado es producto de la atenuación causada por el filtro pasabajos que se forma a la entrada del derivador.
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-BODE-DERIVADOR-NO-COMPENSADO}
+	\caption{Respuesta en Frecuencia Magnitud del Circuito Derivador no compensado}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-FASE-DERIVADOR-NO-COMPENSADO}
+	\caption{Respuesta en Frecuencia del Fase Circuito Derivador no compensado}
+\end{figure}
+
+\section{Respuesta temporal}
+En esta sección se exhibirían la respuesta de ambos circuitos bajo diferentes señales de entrada
+
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FOTOS-TP2-TC-EJ4/derivadorrt4}
+	\caption{Señal dientes de sierra siendo derivada sin compensación}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FOTOS-TP2-TC-EJ4/derivador1}
+	\caption{Señal dientes de sierra siendo derivada con compensación}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FOTOS-TP2-TC-EJ4/serivadorrt5}
+	\caption{Señal Senoidal derivada}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FOTOS-TP2-TC-EJ4/i9tegradort}
+	\caption{Onda Cuadrada siendo integrada}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FOTOS-TP2-TC-EJ4/p9tegradort3}
+	\caption{Tren de pulsos siendo integrado}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/FOTOS-TP2-TC-EJ4/r9tegradort2} 
+	\caption{Integral de dientes de sierra}
+\end{figure}
+
+\section{Impedancia de Entrada}
+Se realizaron las mediciones de impedancia de entrada haciendo uso del analizador de impedancias
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-ZIN-DERIVADOR-COMPENSADO-FASE} 
+	\caption{Zin Derivador Compensado}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-ZIN-DERIVADOR-COMPENSADO-FASE} 
+	\caption{Zin Fase Derivador Compensado}
+\end{figure}
+
+\section{Circuitos Compensados}
+Como se comento anteriormente, el circuito integrador no operaba de manera optima debido a la tensión de offset que se introducía a la salida a causa de las señales de muy baja frecuencia. Por el otro lado el circuito derivador presenta un sobrepico el cual podría causar daños a un circuito que se conectase a este. 
+En el circuito integrador, a bajas frecuencias, su ganancia es muy grande. Es por eso que se debe hacer algo para limitar la ganacias de las mismas. Se podria colocar una resistencia a la entrada pero de ser muy grande arruinaria la transferencia a la salida. Es por eso que se analiza que a bajas frecuencias la impedancia provista por el capacitor es muy grande, comparable con un circuito abierto. Lo cual provocaría que la ganancia del integrador crezca mucho. Por tal motivo se decidió colocar una resistencia en paralelo al capacitor tal que a bajas frecuencias la resistencia limite la ganancia que estas pueden obtener. 
+Se decidió colocar una resistencia unas 10 veces más grande de la asignada. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-INTEGRADOR-COMPENSADO} 
+	\caption{Bode Magnitud Integrador Compensado}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-FASE-INTEGRADOR-COMPENSADO} 
+	\caption{Bode Fase Integrador Compensado}
+\end{figure}
+
+En el caso del derivador era necesario limitar la ganancia que este podría obtener para así evitar el sobre-pico. A altas frecuencias (aproximadamente $140KHz$ en nuestro caso) el capacitor se comporta como un circuito abierto y se pierde control absoluto sobre la ganacia del circuito al tender esta a infinito. Por lo tanto se coloca una resistencia en serie a la entrada del mismo con el fin de limitar la ganancia.
+Se decidió limitar la ganancia a 38$dB$ para poder subsanar el sobre pico. Se escogió una resistencia de 330 $\Omega$.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-ZIN-DERIVADOR-COMPENSADO-MAGNITUD} 
+	\caption{Bode Magnitud Derivador Compensado}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Ejercicio4/SUPERPOSICION-FASE-DERIVADOR-COMPENSADO} 
+	\caption{Bode Fase Derivador Compensado}
+\end{figure}
+
+\section{Conclusiones}
+Es posible concluir que estos circuitos poseen capacidad de realizar operaciones matemáticas siempre que se encuentren dentro del rango de operación permitido. 
+Además se debe tener especial cuidado con las tensiones de off-set del operacional ya que estas pueden influir de manera negativa en el balance de tensiones entre las entradas inversoras y no inversoras. Se pueden estudiar otros métodos de compensación adicional que permitan que los modelos físicos se aproximen lo más a los modelos teóricos. De hecho una mejora que se podría implementar es la de incorporar una resistencia sobre la entrada no inversora que sea de la misma magnitud que la resistencia en serie con la entrada inversora. Esta adición permitirá balancear los voltajes entre sus entradas.   
+
+
 \end{document}
