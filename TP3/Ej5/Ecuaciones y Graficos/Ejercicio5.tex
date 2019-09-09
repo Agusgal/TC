@@ -35,7 +35,14 @@
 \end{center}
 \end{figure}
 
-$R_2 = R_{2}^{'} + R_{2}^{''} $, con $R_{2}^{'} = \alpha R_2$ y $R_{2}^{''} = \left( 1 - \alpha \right) R_2$
+$R_2 = R_{2}^{'} + R_{2}^{''} $, con
+\begin{equation}
+\begin{split}
+	R_{2}^{'} &= \psi R_2\\ R_{2}^{''} &= \left( 1 - \psi \right) R_2
+\end{split}
+\label{equ:r2p}
+\end{equation}
+
 
 \begin{figure}[H]
 \begin{center}
@@ -208,126 +215,63 @@ Definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $ y $Z_{BC}^{'} = Z_{AC} // R_3 $
 \end{center}
 \end{figure}
 
-Observando, se puede resolver el circuito con las condiciones de un amplificador operacional inversor:
+Observando, y utilizando (\ref{equ:r2p}), se puede resolver el circuito con las condiciones de un amplificador operacional inversor:
 \begin{equation}
-	H(s) = - \frac{\alpha_H S^{3} + \beta_H S^{2} + \gamma_H S + 2 R_{1} + R_{2}^{''} + R_{2}^{'}}
-	{\delta_H S^{3} + \eta_H S^{2} + \lambda_H S + 2 R_{1} + R_{2}^{''} + R_{2}^{'}}
+	H(s) = - \frac{\alpha_H S^{2} + \beta_H S + 2 R_{1} + R_{2}}
+	{\gamma_H S^{2} + \delta_H S + 2 R_{1} + R_{2}}
 \end{equation}
 
 Siendo: 
 
 \begin{equation*}
 \begin{split}
-	\alpha_H =\ & {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + {C_{1}}^{2} C_{2} R_{1} {R_{2}}^{2} R_{3} + 2 {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}
+	\alpha_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}
 \end{split}
 \end{equation*}
+\begin{equation*}
+\begin{split}
+	\beta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} -\\ & C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi - C_{2} R_{2} R_{3} \psi + C_{2} R_{2} R_{3}
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+	\gamma_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}
+\end{split}
+\end{equation*}
+\begin{equation*}
+\begin{split}
+ \delta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} \psi
+\end{split}
+\end{equation*}
+\\
+\\
+\\
+
+\begin{center}
+	\textcolor{red}{\textbf{PONER EN EL INFORME SIMPLIFICACIÓN FINAL.}}
+\end{center}
+
+Si se considera $C_1 = 10 \ C_2$, $R_3 \gg R_1$ y $R_3 = 10 \ R_2$ se obtiene
 
 \begin{equation*}
 \begin{split}
-	\beta_H =\ & 2 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 C_{1} C_{2} {R_{1}}^{2} R_{2} + C_{1} C_{2} R_{1} R_{2} R_{2}^{''} + C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{1} C_{2} R_{1} R_{2} R_{3} +\\
-	&2 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{1} C_{2} R_{2} R_{2}^{''} R_{3} + C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+	\alpha_H =\ \gamma_H =\ & 10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right]
 \end{split}
 \end{equation*}
-
 \begin{equation*}
 \begin{split}
-	\gamma_H =\ & 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2}^{''} +\\ & C_{2} R_{1} R_{2}^{'} + C_{2} R_{1} R_{3} + C_{2} R_{2}^{''} R_{2}^{'} + C_{2} R_{2}^{''} R_{3}
+	\beta_H =\ & C_{2} R_{2} \left[ 10R_1 + R_2 \left(10 - \psi - 9 \psi^2 \right) \right]
 \end{split}
 \end{equation*}
-
 \begin{equation*}
 \begin{split}
- \delta_H =\ & {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + {C_{1}}^{2} C_{2} R_{1} {R_{2}}^{2} R_{3} + 2 C_{1}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}
+	\gamma_H =\ & 10 {C_{2}}^{2} {R_{1}}^{2} R_{2} - 20 {C_{2}}^{2} R_{1} {R_{2}}^{2} \psi^{2} + 20 {C_{2}}^{2} R_{1} {R_{2}}^{2} \psi + 10 {C_{2}}^{2} R_{1} R_{2} R_{3}
 \end{split}
 \end{equation*}
-
 \begin{equation*}
 \begin{split}
-	\eta_H =\ & 2 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 C_{1} C_{2} {R_{1}}^{2} R_{2} + C_{1} C_{2} R_{1} R_{2} R_{2}^{''} + C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{1} C_{2} R_{1} R_{2} R_{3} +\\ &
-	2 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{1} C_{2} R_{2} R_{2}^{'} R_{3} + C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+ \delta_H =\ & 2 C_{2} R_{2} \left[ 31 R_1 + R_2 \psi \left(11 - \psi \right) \right]
 \end{split}
 \end{equation*}
-
-\begin{equation*}
-\begin{split}
-	\lambda_H =\ & 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} +\\ &
-	C_{2} R_{1} R_{3} + C_{2} R_{2}^{''} R_{2}^{'} + C_{2} R_{2}^{'} R_{3}
-\end{split}
-\end{equation*}
-
-%\begin{equation}
-%	H(s) = -A_{o} \frac{ \alpha_H S^{3} + \beta_H S^{2} + \gamma_H S + 2 R_{1} + R_{2}^{''} + R_{2}^{'}}
-%	{\delta_H S^{3} + \eta_H S^{2} + \lambda S + 2 A_{o} R_{1} + A_{o} R_{2}^{''} + A_{o} R_{2}^{'} + 4 R_{1} + 2 R_{2}^{''} + 2 R_{2}^{'}}
-%\end{equation}
-%
-%Siendo:
-%
-%\begin{equation*}
-%\begin{split}
-%	\alpha_H =\ & {C_{1}}^{2} C_{2} R_{3} R_{1} {R_{2}}^{2} + {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 2 {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}
-%\end{split}
-%\end{equation*}
-%
-%\begin{equation*}
-%\begin{split}
-%	\beta_H =\ & 2 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 C_{1} C_{2} R_{3} R_{1} R_{2} + C_{1} C_{2} R_{3} R_{2} R_{2}^{''} + 2 C_{1} C_{2} {R_{1}}^{2} R_{2} + C_{1} C_{2} R_{1} R_{2} R_{2}^{''} +\\
-%	&C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
-%\end{split}
-%\end{equation*}
-%
-%\begin{equation*}
-%\begin{split}
-%	\gamma_H =\ & 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{''} + C_{2} {R_{1}}^{2} +\\
-%	&C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
-%\end{split}
-%\end{equation*}
-%
-%\begin{equation*}
-%\begin{split}
-% \delta_H =\ & A_{o} {C_{1}}^{2} C_{2} R_{3} R_{1} {R_{2}}^{2} + A_{o} {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 2 A_{o} {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'} + 2 {C_{1}}^{2} C_{2} R_{3} R_{1} {R_{2}}^{2} +\\
-% &2 {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 4 {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}
-%\end{split}
-%\end{equation*}
-%
-%\begin{equation*}
-%\begin{split}
-%	\eta_H =\ & 2 A_{o} {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 A_{o} C_{1} C_{2} R_{3} R_{1} R_{2} + A_{o} C_{1} C_{2} R_{3} R_{2} R_{2}^{'} + 2 A_{o} C_{1} C_{2} {R_{1}}^{2} R_{2} +\\
-%	&A_{o} C_{1} C_{2} R_{1} R_{2} R_{2}^{''} + A_{o} C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 A_{o} C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + A_{o} C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} +\\
-%	&A_{o} C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2} + 4 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 4 C_{1} C_{2} R_{3} R_{1} R_{2} + C_{1} C_{2} R_{3} R_{2} R_{2}^{''} + C_{1} C_{2} R_{3} R_{2} R_{2}^{'} +\\
-%	&4 C_{1} C_{2} {R_{1}}^{2} R_{2} + 2 C_{1} C_{2} R_{1} R_{2} R_{2}^{''} + 2 C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 4 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + 2 C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + \\
-%	&2 C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
-%\end{split}
-%\end{equation*}
-%
-%\begin{equation*}
-%\begin{split}
-%	\lambda_H =\ & 4 A_{o} C_{1} R_{1} R_{2} + A_{o} C_{1} R_{2} R_{2}^{''} + A_{o} C_{1} R_{2} R_{2}^{'} + A_{o} C_{2} R_{3} R_{1} + A_{o} C_{2} R_{3} R_{2}^{'} + A_{o} C_{2} {R_{1}}^{2} +\\
-%	&A_{o} C_{2} R_{1} R_{2}^{''} + A_{o} C_{2} R_{1} R_{2}^{'} + A_{o} C_{2} R_{2}^{''} R_{2}^{'} + 8 C_{1} R_{1} R_{2} + 2 C_{1} R_{2} R_{2}^{''} + 2 C_{1} R_{2} R_{2}^{'} +\\
-%	&2 C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{''} + C_{2} R_{3} R_{2}^{'} + 2 C_{2} {R_{1}}^{2} + 2 C_{2} R_{1} R_{2}^{''} + 2 C_{2} R_{1} R_{2}^{'} + 2 C_{2} R_{2}^{''} R_{2}^{'}
-%\end{split}
-%\end{equation*}
-%
-%Si se considera $R_3 \\gg R_1$:
-%
-%\begin{equation*}
-%\begin{split}
-%	\alpha_H & =\  R_3 \left( {C_{1}}^{2} C_{2} R_{1} {R_{2}}^{2} + \underbrace{\frac{{C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 2 {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}}{R_3}}_{\approx 0} \right) \\
-%	& \approx {C_{1}}^{2} C_{2} \underbrace{R_{1} R_3}_{\approx 0} {R_{2}}^{2} \approx 0
-%\end{split}
-%\end{equation*}
-%
-%\begin{equation*}
-%\begin{split}
-%	\beta_H =\ & 2 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 C_{1} C_{2} R_{3} R_{1} R_{2} + C_{1} C_{2} R_{3} R_{2} R_{2}^{''} + C_{1} C_{2} R_{1} R_{2} R_{2}^{''} +\\
-%	&C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
-%\end{split}
-%\end{equation*}
-%
-%\begin{equation*}
-%\begin{split}
-%	\gamma_H =\ & 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{''} + C_{2} {R_{1}}^{2} +\\
-%	&C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
-%\end{split}
-%\end{equation*}
 
 \end{document}
