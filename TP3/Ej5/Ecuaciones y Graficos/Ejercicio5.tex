@@ -45,9 +45,9 @@ $R_2 = R_{2}^{'} + R_{2}^{''} $, con $R_{2}^{'} = \alpha R_2$ y $R_{2}^{''} = \l
 	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[R, l = $R_3$] ++(-3.5,0) to[short] ++(0,3);
 	\draw (v1) to[R, l_= $R_3$] ++(3.5,0) to[short] ++(0,3);
 	\draw (v1) to[C, l = $C_2$] ++(0,1.5) node[](v2){};
-	\draw (v2) to[short] ++(-1,0) to[R, l= $R_{2}^{'}$] ++(0,1.5) node[](v3){};
-	\draw (v2) to[short] ++(1,0) to[R, l_= $R_{2}^{''}$] ++(0,1.5) node[](v4){};
-	\draw (v3) to[C, l = $C_1$] (v4);
+	\draw[color=red] (v2) to[short] ++(-1,0) to[R, l= $R_{2}^{'}$, color = red] ++(0,1.5) node[](v3){};
+	\draw[color=red] (v2) to[short] ++(1,0) to[R, l_= $R_{2}^{''}$, color = red] ++(0,1.5) node[](v4){};
+	\draw[color=red] (v3) to[C, l = $C_1$, color = red] (v4);
 	\draw (v3) to[R, l= $R_1$] ++(-3,0) node[ocirc,label=left:$V_{in}$]{};
 	\draw (v4) to[R, l_= $R_1$] ++(3,0) node[ocirc,label=right:$V_{out}$]{};
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
@@ -57,6 +57,8 @@ $R_2 = R_{2}^{'} + R_{2}^{''} $, con $R_{2}^{'} = \alpha R_2$ y $R_{2}^{''} = \l
 \end{center}
 \end{figure}
 
+Aplicando Kennelly para transformar de configuración Pi a Estrella:
+
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -64,9 +66,11 @@ $R_2 = R_{2}^{'} + R_{2}^{''} $, con $R_{2}^{'} = \alpha R_2$ y $R_{2}^{''} = \l
 	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
 	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[R, l = $R_3$] ++(-3.5,0) to[short] ++(0,3);
 	\draw (v1) to[R, l_= $R_3$] ++(3.5,0) to[short] ++(0,3);
-	\draw (v1) to[C, l = $C_2$] ++(0,1.5) to[generic, l = $Z_C$] ++(0,1.5) node[](v2){};
-	\draw (v2) to[generic, l_= $Z_A$] ++(-2,0) to[R, l= $R_1$] ++(-1.5,0) to[short] ++(-1,0) node[ocirc,label=left:$V_{in}$]{};
-	\draw (v2) to[generic, l = $Z_B$] ++(2,0) to[R, l_= $R_1$] ++(1.5,0) to[short] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw[color=red] (v1) to[C, l = $C_2$] ++(0,1.5) to[generic, l = $Z_C$] ++(0,1.5) node[](v2){};
+	\draw[color=red] (v2) to[generic, l_= $Z_A$] ++(-2,0) to[R, l= $R_1$] ++(-1.5,0) node[](aux2){};
+	\draw (aux2) to[short] ++(-1,0) node[ocirc,label=left:$V_{in}$]{};
+	\draw[color=red] (v2) to[generic, l = $Z_B$] ++(2,0) to[R, l_= $R_1$] ++(1.5,0) node[](aux1){};
+	\draw (aux1) to[short] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
 	\caption{Usando Kennelly por primera vez.}
@@ -74,17 +78,40 @@ $R_2 = R_{2}^{'} + R_{2}^{''} $, con $R_{2}^{'} = \alpha R_2$ y $R_{2}^{''} = \l
 \end{center}
 \end{figure}
 
+Siendo:
+
+\begin{equation}
+	Z_{A} = \frac{R_{2}^{'}}{C_{1} R_{2} S + 1}
+\end{equation}	
+\begin{equation}
+	Z_{B} = \frac{R_{2}^{''}}{C_{1} R_{2} S + 1}
+\end{equation}	
+\begin{equation}
+	Z_{C} = \frac{C_{1} R_{2}^{''} R_{2}^{'} S}{C_{1} R_{2} S + 1}
+\end{equation}
+
+Tomando $Z_{A} + R_1$, $Z_{B} + R_1$ y $Z_{C} + \frac{1}{S C_2}$ y aplicando Kennelly nuevamente, se obtiene: 
+
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
 	\node [op amp](A){};
 	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
-	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[short] ++(-3.5,0) to[R, l = $R_3$] ++(0,3);
-	\draw (v1) to[short] ++(3.5,0) to[R, l_= $R_3$] ++(0,3);
-	\draw (v1) to[open] ++(-1.5,0) to[generic, l = $Z_{AC}$] ++(0,3) node[](v2){};
-	\draw (v1) to[open] ++(1.5,0) to[generic, l_= $Z_{BC}$] ++(0,3) node[](v3){};
-	\draw (v2) to[generic, l = $Z_{AB}$] (v3) to[short] ++(3,0) node[ocirc,label=right:$V_{out}$]{};
-	\draw (v2) to[short] ++(-3,0) node[ocirc,label=left:$V_{in}$]{};
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[short] ++(-1.5,0) node[](aux1){};
+	\draw[color=red] (aux1) to[short] ++(-2,0) to[R, l = $R_3$] ++(0,3);
+	\draw[color=red] (aux1) to[generic, l = $Z_{AC}$] ++(0,3) node[](v2){};
+
+	\draw (v1) to[short] ++(1.5,0) node[](aux2){};
+	\draw[color=red] (aux2) to[short] ++(2,0) to[R, l_= $R_3$] ++(0,3);
+	\draw[color=red] (aux2) to[generic, l_= $Z_{BC}$] ++(0,3) node[](v3){};
+	
+	
+	\draw (v2) to[generic, l = $Z_{AB}$] (v3);
+	\draw[color=red] (v3) to[short] ++(2,0) node[](aux3){};
+	\draw (aux3) to[short] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
+	
+	\draw[color=red] (v2) to[short] ++(-2,0) node[](aux4){};
+	\draw (aux4) to[short] ++(-1,0)node[ocirc,label=left:$V_{in}$]{};
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
 	\caption{Usando Kennelly por segunda vez.}
@@ -154,55 +181,53 @@ Definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $ y $Z_{BC}^{'} = Z_{AC} // R_3 $
 \end{center}
 \end{figure}
 
-\begin{equation}
+\begin{equation} \hspace*{-2cm}
 	H \left( S \right) = \frac{Z_{BC}^{'}}{Z_{AC}^{'}} = 
-	(C_1^{2}*C_2*R_1^{2}*R_{2}^{2}*s^{3} +
-	C_1^{2}*C_2*R_1*R_{2}^{2}*r3*s^{3} +
-	2*C_1^{2}*C_2*R_1*R_{2}*R_{2}^{'}*R_{2}^{''}*s^{3} +
-	2*C_1^{2}*R_1*R_{2}^{2}*s^{2} +
-	2*C_1*C_2*R_1^{2}*R_{2}*s^{2} +
-	C_1*C_2*R_1*R_{2}*R_{2}^{'}*s^{2} +
-	C_1*C_2*R_1*R_{2}*R_{2}^{''}*s^{2} +
-	2*C_1*C_2*R_1*R_{2}*r3*s^{2} +
-	2*C_1*C_2*R_1*R_{2}^{'}*R_{2}^{''}*s^{2} +
-	C_1*C_2*R_{2}*R_{2}^{''}*r3*s^{2} +
-	C_1*C_2*R_{2}^{'2}*R_{2}^{''}*s^{2} +
-	C_1*C_2*R_{2}^{'}*R_{2}^{''2}*s^{2} +
-	4*C_1*R_1*R_{2}*s +
-	C_1*R_{2}*R_{2}^{'}*s +
-	C_1*R_{2}*R_{2}^{''}*s +
-	C_2*R_1^{2}*s +
-	C_2*R_1*R_{2}^{'}*s +
-	C_2*R_1*R_{2}^{''}*s +
-	C_2*R_1*r3*s +
-	C_2*R_{2}^{'}*R_{2}^{''}*s +
-	C_2*R_{2}^{''}*r3*s +
-	2*R_1 + R_{2}^{'} +
-	R_{2}^{''})
-	/
-	(C_1^{2}*C_2*R_1^{2}*R_{2}^{2}*s^{3} +
-	C_1^{2}*C_2*R_1*R_{2}^{2}*r3*s^{3} +
-	2*C_1^{2}*C_2*R_1*R_{2}*R_{2}^{'}*R_{2}^{''}*s^{3} +
-	2*C_1^{2}*R_1*R_{2}^{2}*s^{2} +
-	2*C_1*C_2*R_1^{2}*R_{2}*s^{2} +
-	C_1*C_2*R_1*R_{2}*R_{2}^{'}*s^{2} +
-	C_1*C_2*R_1*R_{2}*R_{2}^{''}*s^{2} +
-	2*C_1*C_2*R_1*R_{2}*r3*s^{2} +
-	2*C_1*C_2*R_1*R_{2}^{'}*R_{2}^{''}*s^{2} +
-	C_1*C_2*R_{2}*R_{2}^{'}*r3*s^{2} +
-	C_1*C_2*R_{2}^{'2}*R_{2}^{''}*s^{2} +
-	C_1*C_2*R_{2}^{'}*R_{2}^{''2}*s^{2} +
-	4*C_1*R_1*R_{2}*s +
-	C_1*R_{2}*R_{2}^{'}*s +
-	C_1*R_{2}*R_{2}^{''}*s +
-	C_2*R_1^{2}*s +
-	C_2*R_1*R_{2}^{'}*s +
-	C_2*R_1*R_{2}^{''}*s +
-	C_2*R_1*r3*s +
-	C_2*R_{2}^{'}*R_{2}^{''}*s +
-	C_2*R_{2}^{'}*r3*s +
-	2*R_1 + R_{2}^{'} +
-	R_{2}^{''})
+	\frac{ \left( R_{3} R_{2} + R_{1} R_{2} + 2 R_{2}^{''} R_{2}^{'} \right) C_{1}^{2} C_{2}
+	R_{1} R_{2} S^{3} + \alpha_H C_{1} S^{2} + \beta_H S + 2 R_{1} + R_{2}^{''} + R_{2}^{'}}
+	{\left( R_{3} R_{2} + R_{1} R_{2} + 2 R_{2}^{''} R_{2}^{'} \right)
+	C_{1}^{2} C_{2} R_{1} R_{2} S^{3} + \gamma_H C_{1} S^{2} + \delta_H S +
+	2 R_{1} + R_{2}^{''} + R_{2}^{'}}
+\end{equation}
+
+con
+
+\begin{equation}
+\begin{split}
+	\alpha_H =& 2 C_{1} R_{1} {R_{2}}^{2} + 2 C_{2} R_{3} R_{1} R_{2} + 
+	C_{2} R_{3} R_{2} R_{2}^{''} + 2 C_{2} {R_{1}}^{2} R_{2} + \\
+	&C_{2} R_{1} R_{2} R_{2}^{''} + C_{2} R_{1} R_{2} R_{2}^{'} + 
+	2 C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{2} {R_{2}^{''}}^{2} R_{2}^{'} +
+	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	\beta_H =& 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + 
+	C_{2} R_{3} R_{1} +	C_{2} R_{3} R_{2}^{''} +\\
+	&C_{2} {R_{1}}^{2} S +
+	C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
+	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	\gamma_H =& 2 C_{1} R_{1} {R_{2}}^{2} + 2 C_{2} R_{3} R_{1} R_{2} +
+	C_{2} R_{3} R_{2} R_{2}^{'} + 2 C_{2} {R_{1}}^{2} R_{2} + C_{2} R_{1} R_{2} R_{2}^{''} +\\
+	&C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+\end{split}
+\end{equation}
+
+\begin{equation}
+\begin{split}
+	\delta_H =& 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} +
+	C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{'} +\\
+	&C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
+	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+\end{split}
 \end{equation}
 
 \end{document}
