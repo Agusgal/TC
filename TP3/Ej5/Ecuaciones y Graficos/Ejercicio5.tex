@@ -1,0 +1,208 @@
+\documentclass[a4paper]{article}
+
+\include{Header.tex}
+
+\usepackage{float}
+\usepackage{graphicx}
+
+\usepackage[american voltage]{circuitikz}
+
+\usepackage{amsmath}
+
+\usepackage{xcolor}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\begin{document}
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A){};
+	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[R, l = $R_3$] ++(-3.5,0) to[short] ++(0,3);
+	\draw (v1) to[R, l_= $R_3$] ++(3.5,0) to[short] ++(0,3);
+	\draw (v1) to[open] ++(0,3) node[potentiometershape, rotate=180, label=south:$R_2$](P){};
+	\draw (v1) to[C, l = $C_2$] (P.wiper);
+	\draw (P.right) to[R, l= $R_1$] ++(-4,0) node[ocirc,label=left:$V_{in}$]{};
+	\draw (P.left) to[R, l_= $R_1$] ++(4,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (P.right) to[open] ++(-0.5,0) to[short] ++(0,1.5) to[C, l = $C_1$] ++(2.2,0) to[short] ++(0,-1.5);
+	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
+\end{circuitikz}
+	\caption{Circuito dado.}
+	%\label{}
+\end{center}
+\end{figure}
+
+$R_2 = R_{2}^{'} + R_{2}^{''} $, con $R_{2}^{'} = \alpha R_2$ y $R_{2}^{''} = \left( 1 - \alpha \right) R_2$
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A){};
+	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[R, l = $R_3$] ++(-3.5,0) to[short] ++(0,3);
+	\draw (v1) to[R, l_= $R_3$] ++(3.5,0) to[short] ++(0,3);
+	\draw (v1) to[C, l = $C_2$] ++(0,1.5) node[](v2){};
+	\draw (v2) to[short] ++(-1,0) to[R, l= $R_{2}^{'}$] ++(0,1.5) node[](v3){};
+	\draw (v2) to[short] ++(1,0) to[R, l_= $R_{2}^{''}$] ++(0,1.5) node[](v4){};
+	\draw (v3) to[C, l = $C_1$] (v4);
+	\draw (v3) to[R, l= $R_1$] ++(-3,0) node[ocirc,label=left:$V_{in}$]{};
+	\draw (v4) to[R, l_= $R_1$] ++(3,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
+\end{circuitikz}
+	\caption{Reemplazando $R_2$ por resistencias fijas.}
+	%\label{}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A){};
+	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[R, l = $R_3$] ++(-3.5,0) to[short] ++(0,3);
+	\draw (v1) to[R, l_= $R_3$] ++(3.5,0) to[short] ++(0,3);
+	\draw (v1) to[C, l = $C_2$] ++(0,1.5) to[generic, l = $Z_C$] ++(0,1.5) node[](v2){};
+	\draw (v2) to[generic, l_= $Z_A$] ++(-2,0) to[R, l= $R_1$] ++(-1.5,0) to[short] ++(-1,0) node[ocirc,label=left:$V_{in}$]{};
+	\draw (v2) to[generic, l = $Z_B$] ++(2,0) to[R, l_= $R_1$] ++(1.5,0) to[short] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
+\end{circuitikz}
+	\caption{Usando Kennelly por primera vez.}
+	%\label{}
+\end{center}
+\end{figure}
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A){};
+	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) node[](v1){} to[short] ++(-3.5,0) to[R, l = $R_3$] ++(0,3);
+	\draw (v1) to[short] ++(3.5,0) to[R, l_= $R_3$] ++(0,3);
+	\draw (v1) to[open] ++(-1.5,0) to[generic, l = $Z_{AC}$] ++(0,3) node[](v2){};
+	\draw (v1) to[open] ++(1.5,0) to[generic, l_= $Z_{BC}$] ++(0,3) node[](v3){};
+	\draw (v2) to[generic, l = $Z_{AB}$] (v3) to[short] ++(3,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (v2) to[short] ++(-3,0) node[ocirc,label=left:$V_{in}$]{};
+	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
+\end{circuitikz}
+	\caption{Usando Kennelly por segunda vez.}
+	%\label{}
+\end{center}
+\end{figure}
+
+\begin{equation}
+	Z_{AC} =  \frac{\alpha_{AC} C_{1}^{2} C_2 R_{1} R_{2} S^{3} + \beta_{AC} C_1 S^{2}
+		+ \gamma_{AC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}{
+		 C_2 S \left( C_1 R_{2} S + 1 \right)
+		\left(C_1 R_1 R_{2} S + R_1 + R_{2}^{''}\right)}
+\end{equation}
+
+con
+$$
+	\alpha_{AC} = R_{1} R_{2} + 2 C_{1}^{2} C_2 R_{2}^{'} R_{2}^{''}
+$$
+$$
+	\beta_{AC} = 2 C_{1} R_1 R_{2}^{2} + 2 C_2 R_{1}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +
+		C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} +
+		C_2 R_{2}^{'2} R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
+$$
+$$
+	\gamma_{AC} = 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
+		C_2 R_1^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} +
+		C_2 R_{2}^{'} R_{2}^{''}
+$$
+
+\begin{equation}
+	Z_{AB} = \frac{3 C_1 R_1 R_{2} S + 3 R_1 + 2 R_{2}^{'} + R_{2}^{''}}{C_1 R_{2} S + 1}
+\end{equation}
+
+\begin{equation}
+	Z_{BC} =
+	\frac{ \left( R_1 R_{2} + 2 R_{2}^{'} R_{2}^{''} \right )C_1^{2} C_2 R_1 R_{2} S^{3} +
+	\beta_{BC} C_1 S^{2} + \gamma_{BC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}
+	{C_2 S \left(C_1 R_{2} S + 1\right) \left(C_1 R_1 R_{2} S + R_1 + R_{2}^{'} \right)}
+\end{equation}
+con
+$$
+	\beta_{BC} = 2 C_1 R_1 R_{2}^{2} + 2C_2 R_1^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +
+	C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} + 
+	C_2 R_{2}^{'2} R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
+$$
+
+$$
+	\gamma_{BC} = 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
+	C_2 R_1^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} +
+	C_2 R_{2}^{'} R_{2}^{''} 
+$$
+
+Definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $ y $Z_{BC}^{'} = Z_{AC} // R_3 $
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A){};
+	\draw (A.-) to[short] ++(-1,0) to[generic, l = $Z_{AC}^{'}$] ++(-2,0) node[](v1){} to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
+	\draw (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$] ++(6.5,0) to[short] ++(0,-3);
+	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
+\end{circuitikz}
+	\caption{Modelo final.}
+	%\label{}
+\end{center}
+\end{figure}
+
+\begin{equation}
+	H \left( S \right) = \frac{Z_{BC}^{'}}{Z_{AC}^{'}} = 
+	(C_1^{2}*C_2*R_1^{2}*R_{2}^{2}*s^{3} +
+	C_1^{2}*C_2*R_1*R_{2}^{2}*r3*s^{3} +
+	2*C_1^{2}*C_2*R_1*R_{2}*R_{2}^{'}*R_{2}^{''}*s^{3} +
+	2*C_1^{2}*R_1*R_{2}^{2}*s^{2} +
+	2*C_1*C_2*R_1^{2}*R_{2}*s^{2} +
+	C_1*C_2*R_1*R_{2}*R_{2}^{'}*s^{2} +
+	C_1*C_2*R_1*R_{2}*R_{2}^{''}*s^{2} +
+	2*C_1*C_2*R_1*R_{2}*r3*s^{2} +
+	2*C_1*C_2*R_1*R_{2}^{'}*R_{2}^{''}*s^{2} +
+	C_1*C_2*R_{2}*R_{2}^{''}*r3*s^{2} +
+	C_1*C_2*R_{2}^{'2}*R_{2}^{''}*s^{2} +
+	C_1*C_2*R_{2}^{'}*R_{2}^{''2}*s^{2} +
+	4*C_1*R_1*R_{2}*s +
+	C_1*R_{2}*R_{2}^{'}*s +
+	C_1*R_{2}*R_{2}^{''}*s +
+	C_2*R_1^{2}*s +
+	C_2*R_1*R_{2}^{'}*s +
+	C_2*R_1*R_{2}^{''}*s +
+	C_2*R_1*r3*s +
+	C_2*R_{2}^{'}*R_{2}^{''}*s +
+	C_2*R_{2}^{''}*r3*s +
+	2*R_1 + R_{2}^{'} +
+	R_{2}^{''})
+	/
+	(C_1^{2}*C_2*R_1^{2}*R_{2}^{2}*s^{3} +
+	C_1^{2}*C_2*R_1*R_{2}^{2}*r3*s^{3} +
+	2*C_1^{2}*C_2*R_1*R_{2}*R_{2}^{'}*R_{2}^{''}*s^{3} +
+	2*C_1^{2}*R_1*R_{2}^{2}*s^{2} +
+	2*C_1*C_2*R_1^{2}*R_{2}*s^{2} +
+	C_1*C_2*R_1*R_{2}*R_{2}^{'}*s^{2} +
+	C_1*C_2*R_1*R_{2}*R_{2}^{''}*s^{2} +
+	2*C_1*C_2*R_1*R_{2}*r3*s^{2} +
+	2*C_1*C_2*R_1*R_{2}^{'}*R_{2}^{''}*s^{2} +
+	C_1*C_2*R_{2}*R_{2}^{'}*r3*s^{2} +
+	C_1*C_2*R_{2}^{'2}*R_{2}^{''}*s^{2} +
+	C_1*C_2*R_{2}^{'}*R_{2}^{''2}*s^{2} +
+	4*C_1*R_1*R_{2}*s +
+	C_1*R_{2}*R_{2}^{'}*s +
+	C_1*R_{2}*R_{2}^{''}*s +
+	C_2*R_1^{2}*s +
+	C_2*R_1*R_{2}^{'}*s +
+	C_2*R_1*R_{2}^{''}*s +
+	C_2*R_1*r3*s +
+	C_2*R_{2}^{'}*R_{2}^{''}*s +
+	C_2*R_{2}^{'}*r3*s +
+	2*R_1 + R_{2}^{'} +
+	R_{2}^{''})
+\end{equation}
+
+\end{document}
