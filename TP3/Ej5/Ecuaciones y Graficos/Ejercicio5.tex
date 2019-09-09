@@ -80,15 +80,15 @@ Aplicando Kennelly para transformar de configuración Pi a Estrella:
 
 Siendo:
 
-\begin{equation}
+\begin{equation*}
 	Z_{A} = \frac{R_{2}^{'}}{C_{1} R_{2} S + 1}
-\end{equation}	
-\begin{equation}
+\end{equation*}	
+\begin{equation*}
 	Z_{B} = \frac{R_{2}^{''}}{C_{1} R_{2} S + 1}
-\end{equation}	
-\begin{equation}
+\end{equation*}	
+\begin{equation*}
 	Z_{C} = \frac{C_{1} R_{2}^{''} R_{2}^{'} S}{C_{1} R_{2} S + 1}
-\end{equation}
+\end{equation*}
 
 Tomando $Z_{A} + R_1$, $Z_{B} + R_1$ y $Z_{C} + \frac{1}{S C_2}$ y aplicando Kennelly nuevamente, se obtiene: 
 
@@ -119,50 +119,61 @@ Tomando $Z_{A} + R_1$, $Z_{B} + R_1$ y $Z_{C} + \frac{1}{S C_2}$ y aplicando Ken
 \end{center}
 \end{figure}
 
-\begin{equation}
-	Z_{AC} =  \frac{\alpha_{AC} C_{1}^{2} C_2 R_{1} R_{2} S^{3} + \beta_{AC} C_1 S^{2}
+\begin{equation*}
+	Z_{AC} =  \frac{\alpha_{AC} {C_{1}}^{2} C_2 R_{1} R_{2} S^{3} + \beta_{AC} C_1 S^{2}
 		+ \gamma_{AC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}{
 		 C_2 S \left( C_1 R_{2} S + 1 \right)
 		\left(C_1 R_1 R_{2} S + R_1 + R_{2}^{''}\right)}
-\end{equation}
+\end{equation*}
 
 con
 $$
-	\alpha_{AC} = R_{1} R_{2} + 2 C_{1}^{2} C_2 R_{2}^{'} R_{2}^{''}
+	\alpha_{AC} = R_{1} R_{2} + 2 {C_{1}}^{2} C_2 R_{2}^{'} R_{2}^{''}
 $$
-$$
-	\beta_{AC} = 2 C_{1} R_1 R_{2}^{2} + 2 C_2 R_{1}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +
-		C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} +
+
+\begin{equation*}
+\begin{split}
+	\beta_{AC} =\ & 2 C_{1} R_1 R_{2}^{2} + 2 C_2 R_{1}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +
+		C_2 R_1 R_{2} R_{2}^{''} +\\
+		&2 C_2 R_1 R_{2}^{'} R_{2}^{''} +
 		C_2 R_{2}^{'2} R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
-$$
-$$
-	\gamma_{AC} = 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
-		C_2 R_1^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} +
-		C_2 R_{2}^{'} R_{2}^{''}
-$$
+\end{split}
+\end{equation*}
 
-\begin{equation}
+\begin{equation*}
+\begin{split}
+	\gamma_{AC} =\ & 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
+		C_2 {R_{1}}^{2} +\\
+		&C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''}
+\end{split}
+\end{equation*}
+
+\begin{equation*}
 	Z_{AB} = \frac{3 C_1 R_1 R_{2} S + 3 R_1 + 2 R_{2}^{'} + R_{2}^{''}}{C_1 R_{2} S + 1}
-\end{equation}
+\end{equation*}
 
-\begin{equation}
+\begin{equation*}
 	Z_{BC} =
-	\frac{ \left( R_1 R_{2} + 2 R_{2}^{'} R_{2}^{''} \right )C_1^{2} C_2 R_1 R_{2} S^{3} +
+	\frac{ \left( R_1 R_{2} + 2 R_{2}^{'} R_{2}^{''} \right ){C_{1}}^{2} C_2 R_1 R_{2} S^{3} +
 	\beta_{BC} C_1 S^{2} + \gamma_{BC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}
 	{C_2 S \left(C_1 R_{2} S + 1\right) \left(C_1 R_1 R_{2} S + R_1 + R_{2}^{'} \right)}
-\end{equation}
+\end{equation*}
 con
-$$
-	\beta_{BC} = 2 C_1 R_1 R_{2}^{2} + 2C_2 R_1^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +
-	C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} + 
-	C_2 R_{2}^{'2} R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
-$$
+\begin{equation*}
+\begin{split}
+	\beta_{BC} =\ & 2 C_1 R_1 {R_{2}}^{2} + 2C_2 {R_{1}}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +\\
+	&C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} + 
+	C_2 {R_{2}^{'}}^2 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
+\end{split}
+\end{equation*}
 
-$$
-	\gamma_{BC} = 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
-	C_2 R_1^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} +
+\begin{equation*}
+\begin{split}
+	\gamma_{BC} =  4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
+	C_2 {R_{1}}^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} +
 	C_2 R_{2}^{'} R_{2}^{''} 
-$$
+\end{split}
+\end{equation*}
 
 Definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $ y $Z_{BC}^{'} = Z_{AC} // R_3 $
 
@@ -176,58 +187,102 @@ Definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $ y $Z_{BC}^{'} = Z_{AC} // R_3 $
 	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$] ++(3,0) to[short] ++(0,-2);
 	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
 \end{circuitikz}
-	\caption{Modelo final.}
+	\caption{Usando impedancias en paralelo.}
 	%\label{}
 \end{center}
 \end{figure}
 
-\begin{equation} \hspace*{-2cm}
-	H \left( S \right) = \frac{Z_{BC}^{'}}{Z_{AC}^{'}} = 
-	\frac{ \left( R_{3} R_{2} + R_{1} R_{2} + 2 R_{2}^{''} R_{2}^{'} \right) C_{1}^{2} C_{2}
-	R_{1} R_{2} S^{3} + \alpha_H C_{1} S^{2} + \beta_H S + 2 R_{1} + R_{2}^{''} + R_{2}^{'}}
-	{\left( R_{3} R_{2} + R_{1} R_{2} + 2 R_{2}^{''} R_{2}^{'} \right)
-	C_{1}^{2} C_{2} R_{1} R_{2} S^{3} + \gamma_H C_{1} S^{2} + \delta_H S +
-	2 R_{1} + R_{2}^{''} + R_{2}^{'}}
-\end{equation}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	\node [op amp](A){};
+	\draw (A.-) to[short] ++(-1,0) to[generic, l_= $Z_{AC}^{'}$] ++(-2,0) node[](v1){} to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
+	\draw (v1) to[generic, l = $\frac{Z_{AB}}{1 - k}$] ++(0,-2) node[ground]{};
+	\draw (A.out) ++(0.5,0) to[generic, l = $\frac{Z_{AB}}{1 - \frac{1}{k}}$] ++(0,-1.5) node[ground]{};
+	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l= $Z_{BC}^{'}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
+\end{circuitikz}
+	\caption{Modelo final, aplicando Miller.}
+	%\label{}
+\end{center}
+\end{figure}
 
-con
-
-\begin{equation}
-\begin{split}
-	\alpha_H =& 2 C_{1} R_{1} {R_{2}}^{2} + 2 C_{2} R_{3} R_{1} R_{2} + 
-	C_{2} R_{3} R_{2} R_{2}^{''} + 2 C_{2} {R_{1}}^{2} R_{2} + \\
-	&C_{2} R_{1} R_{2} R_{2}^{''} + C_{2} R_{1} R_{2} R_{2}^{'} + 
-	2 C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{2} {R_{2}^{''}}^{2} R_{2}^{'} +
-	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
-\end{split}
-\end{equation}
+Observando, se puede resolver el circuito con las condiciones de un amplificador operacional inversor:
 
 \begin{equation}
-\begin{split}
-	\beta_H =& 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + 
-	C_{2} R_{3} R_{1} +	C_{2} R_{3} R_{2}^{''} +\\
-	&C_{2} {R_{1}}^{2} S +
-	C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
-	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
-\end{split}
+	H(s) = -A_{o} \frac{ \alpha_H S^{3} + \beta_H S^{2} + \gamma_H S + 2 R_{1} + R_{2}^{''} + R_{2}^{'}}
+	{\delta_H S^{3} + \eta_H S^{2} + \lambda S + 2 A_{o} R_{1} + A_{o} R_{2}^{''} + A_{o} R_{2}^{'} + 4 R_{1} + 2 R_{2}^{''} + 2 R_{2}^{'}}
 \end{equation}
 
-\begin{equation}
-\begin{split}
-	\gamma_H =& 2 C_{1} R_{1} {R_{2}}^{2} + 2 C_{2} R_{3} R_{1} R_{2} +
-	C_{2} R_{3} R_{2} R_{2}^{'} + 2 C_{2} {R_{1}}^{2} R_{2} + C_{2} R_{1} R_{2} R_{2}^{''} +\\
-	&C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
-	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
-\end{split}
-\end{equation}
+Siendo:
 
-\begin{equation}
+\begin{equation*}
 \begin{split}
-	\delta_H =& 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} +
-	C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{'} +\\
-	&C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
-	C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+	\alpha_H =\ & {C_{1}}^{2} C_{2} R_{3} R_{1} {R_{2}}^{2} + {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 2 {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}
 \end{split}
-\end{equation}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+	\beta_H =\ & 2 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 C_{1} C_{2} R_{3} R_{1} R_{2} + C_{1} C_{2} R_{3} R_{2} R_{2}^{''} + 2 C_{1} C_{2} {R_{1}}^{2} R_{2} + C_{1} C_{2} R_{1} R_{2} R_{2}^{''} +\\
+	&C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+	\gamma_H =\ & 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{''} + C_{2} {R_{1}}^{2} +\\
+	&C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+ \delta_H =\ & A_{o} {C_{1}}^{2} C_{2} R_{3} R_{1} {R_{2}}^{2} + A_{o} {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 2 A_{o} {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'} + 2 {C_{1}}^{2} C_{2} R_{3} R_{1} {R_{2}}^{2} +\\
+ &2 {C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 4 {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+	\eta_H =\ & 2 A_{o} {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 A_{o} C_{1} C_{2} R_{3} R_{1} R_{2} + A_{o} C_{1} C_{2} R_{3} R_{2} R_{2}^{'} + 2 A_{o} C_{1} C_{2} {R_{1}}^{2} R_{2} +\\
+	&A_{o} C_{1} C_{2} R_{1} R_{2} R_{2}^{''} + A_{o} C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 A_{o} C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + A_{o} C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} +\\
+	&A_{o} C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2} + 4 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 4 C_{1} C_{2} R_{3} R_{1} R_{2} + C_{1} C_{2} R_{3} R_{2} R_{2}^{''} + C_{1} C_{2} R_{3} R_{2} R_{2}^{'} +\\
+	&4 C_{1} C_{2} {R_{1}}^{2} R_{2} + 2 C_{1} C_{2} R_{1} R_{2} R_{2}^{''} + 2 C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 4 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + 2 C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + \\
+	&2 C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+	\lambda_H =\ & 4 A_{o} C_{1} R_{1} R_{2} + A_{o} C_{1} R_{2} R_{2}^{''} + A_{o} C_{1} R_{2} R_{2}^{'} + A_{o} C_{2} R_{3} R_{1} + A_{o} C_{2} R_{3} R_{2}^{'} + A_{o} C_{2} {R_{1}}^{2} +\\
+	&A_{o} C_{2} R_{1} R_{2}^{''} + A_{o} C_{2} R_{1} R_{2}^{'} + A_{o} C_{2} R_{2}^{''} R_{2}^{'} + 8 C_{1} R_{1} R_{2} + 2 C_{1} R_{2} R_{2}^{''} + 2 C_{1} R_{2} R_{2}^{'} +\\
+	&2 C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{''} + C_{2} R_{3} R_{2}^{'} + 2 C_{2} {R_{1}}^{2} + 2 C_{2} R_{1} R_{2}^{''} + 2 C_{2} R_{1} R_{2}^{'} + 2 C_{2} R_{2}^{''} R_{2}^{'}
+\end{split}
+\end{equation*}
+
+Si se considera $R_3 \\gg R_1$:
+
+\begin{equation*}
+\begin{split}
+	\alpha_H & =\  R_3 \left( {C_{1}}^{2} C_{2} R_{1} {R_{2}}^{2} + \underbrace{\frac{{C_{1}}^{2} C_{2} {R_{1}}^{2} {R_{2}}^{2} + 2 {C_{1}}^{2} C_{2} R_{1} R_{2} R_{2}^{''} R_{2}^{'}}{R_3}}_{\approx 0} \right) \\
+	& \approx {C_{1}}^{2} C_{2} \underbrace{R_{1} R_3}_{\approx 0} {R_{2}}^{2} \approx 0
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+	\beta_H =\ & 2 {C_{1}}^{2} R_{1} {R_{2}}^{2} + 2 C_{1} C_{2} R_{3} R_{1} R_{2} + C_{1} C_{2} R_{3} R_{2} R_{2}^{''} + C_{1} C_{2} R_{1} R_{2} R_{2}^{''} +\\
+	&C_{1} C_{2} R_{1} R_{2} R_{2}^{'} + 2 C_{1} C_{2} R_{1} R_{2}^{''} R_{2}^{'} + C_{1} C_{2} {R_{2}^{''}}^{2} R_{2}^{'} + C_{1} C_{2} R_{2}^{''} {R_{2}^{'}}^{2}
+\end{split}
+\end{equation*}
+
+\begin{equation*}
+\begin{split}
+	\gamma_H =\ & 4 C_{1} R_{1} R_{2} + C_{1} R_{2} R_{2}^{''} + C_{1} R_{2} R_{2}^{'} + C_{2} R_{3} R_{1} + C_{2} R_{3} R_{2}^{''} + C_{2} {R_{1}}^{2} +\\
+	&C_{2} R_{1} R_{2}^{''} + C_{2} R_{1} R_{2}^{'} + C_{2} R_{2}^{''} R_{2}^{'}
+\end{split}
+\end{equation*}
 
 \end{document}
