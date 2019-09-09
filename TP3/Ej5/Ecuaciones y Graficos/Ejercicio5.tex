@@ -30,19 +30,18 @@
 	\draw (P.right) to[open] ++(-0.5,0) to[short] ++(0,1.5) to[C, l = $C_1$] ++(2.2,0) to[short] ++(0,-1.5);
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
-	\caption{Circuito dado.}
-	%\label{}
+	\caption{Circuito a analizar.}
+	\label{fig:circuitoini}
 \end{center}
 \end{figure}
 
-$R_2 = R_{2}^{'} + R_{2}^{''} $, con
+Para facilitar el análisis, se reemplaza el potenciometro $R_2$ con dos resistencias fijas, tal que se cumpla $R_2 = R_{2}^{'} + R_{2}^{''} $, considerando que
 \begin{equation}
 \begin{split}
 	R_{2}^{'} &= \psi R_2\\ R_{2}^{''} &= \left( 1 - \psi \right) R_2
 \end{split}
 \label{equ:r2p}
 \end{equation}
-
 
 \begin{figure}[H]
 \begin{center}
@@ -60,11 +59,11 @@ $R_2 = R_{2}^{'} + R_{2}^{''} $, con
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
 	\caption{Reemplazando $R_2$ por resistencias fijas.}
-	%\label{}
+	\label{fig:kennelly1}
 \end{center}
 \end{figure}
 
-Aplicando Kennelly para transformar de configuración Pi a Estrella:
+Luego se aplica el teorema de Kennelly para transformar la conexión tipo Pi, marcada en rojo en la Figura (\ref{fig:kennelly1}), a una tipo T.
 
 \begin{figure}[H]
 \begin{center}
@@ -80,8 +79,8 @@ Aplicando Kennelly para transformar de configuración Pi a Estrella:
 	\draw (aux1) to[short] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
-	\caption{Usando Kennelly por primera vez.}
-	%\label{}
+	\caption{Resultado de aplicar el teorema de Kennelly por primera vez.}
+	\label{fig:kennelly2}
 \end{center}
 \end{figure}
 
@@ -97,7 +96,7 @@ Siendo:
 	Z_{C} = \frac{C_{1} R_{2}^{''} R_{2}^{'} S}{C_{1} R_{2} S + 1}
 \end{equation*}
 
-Tomando $Z_{A} + R_1$, $Z_{B} + R_1$ y $Z_{C} + \frac{1}{S C_2}$ y aplicando Kennelly nuevamente, se obtiene: 
+Nuevamente se aplica Kennelly, pero esta vez para transformar una configuración del tipo T al tipo Pi. Se utiliza la conexión marcada en rojo en la Figura (\ref{fig:kennelly2}).
 
 \begin{figure}[H]
 \begin{center}
@@ -121,10 +120,12 @@ Tomando $Z_{A} + R_1$, $Z_{B} + R_1$ y $Z_{C} + \frac{1}{S C_2}$ y aplicando Ken
 	\draw (aux4) to[short] ++(-1,0)node[ocirc,label=left:$V_{in}$]{};
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
-	\caption{Usando Kennelly por segunda vez.}
+	\caption{Resultado de aplicar el teorema de Kennelly por segunda vez.}
 	%\label{}
 \end{center}
 \end{figure}
+
+Obteniendose así:
 
 \begin{equation*}
 	Z_{AC} =  \frac{\alpha_{AC} {C_{1}}^{2} C_2 R_{1} R_{2} S^{3} + \beta_{AC} C_1 S^{2}
@@ -134,10 +135,11 @@ Tomando $Z_{A} + R_1$, $Z_{B} + R_1$ y $Z_{C} + \frac{1}{S C_2}$ y aplicando Ken
 \end{equation*}
 
 con
-$$
+\begin{equation*}
+\begin{split}
 	\alpha_{AC} = R_{1} R_{2} + 2 {C_{1}}^{2} C_2 R_{2}^{'} R_{2}^{''}
-$$
-
+\end{split}
+\end{equation*}
 \begin{equation*}
 \begin{split}
 	\beta_{AC} =\ & 2 C_{1} R_1 R_{2}^{2} + 2 C_2 R_{1}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +
@@ -146,7 +148,6 @@ $$
 		C_2 R_{2}^{'2} R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
 \end{split}
 \end{equation*}
-
 \begin{equation*}
 \begin{split}
 	\gamma_{AC} =\ & 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
@@ -173,7 +174,6 @@ con
 	C_2 {R_{2}^{'}}^2 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
 \end{split}
 \end{equation*}
-
 \begin{equation*}
 \begin{split}
 	\gamma_{BC} =  4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
@@ -182,22 +182,24 @@ con
 \end{split}
 \end{equation*}
 
-Definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $ y $Z_{BC}^{'} = Z_{AC} // R_3 $
+Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (\ref{fig:paralelo}).
 
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
 	\node [op amp](A){};
 	\draw (A.-) to[short] ++(-1,0) to[generic, l = $Z_{AC}^{'}$] ++(-2,0) node[](v1){} to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
-	\draw (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$] ++(6.5,0) to[short] ++(0,-3);
+	\draw[color=red] (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$] ++(6.5,0) to[short] ++(0,-3);
 	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
 	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$] ++(3,0) to[short] ++(0,-2);
 	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
 \end{circuitikz}
-	\caption{Usando impedancias en paralelo.}
-	%\label{}
+	\caption{Resultado de tomar las impedancias en paralelo.}
+	\label{fig:paralelo}
 \end{center}
 \end{figure}
+
+Es así que, definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $, $Z_{BC}^{'} = Z_{AC} // R_3 $ y $k = \frac{V_{out}}{V_{in}}$, se aplica el teorema de Miller a la impedancia $Z_{AB}$, señalada en la Figura (\ref{fig:paralelo}).
 
 \begin{figure}[H]
 \begin{center}
@@ -210,15 +212,16 @@ Definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $ y $Z_{BC}^{'} = Z_{AC} // R_3 $
 	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l= $Z_{BC}^{'}$] ++(3,0) to[short] ++(0,-2);
 	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
 \end{circuitikz}
-	\caption{Modelo final, aplicando Miller.}
-	%\label{}
+	\caption{Modelo final, resultado de aplicar el terorema de Miller.}
+	\label{fig:final}
 \end{center}
 \end{figure}
 
-Observando, y utilizando (\ref{equ:r2p}), se puede resolver el circuito con las condiciones de un amplificador operacional inversor:
+La transferencia del circuito de la Figura (\ref{fig:final}) corresponde a la de un amplificador inversor, por lo tanto, considerando (\ref{equ:r2p}), se puede obtener:
 \begin{equation}
-	H(s) = - \frac{\alpha_H S^{2} + \beta_H S + 2 R_{1} + R_{2}}
+	H(s) = -\frac{Z_{BC}^{'}}{Z_{AC}^{'}} = - \frac{\alpha_H S^{2} + \beta_H S + 2 R_{1} + R_{2}}
 	{\gamma_H S^{2} + \delta_H S + 2 R_{1} + R_{2}}
+	\label{equ:hs}
 \end{equation}
 
 Siendo: 
@@ -243,16 +246,8 @@ Siendo:
  \delta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} \psi
 \end{split}
 \end{equation*}
-\\
-\\
-\\
 
-\begin{center}
-	\textcolor{red}{\textbf{PONER EN EL INFORME SIMPLIFICACIÓN FINAL.}}
-\end{center}
-
-Si se considera $C_1 = 10 \ C_2$, $R_3 \gg R_1$ y $R_3 = 10 \ R_2$ se obtiene
-
+Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 \gg R_1$ y $R_3 = 10 \ R_2$, se pueden reescribir los coeficientes de (\ref{equ:hs}), obteniéndose: 
 \begin{equation*}
 \begin{split}
 	\alpha_H =\ \gamma_H =\ & 10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right]
@@ -260,18 +255,52 @@ Si se considera $C_1 = 10 \ C_2$, $R_3 \gg R_1$ y $R_3 = 10 \ R_2$ se obtiene
 \end{equation*}
 \begin{equation*}
 \begin{split}
-	\beta_H =\ & C_{2} R_{2} \left[ 10R_1 + R_2 \left(10 - \psi - 9 \psi^2 \right) \right]
+	\beta_H =\ & C_{2} R_{2} \left[ 31 R_1 + R_2 \left(10 - 9 \psi - \psi^2 \right) \right]
 \end{split}
 \end{equation*}
 \begin{equation*}
 \begin{split}
-	\gamma_H =\ & 10 {C_{2}}^{2} {R_{1}}^{2} R_{2} - 20 {C_{2}}^{2} R_{1} {R_{2}}^{2} \psi^{2} + 20 {C_{2}}^{2} R_{1} {R_{2}}^{2} \psi + 10 {C_{2}}^{2} R_{1} R_{2} R_{3}
+ \delta_H =\ & C_{2} R_{2} \left[ 31 R_1 + R_2 \psi \left(11 - \psi \right) \right]
 \end{split}
 \end{equation*}
+
+De esta forma, con los nuevos coeficientes simplificados, se obtiene de (\ref{equ:hs}) la frecuencia de corte del filtro:
+\begin{equation}
+\begin{split}
+	f_o &=\ \frac{1}{2 \pi} \sqrt{\frac{2R_1 + R_2}{\alpha_H}} = \sqrt{\frac{2R_1 + R_2}{10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right]}} = \\
+	&=\ \sqrt{\frac{2 + \frac{R_2}{R_1}}{10 \left[ 10 + 2 \psi \left(1 - \psi \right) \right]}} \cdot \frac{1}{2 \pi C_2 R_2}
+\end{split}
+\label{equ:fogeneral}
+\end{equation}
+
+Tomando tanto $\psi = 1$, como $\psi = 0$ se obtiene la misma frecuencia de corte
 \begin{equation*}
 \begin{split}
- \delta_H =\ & 2 C_{2} R_{2} \left[ 31 R_1 + R_2 \psi \left(11 - \psi \right) \right]
+	f_o &=\ \frac{\sqrt{2 + \frac{R_2}{R_1}}}{20 \pi C_2 R_2}
 \end{split}
 \end{equation*}
+
+De esta forma, se busca la variación de amplitud máxima en dicha frecuencia. Esto se realiza evaluando la transferencia del sistema en $J\omega_o$, obteniendo de esta forma $A_{0Max}$ y $A_{0Min}$. Es así que, tomando $\psi = 0$:
+\begin{equation*}
+\begin{split}
+|H(J\omega_o)| = A_{0Max} = \frac{31 R_{1} + 10 R_{2}}{31 R_{1}} \approx \frac{30 R_{1} + 10 R_{2}}{30 R_{1}} = \frac{3 R_{1} + R_{2}}{3 R_{1}}
+\end{split}
+\end{equation*}
+
+Por otro lado, con $\psi = 1$:
+\begin{equation*}
+\begin{split}
+|H(J\omega_o)| = A_{0Min} = \frac{31 R_{1}}{31 R_{1} + 10 R_{2}} \approx \frac{30 R_{1}}{30 R_{1} + 10 R_{2}} = \frac{3 R_{1}}{3 R_{1} + R_{2}}
+\end{split}
+\end{equation*}
+
+Es así que se puede determinar que
+\begin{equation*}
+\begin{split}
+\frac{3 R_{1}}{3 R_{1} + R_{2}} \leq A_0 \leq \frac{3 R_{1} + R_{2}}{3 R_{1}}
+\end{split}
+\end{equation*}
+
+
 
 \end{document}
