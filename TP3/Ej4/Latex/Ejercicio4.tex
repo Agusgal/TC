@@ -1,0 +1,30 @@
+\documentclass[a4paper]{article}
+
+\include{Header.tex}
+
+\usepackage{float}
+\usepackage{graphicx}
+
+\usepackage[american voltage]{circuitikz}
+
+\usepackage{amsmath}
+
+\usepackage{xcolor}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+\begin{document}
+
+\subsection{Introducción teórica}
+
+En el siguiente ejercicio se diseñará un circuito para posibilitar la medición de presion. Para eso se utilizará el sensor piezoeléctrico MPX2010DP y un amplificador de instrumentación capaz de amplificar la señal proveniente del sensor. El circuito podrá medir en el rango de presiones comprendido entre los $0$ y los $10kP$, para cuyo caso tendrá una salida de entre $0$ y $3,3 Volt$. Al medir la máxima diferencia de presion permitida por el sensor la señal de salida tendrá una amplitud de al menos $3,1 Volts$ y menor a $3,3 Volts$. En caso de medirse una difeencia de presion nula la salida también lo será. El circuito propuesto es el siguiente:
+
+%%Insertar Imagen del circuito utilizado.
+
+
+Como bien puede apreciarse en la figura anterior, el amplificador de instrumentación cuenta con una configuración dual con solo dos amplificadores operacionales. Ambos están siendo utilizados en su modo no inversor. Para el análisis siguiente se toman ambos op-amps como ideales.
+
+%%Continuará...
+
+\end{document}
