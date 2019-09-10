@@ -70,11 +70,36 @@ Donde GBP es un parámetro propio del operacional y suele ser del orden de los M
 
 Bajo estos supuestos se puede considerar la impedancia de entrada como una bobina con 
 \begin{align}  L=R_gC_gR_L  \ \ \ \ \ \  R_L=r_{coil} \label{eq:basicL1}\end{align}
+\flushleft
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Gyrator vs Inductor}
+Hablamos de la impedancia de entrada pero tambien es conveniente preguntarse, porque es necesario suplantar a los inductores con circuitos que se comporten de manera similar.
+Los inductores ocupan un gran tamaño respecto a el resto de los componentes que pueden ser integrados para reducir aun mas su tamaño, una desventaja del uso del gyrator, es que su rango operativo en el cual se comporta como inductancia no es muy extenso.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Impedancia de entrada.}
 
+Dado a que la caracteristica mas atractiva del gyrator es que su impedancia de entrada, bajo ciertas hipotesis, se comporta como un inductor se procedió a medirla y se contrasto con una simulación de \textbf{LTSpice} de la impedancia de entrada de un hyrator y la impedancia de entrada de una bobina, también simulada.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{ZinG.png}
+	\caption{Impedancia de entrada del Gyrator.}
+	\label{fig:ZinG}
+\end{figure}
+Puede notarse que el pico el cual presenta el Gyrator simulado no se compara con el medido, esto se atribuye a una posible resonancia que se de en la simulación la cual no se da en el circuito real. Otra cosa a notar es que el gyrator tiene un comportamiento similar a el de una bobina en un rango de frecuencias de 0 ~40 kHz
+También se midió la fase obteniendo el siguiente gráfico.
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{ZinGp.png}
+	\caption{Impedancia de entrada del Gyrator fase.}
+	\label{fig:ZinG}
+\end{figure}
+ Aquí tambien se puede notar la similtud entre las señales hasta aproximadamente 40 kHz, tambien que el cambio de fase en el gyrator medido no es tan brusco comparado  con el simulado.
+Finalmente considerando las ultimas mediciones, el rango operativo en el cual se va  a trabajar con el Gyrator será desde 1Hz~40/50 kHz.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsubsection{Elección operacional.}
+El operacional que se eligió fue un operacion \textbf{TL-084} dado a su GBP, sus pequeñas corrientes de Bias y que cuenta con 4 operacionales, la cual es una cualidad notable dado que solamente se podrá utilizar 1 integrado.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \flushleft
@@ -107,6 +132,7 @@ Q:          & Selectividad del sistema                             & =$\frac{1}{
 \caption{Parametros útiles.}
 \label{tab:utils}
 \end{table}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{High Pass.}
@@ -159,7 +185,6 @@ Vale la pena destacar que (\ref{eq:HPL}) y (\ref{eq:transgyrHPfinal}) son iguale
 Es de utilidad recordar las aproximiaciones utilizadas hasta ahora:
 \begin{align}  \frac{1}{1+\frac{s}{GBP}}\approx 1  \ \ \ R<<R_g \ \ \ C_gR_Ls << 1 \label{eq:basicL2}\end{align}
 \subsubsection{Comparación de modelos.}
-\subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
 \subsubsection{Analisis de resultados.}
 
@@ -212,7 +237,6 @@ Utilizando (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se llega a que:
 \end{equation}
 Vale la pena destacar que (\ref{eq:LPL}) y (\ref{eq:LPG}) son iguales.
 \subsubsection{Comparación de modelos.}
-\subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
 \subsubsection{Analisis de resultados.}
 \newpage
@@ -263,7 +287,6 @@ Teniendo en cuenta (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se obtiene:
 \end{align}
 Vale la pena destacar que (\ref{eq:BPL}) y (\ref{eq:BPG}) son iguales.
 \subsubsection{Comparación de modelos.}
-\subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
 \subsubsection{Analisis de resultados.}
 \newpage
@@ -307,9 +330,24 @@ Teniendo en cuenta (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se obtiene:
 \label{eq:BRG}
 \end{align}
 \subsubsection{Comparación de modelos.}
-\subsubsection{PCB.}
 \subsubsection{Respuesta en frecuencia.}
 \subsubsection{Analisis de resultados.}
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\subsection{Diseño en PCB.}
+El circuito se diseño en el software \textbf{Altium Designer} dado a las condiciones de diseño requeridas, se optó por utilizar componentes \textbf{SMD} dado a que tienen un menor error y puede mantener mas acotado el tamaño final de la placa.
+Se eligio utilizar un integrado TL084 utilizando cada opamp del mismo  para cada filtro y se pusieron capacitores de desacople para el mismo. Se obtuvo el siguiente esquemático:
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{esquematico.PNG}
+	\caption{Esquemático del circuito.}
+	\label{fig:esq}
+\end{figure}
+Luego se diseño el circuito en el PCB, se eligió utilizar una placa doble faz, dado a que al elegir utilizar componentes SMD y que tambien se deseaba que todos los componentes estén de un lado único no quedó otra opción.
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=\textwidth]{pcb.PNG}
+	\caption{PCB del circuito.}
+	\label{fig:pcb}
+\end{figure}
 \end{document}
 %\begin{align}\end{align}
