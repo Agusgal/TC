@@ -15,4 +15,4 @@ h = sp.solve([
     (vx, vout1, vfeed, vout)
 )
 #print('$V_{Out}',sp.latex((h[vout]).factor()))
-print(sp.pretty(h))
+print(sp.pretty(h))#[vout]))

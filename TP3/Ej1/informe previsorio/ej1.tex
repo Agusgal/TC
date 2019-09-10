@@ -1,0 +1,51 @@
+\documentclass[a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish, es-tabla]{babel}
+
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\captionsetup{compatibility=false}
+
+\usepackage{multirow}
+\setlength{\doublerulesep}{\arrayrulewidth}
+
+\usepackage{array}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+\usepackage[american]{circuitikz}
+
+\usepackage{fancyhdr}
+
+\usepackage{units} 
+
+\pagestyle{fancy}
+\fancyhf{}
+\lhead{22.01 Teoría de Circuitos}
+\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
+\rfoot{Página \thepage}
+\begin{document}
+
+\section{Introducción al sufrimiento.}
+
+
+\begin{equation}
+\hspace{-3cm}
+V_{out} = V_{in} \cdot \frac{\left(C_{2} C_{6} C_{7} R_{4} R_{6} R_{7} - C_{6} C_{7} R_{1} R_{3} R_{4} R_{7} S + C_{6} C_{7} R_{1} R_{3} R_{6} R_{8} S + C_{6} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} - C_{7} R_{1} R_{3} R_{4} R_{6} R_{7} S^{2}\right)}{C_{2} C_{6} C_{7} R_{4} R_{6} R_{7} + C_{6} C_{7} R_{1} R_{3} R_{6} R_{8} S + C_{6} C_{7} R_{1} R_{3} R_{7} R_{8} S + C_{6} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} + C_{7} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2}}
+\end{equation}
+
+\begin{equation}
+\hspace{-3cm}
+\frac{vi \left(- C_{2} C_{6} R_{1} R_{3} R_{4} R_{6} R_{7} S^{2} + C_{2} C_{7} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} - C_{2} R_{1} R_{3} R_{4} R_{7} S + C_{2} R_{1} R_{3} R_{6} R_{8} S + R_{4} R_{6} R_{7}\right)}{C_{2} C_{6} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} + C_{2} C_{7} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} + C_{2} R_{1} R_{3} R_{6} R_{8} S + C_{2} R_{1} R_{3} R_{7} R_{8} S + R_{4} R_{6} R_{7}}
+\end{equation}
+
+\begin{equation}
+\hspace{-3cm}
+\frac{vi \left(- C_{2} C_{6} R_{1} R_{3} R_{4} R_{6} R_{7} S^{2} + C_{2} C_{7} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} - C_{2} R_{1} R_{3} R_{4} R_{7} S + C_{2} R_{1} R_{3} R_{6} R_{8} S + R_{4} R_{6} R_{7}\right)}{C_{2} C_{6} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} + C_{2} C_{7} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} + C_{2} R_{1} R_{3} R_{6} R_{8} S + C_{2} R_{1} R_{3} R_{7} R_{8} S + R_{4} R_{6} R_{7}}
+\end{equation}
+
+\end{document}
