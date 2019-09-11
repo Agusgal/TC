@@ -143,18 +143,21 @@ class Measurer():
         print("Ingresar tension para el generador de funciones en volts pico a pico:")
         while (not good_input):
             self.voltage = input()
-            if (self.voltage.isnumeric()):
+            try:
                 self.voltage = float(self.voltage)
-                if (self.voltage >= 0.001 and self.voltage <= 5):
-                    good_input = True
-                else:
-                    print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
+            except ValueError:
+                print("Intente nuevamente con una entrada numerica.")
+            if (self.voltage >= 0.001 and self.voltage <= 5):
+                good_input = True
             else:
                 print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
+
 
         #Se pide el primer canal a medir y se valida
         good_input = False
         print("Ingresar primer canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
+        print("Se tomaran los canales de la siguiente forma para los settings de las mediciones:")
+        print("Primer canal ---> Segundo canal")
         while (not good_input):
             self.chan1 = input()
             if (self.chan1.isnumeric()):
@@ -180,6 +183,9 @@ class Measurer():
             else:
                 print("Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
 
+
+
+
     #Esta clase es el algoritmo que setea al generador y osciloscopio en las configuraciones necesarias para cada punto en el que se va a medir
     def bode(self):
         self.oscilloscope = self.openResources[OSC_RESOURC]
@@ -189,52 +195,84 @@ class Measurer():
 
         self.oscilloscope.set_bode_meas(self.chan1, self.chan2) #Se configura al osciloscopio para realizar un bode, mediciones de ratio, phase, etc.
         self.generator.set_voltage(self.voltage) #Se configura al generador con la tension elegida
-
+        self.generator.set_output(1)
         self.ratio=[]
         self.phase=[]
 
         #Algoritmo que se corre para cada punto en el que se va a querer medir.
+        div_start_chan1 = 0.001
+        div_start_chan2 = 0.001
         for ff in (self.f):
             self.generator.set_frequency(ff)                        #Se setea la frecuencia en el generador
-            self.oscilloscope.tim_div(Resources.SET, 1/ff)           #Se setea la frecuencia del osciloscopio
-            good_chan_div=False
-            div_start = 0.001
-
-            while(not good_chan_div):                               #Este bloque while setea la division del rango en lo minimo posible
+            self.oscilloscope.tim_div(Resources.SET, 1/(2*ff))           #Se setea la frecuencia del osciloscopio
+            exit_while = False
+            while(True):                                                                       #Este bloque while setea la division del rango en lo minimo posible
                 for i in [1, 2, 5]:                                                             #Las divisiones se prueban por decada, en 1, 2 y 5.
-                    self.oscilloscope.chan_div(Resources.SET, self.chan1, div_start*i)           #Se setea la division
-                    #time.sleep(0.5)
+                    self.oscilloscope.chan_div(Resources.SET, self.chan1, div_start_chan1*i)           #Se setea la division
+                    time.sleep(0.5)
                     if(self.oscilloscope.is_clipping(self.chan1)):                              #Si esta clippeando
                         pass                                                                    #No hace nada, se multiplicara div_start por otra decada si ya sale del for
-                    else:                                                                       #Si no esta clippeando
-                        good_chan_div = True                                                    #Saldra del while
-                        break                                                                   #Y sale del for
-                div_start *= 10                 #Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
-
-
-            good_chan_div = False
-            div_start = 0.001
-            while (not good_chan_div):  # Este bloque while setea la division del rango en lo minimo posible
+                    else:
+                        exit_while=True#Si no esta clippeando    #Saldra del while
+                        break               #Y sale del for
+                if (exit_while):
+                    break
+                if (div_start_chan1 != 1):
+                    div_start_chan1 *= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
+                else:
+                    break
+            exit_while=False
+            while (True):  # Este bloque while setea la division del rango en lo minimo posible
                 for i in [1, 2, 5]:  # Las divisiones se prueban por decada, en 1, 2 y 5.
-                    self.oscilloscope.chan_div(Resources.SET, self.chan2, div_start * i)  # Se setea la division
-                    #time.sleep(0.5)
+                    self.oscilloscope.chan_div(Resources.SET, self.chan2, div_start_chan2 * i)  # Se setea la division
+                    time.sleep(0.5)
                     if (self.oscilloscope.is_clipping(self.chan2)):  # Si esta clippeando
-                        pass # No hace nada, se multiplicara div_start por otra decada si ya sale del for
-                    else:  # Si no esta clippeando
-                        good_chan_div = True  # Saldra del while
+                        pass  # No hace nada, se multiplicara div_start por otra decada si ya sale del for
+                    else:  # Si no esta clippeando    #Saldra del while
+                        exit_while=True
                         break  # Y sale del for
-                div_start *= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
+                if(exit_while):
+                    break
+                if (div_start_chan2 != 1):
+                    div_start_chan2 *= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
+                else:
+                    break
 
             med=self.oscilloscope.measure_stats()  #Se le pide al osciloscopio las mediciones
             med = med.split(',')
-            self.ratio.append(med[0])
-            self.phase.append(med[1])
-            print("Ratio:",med[0])
-            print("Phase:", med[1])
-        #plt.plot(self.f, self.ratio)
-        #plt.plot(self.f, self.phase)
+            self.ratio.append(float(med[0]))
+            self.phase.append(float(med[1]))
 
-        #plt.show()
+            if (div_start_chan1 != 1):
+                div_start_chan1 /= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
+            else:
+                div_start_chan1 = 0.001
+
+            if (div_start_chan2 != 1):
+                div_start_chan2 /= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
+            else:
+                div_start_chan2 = 0.001
+
+            print(float(med[0]))
+            print(float(med[1]))
+
+        plt.xscale("log")
+        plt.plot(self.f, self.ratio, label="Amplitud")
+        plt.legend()
+        plt.show()
+        plt.xscale("log")
+        plt.plot(self.f, self.phase, label="Fase")
+        plt.legend()
+        plt.show()
+
+        # file = open("Mediciones/bode.csv", "w+")
+        #
+        # file.write(self.f + "\r\n")
+        # file.write(self.ratio + "\r\n")
+        # file.write(self.phase + "\r\n")
+        #
+        # file.close()
+
 
 
     def tran(self):
@@ -268,14 +306,14 @@ class Measurer():
         print("Ingresar la tension a la que se desea el generador de funciones.")
         while (not good_input):
             self.voltage = input()
-            if (self.voltage.isnumeric()):
+            if (self.voltage.isdigit()):
                 self.voltage = float(self.voltage)
                 if (self.voltage >= 0.001 and self.voltage <= 5):
                     good_input = True
                 else:
                     print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
             else:
-                print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
+                print("Intente nuevamente con una entrada numerica.")
 
         good_input = False
         print("Ingresar la tension a la que se desea el generador de funciones.")
