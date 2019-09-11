@@ -11,10 +11,86 @@
 
 \usepackage{xcolor}
 
+\usepackage{multirow}
+
 \usepackage{caption}
 \usepackage{subcaption}
 
 \begin{document}
+
+\subsection{Fisiología del oído}
+
+La fisiología auditiva puede ser dividida en tres estructuras:
+\begin{itemize}
+	\item Oído externo:
+	Este conforma parte del órgano periférico encargado de la conducción de estímulos externos, transmitiendolos hacia el canal auditivo externo. Las paredes rígidas de este último evitan que el sonido sea absorbido por por los demás tejidos blandos.
+	\item Oído medio:
+	Compuesto por el sistema timpanoosicular (membrana timpánica y los tres huesillos: martillo, yunque y estribo), cumple con la función tanto de transmitir las señales del ambiente, como de proteger las estructuras neurosensoriales del oído interno y de la ventana redonda.
+	\item Oído interno:
+	Constituido por el laberinto óseo y dentro de este, el membranoso. Comprende dos aparatos desde el punto de vista anatómico y funcional: el coclear, encargado de la audición y por ende, del desarrollo del lenguaje, y el vestibular, que es el órgano que se ocupa del equilibrio\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.} \footnote{``Cómo Funciona el oído - Inicio Blog Beltone España'', Inicio Blog Beltone España, 2019. [Online]. Disponible: http://blog.beltone.es/como-funciona-el-oido/ear\_cyan\_10-jpg/. [Accessed: 11- Sep- 2019].}.
+\end{itemize}
+
+\begin{center}
+\textcolor{red}{\textbf{ESTA NOTA EN REALIDAD DEBERÍA IR EN LA CAPTION DE LA FIGURA DE ABAJO.}}
+\end{center}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/Partes-del-oido.png}
+	\caption{Estructura interna del oído.}
+	\label{fig:oido}
+\end{figure}
+
+La señal captada se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo.
+
+A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}. 
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
+	\caption{Ganancia del oído externo, medio y total.}
+	\label{fig:oidoganancia}
+\end{figure}
+
+Es así que se presenta una división de las bandas de frecuencia audibles por el oído humano\footnote{``Ecualización Básica: Todo lo que necesitas saber sobre la Ecualización | LANDR Blog'', LANDR Blog, 2019. [Online]. Available: https://blog.landr.com/es/ecualizacion-basica-todo-lo-que-necesitas-saber-sobre-la-ecualizacion/. [Accessed: 11- Sep- 2019].}.
+
+%\begin{table}[H]
+%\begin{center}
+%\hspace*{-2.75cm}
+%\begin{tabular}{|c|c|c|c|c|c|}
+%\hline
+%\multicolumn{2}{|c|}{Bajos}           & \multicolumn{2}{c|}{Medios}           & \multicolumn{2}{c|}{Altos}                                                  \\ \hline
+%Frecuencia [Hz]   & División          & Frecuencia [Hz]     & División        & Frecuencia [Hz]                        & División                           \\ \hline
+%20 $\sim$ 40   & Graves profundos  & 300 $\sim$ 600   & Gama media-baja & \multirow{2}{*}{5000 $\sim$ 10000}  & \multirow{2}{*}{Gama alta}         \\ \cline{1-4}
+%40 $\sim$ 80   & Graves bajos      & 600 $\sim$ 1200  & Gama media      &                                        &                                    \\ \hline
+%80 $\sim$ 160  & Graves medios     & 1200 $\sim$ 2400 & Gama superior   & \multirow{2}{*}{10000 $\sim$ 20000} & \multirow{2}{*}{Gama extrema-alta} \\ \cline{1-4}
+%160 $\sim$ 300 & Graves superiores & 2400 $\sim$ 5000 & Gama presencial &                                        &                                    \\ \hline
+%\end{tabular}
+%\caption{División del espectro de frecuencias audibles.}
+%\label{table:divfreq}
+%\end{center}
+%\end{table}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/FrequencySpectrumDivision.png}
+	\caption{División del espectro de frecuencias audibles.}
+	\label{fig:divfreq}
+\end{figure}
+
+\begin{center}
+\textcolor{red}{\textbf{ELEGIR ENTRE DIBUJO Y TABLA.}}
+\end{center}
+
+Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ db$, la segunda posee un umbral mínimo de $60 \ db$. 
+
+Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas\footnote{"Escuchar sin riesgos!", Who.int, 2019. [Online]. Available: https://www.who.int/pbd/deafness/activities/MLS\_Brochure\_Spanish\_lowres\_for\_web.pdf. [Accessed: 11- Sep- 2019].}.
+
+\subsection{Funcionamiento de un ecualizador}
+
+Un equalizador es un dispositivo que se caracteriza por modificar la amplitud de los coeficientes de Fourier de una señal. En otras palabras, permite modificar la ganancia de de las frecuencias bajas, medias y/o altas de una señal. Para ello, se basa en la combinación de distintos filtros pasa-banda, cuya combinación permite dar con la configuración deseada.
+
+Existen distintos tipos de ecualizadores, con mayor y menor cantidad de bandas, es decir, filtros selectores que amplifican o atenúan ciertas frecuencias. En el presente informe se desarrolló un filtro de tres bandas. Para ello se analizó el circuito brindado por la cátedra, mostrado en la Figura (\ref{fig:circuitoini}).
 
 \begin{figure}[H]
 \begin{center}
@@ -42,6 +118,7 @@ Para facilitar el análisis, se reemplaza el potenciometro $R_2$ con dos resiste
 \end{split}
 \label{equ:r2p}
 \end{equation}
+siendo $0 \leq \psi \leq 1$.
 
 \begin{figure}[H]
 \begin{center}
@@ -64,7 +141,6 @@ Para facilitar el análisis, se reemplaza el potenciometro $R_2$ con dos resiste
 \end{figure}
 
 Luego se aplica el teorema de Kennelly para transformar la conexión tipo Pi, marcada en rojo en la Figura (\ref{fig:kennelly1}), a una tipo T.
-
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -85,7 +161,6 @@ Luego se aplica el teorema de Kennelly para transformar la conexión tipo Pi, ma
 \end{figure}
 
 Siendo:
-
 \begin{equation*}
 	Z_{A} = \frac{R_{2}^{'}}{C_{1} R_{2} S + 1}
 \end{equation*}	
@@ -97,7 +172,6 @@ Siendo:
 \end{equation*}
 
 Nuevamente se aplica Kennelly, pero esta vez para transformar una configuración del tipo T al tipo Pi. Se utiliza la conexión marcada en rojo en la Figura (\ref{fig:kennelly2}).
-
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -110,7 +184,6 @@ Nuevamente se aplica Kennelly, pero esta vez para transformar una configuración
 	\draw (v1) to[short] ++(1.5,0) node[](aux2){};
 	\draw[color=red] (aux2) to[short] ++(2,0) to[R, l_= $R_3$] ++(0,3);
 	\draw[color=red] (aux2) to[generic, l_= $Z_{BC}$] ++(0,3) node[](v3){};
-	
 	
 	\draw (v2) to[generic, l = $Z_{AB}$] (v3);
 	\draw[color=red] (v3) to[short] ++(2,0) node[](aux3){};
@@ -126,14 +199,12 @@ Nuevamente se aplica Kennelly, pero esta vez para transformar una configuración
 \end{figure}
 
 Obteniendose así:
-
 \begin{equation*}
 	Z_{AC} =  \frac{\alpha_{AC} {C_{1}}^{2} C_2 R_{1} R_{2} S^{3} + \beta_{AC} C_1 S^{2}
 		+ \gamma_{AC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}{
 		 C_2 S \left( C_1 R_{2} S + 1 \right)
 		\left(C_1 R_1 R_{2} S + R_1 + R_{2}^{''}\right)}
 \end{equation*}
-
 con
 \begin{equation*}
 \begin{split}
@@ -183,7 +254,6 @@ con
 \end{equation*}
 
 Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (\ref{fig:paralelo}).
-
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -200,7 +270,6 @@ Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (
 \end{figure}
 
 Es así que, definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $, $Z_{BC}^{'} = Z_{AC} // R_3 $ y $k = \frac{V_{out}}{V_{in}}$, se aplica el teorema de Miller a la impedancia $Z_{AB}$, señalada en la Figura (\ref{fig:paralelo}).
-
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -225,7 +294,6 @@ La transferencia del circuito de la Figura (\ref{fig:final}) corresponde a la de
 \end{equation}
 
 Siendo: 
-
 \begin{equation*}
 \begin{split}
 	\alpha_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}
@@ -264,7 +332,7 @@ Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 \g
 \end{split}
 \end{equation*}
 
-De esta forma, con los nuevos coeficientes simplificados, se obtiene de (\ref{equ:hs}) la frecuencia de corte del filtro:
+Es así que, con los nuevos coeficientes simplificados, se obtiene de (\ref{equ:hs}) la frecuencia de corte del filtro:
 \begin{equation}
 \begin{split}
 	f_o &=\ \frac{1}{2 \pi} \sqrt{\frac{2R_1 + R_2}{\alpha_H}} = \sqrt{\frac{2R_1 + R_2}{10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right]}} = \\
@@ -280,7 +348,7 @@ Tomando tanto $\psi = 1$, como $\psi = 0$ se obtiene la misma frecuencia de cort
 \end{split}
 \end{equation*}
 
-De esta forma, se busca la variación de amplitud máxima en dicha frecuencia. Esto se realiza evaluando la transferencia del sistema en $J\omega_o$, obteniendo de esta forma $A_{0Max}$ y $A_{0Min}$. Es así que, tomando $\psi = 0$:
+De esta forma, se busca la variación de amplitud máxima en dicha frecuencia. Esto se realiza evaluando la transferencia del sistema en $J\omega_o$, obteniendo de esta forma $A_{0Max}$ y $A_{0Min}$. Luego, tomando $\psi = 0$:
 \begin{equation*}
 \begin{split}
 |H\left(J\omega_o\right)| = A_{0Max} = \frac{31 R_{1} + 10 R_{2}}{31 R_{1}} \approx \frac{30 R_{1} + 10 R_{2}}{30 R_{1}} = \frac{3 R_{1} + R_{2}}{3 R_{1}}
@@ -294,13 +362,29 @@ Por otro lado, con $\psi = 1$:
 \end{split}
 \end{equation*}
 
-Es así que se puede determinar que
+Se determina de esta forma que
 \begin{equation*}
 \begin{split}
 \frac{3 R_{1}}{3 R_{1} + R_{2}} \leq A_0 \leq \frac{3 R_{1} + R_{2}}{3 R_{1}}
 \end{split}
 \end{equation*}
 
+Además, mediante el uso de (\ref{equ:hs}), se realiza un diagrama de polos y ceros en el plano $S$, variando el factor $\psi$. De esta forma se obtiene la Figura (\ref{fig:zplanepsi}).
 
+\begin{figure}[H]
+	\includegraphics[width=\textwidth]{Imagenes/Zplanepsi.png}
+\caption{Diagrama de polos y ceros variando $\psi$ entre 0 y 1.}
+	\label{fig:zplanepsi}
+\end{figure}
+
+Debido a que, tanto los polos como los ceros del sistema, sin importar el valor de $\psi$, se encuentran en el semiplano izquierdo, se obtiene el menor diagrama de fase posible, en consecuencia, este sistema es de fase mínima. 
+
+\subsection{Desarrollo del circuito y selección de componentes}
+
+Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$, pero considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos)
+
+%115,27
+%1k
+%9,82k
 
 \end{document}
