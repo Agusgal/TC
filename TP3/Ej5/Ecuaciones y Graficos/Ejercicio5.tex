@@ -54,29 +54,29 @@ A continuación, se realiza un detenimiento en el análisis de la ganancia del o
 
 Es así que se presenta una división de las bandas de frecuencia audibles por el oído humano\footnote{``Ecualización Básica: Todo lo que necesitas saber sobre la Ecualización | LANDR Blog'', LANDR Blog, 2019. [Online]. Available: https://blog.landr.com/es/ecualizacion-basica-todo-lo-que-necesitas-saber-sobre-la-ecualizacion/. [Accessed: 11- Sep- 2019].}.
 
-\begin{table}[H]
-\begin{center}
-\hspace*{-2.75cm}
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
-\multicolumn{2}{|c|}{Bajos}           & \multicolumn{2}{c|}{Medios}           & \multicolumn{2}{c|}{Altos}                                                  \\ \hline
-Frecuencia [Hz]   & División          & Frecuencia [Hz]     & División        & Frecuencia [Hz]                        & División                           \\ \hline
-20 $\sim$ 40   & Graves profundos  & 300 $\sim$ 600   & Gama media-baja & \multirow{2}{*}{5000 $\sim$ 10000}  & \multirow{2}{*}{Gama alta}         \\ \cline{1-4}
-40 $\sim$ 80   & Graves bajos      & 600 $\sim$ 1200  & Gama media      &                                        &                                    \\ \hline
-80 $\sim$ 160  & Graves medios     & 1200 $\sim$ 2400 & Gama superior   & \multirow{2}{*}{10000 $\sim$ 20000} & \multirow{2}{*}{Gama extrema-alta} \\ \cline{1-4}
-160 $\sim$ 300 & Graves superiores & 2400 $\sim$ 5000 & Gama presencial &                                        &                                    \\ \hline
-\end{tabular}
-\caption{División del espectro de frecuencias audibles.}
-\label{table:divfreq}
-\end{center}
-\end{table}
+%\begin{table}[H]
+%\begin{center}
+%\hspace*{-2.75cm}
+%\begin{tabular}{|c|c|c|c|c|c|}
+%\hline
+%\multicolumn{2}{|c|}{Bajos}           & \multicolumn{2}{c|}{Medios}           & \multicolumn{2}{c|}{Altos}                                                  \\ \hline
+%Frecuencia [Hz]   & División          & Frecuencia [Hz]     & División        & Frecuencia [Hz]                        & División                           \\ \hline
+%20 $\sim$ 40   & Graves profundos  & 300 $\sim$ 600   & Gama media-baja & \multirow{2}{*}{5000 $\sim$ 10000}  & \multirow{2}{*}{Gama alta}         \\ \cline{1-4}
+%40 $\sim$ 80   & Graves bajos      & 600 $\sim$ 1200  & Gama media      &                                        &                                    \\ \hline
+%80 $\sim$ 160  & Graves medios     & 1200 $\sim$ 2400 & Gama superior   & \multirow{2}{*}{10000 $\sim$ 20000} & \multirow{2}{*}{Gama extrema-alta} \\ \cline{1-4}
+%160 $\sim$ 300 & Graves superiores & 2400 $\sim$ 5000 & Gama presencial &                                        &                                    \\ \hline
+%\end{tabular}
+%\caption{División del espectro de frecuencias audibles.}
+%\label{table:divfreq}
+%\end{center}
+%\end{table}
 
-%\begin{figure}[H]
-%\centering
-%	\includegraphics[width=0.9\textwidth]{Imagenes/FrequencySpectrumDivision.png}
-%	\caption{División del espectro de frecuencias audibles.}
-%	\label{fig:divfreq}
-%\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/FrequencySpectrumDivision.png}
+	\caption{División del espectro de frecuencias audibles.}
+	\label{fig:divfreq}
+\end{figure}
 
 \begin{center}
 \textcolor{red}{\textbf{ELEGIR ENTRE DIBUJO Y TABLA.}}
@@ -118,6 +118,7 @@ Para facilitar el análisis, se reemplaza el potenciometro $R_2$ con dos resiste
 \end{split}
 \label{equ:r2p}
 \end{equation}
+siendo $0 \leq \psi \leq 1$.
 
 \begin{figure}[H]
 \begin{center}
@@ -380,5 +381,10 @@ Debido a que, tanto los polos como los ceros del sistema, sin importar el valor 
 
 \subsection{Desarrollo del circuito y selección de componentes}
 
+Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$, pero considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos)
+
+%115,27
+%1k
+%9,82k
 
 \end{document}
