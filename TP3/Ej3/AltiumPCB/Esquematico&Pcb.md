@@ -1,0 +1,1 @@
+# Esquematico y PCB del amplificador de instrumentación diseñado en Altium Desginer
