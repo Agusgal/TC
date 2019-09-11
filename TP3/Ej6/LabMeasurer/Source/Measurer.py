@@ -183,6 +183,53 @@ class Measurer():
             else:
                 print("Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
 
+            # Configuracion de canales
+            good_input = False
+            print("Se desea usar high resolution para bajas frecuencias y average (32 puntos) para altas frecuencias? [y/n]")
+            while (not good_input):
+                self.acqchoice = input()
+                if (self.acqchoice == 'n' or self.acqchoice == 'N'):
+                    self.acqchoice = 0
+                    good_input = True
+                elif(self.acqchoice == 'y' or self.acqchoice == 'Y'):
+                    self.acqchoice = 1
+                    good_input = True
+                else:
+                    print(
+                        "Intente nuevamente. [y/n]")
+
+            # Configuracion de canales
+            good_input = False
+            print(
+                "Se desea usar AC coupling? [y/n]")
+            while (not good_input):
+                self.accoupchoice = input()
+                if (self.accoupchoice == 'n' or self.accoupchoice == 'N'):
+                    self.accoupchoice = 0
+                    good_input = True
+                elif (self.accoupchoice == 'y' or self.accoupchoice == 'Y'):
+                    self.accoupchoice = 1
+                    good_input = True
+                else:
+                    print(
+                        "Intente nuevamente. [y/n]")
+
+            # Configuracion de canales
+            good_input = False
+            print(
+                "Se desea usar HF reject y noise reject en el trigger? [y/n]")
+            while (not good_input):
+                self.trigfilterchoice = input()
+                if (self.trigfilterchoice == 'n' or self.trigfilterchoice == 'N'):
+                    self.trigfilterchoice = 0
+                    good_input = True
+                elif (self.trigfilterchoice == 'y' or self.trigfilterchoice == 'Y'):
+                    self.trigfilterchoice = 1
+                    good_input = True
+                else:
+                    print(
+                        "Intente nuevamente. [y/n]")
+
 
 
 
@@ -192,6 +239,12 @@ class Measurer():
         self.generator = self.openResources[GEN_RESOURC]
 
         self.bode_input_gathering() #Se pide informacion sobre como se quiere realizar el bode
+
+        if(self.accoupchoice):
+            self.oscilloscope.chan_coup(Resources.SET, self.chan1, Resources.COUP_AC)
+            self.oscilloscope.chan_coup(Resources.SET, self.chan2, Resources.COUP_AC)
+        if(self.trigfilterchoice):
+            self.oscilloscope.trig_hfreject(Resources.SET, Resources.TRIG_HFREJ_ON)
 
         self.oscilloscope.set_bode_meas(self.chan1, self.chan2) #Se configura al osciloscopio para realizar un bode, mediciones de ratio, phase, etc.
         self.generator.set_voltage(self.voltage) #Se configura al generador con la tension elegida
@@ -203,13 +256,21 @@ class Measurer():
         div_start_chan1 = 0.001
         div_start_chan2 = 0.001
         for ff in (self.f):
+
+            if(self.acqchoice):
+                if(ff <= 1*10**5):
+                    self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_HIGH_RES)
+                else:
+                    self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_AVERAGE)
+                    self.oscilloscope.acq_average_count(Resources.SET, 32)
+
             self.generator.set_frequency(ff)                        #Se setea la frecuencia en el generador
-            self.oscilloscope.tim_div(Resources.SET, 1/(2*ff))           #Se setea la frecuencia del osciloscopio
+            self.oscilloscope.tim_div(Resources.SET, 1/((1.5)*ff))           #Se setea la frecuencia del osciloscopio
             exit_while = False
             while(True):                                                                       #Este bloque while setea la division del rango en lo minimo posible
                 for i in [1, 2, 5]:                                                             #Las divisiones se prueban por decada, en 1, 2 y 5.
                     self.oscilloscope.chan_div(Resources.SET, self.chan1, div_start_chan1*i)           #Se setea la division
-                    time.sleep(0.5)
+                    time.sleep(2*(1/(np.power(ff, (1/6)))))
                     if(self.oscilloscope.is_clipping(self.chan1)):                              #Si esta clippeando
                         pass                                                                    #No hace nada, se multiplicara div_start por otra decada si ya sale del for
                     else:
@@ -225,7 +286,7 @@ class Measurer():
             while (True):  # Este bloque while setea la division del rango en lo minimo posible
                 for i in [1, 2, 5]:  # Las divisiones se prueban por decada, en 1, 2 y 5.
                     self.oscilloscope.chan_div(Resources.SET, self.chan2, div_start_chan2 * i)  # Se setea la division
-                    time.sleep(0.5)
+                    time.sleep(2*(1/(np.power(ff, (1/6)))))
                     if (self.oscilloscope.is_clipping(self.chan2)):  # Si esta clippeando
                         pass  # No hace nada, se multiplicara div_start por otra decada si ya sale del for
                     else:  # Si no esta clippeando    #Saldra del while
@@ -238,7 +299,7 @@ class Measurer():
                 else:
                     break
 
-            med=self.oscilloscope.measure_stats()  #Se le pide al osciloscopio las mediciones
+            med=self.oscilloscope.measure_stats(ff)  #Se le pide al osciloscopio las mediciones
             med = med.split(',')
             self.ratio.append(float(med[0]))
             self.phase.append(float(med[1]))
@@ -265,13 +326,14 @@ class Measurer():
         plt.legend()
         plt.show()
 
-        # file = open("Mediciones/bode.csv", "w+")
-        #
-        # file.write(self.f + "\r\n")
-        # file.write(self.ratio + "\r\n")
-        # file.write(self.phase + "\r\n")
-        #
-        # file.close()
+        file = open("Mediciones/bode.csv", "w+")
+        file.write("frequency\tMAG\tPHA\r\n")
+        for i in len(self.f):
+            file.write(self.f[i] + '\t')
+            file.write(self.ratio[i] + '\t')
+            file.write(self.phase[i] + '\t')
+
+        file.close()
 
 
 
