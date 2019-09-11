@@ -11,7 +11,7 @@ import matplotlib.pyplot as plt
 SET = 0
 GET = 1
 OOR_VAL = '9.9e+37' #out of range value
-REST_TIME = 0.5
+REST_TIME = 3
 ###################################################################################
 #CHANNEL
 ###################################################################################
@@ -96,7 +96,7 @@ class Oscilloscope:
             self.chan2 = CHANNEL_3
         elif (channel2 == 4):
             self.chan2 = CHANNEL_4
-        self.clear_meas()
+        #self.clear_meas()
         self.set_ratio_meas(channel1, channel2)
         self.set_phase_meas(channel1, channel2)
         self.set_sleep_time_stats(REST_TIME)
@@ -275,25 +275,25 @@ class Oscilloscope:
     def get_ratio(self, channel1=1, channel2=2):
         return self.resource.query(':MEASure:VRATio?')
     def set_freq_meas(self, channel):
-        if (channel == 0):
+        if (channel != 0):
             self.resource.write(':MEASure:FREQuency CHANnel' + str(channel))
-        elif(channel != 0):
+        elif(channel == 0):
             self.resource.write(':MEASure:FREQuency ' + CHANNEL_MATH)
     def set_phase_meas(self, channel1, channel2):
         if(channel1 == 0):
-            self.resource.write(':MEASure ' + CHANNEL_MATH + ',CHANnel' + str(channel2))
+            self.resource.write(':MEASure:SOURce ' + CHANNEL_MATH + ',CHANnel' + str(channel2))
         elif(channel2 == 0):
-            self.resource.write(':MEASure CHANnel' + str(channel1) + ',' + CHANNEL_MATH)
+            self.resource.write(':MEASure:SOURce CHANnel' + str(channel1) + ',' + CHANNEL_MATH)
         else:
-            self.resource.write(':MEASure CHANnel' + str(channel1) + ',CHANnel' + str(channel2))
+            self.resource.write(':MEASure:SOURce CHANnel' + str(channel1) + ',CHANnel' + str(channel2))
         self.resource.write(':MEASure:PHAse')
     def set_ratio_meas(self, channel1, channel2):
         if (channel1 == 0):
-            self.resource.write(':MEASure ' + CHANNEL_MATH + ',CHANnel' + str(channel2))
+            self.resource.write(':MEASure:SOURce ' + CHANNEL_MATH + ',CHANnel' + str(channel2))
         elif (channel2 == 0):
-            self.resource.write(':MEASure CHANnel' + str(channel1) + ',' + CHANNEL_MATH)
+            self.resource.write(':MEASure:SOURce CHANnel' + str(channel1) + ',' + CHANNEL_MATH)
         else:
-            self.resource.write(':MEASure CHANnel' + str(channel1) + ',CHANnel' + str(channel2))
+            self.resource.write(':MEASure:SOURce CHANnel' + str(channel1) + ',CHANnel' + str(channel2))
         self.resource.write(':MEASure:VRATio')
     def stats_reset(self):
         self.resource.write(':MEASure:STATistics:RESet')
@@ -309,7 +309,6 @@ class Generator:
     def __init__(self, resource):
         self.resource = resource
         self.reset()
-        self.set_output(1)
 
     def reset(self):
         self.resource.write('*RST')
