@@ -295,13 +295,13 @@ class Oscilloscope:
         else:
             self.resource.write(':MEASure:SOURce CHANnel' + str(channel1) + ',CHANnel' + str(channel2))
         self.resource.write(':MEASure:VRATio')
-    def stats_reset(self):
+    def stats_reset(self, f):
         self.resource.write(':MEASure:STATistics:RESet')
-        time.sleep(self.sleep)
+        time.sleep(8*(1/(np.power(f, (1/6)))))
     def stat_set(self, stat):
         self.resource.write(':MEASure:STATistics ' + stat)
-    def measure_stats(self):
-        self.stats_reset()
+    def measure_stats(self, f):
+        self.stats_reset(f)
         return self.resource.query(':MEASure:RESults?')
 
 ##############################################################################################################################################################

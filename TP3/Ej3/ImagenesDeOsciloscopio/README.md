@@ -1,0 +1,1 @@
+# Imagenes de las mediciones del amplificador de instrumentación

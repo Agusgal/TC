@@ -1,0 +1,1 @@
+# Informe sobre el amplificador de instrumentación 
