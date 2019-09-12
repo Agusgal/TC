@@ -377,15 +377,15 @@ Debido a que, tanto los polos como los ceros del sistema, sin importar el valor 
 
 \subsection{Desarrollo del circuito y selección de componentes}
 
-Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Se busca una frecuencia cercana a los  $100 \ Hz$ para los tonos bajos, $1 \ kHz$ para los medios y $10 \ kHz$ para los altos. De esta forma, y pensando en valores comerciales de componentes de tecnología SMD para ciertos casos, se seleccionan los elementos deseados, completando la siguiente tabla:
+Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Se busca una frecuencia cercana a los  $150 \ Hz$ para los tonos bajos, $1 \ kHz$ para los medios y $10 \ kHz$ para los altos. De esta forma, y pensando en valores comerciales de componentes de tecnología SMD para ciertos casos, se seleccionan los elementos deseados, completando la siguiente tabla:
 
-\begin{table}[]
+\begin{table}[H]
 \begin{center}
 \begin{tabular}{ccccccc}
 \hline
-\textbf{Banda} & $\mathbf{R_1$} & \textbf{$R_2$} & \textbf{$R_3$} & \textbf{$C_1$} & \textbf{$C_2$} & \textbf{$f_o$} \\
+Banda & $R_1$ & $R_2$ & $R_3$ & $C_1$ & $C_2$ & $f_o$ \\
 \hline
-Baja & $430 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $680 \ nF$ & $68 \ nF$ & $115,27 \ Hz$ \\
+Baja & $560 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $470 \ nF$ & $47 \ nF$ & $150,90 \ Hz$ \\
 Media & $390 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $82 \ nF$ & $8,2 \ nF$ & $1 \ kHz$ \\
 Alta & $270 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $10 \ nF$ & $1 \ nF$ & $9,82 \ kHz$\\
 \hline
@@ -393,9 +393,5 @@ Alta & $270 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $10 \ nF$ & $1 \ nF$ 
 \caption{Valores de los componentes seleccionados.}
 \end{center}
 \end{table}
-
-%115,27
-%1k
-%9,82k
 
 \end{document}
