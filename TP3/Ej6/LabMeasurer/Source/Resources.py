@@ -1,8 +1,6 @@
-from Source import Measurer
-import visa
-import logging
 import time
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 
 ###################################################################################
@@ -107,9 +105,9 @@ class Oscilloscope:
         self.resource.write('*RST')
     def autoscale(self):
         self.resource.write(':AUToscale')
-    def measure_tran(self, channel):
-        self.digitize_chan(channel)
-        self.waveform_source(channel)
+    def measure_tran(self, channel1, channel2, filename):
+        self.digitize_chan(channel1)
+        self.waveform_source(channel1)
         self.waveform_format(WAVEFORM_FORMAT_ASCII)
         self.waveform_unsigned(WAVEFORM_UNSIGNED_OFF)
         self.waveform_points_mode(SET, WAVEFORM_POINTS_MODE_RAW)
@@ -118,19 +116,64 @@ class Oscilloscope:
         preamble = preamble.split(',')
         time_increment = float(preamble[4])
         chan_increment = float(preamble[7])
-        data = self.waveform_data()
-        data = data[10:]
-        data = data.split(',')
-        len_data= (len(data))
-        data_float=[]
+        data1 = self.waveform_data()
+        data1 = data1[10:]
+        data1 = data1.split(',')
+        len_data= (len(data1))
+        data_float1=[]
         for i in range(len_data):
-            data_float.append(float(data[i]))
+            data_float1.append(float(data1[i]))
         time_div = time_increment*len_data/TIME_DIV_SQUARES
         chan_div = chan_increment*32
-        retValue=[[time_div,chan_div]]
+        chan1_tran=[[time_div,chan_div]]
         for i in range(len_data):
-            retValue.append(data_float[i])
-        return retValue
+            chan1_tran.append(data_float1[i])
+
+        self.digitize_chan(channel2)
+        self.waveform_source(channel2)
+        self.waveform_format(WAVEFORM_FORMAT_ASCII)
+        self.waveform_unsigned(WAVEFORM_UNSIGNED_OFF)
+        self.waveform_points_mode(SET, WAVEFORM_POINTS_MODE_RAW)
+        self.waveform_points(SET, 10000)
+        preamble = self.waveform_preamble()
+        preamble = preamble.split(',')
+        time_increment = float(preamble[4])
+        chan_increment = float(preamble[7])
+        data2 = self.waveform_data()
+        data2 = data2[10:]
+        data2 = data2.split(',')
+        len_data = (len(data2))
+        data_float = []
+        for i in range(len_data):
+            data_float.append(float(data2[i]))
+        time_div = time_increment * len_data / TIME_DIV_SQUARES
+        chan_div = chan_increment * 32
+        chan2_tran = [[time_div, chan_div]]
+        for i in range(len_data):
+            chan2_tran.append(data_float[i])
+
+        if (os.path.exists("Mediciones/" + filename + ".csv")):
+            file = open("Mediciones/" + filename + ".csv", "w+")
+        else:
+            for i in range(1, 100, 1):
+                file = open("Mediciones/" + filename + "(" + str(i) + ")" + ".csv", 'w+')
+
+        file.write("time\tV1\tV2\r\n")
+
+        print(len_data)
+        print(time_increment)
+        time = np.arange(0, len_data*time_increment, time_increment)
+
+        plt.plot(time, chan1_tran)
+        plt.plot(time,chan2_tran)
+        plt.show()
+
+        for i in time:
+            file.write(str(self.time[i]) + '\t')
+            file.write(str(self.chan1_tran[i]) + '\t')
+            file.write(str(self.chan2_tran[i]) + '\r\n')
+
+        file.close()
 
 #CHANNEL SET
     def chan_div(self, sog, channel, div = 1):       #CHANNEL DIVISION

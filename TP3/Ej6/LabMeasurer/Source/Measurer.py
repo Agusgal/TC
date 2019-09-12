@@ -4,6 +4,7 @@ import time
 import numpy as np
 from Source import Resources
 import matplotlib.pyplot as plt
+import os
 
 OSC_RESOURC = 0
 GEN_RESOURC = 1
@@ -84,6 +85,10 @@ class Measurer():
         stop_freq = 0
         point_per_decade_quantity = 0
 
+        print("Ingresar nombre del archivo a guardar en la carpeta de Mediciones.")
+        self.filename = input()
+
+
         #Se pide la frecuencia de arranque y se valida
         good_input = False
         print("Ingresar el exponente decimal de la frecuencia de arranque. Debe ser entre 1 y 7.")
@@ -140,17 +145,17 @@ class Measurer():
 
         #Se pide la tension del generador y se valida
         good_input = False
-        print("Ingresar tension para el generador de funciones en volts pico a pico:")
+        print("Ingresar tension para el generador de funciones EN TENSION PICO:")
         while (not good_input):
             self.voltage = input()
             try:
                 self.voltage = float(self.voltage)
+                if (self.voltage >= 0.001 and self.voltage <= 5):
+                    good_input = True
+                else:
+                    print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
             except ValueError:
                 print("Intente nuevamente con una entrada numerica.")
-            if (self.voltage >= 0.001 and self.voltage <= 5):
-                good_input = True
-            else:
-                print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
 
 
         #Se pide el primer canal a medir y se valida
@@ -257,20 +262,15 @@ class Measurer():
         div_start_chan2 = 0.001
         for ff in (self.f):
 
-            if(self.acqchoice):
-                if(ff <= 1*10**5):
-                    self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_HIGH_RES)
-                else:
-                    self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_AVERAGE)
-                    self.oscilloscope.acq_average_count(Resources.SET, 32)
+            self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_NORMAL)
 
             self.generator.set_frequency(ff)                        #Se setea la frecuencia en el generador
-            self.oscilloscope.tim_div(Resources.SET, 1/((1.5)*ff))           #Se setea la frecuencia del osciloscopio
+            self.oscilloscope.tim_div(Resources.SET, 1/((2)*ff))           #Se setea la frecuencia del osciloscopio
             exit_while = False
             while(True):                                                                       #Este bloque while setea la division del rango en lo minimo posible
                 for i in [1, 2, 5]:                                                             #Las divisiones se prueban por decada, en 1, 2 y 5.
                     self.oscilloscope.chan_div(Resources.SET, self.chan1, div_start_chan1*i)           #Se setea la division
-                    time.sleep(2*(1/(np.power(ff, (1/6)))))
+                    time.sleep(3*(1/(np.power(ff, (1/6)))))
                     if(self.oscilloscope.is_clipping(self.chan1)):                              #Si esta clippeando
                         pass                                                                    #No hace nada, se multiplicara div_start por otra decada si ya sale del for
                     else:
@@ -286,7 +286,7 @@ class Measurer():
             while (True):  # Este bloque while setea la division del rango en lo minimo posible
                 for i in [1, 2, 5]:  # Las divisiones se prueban por decada, en 1, 2 y 5.
                     self.oscilloscope.chan_div(Resources.SET, self.chan2, div_start_chan2 * i)  # Se setea la division
-                    time.sleep(2*(1/(np.power(ff, (1/6)))))
+                    time.sleep(3*(1/(np.power(ff, (1/6)))))
                     if (self.oscilloscope.is_clipping(self.chan2)):  # Si esta clippeando
                         pass  # No hace nada, se multiplicara div_start por otra decada si ya sale del for
                     else:  # Si no esta clippeando    #Saldra del while
@@ -298,6 +298,13 @@ class Measurer():
                     div_start_chan2 *= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
                 else:
                     break
+
+            if(self.acqchoice):
+                if(ff <= 1*10**5):
+                    self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_HIGH_RES)
+                else:
+                    self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_AVERAGE)
+                    self.oscilloscope.acq_average_count(Resources.SET, 32)
 
             med=self.oscilloscope.measure_stats(ff)  #Se le pide al osciloscopio las mediciones
             med = med.split(',')
@@ -318,24 +325,33 @@ class Measurer():
             print(float(med[1]))
 
         plt.xscale("log")
+        plt.grid(True)
+        plt.xlabel("Frecuencia [Hz]")
+        plt.ylabel("Amplitud [db]")
         plt.plot(self.f, self.ratio, label="Amplitud")
         plt.legend()
         plt.show()
+        plt.grid(True)
         plt.xscale("log")
+        plt.xlabel("Frecuencia [Hz]")
+        plt.ylabel("Fase [Grados]")
         plt.plot(self.f, self.phase, label="Fase")
         plt.legend()
         plt.show()
 
-        file = open("Mediciones/bode.csv", "w+")
+        if(os.path.exists("Mediciones/" + self.filename + ".csv")):
+            file = open("Mediciones/" + self.filename + ".csv", "w+")
+        else:
+            for i in range (1, 100, 1):
+                file = open("Mediciones/" + self.filename + "(" + str(i) + ")" + ".csv", "w+")
+
         file.write("frequency\tMAG\tPHA\r\n")
         for i in len(self.f):
-            file.write(self.f[i] + '\t')
-            file.write(self.ratio[i] + '\t')
-            file.write(self.phase[i] + '\t')
+            file.write(str(self.f[i]) + '\t')
+            file.write(str(self.ratio[i]) + '\t')
+            file.write(str(self.phase[i]) + '\r\n')
 
         file.close()
-
-
 
     def tran(self):
         self.oscilloscope = self.openResources[OSC_RESOURC]
@@ -345,6 +361,10 @@ class Measurer():
 
         self.generator.set_voltage(self.voltage)  # Se configura al generador con la tension elegida
         self.generator.set_frequency(self.frequency)
+
+        self.oscilloscope.measure_tran(self.chan1, self.chan2, self.filename)
+
+
 
 
 
@@ -365,11 +385,17 @@ class Measurer():
     def tran_input_gathering(self):
 
         good_input = False
-        print("Ingresar la tension a la que se desea el generador de funciones.")
+
+        print("Ingresar nombre del archivo a guardar en la carpeta de Mediciones.")
+        self.filename = input()
+
+        print("Ingresar la tension a la que se desea el generador de funciones EN TENSION PICO.")
         while (not good_input):
             self.voltage = input()
-            if (self.voltage.isdigit()):
+            try:
                 self.voltage = float(self.voltage)
+            except ValueError:
+                print("Intente nuevamente con una entrada numerica.")
                 if (self.voltage >= 0.001 and self.voltage <= 5):
                     good_input = True
                 else:
@@ -377,18 +403,19 @@ class Measurer():
             else:
                 print("Intente nuevamente con una entrada numerica.")
 
-        good_input = False
-        print("Ingresar la tension a la que se desea el generador de funciones.")
-        while (not good_input):
-            self.frequency = input()
-            if (self.frequency.isnumeric()):
-                self.frequency = float(self.frequency)
-                if (self.frequency >= 10 and self.frequency <= 15*10**6):
-                    good_input = True
-                else:
-                    print("Intente nuevamente con una entrada numerica entre 10 y 15 000 000")
-            else:
-                print("Intente nuevamente con una entrada numerica entre 0.001 y 15 000 000.")
+                # Se pide la tension del generador y se valida
+                good_input = False
+                print("Ingresar tension para el generador de funciones EN TENSION PICO:")
+                while (not good_input):
+                    self.voltage = input()
+                    try:
+                        self.voltage = float(self.voltage)
+                        if (self.voltage >= 0.001 and self.voltage <= 5):
+                            good_input = True
+                        else:
+                            print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
+                    except ValueError:
+                        print("Intente nuevamente con una entrada numerica.")
 
                 # Se pide el primer canal a medir y se valida
                 good_input = False
