@@ -1,5 +1,3 @@
-
-\section{Circuitos integradores y derivadores}
 \subsection{Introducción}
 Los circuitos implementados con amplificadores operacionales permiten la implementación de diferentes configuraciones que resuelven problemas matemáticos. Con el diseño adecuado pueden usarse para resolver sistemas de ecuaciones diferenciales.
 En este caso estudiaremos 2 bloques fundamentales. El circuito integrador y el derivador. Se analizaran sus características más relevantes así como también sus límites de uso y como extenderlos para aprovecharlos al máximo.
@@ -13,28 +11,28 @@ En este caso estudiaremos 2 bloques fundamentales. El circuito integrador y el d
 	
 \end{figure}
 
-\subsection{Análisis previo del \textbf{LM833N}}
+\subsubsection{Análisis previo del \textbf{LM833N}}
 El amplificador a utilizar es el \textbf{LM833N} de STMicroelectronics. El mismo es un operacional de bajo ruido diseñado para aplicaciones relacionadas al manejo de audio.
 En su hoja de datos podemos ver que posee un alto nivel Slew Rate de hasta 7 $\frac{V}{s}$, un GBP de 15MHz y una ganancia de tensión 
 a lazo abierto típica de unos 110 dB. Notemos que también se indica que la ganancia mínima es de unos 90 dB. 
 
 
- \subsubsection{Cálculo de $A_{vol}$}
+\textbf{Cálculo de $A_{vol}$}\\
 Para poder realizar los cálculos de transferencia y establecer sus correspondientes transferencias de teóricas primero debemos conocer $A_{vol}$ medido en veces. Para esto basta con tomar el valor de ganancia de tensión típica a veces.
 $$A_{vol} = 10^{\frac{110}{20}}$$
 $$A_{vol} \approx 316.227,77$$
 
-\subsubsection{Cálculo de  la $f_p$, polo dominante}
+\textbf{Cálculo de  la $f_p$, polo dominante}\\
 
 Dado el \textbf{GBP} de 15MHz podemos fácilmente calcular la frecuencia de corte a lazo abierto
 
 $$ f_p = \frac{15MHz}{A_{vol}} $$
 $$ f_p \approx 47.44Hz$$
 
-\section{Ganancia bajo diferentes condiciones de $A_{vol}$}
+\subsection{Ganancia bajo diferentes condiciones de $A_{vol}$}
 En esta sección analizaremos las características de la ganancia de tensión brindad por ambos circuitos bajo diferentes condiciones.
 
-\subsection{$A_{vol}$ infinito}
+\subsubsection{$A_{vol}$ infinito}
 En un circuito con amplificadores operacionales es deseable utilizar dispositivos con $A_{vol}$(ganancia a lazo abierto) lo más alto posible para que los modelos teóricos se aproximen a su implementación física.
 
 Ambos circuitos adoptan la configuración de un circuito inversor y sus transferencias pueden ser descritas mediante
@@ -67,7 +65,7 @@ $$v_{out}(t)= -CR \frac{d}{dt}v_t(t)$$
 
 Si bien, estos circuitos tienen la capacidad de realizar las operaciones antes mencionadas, en los párrafos siguientes estudiaremos su comportamiento y bajo que condiciones funcionan.
 
-\subsubsection{Diagramas de Bode con $A_{vol}$ ideal}
+\textbf{Diagramas de Bode con $A_{vol}$ ideal}\\
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Ejercicio4/BODE-IDEAL-MAGNITUD-INTEGRADOR.png}
@@ -95,14 +93,14 @@ En cuanto a la fase en ambos casos podemos observar como ver cómo las operacion
 	\caption{Fase Ideal Circuito Derivador}
 \end{figure}
 
-\subsection{$A_{vol}$ finito}
+\subsubsection{$A_{vol}$ finito}
 La ganancia a lazo abierto nunca es infinita en los amplificadores operacionales aunque por cuestiones de simplicidad podemos tratarlo como así fuese. En la introducción calculamos el $A_{vol}$ del \textbf{LM833} a partir de los datos brindados por el fabricante en la hoja de datos y encontramos que este valor se encuentra aproximadamente en $316.227,77$.
 Ahora podemos volver a mirar a la función transferencia del inversor no ideal presentada al comienzo.
 $$H(s)_{inv} = \frac{-\frac{Z_{Feed}}{Z_{in}}}
 {1+\frac{1+\frac{Z_{Feed}}{Z_{in}}}{A_{vol}}} $$
 
 
-\subsubsection{Diagramas de Bode con $A_{vol}$ finito}
+\textbf{Diagramas de Bode con $A_{vol}$ finito}\\
 Considerando $A_{vol}$ finito obtenemos las siguientes transferencias modificadas.
 
 Para el \textbf{integrador} tenemos que $Z_{in}=R$, $Z_{feed}=\frac{1}{sCR}$
@@ -138,7 +136,7 @@ En el caso del derivador ocurre lo contrario, es necesario alcanzar frecuencias 
 	\caption{Fase con $A_{vol}$ finito Circuito Integrador}
 \end{figure}
 
-\subsection{Análisis con Polo Dominante}
+\subsubsection{Análisis con Polo Dominante}
 Con la finalidad de obtener resultados más predecible y garantizar la estabilidad del opamp, los fabricantes añaden el llamado \textbf{polo dominante}.
 Por lo tanto ahora consideraremos:
 $$A(s)=\frac{A_{vol}}{1+\frac{s}{\omega_p}}$$
@@ -176,8 +174,8 @@ En el rango de frecuencias bajas esta configuración presenta una atenuación si
 	\caption{Fase con $A_{vol}(s)$ Polo Dominante Circuito Derivador}
 \end{figure}
 
-\section{Respuesta en frecuencia}
-\subsubsection{Integrador NO Compensado}
+\subsection{Respuesta en frecuencia}
+\textbf{Integrador NO Compensado}
 El circuito integrador no compensado presenta una muy alta ganancia a bajas frecuencia lo cual produce saturación a la salida. Se utilizaron señales del orden de los 150 $mV$ para poder realizar las mediciones a bajas frecuencias.
 %Bode integrador 
 \begin{figure}[H]
@@ -222,7 +220,7 @@ Por las mismas razones de falta de precisión no se presenta el Bode de Fase.
 \end{figure}
 
 
-\subsubsection{Derivador No Compensado}
+\textbf{Derivador No Compensado}
 Se midió la respuesta en frecuencia del derivador sin resistencia de compensación alguna.
 \begin{figure}[H]
 	\centering
@@ -245,7 +243,7 @@ El sobre-pico observado es producto de la atenuación causada por el filtro pasa
 	\caption{Respuesta en Frecuencia del Fase Circuito Derivador no compensado}
 \end{figure}
 
-\section{Respuesta temporal}
+\subsection{Respuesta temporal}
 En esta sección se exhibirían la respuesta de ambos circuitos bajo diferentes señales de entrada
 
 
@@ -286,7 +284,7 @@ En esta sección se exhibirían la respuesta de ambos circuitos bajo diferentes 
 	\caption{Integral de dientes de sierra}
 \end{figure}
 
-\section{Impedancia de Entrada}
+\subsection{Impedancia de Entrada}
 Se realizaron las mediciones de impedancia de entrada haciendo uso del analizador de impedancias
 
 \begin{figure}[H]
@@ -301,7 +299,7 @@ Se realizaron las mediciones de impedancia de entrada haciendo uso del analizado
 	\caption{Zin Fase Derivador Compensado}
 \end{figure}
 
-\section{Circuitos Compensados}
+\subsection{Circuitos Compensados}
 Como se comento anteriormente, el circuito integrador no operaba de manera optima debido a la tensión de offset que se introducía a la salida a causa de las señales de muy baja frecuencia. Por el otro lado el circuito derivador presenta un sobrepico el cual podría causar daños a un circuito que se conectase a este. 
 En el circuito integrador, a bajas frecuencias, su ganancia es muy grande. Es por eso que se debe hacer algo para limitar la ganacias de las mismas. Se podria colocar una resistencia a la entrada pero de ser muy grande arruinaria la transferencia a la salida. Es por eso que se analiza que a bajas frecuencias la impedancia provista por el capacitor es muy grande, comparable con un circuito abierto. Lo cual provocaría que la ganancia del integrador crezca mucho. Por tal motivo se decidió colocar una resistencia en paralelo al capacitor tal que a bajas frecuencias la resistencia limite la ganancia que estas pueden obtener. 
 Se decidió colocar una resistencia unas 10 veces más grande de la asignada. 
@@ -333,6 +331,6 @@ Se decidió limitar la ganancia a 38$dB$ para poder subsanar el sobre pico. Se e
 	\caption{Bode Fase Derivador Compensado}
 \end{figure}
 
-\section{Conclusiones}
+\subsection{Conclusiones}
 Es posible concluir que estos circuitos poseen capacidad de realizar operaciones matemáticas siempre que se encuentren dentro del rango de operación permitido. 
 Además se debe tener especial cuidado con las tensiones de off-set del operacional ya que estas pueden influir de manera negativa en el balance de tensiones entre las entradas inversoras y no inversoras. Se pueden estudiar otros métodos de compensación adicional que permitan que los modelos físicos se aproximen lo más a los modelos teóricos. De hecho una mejora que se podría implementar es la de incorporar una resistencia sobre la entrada no inversora que sea de la misma magnitud que la resistencia en serie con la entrada inversora. Esta adición permitirá balancear los voltajes entre sus entradas.   
