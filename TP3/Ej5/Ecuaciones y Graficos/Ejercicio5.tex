@@ -206,16 +206,9 @@ con
 \begin{equation*}
 \begin{split}
 	\beta_{AC} =\ & 2 C_{1} R_1 R_{2}^{2} + 2 C_2 R_{1}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +
-		C_2 R_1 R_{2} R_{2}^{''} +\\
-		&2 C_2 R_1 R_{2}^{'} R_{2}^{''} +
-		C_2 R_{2}^{'2} R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
-\end{split}
-\end{equation*}
-\begin{equation*}
-\begin{split}
+		C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} + C_2 R_{2}^{'2} R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}\\
 	\gamma_{AC} =\ & 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
-		C_2 {R_{1}}^{2} +\\
-		&C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''}
+		C_2 {R_{1}}^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''}
 \end{split}
 \end{equation*}
 
@@ -232,14 +225,9 @@ con
 con
 \begin{equation*}
 \begin{split}
-	\beta_{BC} =\ & 2 C_1 R_1 {R_{2}}^{2} + 2C_2 {R_{1}}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} +\\
-	&C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} + 
-	C_2 {R_{2}^{'}}^2 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}
-\end{split}
-\end{equation*}
-\begin{equation*}
-\begin{split}
-	\gamma_{BC} =  4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
+	\beta_{BC} =\ & 2 C_1 R_1 {R_{2}}^{2} + 2C_2 {R_{1}}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} + C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} + 
+	C_2 {R_{2}^{'}}^2 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''2}\\
+	\gamma_{BC} =\ & 4 C_1 R_1 R_{2} + C_1 R_{2} R_{2}^{'} + C_1 R_{2} R_{2}^{''} +
 	C_2 {R_{1}}^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} +
 	C_2 R_{2}^{'} R_{2}^{''} 
 \end{split}
@@ -277,7 +265,7 @@ Resolviendo el sistema previamente planteado, se llega a que la transferencia de
 
 \begin{equation*}
 	H(S) = \frac{1}{\frac{Z_{BC}^{'}}{Z_{AC}^{'}} {A_{vol}\left(S\right)}^{-1} - \frac{Z_{BC}^{'}}{Z_{AC}^{'}} - {A_{vol}\left(S\right)}^{-1}} = \frac{1}{\frac{Z_{BC}^{'}}{Z_{AC}^{'}} \frac{1 + \frac{S}{\omega_o}}{A_{vol}} - \frac{Z_{BC}^{'}}{Z_{AC}^{'}} - \frac{1 + \frac{S}{\omega_o}}{A_{vol}}}
-	\label{equ:hsavol}
+	\label{equ:hsavolw}
 \end{equation*}
 
 Tomando $\omega_o \rightarrow \infty$ se llega a
@@ -298,28 +286,16 @@ Nuevamente, considerando $A_o \rightarrow \infty$ se obtiene
 Siendo: 
 \begin{equation*}
 \begin{split}
-	\alpha_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}
-\end{split}
-\end{equation*}
-\begin{equation*}
-\begin{split}
-	\beta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} -\\ & C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi - C_{2} R_{2} R_{3} \psi + C_{2} R_{2} R_{3}
-\end{split}
-\end{equation*}
-\begin{equation*}
-\begin{split}
-	\gamma_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}
-\end{split}
-\end{equation*}
-\begin{equation*}
-\begin{split}
- \delta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} \psi
+	\alpha_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}\\
+	\beta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi - C_{2} R_{2} R_{3} \psi + C_{2} R_{2} R_{3}\\
+	\gamma_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}\\
+	\delta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} \psi
 \end{split}
 \end{equation*}
 
 Además, realizando el ensayo de circuito cerrado, se puede calcular la impedancia de entrada:
 \begin{equation}
-	Z_{in} = \frac{V_{out}}{V_{in}} = \left( Z_{AC}^{'} + Z_{BC}^{'} \right) // Z_{AB}
+	Z_{in} = \frac{V_{out}}{V_{in}} = \frac{\left( Z_{AC}^{'} + Z_{BC}^{'} \right) \cdot Z_{AB}}{Z_{AC}^{'} + Z_{BC}^{'} + Z_{AB}}
 	\label{equ:zin}
 \end{equation}
 
@@ -418,95 +394,84 @@ Alta & $100 \ \Omega$ & $1 \ k\Omega$ & $10 \ k\Omega$ & $56 \ nF$ & $5,6 \ nF$ 
 
 Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido al hecho de que cada etapa solo amplifica o atenúa en un rango de frecuencias dadas, mientras que fuera de dicho rango, no se ven afectadas. Además, se buscó reproducir los valores de amplificación de ecualizadores comerciales, los cuales se encuentran entre $\pm 12 \ db$ y $\pm 15 \ db$.
 En consecuencia, la transferencia total del circuito resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la impedancia de entrada total del sistema resulta de la suma de cada impedancia de entrada, obteniendo esta de la misma forma que la tranferencia, es decir, tomando nuevamente los valores de la tabla previamente mencionada y reemplazandola en (\ref{equ:zin}). Es así que se procede a graficar la respuesta en frecuencia de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0,5$.
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-bode.png}
 	\caption{Diagrama de BODE en amplitud, variando $\psi$ de las frecuencias bajas.}
 	\label{fig:bode_modulo_low}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-ph.png}
 	\caption{Diagrama de BODE en fase, variando $\psi$ de las frecuencias bajas.}
 	\label{fig:bode_ph_low}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-bode.png}
 	\caption{Diagrama de BODE en amplitud, variando $\psi$ de las frecuencias medias.}
-	\label{fig:bode_modulo_low}
+	\label{fig:bode_modulo_med}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-ph.png}
 	\caption{Diagrama de BODE en fase, variando $\psi$ de las frecuencias medias.}
-	\label{fig:bode_ph_low}
+	\label{fig:bode_ph_med}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-bode.png}
 	\caption{Diagrama de BODE en amplitud, variando $\psi$ de las frecuencias altas.}
-	\label{fig:bode_modulo_low}
+	\label{fig:bode_modulo_high}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-ph.png}
 	\caption{Diagrama de BODE en fase, variando $\psi$ de las frecuencias altas.}
-	\label{fig:bode_ph_low}
+	\label{fig:bode_ph_high}
 \end{figure}
 
 \begin{center}
 \textcolor{red}{\textbf{PONER ALGUNA CONCLUSIÓN U OBSERVACIÓN.}}
 \end{center}
 
-De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total. Debido a que se colocaron las tres instancias en serie, Z_{In_{T}} es la suma de impedancia de cada instancia.
-
+De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total. Debido a que se colocaron las tres instancias en serie, $Z_{In_{T}}$ es la suma de impedancia de cada instancia.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Low-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ de las frecuencias bajas.}
-	\label{fig:bode_modulo_low}
+	\label{fig:zin_modulo_low}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Low-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ de las frecuencias bajas.}
-	\label{fig:bode_ph_low}
+	\label{fig:zin_ph_low}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Med-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ de las frecuencias medias.}
-	\label{fig:bode_modulo_low}
+	\label{fig:zin_modulo_med}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Med-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ de las frecuencias medias.}
-	\label{fig:bode_ph_low}
+	\label{fig:zin_ph_med}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-High-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ de las frecuencias altas.}
-	\label{fig:bode_modulo_low}
+	\label{fig:zin_modulo_high}
 \end{figure}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-High-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ de las frecuencias altas.}
-	\label{fig:bode_ph_low}
+	\label{fig:zin_ph_high}
 \end{figure}
+
 
 \end{document}
