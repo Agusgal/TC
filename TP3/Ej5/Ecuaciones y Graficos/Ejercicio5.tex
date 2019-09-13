@@ -20,19 +20,15 @@
 
 \subsection{Fisiología del oído}
 
-La fisiología auditiva puede ser dividida en tres estructuras:
+La fisiología auditiva se encuentra dada en tres estructuras:
 \begin{itemize}
 	\item Oído externo:
 	Este conforma parte del órgano periférico encargado de la conducción de estímulos externos, transmitiendolos hacia el canal auditivo externo. Las paredes rígidas de este último evitan que el sonido sea absorbido por por los demás tejidos blandos.
 	\item Oído medio:
 	Compuesto por el sistema timpanoosicular (membrana timpánica y los tres huesillos: martillo, yunque y estribo), cumple con la función tanto de transmitir las señales del ambiente, como de proteger las estructuras neurosensoriales del oído interno y de la ventana redonda.
 	\item Oído interno:
-	Constituido por el laberinto óseo y dentro de este, el membranoso. Comprende dos aparatos desde el punto de vista anatómico y funcional: el coclear, encargado de la audición y por ende, del desarrollo del lenguaje, y el vestibular, que es el órgano que se ocupa del equilibrio\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.} \footnote{``Cómo Funciona el oído - Inicio Blog Beltone España'', Inicio Blog Beltone España, 2019. [Online]. Disponible: http://blog.beltone.es/como-funciona-el-oido/ear\_cyan\_10-jpg/. [Accessed: 11- Sep- 2019].}.
+	Constituido por el laberinto óseo y dentro de este, el membranoso. Comprende dos aparatos desde el punto de vista anatómico y funcional: el coclear, encargado de la audición y por ende, del desarrollo del lenguaje, y el vestibular, que es el órgano que se ocupa del equilibrio\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.}.
 \end{itemize}
-
-\begin{center}
-\textcolor{red}{\textbf{ESTA NOTA EN REALIDAD DEBERÍA IR EN LA CAPTION DE LA FIGURA DE ABAJO.}}
-\end{center}
 
 \begin{figure}[H]
 \centering
@@ -254,10 +250,10 @@ Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (
 \begin{center}
 \begin{circuitikz}
 	\node [op amp](A){};
-	\draw (A.-) to[short] ++(-1,0) to[generic, l = $Z_{AC}^{'}$] ++(-2,0) node[](v1){} to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
-	\draw[color=red] (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$] ++(6.5,0) to[short] ++(0,-3);
+	\draw (A.-) to[short] ++(-1,0) to[generic, l = $Z_{AC}^{'}$, i<_ = $I_{C}$] ++(-2,0) node[](v1){} to[short, -o, i<_= $I_{in}$] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
+	\draw[color=red] (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$, i = $I_{B}$] ++(6.5,0) to[short] ++(0,-3);
 	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
-	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$, i = $I_{C}$] ++(3,0) to[short] ++(0,-2);
 	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
 \end{circuitikz}
 	\caption{Resultado de tomar las impedancias en paralelo.}
@@ -265,24 +261,20 @@ Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (
 \end{center}
 \end{figure}
 
-Es así que, definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $, $Z_{BC}^{'} = Z_{AC} // R_3 $ y $k = \frac{V_{out}}{V_{in}}$, se aplica el teorema de Miller a la impedancia $Z_{AB}$, señalada en la Figura (\ref{fig:paralelo}).
-\begin{figure}[H]
-\begin{center}
-\begin{circuitikz}
-	\node [op amp](A){};
-	\draw (A.-) to[short] ++(-1,0) to[generic, l_= $Z_{AC}^{'}$] ++(-2,0) node[](v1){} to[short, -o] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
-	\draw (v1) to[generic, l = $\frac{Z_{AB}}{1 - k}$] ++(0,-2) node[ground]{};
-	\draw (A.out) ++(0.5,0) to[generic, l = $\frac{Z_{AB}}{1 - \frac{1}{k}}$] ++(0,-1.5) node[ground]{};
-	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
-	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l= $Z_{BC}^{'}$] ++(3,0) to[short] ++(0,-2);
-	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
-\end{circuitikz}
-	\caption{Modelo final, resultado de aplicar el terorema de Miller.}
-	\label{fig:final}
-\end{center}
-\end{figure}
+Es así que, definiendo: $Z_{AC}^{'} = Z_{AC} // R_3 $, $Z_{BC}^{'} = Z_{AC} // R_3 $, se plantean las siguientes ecuaciones:
 
-La transferencia del circuito de la Figura (\ref{fig:final}) corresponde a la de un amplificador inversor, por lo tanto, considerando (\ref{equ:r2p}), se puede obtener:
+\begin{equation*}
+\left\{
+\begin{aligned}
+		& V_{out} = A_o \left( V^+ - V^- \right) =  -A_o V^- \\
+		& V_{in} - Z_{AC}^{'} \ I_{C} = V^- \\
+		& V^- = V_{in} - Z_{BC}^{'} \ I_{C} \\
+		& V_{in} - Z_{AB} \ I_{B} = V_{out} 
+\end{aligned}
+\right.
+\end{equation*}
+
+Resolviendo el sistema previamente planteado, se llega a que la transferencia del circuito de la Figura (\ref{fig:paralelo}) corresponde a la de un amplificador inversor, por lo tanto, considerando (\ref{equ:r2p}), se obtiene:
 \begin{equation}
 	H(s) = -\frac{Z_{BC}^{'}}{Z_{AC}^{'}} = - \frac{\alpha_H S^{2} + \beta_H S + 2 R_{1} + R_{2}}
 	{\gamma_H S^{2} + \delta_H S + 2 R_{1} + R_{2}}
@@ -310,6 +302,12 @@ Siendo:
  \delta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} \psi
 \end{split}
 \end{equation*}
+
+Además, realizando el ensayo de circuito cerrado, se puede calcular la impedancia de entrada:
+\begin{equation}
+	Z_{in} = \frac{V_{out}}{V_{in}} = \left( Z_{AC}^{'} + Z_{BC}^{'} \right) // Z_{AB}
+	\label{equ:zin}
+\end{equation}
 
 Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 \gg R_1$ y $R_3 = 10 \ R_2$, se pueden reescribir los coeficientes de (\ref{equ:hs}), obteniéndose: 
 \begin{equation*}
@@ -377,7 +375,11 @@ Debido a que, tanto los polos como los ceros del sistema, sin importar el valor 
 
 \subsection{Desarrollo del circuito y selección de componentes}
 
-Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Se busca una frecuencia cercana a los  $150 \ Hz$ para los tonos bajos, $1 \ kHz$ para los medios y $10 \ kHz$ para los altos. De esta forma, y pensando en valores comerciales de componentes de tecnología SMD para ciertos casos, se seleccionan los elementos deseados, completando la siguiente tabla:
+Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Debido al carácter logarítmico de las frecuencias, se calculan dichas frecuencias de la forma:
+\begin{equation*}
+	\log{(f_{med})} = \frac{\log(f_{min}) + \log(f_{max})}{2} = \log(\sqrt{f_{min} f_{max}})
+\end{equation*}
+ Es así que se necesita una frecuencia cercana a los $77,50 \ Hz$ para las frecuencias bajas , $1,2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales, se seleccionan los elementos deseados, completando la siguiente tabla:
 
 \begin{table}[H]
 \begin{center}
@@ -385,13 +387,72 @@ Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecu
 \hline
 Banda & $R_1$ & $R_2$ & $R_3$ & $C_1$ & $C_2$ & $f_o$ \\
 \hline
-Baja & $560 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $470 \ nF$ & $47 \ nF$ & $150,90 \ Hz$ \\
-Media & $390 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $82 \ nF$ & $8,2 \ nF$ & $1 \ kHz$ \\
-Alta & $270 \ \Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $10 \ nF$ & $1 \ nF$ & $9,82 \ kHz$\\
+Baja & $1 \ k\Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $680 \ nF$ & $68 \ nF$ & $81,08 \ Hz$ \\
+Media & $1 \ k\Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $47 \ nF$ & $4,7 \ nF$ & $1,17 \ kHz$ \\
+Alta & $100 \ \Omega$ & $1 \ k\Omega$ & $10 \ k\Omega$ & $56 \ nF$ & $5,6 \ nF$ & $9,85 \ kHz$\\
 \hline
 \end{tabular}
 \caption{Valores de los componentes seleccionados.}
+\label{tabla:valores}
 \end{center}
 \end{table}
+
+Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una. Por lo tanto, la transferencia total del circuito resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}). Es así que se procede a graficar la respuesta en frecuencia de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0,5$
+
+\begin{center}
+\textcolor{red}{\textbf{VER EJE DE FASES.}}
+\end{center}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-bode.png}
+	\caption{Diagrama de BODE en amplitud, variando $\psi$ de las frecuencias bajas.}
+	\label{fig:bode_modulo_low}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-ph.png}
+	\caption{Diagrama de BODE en fase, variando $\psi$ de las frecuencias bajas.}
+	\label{fig:bode_ph_low}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-bode.png}
+	\caption{Diagrama de BODE en amplitud, variando $\psi$ de las frecuencias medias.}
+	\label{fig:bode_modulo_low}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-ph.png}
+	\caption{Diagrama de BODE en fase, variando $\psi$ de las frecuencias medias.}
+	\label{fig:bode_ph_low}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-bode.png}
+	\caption{Diagrama de BODE en amplitud, variando $\psi$ de las frecuencias altas.}
+	\label{fig:bode_modulo_low}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-ph.png}
+	\caption{Diagrama de BODE en fase, variando $\psi$ de las frecuencias altas.}
+	\label{fig:bode_ph_low}
+\end{figure}
+
+\begin{center}
+\textcolor{red}{\textbf{PONER ALGUNA CONCLUSIÓN U OBSERVACIÓN.}}
+\end{center}
+
+De la misma forma, se muestra la impedancia de entrada de cada ...
+
+\begin{center}
+\textcolor{red}{\textbf{CALCULÉ LA ZIN DE CADA UNO POR SEPARADO!.}}
+\end{center}
 
 \end{document}
