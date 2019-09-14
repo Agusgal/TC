@@ -5,9 +5,14 @@ import numpy as np
 from Source import Resources
 import matplotlib.pyplot as plt
 import os
+import csv
 
 OSC_RESOURC = 0
 GEN_RESOURC = 1
+
+STARTING_DIV_VAL = 0.001
+HFREJECT_CUTOFF = 1*10**5
+HIGH_RES_CUTOFF = 1*10**5
 
 BODE = 'B'
 EXIT = 'E'
@@ -86,74 +91,163 @@ class Measurer():
         point_per_decade_quantity = 0
 
         print("Ingresar nombre del archivo a guardar en la carpeta de Mediciones.")
-        self.filename = input()
+        while(True):
+            self.filename = input()
+            if(self.filename != ""):
+                break
 
+        # Configuracion de canales
+        good_input = False
+        print(
+            "Se desea utilizar escala [L]ineal o lo[G]aritmica para la frecuencia?")
+        while (not good_input):
+            self.freqscale = input()
+            if (self.freqscale == 'L' or self.freqscale == 'l'):
+                self.freqscale = 'l'
+                good_input = True
+            elif (self.freqscale == 'G' or self.freqscale == 'g'):
+                self.freqscale = 'g'
+                good_input = True
+            else:
+                print(
+                    "Intente nuevamente. [L]ineal o lo[G]aritmico")
 
         #Se pide la frecuencia de arranque y se valida
         good_input = False
-        print("Ingresar el exponente decimal de la frecuencia de arranque. Debe ser entre 1 y 7.")
+        if(self.freqscale == 'g'):
+            print("Ingresar el exponente decimal de la frecuencia de arranque. Debe ser entre 1 y 7. Si se quiere multiplicar la frecuencia elegida por un numero de una"
+              "sola cifra, utilizar una coma luego del exponente. Ejemplo para 500KHz: 5,5")
+        else:
+            print("Ingresar la frecuencia de arraque:")
         while (not good_input):
             start_freq = input()
-            if (start_freq.isnumeric()):
-                start_freq = float(start_freq)
-                if (start_freq >= 1 and start_freq <= 7):
-                    good_input = True
+            if(start_freq.find(',') != -1):
+                start_freq = start_freq.split(',')
+                self.mult = start_freq[1]
+                start_freq = start_freq[0]
+                if (start_freq.isnumeric()):
+                    start_freq = float(start_freq)
+                    if (start_freq >= 1 and start_freq <= 7):
+                        good_input = True
+                    else:
+                        print("Intente nuevamente con una entrada numerica entre 1 y 7.")
                 else:
                     print("Intente nuevamente con una entrada numerica entre 1 y 7.")
+                if (self.mult.isnumeric()):
+                    self.mult = float(self.mult)
+                    if (self.mult >= 1 and self.mult <= 9):
+                        good_input = True
+                    else:
+                        print("Intente nuevamente con una entrada numerica entre 1 y 9.")
+                else:
+                    print("Intente nuevamente con una entrada numerica entre 1 y 9.")
             else:
-                print("Intente nuevamente con una entrada numerica entre 1 y 7.")
+                if (start_freq.isnumeric()):
+                    start_freq = float(start_freq)
+                    if(self.freqscale == 'g'):
+                        if (start_freq >= 1 and start_freq <= 7):
+                            good_input = True
+                            self.mult = 1
+                        else:
+                            print("Intente nuevamente con una entrada numerica entre 1 y 7.")
+                    else:
+                        if(start_freq >=1 and start_freq <= 10*10**6):
+                            good_input = True
+                            self.mult = 1
+                        else:
+                            print("Intente nuevamente con una entrada numerica entre 1 y 10MHz.")
+                else:
+                    print("Intente nuevamente con una entrada numerica entre 1 y 7.")
 
         #Se pide la frecuencia final y se valida
         good_input = False
-        print("Ingresar el exponente decimal de la frecuencia final. Debe ser entre 1 y 7.")
+        print("Ingresar el exponente decimal de la frecuencia final. Debe ser entre 1 y 7. Si se quiere multiplicar la frecuencia elegida por un numero de una"
+              "sola cifra, utilizar una coma luego del exponente. Ejemplo para 500KHz: 5.5")
         while (not good_input):
             stop_freq = input()
-            if (stop_freq.isnumeric()):
-                stop_freq = float(stop_freq)
-                if (stop_freq >= 1 and stop_freq <= 7):
-                    if (stop_freq >= start_freq):
+            if (stop_freq.find(',') != -1):
+                stop_freq = stop_freq.split(',')
+                self.multstop = stop_freq[1]
+                stop_freq = stop_freq[0]
+                if (stop_freq.isnumeric()):
+                    stop_freq = float(stop_freq)
+                    if (stop_freq >= 1 and stop_freq <= 7):
                         good_input = True
                     else:
-                        print("La frecuencia final debe ser mayor o igual a la de arranque")
+                        print("Intente nuevamente con una entrada numerica entre 1 y 7.")
                 else:
                     print("Intente nuevamente con una entrada numerica entre 1 y 7.")
+                if (self.multstop.isnumeric()):
+                    self.multstop = float(self.multstop)
+                    if (self.multstop >= 1 and self.multstop <= 9):
+                        good_input = True
+                    else:
+                        print("Intente nuevamente con una entrada numerica entre 1 y 9.")
+                else:
+                    print("Intente nuevamente con una entrada numerica entre 1 y 9.")
             else:
-                print("Intente nuevamente con una entrada numerica entre 1 y 7.")
+                if (stop_freq.isnumeric()):
+                    stop_freq = float(stop_freq)
+                    if (self.freqscale == 'g'):
+                        if (stop_freq >= 1 and stop_freq <= 7):
+                            good_input = True
+                            self.multstop = 1
+                        else:
+                            print("Intente nuevamente con una entrada numerica entre 1 y 7.")
+                    else:
+                        if (stop_freq >= 1 and stop_freq <= 10 * 10 ** 6):
+                            good_input = True
+                            self.multstop = 1
+                        else:
+                            print("Intente nuevamente con una entrada numerica entre 1 y 10MHz.")
+                else:
+                    print("Intente nuevamente con una entrada numerica entre 1 y 7.")
 
         #Se piden la cantidad de puntos por decada y se valida
         good_input = False
-        print("Cantidad de puntos por decada:")
+        if(self.freqscale == 'g'):
+            print("Cantidad de puntos por decada:")
+        else:
+            print("Cantidad de puntos:")
         while (not good_input):
             point_per_decade_quantity = input()
             if (point_per_decade_quantity.isnumeric()):
                 point_per_decade_quantity = float(point_per_decade_quantity)
-                if (point_per_decade_quantity >= 1 and point_per_decade_quantity <= 1000):
+                if (point_per_decade_quantity >= 1 and point_per_decade_quantity <= 10000):
                     good_input = True
                 else:
-                    print("Intente nuevamente con una entrada numerica entre 1 y 1000.")
+                    print("Intente nuevamente con una entrada numerica entre 1 y 10000.")
             else:
-                print("Intente nuevamente con una entrada numerica entre 1 y 1000.")
+                print("Intente nuevamente con una entrada numerica entre 1 y 10000.")
 
         #Se calcula la cantidad de puntos total y se realiza el array con todas las frecuencias a las que se va a medir
         if (start_freq == stop_freq):
-            self.f = [10 ** start_freq]
+            if(self.freqscale == 'g'):
+                self.f = [10 ** start_freq]
+            else:
+                self.f = [start_freq]
         else:
-            self.f = np.logspace(start_freq, stop_freq, point_per_decade_quantity * (stop_freq - start_freq))
+            if(self.freqscale == 'g'):
+                self.f = np.logspace(np.log10(self.mult*(10**start_freq)), np.log10(self.multstop*(10**stop_freq)), point_per_decade_quantity * (stop_freq - start_freq))
+                print(self.f) #DEBUG
+            elif(self.freqscale == 'l'):
+                self.f = np.linspace(start_freq, stop_freq, point_per_decade_quantity)
 
         for ff in self.f:
             ff = int(ff)
 
         #Se pide la tension del generador y se valida
         good_input = False
-        print("Ingresar tension para el generador de funciones EN TENSION PICO:")
+        print("Ingresar tension pico a pico para el generador de funciones:")
         while (not good_input):
             self.voltage = input()
             try:
                 self.voltage = float(self.voltage)
-                if (self.voltage >= 0.001 and self.voltage <= 5):
+                if (self.voltage >= 0.01 and self.voltage <= 10):
                     good_input = True
+                    self.voltage = self.voltage/2
                 else:
-                    print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
+                    print("Intente nuevamente con una entrada numerica entre 0.01 y 10.")
             except ValueError:
                 print("Intente nuevamente con una entrada numerica.")
 
@@ -188,85 +282,113 @@ class Measurer():
             else:
                 print("Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
 
-            # Configuracion de canales
-            good_input = False
-            print("Se desea usar high resolution para bajas frecuencias y average (32 puntos) para altas frecuencias? [y/n]")
-            while (not good_input):
-                self.acqchoice = input()
-                if (self.acqchoice == 'n' or self.acqchoice == 'N'):
-                    self.acqchoice = 0
-                    good_input = True
-                elif(self.acqchoice == 'y' or self.acqchoice == 'Y'):
-                    self.acqchoice = 1
+        #Tiempo minimo de establecimiento
+        good_input = False
+        print("Establecer un tiempo minimo de establecimiento para tomar las mediciones.")
+        while (not good_input):
+            self.minwaittime = input()
+            try:
+                self.minwaittime = float(self.minwaittime)
+                if (self.minwaittime >= 0 and self.minwaittime <= 15):
                     good_input = True
                 else:
-                    print(
-                        "Intente nuevamente. [y/n]")
+                    print("Intente nuevamente con una entrada numerica entre 0 y 15 segundos")
+            except ValueError:
+                print("Intente nuevamente con una entrada numerica.")
 
-            # Configuracion de canales
-            good_input = False
-            print(
-                "Se desea usar AC coupling? [y/n]")
-            while (not good_input):
-                self.accoupchoice = input()
-                if (self.accoupchoice == 'n' or self.accoupchoice == 'N'):
-                    self.accoupchoice = 0
-                    good_input = True
-                elif (self.accoupchoice == 'y' or self.accoupchoice == 'Y'):
-                    self.accoupchoice = 1
-                    good_input = True
-                else:
-                    print(
-                        "Intente nuevamente. [y/n]")
-
-            # Configuracion de canales
-            good_input = False
-            print(
-                "Se desea utilizar trigger externo?")
-            while (not good_input):
-                self.trigext = input()
-                if (self.trigext == 'n' or self.trigext == 'N'):
-                    self.trigext = 0
-                    good_input = True
-                elif (self.trigext == 'y' or self.trigext == 'Y'):
-                    self.trigext = 1
-                    good_input = True
-                else:
-                    print(
-                        "Intente nuevamente. [y/n]")
-
-            if(not self.trigext):
-                # Configuracion de canales
-                good_input = False
+        # Configuracion de canales
+        good_input = False
+        print("Se desea usar high resolution para bajas frecuencias y average (32 puntos) para altas frecuencias? [y/n]")
+        while (not good_input):
+            self.acqchoice = input()
+            if (self.acqchoice == 'n' or self.acqchoice == 'N'):
+                self.acqchoice = 0
+                good_input = True
+            elif(self.acqchoice == 'y' or self.acqchoice == 'Y'):
+                self.acqchoice = 1
+                good_input = True
+            else:
                 print(
-                    "Se desea usar HF reject y noise reject en el trigger? [y/n]")
-                while (not good_input):
-                    self.trigfilterchoice = input()
-                    if (self.trigfilterchoice == 'n' or self.trigfilterchoice == 'N'):
-                        self.trigfilterchoice = 0
-                        good_input = True
-                    elif (self.trigfilterchoice == 'y' or self.trigfilterchoice == 'Y'):
-                        self.trigfilterchoice = 1
+                    "Intente nuevamente. [y/n]")
+        if(self.acqchoice):
+            # Se pide la tension del generador y se valida
+            good_input = False
+            print("Ingresar cantidad de pantallas a promediar para el averaging: 1, 2, 4, 8, 16, 32, 64, 128, 256..")
+            while (not good_input):
+                self.avgcount = input()
+                try:
+                    self.avgcount = float(self.avgcount)
+                    if (self.avgcount >= 1 and self.avgcount <= 8192):
                         good_input = True
                     else:
-                        print(
-                            "Intente nuevamente. [y/n]")
+                        print("Intente nuevamente con una entrada numerica entre 1 y 8192.")
+                except ValueError:
+                    print("Intente nuevamente con una entrada numerica.")
 
+        # Configuracion de canales
+        good_input = False
+        print(
+            "Se desea usar AC coupling? [y/n]")
+        while (not good_input):
+            self.accoupchoice = input()
+            if (self.accoupchoice == 'n' or self.accoupchoice == 'N'):
+                self.accoupchoice = 0
+                good_input = True
+            elif (self.accoupchoice == 'y' or self.accoupchoice == 'Y'):
+                self.accoupchoice = 1
+                good_input = True
+            else:
+                print(
+                    "Intente nuevamente. [y/n]")
+
+        # Configuracion de canales
+        good_input = False
+        print(
+            "Se desea utilizar trigger externo? [y/n] (RECOMENDADO)")
+        while (not good_input):
+            self.trigext = input()
+            if (self.trigext == 'n' or self.trigext == 'N'):
+                self.trigext = 0
+                good_input = True
+            elif (self.trigext == 'y' or self.trigext == 'Y'):
+                self.trigext = 1
+                good_input = True
+            else:
+                print(
+                    "Intente nuevamente. [y/n]")
+
+        if(not self.trigext):
             # Configuracion de canales
             good_input = False
             print(
-                "Se desea utilizar las puntas en x10? [y/n]")
+                "Se desea usar HF reject y noise reject en el trigger? [y/n]")
             while (not good_input):
-                self.probe10 = input()
-                if (self.probe10 == 'n' or self.probe10 == 'N'):
-                    self.probe10 = 0
+                self.trigfilterchoice = input()
+                if (self.trigfilterchoice == 'n' or self.trigfilterchoice == 'N'):
+                    self.trigfilterchoice = 0
                     good_input = True
-                elif (self.probe10 == 'y' or self.probe10 == 'Y'):
-                    self.probe10 = 1
+                elif (self.trigfilterchoice == 'y' or self.trigfilterchoice == 'Y'):
+                    self.trigfilterchoice = 1
                     good_input = True
                 else:
                     print(
                         "Intente nuevamente. [y/n]")
+
+        # Configuracion de canales
+        good_input = False
+        print(
+            "Se desea utilizar las puntas en x10? [y/n]")
+        while (not good_input):
+            self.probe10 = input()
+            if (self.probe10 == 'n' or self.probe10 == 'N'):
+                self.probe10 = 0
+                good_input = True
+            elif (self.probe10 == 'y' or self.probe10 == 'Y'):
+                self.probe10 = 1
+                good_input = True
+            else:
+                print(
+                    "Intente nuevamente. [y/n]")
 
 
 
@@ -275,91 +397,104 @@ class Measurer():
     def bode(self):
         self.oscilloscope = self.openResources[OSC_RESOURC]
         self.generator = self.openResources[GEN_RESOURC]
-
         self.bode_input_gathering() #Se pide informacion sobre como se quiere realizar el bode
 
+        #AC-COUPLING
         if(self.accoupchoice):
             self.oscilloscope.chan_coup(Resources.SET, self.chan1, Resources.COUP_AC)
             self.oscilloscope.chan_coup(Resources.SET, self.chan2, Resources.COUP_AC)
 
+        #EXTERNAL TRIGGER
         if(self.trigext):
             self.oscilloscope.trig_source(Resources.SET, Resources.TRIG_EXTERNAL)
+        #HFREJECT hasta 100khz
         elif(self.trigfilterchoice):
             self.oscilloscope.trig_hfreject(Resources.SET, Resources.TRIG_HFREJ_ON)
 
+        #CONFIGURACION DEL OSCILOSCOPIO
         self.oscilloscope.set_bode_meas(self.chan1, self.chan2) #Se configura al osciloscopio para realizar un bode, mediciones de ratio, phase, etc.
+
+        #CONFIGURACION GENERADOR
         self.generator.set_voltage(self.voltage) #Se configura al generador con la tension elegida
         self.generator.set_output(1)
+
+        #PROBETAS
         if(self.probe10):
             self.oscilloscope.chan_probe(Resources.SET, self.chan1, 10)
             self.oscilloscope.chan_probe(Resources.SET, self.chan2, 10)
+
         self.ratio=[]
         self.phase=[]
 
         #Algoritmo que se corre para cada punto en el que se va a querer medir.
-        div_start_chan1 = 0.001
-        div_start_chan2 = 0.001
+        first_fit = True
+        self.chan_divs=[]
+        for i in range(-3, 1, 1):
+            for j in [1, 2, 5]:
+                self.chan_divs.append(j*10**(i))
+        print(self.chan_divs)  # DEBUG
         for ff in (self.f):
-            if(ff > 1*10**5):
+
+            #Cortar hfreject del trigger si freq muy alta
+            if(ff > HFREJECT_CUTOFF):
                 self.oscilloscope.trig_hfreject(Resources.SET, Resources.TRIG_HFREJ_OFF)
+
+            #Para ver si quepa la senal sacar filtros
             self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_NORMAL)
+
             self.generator.set_frequency(ff)                        #Se setea la frecuencia en el generador
             self.oscilloscope.tim_div(Resources.SET, 1/((2)*ff))           #Se setea la frecuencia del osciloscopio
-            exit_while = False
-            while(True):
-                #Este bloque while setea la division del rango en lo minimo posible
-                for i in [1, 2, 5]:                                                             #Las divisiones se prueban por decada, en 1, 2 y 5.
-                    self.oscilloscope.chan_div(Resources.SET, self.chan1, div_start_chan1*i)           #Se setea la division
-                    time.sleep(3*(1/(np.power(ff, (1/6)))))
-                    if(self.oscilloscope.is_clipping(self.chan1)):                              #Si esta clippeando
-                        pass                                                                    #No hace nada, se multiplicara div_start por otra decada si ya sale del for
-                    else:
-                        exit_while=True#Si no esta clippeando    #Saldra del while
-                        break               #Y sale del for
-                if (exit_while):
-                    break
-                if (div_start_chan1 != 1):
-                    div_start_chan1 *= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
-                else:
-                    break
-            exit_while=False
-            while (True):  # Este bloque while setea la division del rango en lo minimo posible
-                for i in [1, 2, 5]:  # Las divisiones se prueban por decada, en 1, 2 y 5.
-                    self.oscilloscope.chan_div(Resources.SET, self.chan2, div_start_chan2 * i)  # Se setea la division
-                    time.sleep(3*(1/(np.power(ff, (1/6)))))
-                    if (self.oscilloscope.is_clipping(self.chan2)):  # Si esta clippeando
-                        pass  # No hace nada, se multiplicara div_start por otra decada si ya sale del for
-                    else:  # Si no esta clippeando    #Saldra del while
-                        exit_while=True
-                        break  # Y sale del for
-                if(exit_while):
-                    break
-                if (div_start_chan2 != 1):
-                    div_start_chan2 *= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
-                else:
-                    break
 
+            exit_while = False
+
+            #Primer fitteo en la pantalla para ambas senales
+            self.chan1_div_index = 0
+            self.chan2_div_index = 0
+            if(first_fit):
+                for div in self.chan_divs:
+                    self.oscilloscope.chan_div(Resources.SET, self.chan1, div)
+                    time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                    if(not self.oscilloscope.is_clipping(self.chan1)):
+                        break
+                    else:
+                        self.chan1_div_index =+ 1
+                for div in self.chan_divs:
+                    self.oscilloscope.chan_div(Resources.SET, self.chan2, div)
+                    time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                    if(not self.oscilloscope.is_clipping(self.chan2)):
+                        break
+                    else:
+                        self.chan2_div_index =+ 1
+                first_fit = False
+
+            #Se fija si con la nueva frecuencia la senal sigue entrando
+            while(not self.oscilloscope.is_big_enough(self.chan1)):
+                if(self.chan1_div_index > 0):
+                    self.chan1_div_index =-1
+                    self.oscilloscope.chan_div(Resources.SET, self.chan1, self.chan_divs[self.chan1_div_index])
+                    time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                else:
+                    break
+            while(self.oscilloscope.is_clipping(self.chan1)):
+                if (self.chan1_div_index < len(self.chan_divs) - 2):
+                    self.chan1_div_index = +1
+                else:
+                    break
+                self.oscilloscope.chan_div(Resources.SET, self.chan1, self.chan_divs[self.chan1_div_index])
+                time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+
+            #Luego de hacer entrar la senal, pone los filtros para medir
             if(self.acqchoice):
-                if(ff <= 1*10**5):
+                if(ff <= HIGH_RES_CUTOFF):
                     self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_HIGH_RES)
                 else:
                     self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_AVERAGE)
-                    self.oscilloscope.acq_average_count(Resources.SET, 32)
+                    self.oscilloscope.acq_average_count(Resources.SET, self.avgcount)
 
-            med=self.oscilloscope.measure_stats(ff)  #Se le pide al osciloscopio las mediciones
+            med=self.oscilloscope.measure_stats(ff, self.minwaittime)  #Se le pide al osciloscopio las mediciones
             med = med.split(',')
             self.ratio.append(float(med[0]))
             self.phase.append(float(med[1]))
-
-            if (div_start_chan1 != 1):
-                div_start_chan1 /= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
-            else:
-                div_start_chan1 = 0.001
-
-            if (div_start_chan2 != 1):
-                div_start_chan2 /= 10  # Si esta clippeando la senal y la division por 1, 2 o 5 clippean igual, se avanza a la siguiente decada
-            else:
-                div_start_chan2 = 0.001
 
             print(float(med[0]))
             print(float(med[1]))
@@ -379,19 +514,38 @@ class Measurer():
         plt.legend()
         plt.show()
 
-        if(os.path.exists("Mediciones/" + self.filename + ".csv")):
-            file = open("Mediciones/" + self.filename + ".csv", "w+")
+        self.oldfilepath = self.filepath
+
+        if(not os.path.exists("Mediciones/ParaPlotterTool/" + self.filename + ".xlsx")):
+            self.filepath = "Mediciones/ParaPlotterTool/" + self.filename + ".xlsx"
         else:
-            for i in range (1, 100, 1):
-                file = open("Mediciones/" + self.filename + "(" + str(i) + ")" + ".csv", "w+")
+            for i in range (1, 10, 1):
+                if(not os.path.exists("Mediciones/ParaPlotterTool/" + self.filename + "(" + str(i) + ")" + ".xlsx")):
+                    self.filepath = "Mediciones/ParaPlotterTool/" + self.filename + "(" + str(i) + ")" + ".xlsx"
+                    break
 
-        file.write("frequency\tMAG\tPHA\r\n")
-        for i in len(self.f):
-            file.write(str(self.f[i]) + '\t')
-            file.write(str(self.ratio[i]) + '\t')
-            file.write(str(self.phase[i]) + '\r\n')
+        with open(self.filepath) as csvfile:
+            writer = csv.writer(csvfile, delimiter=';')
+            writer.writerow(["frequency", "MAG", "PHA"])
+            for i in range(0, len(self.f), 1):
+                writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
+        csvfile.close()
 
-        file.close()
+        self.filepath = self.oldfilepath
+
+        if (not os.path.exists("Mediciones/CSV/" + self.filename + ".csv")):
+            self.filepath = "Mediciones/CSV/" + self.filename + ".csv"
+            for i in range(1, 10, 1):
+                if (not os.path.exists("Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv")):
+                    self.filepath = "Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv"
+                    break
+
+        with open(self.filepath) as csvfile:
+            writer = csv.writer(csvfile, delimiter=',')
+            writer.writerow(["frequency", "MAG", "PHA"])
+            for i in range(0, len(self.f), 1):
+                writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
+        csvfile.close()
 
     def tran(self):
         self.oscilloscope = self.openResources[OSC_RESOURC]

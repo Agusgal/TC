@@ -1,0 +1,70 @@
+\documentclass[a4paper]{article}
+\usepackage[spanish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{float}
+\usepackage{graphicx}
+%\usepackage[american voltage]{circuitikz}
+\usepackage{amsmath}
+\usepackage{xcolor}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[bottom]{footmisc}
+
+
+\begin{document}
+	\subsection{Introducción}
+	Los amplificadores de instrumentación, también conocidos como \textbf{IN-AMP},  son utilizados para amplificar con alta precisión las señales provenientes de diversas unidades de adquisición de datos que no poseen la amplitud suficiente como para poder ser aprovechada siendo muy susceptible a contaminación por ruido . Sin embargo, amplificar no es el único objetivo de este dispositivo. Si así fuese entonces bastaría con utilizar un amplificador operacional corriente.
+	\subsubsection{Diferencias entre \textbf{IN-AMP} y \textbf{OP AMP}}
+	A simple vista un \textbf{IN-AMP} puede ser fácilmente confundido con un \textbf{OP AMP} dado que tiene varios rasgos en común. En primer lugar ambos dispositivos amplifican una señal diferencial, es decir que multiplican por un cierto factor la diferencia de potencial entre sus terminales de entrada. Por otro lado también poseen una elevada impedancia de entrada (del orden de los Megaohms) y una muy baja impedancia de salida de unos pocos ohms.
+	No obstante, podemos notar algunas diferencias fundamentales entre ambos. Por ejemplo, para configurar la ganancia a lazo cerrado de un amplificador operacional se debe ajustar mediante resistores de retro-alimentación externos mientras que en un amplificador de instrumentación la ganancia puede venir predefinida por el fabricante o ajustada mediante una única \textbf{resistencia externa} denominada usualmente como \textbf{$R_{gain}$}.
+	En caso de que se desee amplificar una señal diferencial el amplificador de instrumentación eliminara cualquier componente de señal común a ambas entradas como puede ser un offset de continua o simplemente ruido. Esta característica es la que hace especiales a los amplificadores de instrumentación ya que permiten reducir de manera significativa el ruido de las señales recibidas.  
+	Por el contrario, los amplificadores operacionales tradicionales que no están diseñados para eliminar este tipo señales no deseadas.
+
+	
+	\subsection{Análisis teórico}
+	El circuito a analizar es una variante de los famosos amplificadores de instrumentación que utilizan 3 amplificadores operacionales que se puede observar en la figura debajo.
+	%Imagen del amplificador de instrumentación con 3 op-amps
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{../ImagenesVarias/inAmp3Opamp}
+		%TODO revisar footnote imagen 
+		\caption[Compact Routing Example]{Clasico amplificador de instrumentación con 3 Opamps
+		\footnote{Imagen extraída de: \textit{A designer's guide to instrumentation amplifiers}}}
+	\end{figure}
+
+
+	En nuestro caso se trabajara con la versión de 4 amplificadores operacionales.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{../ImagenesVarias/ampInst}
+	\end{figure}
+
+	Valiendonos de la herramienta de análisis simbólico \textit{SapWin \footnote{SapWin es una programa de análisis y simulación de circuitos desarrollado por la \textit{Universitá degli studi Firenze}}} obtenemos la siguiente expresión para la ganancia ideal de amplificador de instrumentación:
+	
+	$$V_{out}=\frac{-V_1 R_2 R_4 R_7 - 
+					V_1 R_2 R_3 R_7 +
+					V_2 R_2 R_3 R_7+
+					V_2 R_2 R_3 R_6
+					}{R_1 R_4 R_7}$$ 
+	
+	Notamos que en la situación ideal tanto las resistencias $R_5$ y $R_9$ no afectan la ganancia del circuito.
+	\subsubsection{Relaciones entre los componentes}
+	
+
+
+	
+	
+\begin{thebibliography}{9}
+	
+	\bibitem{Franco} 
+	SERGIO, F. (2002). Design with operational amplifiers and analog integrated circuits. New York [etc.]: McGraw-Hill, pp.73-91.	
+	
+	\bibitem{Coughlin} 
+	R. Coughlin and F. Driscoll, Circuitos integrados lineales y amplificadores operacionales. México: Prentice-Hall Hispanoamericana, 1998.
+	
+	\bibitem{dguideinamp}
+	C. Kitchin and L. Counts, A designer's guide to instrumentation amplifiers. Norwood, Mass.: Analog Devices, 2006.
+	
+\end{thebibliography}
+
+\end{document}

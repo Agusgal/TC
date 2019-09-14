@@ -201,11 +201,11 @@ class Oscilloscope:
         elif (sog == GET):
             return self.resource.query(':CHANnel' + str(channel) + ':PROBe?')
 
-    def chan_coup(self, sog, coupling = COUP_DC):    #CHANNEL COUPLING
+    def chan_coup(self, sog, channel, coupling = COUP_DC):    #CHANNEL COUPLING
         if (sog == SET):
-            self.resource.write(':CHANnel1:COUPling ' + coupling)
+            self.resource.write(':CHANnel' + str(channel) + ':COUPling ' + coupling)
         elif (sog == GET):
-            return self.resource.query(':CHANnel1:COUPling?')
+            return self.resource.query(':CHANnel' + str(channel) + ':COUPling?')
 
 #TIMEBASE SET
     def tim_mode(self, sog, mode):   #TIMEBASE MODE
@@ -312,16 +312,13 @@ class Oscilloscope:
             return True
         else:
             return False
-    def is_still_fitting(self, channel):
+    def is_big_enough(self, channel):
         self.resource.write(':MEASure:SOURce CHANnel' + str(channel))
         vmax = float(self.resource.query(':MEASure:VMAX?'))
         vmin = float(self.resource.query(':MEASure:VMIN?'))
         chan_div = float(self.chan_div(GET, channel))
-        if(vmax != OOR_VAL and vmin != OOR_VAL):
-            if((vmax-vmin) > 4*chan_div):
-                return True
-            else:
-                return False
+        if((vmax-vmin) > 4*self.chan_div):
+            return True
         else:
             return False
 
@@ -356,13 +353,17 @@ class Oscilloscope:
         else:
             self.resource.write(':MEASure:SOURce CHANnel' + str(channel1) + ',CHANnel' + str(channel2))
         self.resource.write(':MEASure:VRATio')
-    def stats_reset(self, f):
+    def stats_reset(self, f, mintime):
         self.resource.write(':MEASure:STATistics:RESet')
-        time.sleep(8*(1/(np.power(f, (1/6)))))
+        freqtime = 8*(1/(np.power(f, (1/6))))
+        if(mintime > freqtime):
+            time.sleep(mintime)
+        else:
+            time.sleep(freqtime)
     def stat_set(self, stat):
         self.resource.write(':MEASure:STATistics ' + stat)
-    def measure_stats(self, f):
-        self.stats_reset(f)
+    def measure_stats(self, f, mintime):
+        self.stats_reset(f, mintime)
         return self.resource.query(':MEASure:RESults?')
 
 ##############################################################################################################################################################
