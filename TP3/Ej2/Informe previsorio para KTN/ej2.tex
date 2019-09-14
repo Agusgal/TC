@@ -200,8 +200,7 @@ Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con g
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndP}
 \end{figure}
-
-\begin{center} \textcolor{red}{Decir algo útil respecto a la diferencia}\end{center}
+Es de interés mencionar que debido a la resistencia interna de la bobina y su análogo de $R_L$ ofrecen un termino lineal en el numerador de la transferencia, este cero introducido es el culpabla de que a las bajas frecuencias la pendiente correspondiente a un sistema de primer orden. Tambien es observable que a partir de una frecuencia, $f_d \approx 1kHz $, la pendiente aumenta a la de un sistema de segundo orden, tal como es deseado.
 %%
 \subsubsection{Elección de componentes.}
 Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) para la cual el filtro debe cumplir esas especificaciones.
@@ -273,7 +272,7 @@ H(s)=\frac{1}{s^2\cdot LC+s\cdot C(R+r_{coil})+1}
 \end{align}
 La cual verifica ser un pasabajos.
 \subsubsection{Circuito utilizando Gyrator.}
-El gyrator tiene la particularidad de que debe estar referenciado a tierra para funcionar como tal, en este caso lo utilizaremos "flotando" para realizar el filtro pasa bajos.La idea que impulsó este diseño fue que el comportamiento de bobina del circuito de la figura (\ref{ig:gyrop}) es visto por el circuito gracias a la impedancia de entrada. En este caso se pensará la R y C como la carga, y se calculó la impedancia de salida del siguiente circuito:
+El gyrator tiene la particularidad de que debe estar referenciado a tierra para funcionar como tal, en este caso lo utilizaremos "flotando" para realizar el filtro pasa bajos.La idea que impulsó este diseño fue que el comportamiento de bobina del circuito de la figura (\ref{fig:gyrop}) es visto por el circuito gracias a la impedancia de entrada. En este caso se pensará la R y C como la carga, y se calculó la impedancia de salida del siguiente circuito:
 
 \begin{figure}[H]	
 	\centering
@@ -305,6 +304,9 @@ Utilizando (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se llega a que:
 \label{eq:LPG}
 \end{equation}
 Vale la pena destacar que (\ref{eq:LPL}) y (\ref{eq:LPG}) son iguales y que es un filtro de segundo orden.
+%%
+\subsubsection{Diseños alternativos.}
+Previo a la desición de utilizar el diseño de la figura (\ref{fig:gyrLP}) se idearon otras alternativas. Una fue utilizar una salida diferencial sobre el capacitor, una mejora sobre este último era utilizar un restador para que esta salida diferencial quede referenciada a tierra. Otra alternativa encontrada fue la utilizacion de 2 gyrators para formar un  frequency-dependent negative resistance (FDNR) para realizar el filtro; este diseño finalmente fue desechado dado a que para este ultimo se necesitarían 2 operacionales, y dado la limitacion en el integrado se optó por mantener simple el diseño e implementar el diseño final.
 %%
 \subsubsection{Comparación de modelos.}
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo como era esperado una gran coincidencia en las frecuencias bajas y medias, y finalmente difiriendo en las altas como se ve a continuación:
