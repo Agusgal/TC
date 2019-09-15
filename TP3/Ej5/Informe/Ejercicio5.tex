@@ -284,14 +284,15 @@ Nuevamente, considerando $A_o \rightarrow \infty$ se obtiene
 \end{equation}
 
 Siendo: 
-\begin{equation*}
+\begin{equation}
 \begin{split}
 	\alpha_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}\\
 	\beta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi - C_{2} R_{2} R_{3} \psi + C_{2} R_{2} R_{3}\\
 	\gamma_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}\\
 	\delta_H =\ & 2 C_{1} R_{1} R_{2} + C_{2} {R_{1}}^{2} + C_{2} R_{1} R_{2} + C_{2} R_{1} R_{3} - C_{2} {R_{2}}^{2} \psi^{2} + C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} \psi
 \end{split}
-\end{equation*}
+\label{equ:general}
+\end{equation}
 
 Además, realizando el ensayo de circuito cerrado, se puede calcular la impedancia de entrada:
 \begin{equation}
@@ -300,21 +301,14 @@ Además, realizando el ensayo de circuito cerrado, se puede calcular la impedanc
 \end{equation}
 
 Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 \gg R_1$ y $R_3 = 10 \ R_2$, se pueden reescribir los coeficientes de (\ref{equ:hs}), obteniéndose: 
-\begin{equation*}
+\begin{equation}
 \begin{split}
-	\alpha_H =\ \gamma_H =\ & 10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right]
+	\alpha_H =\ \gamma_H =\ & 10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right] \\
+	\beta_H =\ & C_{2} R_{2} \left[ 31 R_1 + R_2 \left(10 - 9 \psi - \psi^2 \right) \right] \\
+	\delta_H =\ & C_{2} R_{2} \left[ 31 R_1 + R_2 \psi \left(11 - \psi \right) \right] \\
 \end{split}
-\end{equation*}
-\begin{equation*}
-\begin{split}
-	\beta_H =\ & C_{2} R_{2} \left[ 31 R_1 + R_2 \left(10 - 9 \psi - \psi^2 \right) \right]
-\end{split}
-\end{equation*}
-\begin{equation*}
-\begin{split}
- \delta_H =\ & C_{2} R_{2} \left[ 31 R_1 + R_2 \psi \left(11 - \psi \right) \right]
-\end{split}
-\end{equation*}
+\label{equ:simplifica}
+\end{equation}
 
 Es así que, con los nuevos coeficientes simplificados, se obtiene de (\ref{equ:hs}) la frecuencia de corte del filtro:
 \begin{equation}
@@ -365,16 +359,35 @@ En un ecualizador analógico, al modificar una frecuencia dada, se modifica tamb
 Debido a que, tanto los polos como los ceros del sistema, sin importar el valor de $\psi$, se encuentran en el semiplano izquierdo, se obtiene el menor diagrama de fase posible, en consecuencia, este sistema es de fase mínima.
 
 \begin{center}
-\textcolor{red}{\textbf{BUSCAR HACERLO DE FASE NO MÍNIMA.}}
+	\textcolor{red}{FASE NO MÍNIMA.}
 \end{center}
+
+%Si se busca conseguir que el sistema sea de fase no mínima, se debe seleccionar los componentes tales que haya cero en el semiplano derecho. Para lograr esto, se propone llevar la (\ref{equ:hs}) sea de la forma
+%
+%\begin{equation*}
+%	H(s) = \frac{a S^2 + b S + c}{a S^2 - b S + c}
+%\end{equation*}
+%
+%Por lo tanto, se toma lo obtenido en (\ref{equ:general}) y se busca que
+%\begin{equation*}
+%	\beta_H = - \delta_H
+%\end{equation*}
+%\begin{equation*}
+%	3 C_{1} R_{1} R_{2} + 2 C_{2} {R_{1}}^{2} + 2 C_{2} R_{1} R_{2} + 2 C_{2} R_{1} R_{3} - 2 C_{2} {R_{2}}^{2} \psi^{2} + 2 C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} = 0
+%\end{equation*}
+%\begin{equation*}
+%	R_{3} = \frac{-3 C_{1} R_{1} R_{2} - 2 C_{2} {R_{1}}^{2} - 2 C_{2} R_{1} R_{2} + 2 C_{2} {R_{2}}^{2} \psi^{2} - 2 C_{2} {R_{2}}^{2} \psi }{2 C_{2} R_{1} + C_{2} R_{2}}
+%\end{equation*}
+
 
 \subsection{Desarrollo del circuito y selección de componentes}
 
-Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Debido al carácter logarítmico de las frecuencias, se calculan dichas frecuencias de la forma:
+Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Debido al carácter logarítmico de las frecuencias, se calculan dichos valores de la forma:
 \begin{equation*}
 	\log{(f_{med})} = \frac{\log(f_{min}) + \log(f_{max})}{2} = \log(\sqrt{f_{min} f_{max}})
 \end{equation*}
-Es así que se necesita una frecuencia cercana a los $77,50 \ Hz$ para las frecuencias bajas , $1,2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales, se seleccionan los elementos deseados, completando la siguiente tabla:
+
+Es así que se necesita una frecuencia cercana a los $77.50 \ Hz$ para las frecuencias bajas, $1.2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales, se seleccionan los elementos deseados, completando la siguiente tabla:
 
 \begin{table}[H]
 \begin{center}
@@ -382,9 +395,9 @@ Es así que se necesita una frecuencia cercana a los $77,50 \ Hz$ para las frecu
 \hline
 Banda & $R_1$ & $R_2$ & $R_3$ & $C_1$ & $C_2$ & $f_o$ \\
 \hline
-Baja & $1 \ k\Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $680 \ nF$ & $68 \ nF$ & $81,08 \ Hz$ \\
-Media & $1 \ k\Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $47 \ nF$ & $4,7 \ nF$ & $1,17 \ kHz$ \\
-Alta & $100 \ \Omega$ & $1 \ k\Omega$ & $10 \ k\Omega$ & $56 \ nF$ & $5,6 \ nF$ & $9,85 \ kHz$\\
+Baja & $10 \ k\Omega$ & $100 \ k\Omega$ & $1 \ M\Omega$ & $68 \ nF$ & $6.8 \ nF$ & $81.08 \ Hz$ \\
+Media & $1 \ k\Omega$ & $10 \ k\Omega$ & $100 \ k\Omega$ & $47 \ nF$ & $4.7 \ nF$ & $1.17 \ kHz$ \\
+Alta & $100 \ \Omega$ & $1 \ k\Omega$ & $10 \ k\Omega$ & $56 \ nF$ & $5.6 \ nF$ & $9.85 \ kHz$\\
 \hline
 \end{tabular}
 \caption{Valores de los componentes seleccionados.}
@@ -392,8 +405,17 @@ Alta & $100 \ \Omega$ & $1 \ k\Omega$ & $10 \ k\Omega$ & $56 \ nF$ & $5,6 \ nF$ 
 \end{center}
 \end{table}
 
-Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido al hecho de que cada etapa solo amplifica o atenúa en un rango de frecuencias dadas, mientras que fuera de dicho rango, no se ven afectadas. Además, se buscó reproducir los valores de amplificación de ecualizadores comerciales, los cuales se encuentran entre $\pm 12 \ db$ y $\pm 15 \ db$.
-En consecuencia, la transferencia total del circuito resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la impedancia de entrada total del sistema resulta de la suma de cada impedancia de entrada, obteniendo esta de la misma forma que la tranferencia, es decir, tomando nuevamente los valores de la tabla previamente mencionada y reemplazandola en (\ref{equ:zin}). Es así que se procede a graficar la respuesta en frecuencia de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0,5$.
+Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido debido a la impedancia de entrada del circuito total, razón que se expone más adelante en el informe. Otra ventaja que presenta esta disposición es la facilidad que se presenta al calcular la transferencia de entrada del circuito total, ya que debido a teoría de cuadripolos, la primera resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la segunda se obtiene de la suma de cada impedancia de entrada, de la misma forma que la transferencia, es decir, tomando nuevamente los valores de la tabla previamente mencionada y reemplazándola en (\ref{equ:zin}). Es así que se deja en forma de ecuaciones lo dicho anteriormente:
+
+\begin{equation}
+	H(S) = H_{bajas}(S) \cdot H_{medias}(S) \cdot H_{altas}(S)
+\end{equation}
+\begin{equation}
+	Z_{in}(S) = Z_{bajas}(S) + Z_{medias}(S) + Z_{altas}(S)
+\end{equation}
+siendo el subindice representativo de las frecuencias que modifican.
+
+Por otro lado, se buscó reproducir los valores de amplificación de ecualizadores comerciales, los cuales se encuentran entre $\pm 12 \ db$ y $\pm 15 \ db$. Es así que se procede a graficar la respuesta en frecuencia calculada de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0.5$.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-bode.png}
@@ -431,47 +453,45 @@ En consecuencia, la transferencia total del circuito resulta del producto de la 
 	\label{fig:bode_ph_high}
 \end{figure}
 
-\begin{center}
-\textcolor{red}{\textbf{PONER ALGUNA CONCLUSIÓN U OBSERVACIÓN.}}
-\end{center}
+Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase. Cabe destacar el oído humano no detecta cambios en la fase cuando a distintas frecuencias se refiere. Se podría hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero ducho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano.
 
-De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total. Debido a que se colocaron las tres instancias en serie, $Z_{In_{T}}$ es la suma de impedancia de cada instancia.
+De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total. Debido a que al variar $\psi$ para cada instancia, fijando las demás en $0.5$, resultó indistinto para cada caso, se muestra simplemente una única representación de como depende la impedancia de entrada, en las mismas condiciones que se realizó con la transferencia total del circuito.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Low-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ de las frecuencias bajas.}
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
+	\caption{Impedancia de entrada en modulo, variando $\psi$.}
 	\label{fig:zin_modulo_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Low-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ de las frecuencias bajas.}
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
+	\caption{Fase de la impedancia de entrada, variando $\psi$.}
 	\label{fig:zin_ph_low}
 \end{figure}
+
+Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciometro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Med-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ de las frecuencias medias.}
-	\label{fig:zin_modulo_med}
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
+	\caption{Comparación de impedancias de entrada, en módulo.}
+	\label{fig:zin_comp_mod}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Med-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ de las frecuencias medias.}
-	\label{fig:zin_ph_med}
+		\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
+	\caption{Comparación de impedancias de entrada, en fase.}
+	\label{fig:zin_comp_ph}
 \end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-High-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ de las frecuencias altas.}
-	\label{fig:zin_modulo_high}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-High-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ de las frecuencias altas.}
-	\label{fig:zin_ph_high}
-\end{figure}
+
+\subsection{Mediciones}
+
+Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
+
+Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional LM833, debido a su frecuente uso en lo que a audio respecta. Debido a que este dispositivo es dual, como se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, se debe considerar de ahora en más el cambio de fase que este provee al circuito.   
+
+\begin{center}
+	\textcolor{red}{\textbf{MEDICIONES, SPICE Y TEORICOS.}}
+\end{center} 
 
 
 \end{document}

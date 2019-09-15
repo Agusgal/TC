@@ -62,7 +62,7 @@ Estos circuitos están compuestos solamente por resistores, capacitores y amplif
 	\centering
 	\includegraphics[width=0.5\textwidth]{Imagenes/gic_zin.PNG}
 	\caption{Obtención de la impedancia de entrada del convertidor generalizado de impedancia puesto a tierra[2].}
-	\label{fig:gic}
+	\label{fig:gic_zin}
 \end{figure}
 
 Para obtener la impedancia de entrada del GIC basta solamente calcular la corriente de entrada y utilizar la ley de nodos de Kirchhoff en los nodos de potencial V.
@@ -98,11 +98,282 @@ Esto demuestra que un GIC se puede utilizar para emular la impedancia que se des
 	\label{fig:gic_ind_fndr}
 \end{figure}
 
-Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor puesto a tierra o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo con un GIC no puestoa tierra.
+Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor puesto a tierra o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo con un GIC que no está no puesto a tierra.
 
 
 \subsection{Análisis del Circuito}
+
+En una primera instancia, se puede observar en la Figura (\ref{fig:circ_redibujado}) como el circuito a analizar consiste de un filtro de primer orden compuesto por un convertidor generalizado de impedancia cuya salida se encuentra realimentada a la entrada. Si bien la elección de las impedancias del GIC sugieren que este se comporta como un inductor y que el filtro será de segundo orden, la realimentación por la resistencia $R_8$ al potencial de entrada exige un análisis detallado de la función transferencia del circuito. Este será el primer paso a tomar en el análisis del filtro.
+
 \subsubsection{Análisis de la Función Transferencia}
+Para realizar el análisis de la función transferencia se considerarán los amplificadores operacionales como ideales.
+
+\begin{figure}[H]
+\centering
+\scalebox{0.5}{
+\begin{circuitikz}
+\draw
+
+(5, 0) node[label=north:$V_1$](V1){} %Punto inicial, mas o menos centrado horizontalmente
+	to[short] ++ (-3,0)
+	to[R, l=$R_6$, *-] ++ (0, -2)
+	node[ground]{}
+	to[open] ++ (0, 2)
+	to[short] ++ (-1, 0)
+	to[C, l_=$C_6$, *-] ++ (0, -2)
+	node[ground]{}
+	to[open] ++ (0, 2)
+	to[short] ++ (-1, 0)
+	node[](R7_right){}
+	to[C, l=$C_7$, *-*] ++ (-2, 0)
+	node[](R7_left){}
+	to[short] ++ (-1,0)
+	node[](gic_loop){}
+	to[short] ++ (-1,0)
+	to[V, l=$V_i$] ++ (0, -2)
+	node[ground]{}
+
+(R7_left) to[short] ++ (0, 1)
+	to[R, l=$R_7$] ++ (2, 0)
+	to[short] (R7_right)	
+
+(V1) to[R, l=$R_1$] ++ (0, -2)
+	node[label = east:$V_2$](V2){}
+	
+(V2) to[C, l=$C_2$] ++ (0, -2)
+	node[](V3){}
+	to[open] ++ (-0.5, 0.5)
+	node[](){$V_3$}
+	to[open] ++ (0.5, -0.5)
+
+(V3) to[R, l=$R_3$] ++ (0, -2)
+	node[label=west:$V_4$](V4){}
+	
+(V4) to[R, l=$R_4$] ++ (0, -2)
+	node[label=east:$V_5$](V5){}
+
+(V5) to[R, l=$R_8$] ++ (0,-2)
+	to[short] ++ (-8, 0)
+	to[short, -*] (gic_loop)
+
+(V2) to[open] ++ (3, 0)
+	node[op amp, yscale=-1](opamp){}
+
+(opamp.+) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V1)
+	
+(opamp.-) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, -1.5)
+	to[short, -*] (V3)
+
+(opamp.out) to[short] ++ (1, 0)
+	node[label=east:$V_{out}$](Vout){}
+	to[short] ++ (0, -4)
+	to[short, -*] (V4)
+	
+(V4) ++ (-3, 0) node[op amp, xscale=-1](opamp2){}
+
+(opamp2.+) to[short] ++ (0.5, 0)
+	to[short] ++ (0, -1.5)
+	to[short, -*] (V5)
+	
+(opamp2.-) to[short] ++ (0.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V3)
+	
+(opamp2.out) to[short] ++ (0, 2.5)
+	to[short] ++ (2.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V2)
+
+;
+\end{circuitikz}
+}
+\caption{Circuito a analizar redibujado para facilitar la obtención de la función transferencia.}
+\label{fig:circ_redibujado}
+\end{figure}
+
+Realizando un adecuado redibujo del circuito, se puede observar como los operacionales mantendrán a sus entradas el mismo potencial. Como paso siguiente, y para utilizar el método de nodos en aquellos que son mantenidos a un mismo potencial, se debe redibujar nuevamente al circuito aplicando el teorema de Thévenin entre los nodos $V_1$ y tierra. Para esto, se desconecta la realimentación por medio de la resistencia $R_8$ teniendo en cuenta los efectos que esta producen sobre el circuito.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\scalebox{0.4}{
+\begin{circuitikz}
+
+\draw
+
+(5, 0) node[label=north:$V_1$](V1){} %Punto inicial, mas o menos centrado horizontalmente
+	to[short] ++ (-3,0)
+	to[R, l=$R_6$, *-] ++ (0, -2)
+	node[ground]{}
+	to[open] ++ (0, 2)
+	to[short] ++ (-1, 0)
+	to[C, l_=$C_6$, *-] ++ (0, -2)
+	node[ground]{}
+	to[open] ++ (0, 2)
+	to[short] ++ (-1, 0)
+	node[](R7_right){}
+	to[C, l=$C_7$, *-*] ++ (-2, 0)
+	node[](R7_left){}
+	to[short] ++ (-1,0)
+	node[](gic_loop){}
+	to[short] ++ (-1,0)
+	to[V, l=$V_i$] ++ (0, -2)
+	node[ground]{}
+
+(R7_left) to[short] ++ (0, 1)
+	to[R, l=$R_7$] ++ (2, 0)
+	to[short] (R7_right)	
+
+(V1) to[R, l=$R_1$] ++ (0, -2)
+	node[label = east:$V_2$](V2){}
+	
+(V2) to[C, l=$C_2$] ++ (0, -2)
+	node[](V3){}
+	to[open] ++ (-0.5, 0.5)
+	node[](){$V_3$}
+	to[open] ++ (0.5, -0.5)
+
+(V3) to[R, l=$R_3$] ++ (0, -2)
+	node[label=west:$V_4$](V4){}
+	
+(V4) to[R, l=$R_4$] ++ (0, -2)
+	node[label=east:$V_5$](V5){}
+
+(V5) to[R, l=$R_8$] ++ (0,-2)
+	to[short] ++ (-7, 0)
+	to[short, -*] ++ (0, 5)
+	to[V, l=$V_i$] ++ (-2, 0)
+	to[short] ++ (0, -1)
+	node[ground](){}
+
+(V2) to[open] ++ (3, 0)
+	node[op amp, yscale=-1](opamp){}
+
+(opamp.+) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V1)
+	
+(opamp.-) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, -1.5)
+	to[short, -*] (V3)
+
+(opamp.out) to[short] ++ (1, 0)
+	node[label=east:$V_{out}$](Vout){}
+	to[short] ++ (0, -4)
+	to[short, -*] (V4)
+	
+(V4) ++ (-3, 0) node[op amp, xscale=-1](opamp2){}
+
+(opamp2.+) to[short] ++ (0.5, 0)
+	to[short] ++ (0, -1.5)
+	to[short, -*] (V5)
+	
+(opamp2.-) to[short] ++ (0.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V3)
+	
+(opamp2.out) to[short] ++ (0, 2.5)
+	to[short] ++ (2.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V2)
+
+;
+
+\end{circuitikz}
+}
+\caption{Circuito redibujado.}\label{fig:circ_redibujado_2}
+\end{subfigure}
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\scalebox{0.6}{
+\begin{circuitikz}
+ 
+ \draw
+
+(0,0) node[label=north:$V_1$](V1){}
+	to[short, *-] ++ (-1, 0)
+	to[R, l=$R_6$] ++ (0, -2)
+	node[ground](){}
+	to[open] ++ (0, 2)
+	to[short, *-*] ++ (-1, 0)
+	to[C, l_=$C_6$] ++ (0,-2)
+	node[ground](){}
+	to[open] ++ (0, 2)
+	to[short] ++ (-1, 0)
+	to[C, l=$C_7$, *-*] ++ (-2, 0)
+	to[short] ++ (0, 1)
+	to[R, l=$R_7$] ++ (2, 0)
+	to[short] ++ (0, -1)
+	to[open] ++ (-2, 0)
+	to[short] ++ (-1, 0)
+	to[V, l=$V_i$] ++ (0, -2)
+	node[ground](){}
+
+;
+ 
+\end{circuitikz}
+}
+\caption{Circuito para el análisis de Thévenin}
+\label{fig:circ_thevenin}
+\end{subfigure}
+\end{figure}
+
+Se puede observar en la Figura (\ref{fig:circ_thevenin}) como la tensión de Thévenin será el divisor resistivo entre las impedancias equivalentes $Z_7$ y $Z_6$, mientras que la impedancia de Thévenin será el paralelo entre ambas impedancias equivalentes. Resulta entonces:
+
+\begin{equation}
+V_{Th} = V_i \cdot \frac{\left(R_6 // \frac{1}{SC_6}\right)}{\left(R_6 // \frac{1}{SC_6}\right) + \left(R_7 // \frac{1}{SC_7}\right)}
+\end{equation}
+
+\begin{equation}
+R_{Th} = \left(R_6 // \frac{1}{SC_6}\right) // \left(R_7 // \frac{1}{SC_7}\right)
+\end{equation}
+
+Finalmente, con las ecuaciones obtenidas habiendo aplicado el teorema de Thévenin, se aplica el método de los nodos en aquellos nodos cuyo potencial es mantenido igual por los operacionales, resultando en:
+
+\begin{equation}
+V_1=V_3=V_5=V_A
+\label{eq:circ_trans1}
+\end{equation}
+
+\begin{equation}
+\frac{V_{out} - V_A}{R_4} = \frac{V_A-V_i}{R8}
+\label{eq:circ_trans2}
+\end{equation}
+
+\begin{equation}
+\frac{V_2 - V_A}{\frac{1}{SC_2}} = \frac{V_A-V_{out}}{R_3}
+\label{eq:circ_trans3}
+\end{equation}
+
+\begin{equation}
+\frac{V_i \cdot \frac{\left(R_6 // \frac{1}{SC_6}\right)}{\left(R_6 // \frac{1}{SC_6}\right) + \left(R_7 // \frac{1}{SC_7}\right)} - V_A}{\left(R_6 // \frac{1}{SC_6}\right) // \left(R_7 // \frac{1}{SC_7}\right)} = \frac{V_A-V_2}{R_1}
+\label{eq:circ_trans4}
+\end{equation}
+
+A partir de (\ref{eq:circ_trans1}), (\ref{eq:circ_trans2}), (\ref{eq:circ_trans3}) y (\ref{eq:circ_trans4}) se obtiene:
+
+\begin{equation}
+\hspace{-0.5cm}
+\frac{V_{out}}{V_i} = \frac{S^2 C_2 R_1 R_3 R_6 R_7 (-C_6 R_4 + C_7 R_8) + S C_2 R_1 R_3 (R_6 R_8 - R_4 R_7) + R_4 R_6 R_7}{S^2 C_2 R_1 R_3 R_6 R_8 (C_6 + C_7)+S C_2 R_1 R_3 R_8 (R_7 + R_6) + R_4 R_6 R_7}
+\label{circ_trans}
+\end{equation}
+Utilizando las consideraciones de diseño del circuito de low-pass notch:
+$$R_1=R_3=R_4=R_8=R \ \ \ ; \ \ \ R_6=R_7=2QR$$
+$$C_2=C \ \ \ ; \ \ \ C_6=(1-\frac{1}{k^2})\frac{C}{2}  \ \ \ ; \ \ \ C_7=(1+\frac{1}{k^2})\frac{C}{2}$$
+$$k=\left(\frac{\omega_z}{\omega_p} \right) > 1$$
+
+Se logra obtener la siguiente expresión para el circuito:
+
+\begin{equation}
+\frac{Vo}{Vi} = \frac{\left(\frac{S}{\frac{k}{C R}}\right)^2 + 1}{\left( \frac{S}{\frac{1}{CR}} \right)^2+\frac{SCR}{2Q} + 1}
+\label{circ_trans_simple}
+\end{equation}
+
+
 
 \subsubsection{Análisis de Polos y Ceros}
 \subsubsection{Análisis de Impedancias de Entrada y Salida}
@@ -130,11 +401,6 @@ Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementacion
 [1]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 185.
 [2]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 186.
 [3]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 187.
-
-\begin{equation}
-\hspace{-4cm}
-\frac{vi \left(- C_{2} C_{6}^{2} C_{7} R_{1} R_{3} R_{4} R_{6}^{2} R_{7}^{2} S^{4} - C_{2} C_{6}^{2} R_{1} R_{3} R_{4} R_{6}^{2} R_{7} S^{3} + C_{2} C_{6} C_{7}^{2} R_{1} R_{3} R_{6}^{2} R_{7}^{2} R_{8} S^{4} - 2 C_{2} C_{6} C_{7} R_{1} R_{3} R_{4} R_{6} R_{7}^{2} S^{3} + 2 C_{2} C_{6} C_{7} R_{1} R_{3} R_{6}^{2} R_{7} R_{8} S^{3} - C_{2} C_{6} R_{1} R_{3} R_{4} R_{6}^{2} R_{7}^{2} S^{2} - 2 C_{2} C_{6} R_{1} R_{3} R_{4} R_{6} R_{7} S^{2} + C_{2} C_{6} R_{1} R_{3} R_{6}^{2} R_{8} S^{2} + C_{2} C_{7}^{2} R_{1} R_{3} R_{6} R_{7}^{2} R_{8} S^{3} - C_{2} C_{7} R_{1} R_{3} R_{4} R_{7}^{2} S^{2} + C_{2} C_{7} R_{1} R_{3} R_{6}^{2} R_{7}^{2} R_{8} S^{2} + 2 C_{2} C_{7} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} - C_{2} R_{1} R_{3} R_{4} R_{6} R_{7}^{2} S - C_{2} R_{1} R_{3} R_{4} R_{7} S + C_{2} R_{1} R_{3} R_{6}^{2} R_{7} R_{8} S + C_{2} R_{1} R_{3} R_{6} R_{8} S + C_{6}^{2} R_{4} R_{6}^{2} R_{7}^{2} S^{2} + C_{6} C_{7} R_{4} R_{6}^{2} R_{7}^{2} S^{2} + C_{6} R_{4} R_{6}^{2} R_{7} S + 2 C_{6} R_{4} R_{6} R_{7}^{2} S + C_{7} R_{4} R_{6} R_{7}^{2} S + R_{4} R_{6} R_{7} + R_{4} R_{7}^{2}\right)}{C_{2} C_{6}^{2} C_{7} R_{1} R_{3} R_{6}^{2} R_{7}^{2} R_{8} S^{4} + C_{2} C_{6}^{2} R_{1} R_{3} R_{6}^{2} R_{7} R_{8} S^{3} + C_{2} C_{6} C_{7}^{2} R_{1} R_{3} R_{6}^{2} R_{7}^{2} R_{8} S^{4} + 2 C_{2} C_{6} C_{7} R_{1} R_{3} R_{6}^{2} R_{7} R_{8} S^{3} + 2 C_{2} C_{6} C_{7} R_{1} R_{3} R_{6} R_{7}^{2} R_{8} S^{3} + C_{2} C_{6} R_{1} R_{3} R_{6}^{2} R_{7}^{2} R_{8} S^{2} + C_{2} C_{6} R_{1} R_{3} R_{6}^{2} R_{8} S^{2} + 2 C_{2} C_{6} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} + C_{2} C_{7}^{2} R_{1} R_{3} R_{6} R_{7}^{2} R_{8} S^{3} + C_{2} C_{7} R_{1} R_{3} R_{6}^{2} R_{7}^{2} R_{8} S^{2} + 2 C_{2} C_{7} R_{1} R_{3} R_{6} R_{7} R_{8} S^{2} + C_{2} C_{7} R_{1} R_{3} R_{7}^{2} R_{8} S^{2} + C_{2} R_{1} R_{3} R_{6}^{2} R_{7} R_{8} S + C_{2} R_{1} R_{3} R_{6} R_{7}^{2} R_{8} S + C_{2} R_{1} R_{3} R_{6} R_{8} S + C_{2} R_{1} R_{3} R_{7} R_{8} S + C_{6}^{2} R_{4} R_{6}^{2} R_{7}^{2} S^{2} + C_{6} C_{7} R_{4} R_{6}^{2} R_{7}^{2} S^{2} + C_{6} R_{4} R_{6}^{2} R_{7} S + 2 C_{6} R_{4} R_{6} R_{7}^{2} S + C_{7} R_{4} R_{6} R_{7}^{2} S + R_{4} R_{6} R_{7} + R_{4} R_{7}^{2}}
-\end{equation}
 
 
 \end{document}

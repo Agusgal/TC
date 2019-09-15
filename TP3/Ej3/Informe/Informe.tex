@@ -21,25 +21,29 @@
 	Por el contrario, los amplificadores operacionales tradicionales que no están diseñados para eliminar este tipo señales no deseadas.
 
 	
-	\subsection{Análisis teórico}
+	\subsection{Características del IN-AMP}
 	El circuito a analizar es una variante de los famosos amplificadores de instrumentación que utilizan 3 amplificadores operacionales que se puede observar en la figura debajo.
 	%Imagen del amplificador de instrumentación con 3 op-amps
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\linewidth]{../ImagenesVarias/inAmp3Opamp}
 		%TODO revisar footnote imagen 
-		\caption[Compact Routing Example]{Clasico amplificador de instrumentación con 3 Opamps
-		\footnote{Imagen extraída de: \textit{A designer's guide to instrumentation amplifiers}}}
+		\caption{Clasico amplificador de instrumentación con 3 Opamps}
 	\end{figure}
-
-
+	%\footnote{Imagen extraída de: \textit{A designer's guide to Sinstrumentation amplifiers}
+		
+	Como se puede apreciar a la izquierda de la línea punteada se han colocado un par de buffers. El objetivo de los mismos es de el de aumentar significativamente la impedancia de entrada del in-amp para independizarla lo más posible de la impedancias de las fuentes ya que este pueden ser muy altas o estar desbalanceadas. Tambien ofrece la ventaja de no cargar a la fuente, lo cual es de gran relevancia al trabajar con señales pequeñas. Además le otorga una cierta ganancia a la señal de entradate{. Este aspecto del circuito se debe tener en cuenta para evitar la saturación de los op-amps y perder la efectividad del circuito.
 	En nuestro caso se trabajara con la versión de 4 amplificadores operacionales.
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=\linewidth]{../ImagenesVarias/ampInst}
+		\includegraphics[width=\linewidth]{../ImagenesVarias/inAmpSch.png}
+		\caption{Amplificador de instrumentación de 4 op-amps}
 	\end{figure}
+	
+	
+	Es evidente que ambos circuitos son muy similares entre sí
 
-	Valiendonos de la herramienta de análisis simbólico \textit{SapWin \footnote{SapWin es una programa de análisis y simulación de circuitos desarrollado por la \textit{Universitá degli studi Firenze}}} obtenemos la siguiente expresión para la ganancia ideal de amplificador de instrumentación:
+	Haciendo uso de la herramienta de análisis simbólico \textit{SapWin \footnote{SapWin es una programa de análisis y simulación de circuitos desarrollado por la \textit{Universitá degli studi Firenze}}} obtenemos la siguiente expresión para la ganancia ideal de amplificador de instrumentación:
 	
 	$$V_{out}=\frac{-V_1 R_2 R_4 R_7 - 
 					V_1 R_2 R_3 R_7 +
@@ -49,6 +53,8 @@
 	
 	Notamos que en la situación ideal tanto las resistencias $R_5$ y $R_9$ no afectan la ganancia del circuito.
 	\subsubsection{Relaciones entre los componentes}
+	Una de las finalidades del amplificador de instrumentación es la de eliminar aquellas señales que sean comunes a las señales de entrada.
+	
 	
 
 
@@ -64,6 +70,9 @@
 	
 	\bibitem{dguideinamp}
 	C. Kitchin and L. Counts, A designer's guide to instrumentation amplifiers. Norwood, Mass.: Analog Devices, 2006.
+	
+	\bibitem{an244}
+	Jeffrey R. Riskin, A User's guide to IC instrumentation amplifiers. Norwood, Mass.: Analog Devices.
 	
 \end{thebibliography}
 
