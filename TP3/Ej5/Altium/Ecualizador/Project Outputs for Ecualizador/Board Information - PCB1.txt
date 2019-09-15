@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : C:\Users\Usuario\source\repos\TC\TP3\Ej5\Altium\Ecualizador\PCB1.PcbDoc
+Date         : 15/9/2019
+Time         : 17:04:08
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100,00%
+    Connections, 57
+    Connections routed, 57
+    Connections remaining, 0
+count : 4

@@ -487,6 +487,8 @@ Se observa de estas figuras que la impedancia de entrada se comporta de manera r
 
 Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
 
+Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional LM833, debido a su frecuente uso en lo que a audio respecta. Debido a que este dispositivo es dual, como se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, se debe considerar de ahora en más el cambio de fase que este provee al circuito.   
+
 \begin{center}
 	\textcolor{red}{\textbf{MEDICIONES, SPICE Y TEORICOS.}}
 \end{center} 
