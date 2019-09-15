@@ -33,17 +33,18 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Introducción.}
-El \textbf{Gyrator} es un componente electrónico inicialmente propuesto como el quinto componente lineal y pasivo luego del resistor, capacitor, inductor y transformador ideal. Fue propuesto en 1948 por Bernard D. H. Tellegen el componente acopla la la corriente en un puerto con la tensión en el otro y viceversa. Siendo caracterizado por un cuadripolo con parametros impedancia:
+El \textbf{Gyrator} es un componente electrónico inicialmente propuesto como el quinto componente lineal y pasivo luego del resistor, capacitor, inductor y transformador ideal. Fue propuesto en 1948 por Bernard D. H. Tellegen. El componente acopla la  corriente en un puerto con la tensión en el otro y viceversa. Siendo caracterizado por un cuadripolo con parametros impedancia:
 $$ Z= \left(\begin{matrix}0&-R\\R&0\end{matrix}\right) $$
 Donde R sería la resistencia interna del Gyrator.
-
+Es de utilidad recordar que la relación entrada-salida de los parametros impedancia es la siguiente:
+\begin{align} \left(\begin{matrix}V_1\\V_2\end{matrix}\right) =   \left(\begin{matrix}0&-R\\R&0\end{matrix}\right)  \cdot \left(\begin{matrix}I_1\\I_2\end{matrix}\right) \end{align}
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyratorsimb.png}
-	\caption{Simbolo eléctrico del Gyrator.}
+	\caption{Símbolo eléctrico del Gyrator.}
 	\label{fig:gyrsimb}
 \end{figure}
-Realmente es implementado utilizando opamps, y uno de los usos mas populares es para la inversión de impedancias, permitiendo simular un inductor utilizando otros componentes.La configuración generalmente utilizada es la siguiente:
+En la realidad el gyrator es implementado utilizando amplificadores operacionales. Uno de los usos mas populares es para la inversión de impedancias, permitiendo simular un inductor utilizando otros componentes (capacitores y resistencias).La configuración generalmente utilizada es la siguiente:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.5\textwidth]{ImagenesEj2/gyrop.png}
@@ -52,17 +53,17 @@ Realmente es implementado utilizando opamps, y uno de los usos mas populares es 
 \end{figure}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\subsection{Calculo analítico.}
+\subsection{Cálculo analítico.}
 Utilizando el circuito de la figura (\ref{fig:gyrop}) se plantearon las siguientes ecuaciones:
 \begin{align}   V_{Out} = V^- \label{eq:1}\end{align}
 \begin{align} V_{Out} = A(s) \cdot (V^+-V^-)\label{eq:2}\end{align}
 \begin{align} A(s)= \frac{A_0}{1+\frac{s}{\omega'}}\end{align}
 \begin{align} I_{In}=\frac{V_{In}-V^-}{R_L}+\frac{V^+}{R_g}\end{align}
 \begin{align} V^+=V_{In}\cdot \frac{R_g}{R_g+\frac{1}{sC_g}} \end{align}
-primero observaremos que en utilizando (\ref{eq:1}) y (\ref{eq:2}) se llega a que 
+primero observaremos que utilizando (\ref{eq:1}) y (\ref{eq:2}) se llega a que:
 \begin{align}V^- =V^+ \cdot \frac{A(s)}{A(s)+1} = V^+ \cdot \frac{A_0}{A_0+1+\frac{s}{\omega'}} \approx V^+ \cdot \frac{1}{1+\frac{s}{GBP}} \label{eq:desp}   \end{align}
-Donde GBP es un parámetro propio del operacional y suele ser del orden de los MHz. Por lo tanto este termino sería desprecianle siempre que el rango de frecuencias en los cuales se trabaje sea menor a 50kHz
-, teniendo en cuenta esa aproximacion se pueden llegar a las siguientes expresiones:
+Donde GBP es un parámetro propio del operacional y suele ser del orden de los MHz. Por lo tanto este termino sería despreciable siempre que el rango de frecuencias en los cuales se trabaje sea menor a 50kHz\footnote{La elección de este valor de frecuencia será detallado en las siguientes páginas.}
+, teniendo en cuenta esa aproximación se pueden llegar a las siguientes expresiones:
 \begin{align}H(s)= \frac{R_g}{R_g+\frac{1}{sC_g}} \end{align}
 
 
@@ -76,12 +77,12 @@ Bajo estos supuestos se puede considerar la impedancia de entrada como una bobin
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Gyrator vs Inductor}
 Hablamos de la impedancia de entrada pero tambien es conveniente preguntarse, porque es necesario suplantar a los inductores con circuitos que se comporten de manera similar.
-Los inductores ocupan un gran tamaño respecto a el resto de los componentes que pueden ser integrados para reducir aun mas su tamaño, una desventaja del uso del gyrator, es que su rango operativo en el cual se comporta como inductancia no es muy extenso. Tambien otro factor a tener en cuenta es la desviación estandar respecto al valor nominal de la inductancia, mientras que con el gyrator dado a que los componentes que lo integran son mas precisos el inductor emulado también lo será.
+Los inductores ocupan un gran tamaño respecto al resto de los componentes, que pueden ser integrados para reducir aun mas su tamaño.Tambien otro factor a tener en cuenta es la desviación estandar respecto al valor nominal de la inductancia, mientras que con el gyrator dado a que los componentes que lo integran son mas precisos el inductor emulado también lo será. Una desventaja del uso del gyrator, es que su rango operativo en el cual se comporta como inductancia no es muy extenso.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Impedancia de entrada.}
 \label{section:zin}
-Dado a que la caracteristica mas atractiva del gyrator es que su impedancia de entrada, bajo ciertas hipotesis, se comporta como un inductor se procedió a medirla y se contrasto con una simulación de \textbf{LTSpice} de la impedancia de entrada de un hyrator y la impedancia de entrada de una bobina, también simulada.
+Dado a que la característica mas atractiva del gyrator es  su impedancia de entrada, bajo ciertas hipotesis, se comporta como un inductor, se procedió a medirla y se contrasto con una simulación de \textbf{LTSpice} de la impedancia de entrada de un gyrator y la impedancia de entrada de una bobina, también simulada.
 
 \begin{figure}[H]	
 	\centering
@@ -89,7 +90,7 @@ Dado a que la caracteristica mas atractiva del gyrator es que su impedancia de e
 	\caption{Impedancia de entrada del Gyrator.}
 	\label{fig:ZinG}
 \end{figure}
-Puede notarse que el pico el cual presenta el Gyrator simulado no se compara con el medido, esto se atribuye a una posible resonancia que se de en la simulación la cual no se da en el circuito real. Otra cosa a notar es que el gyrator tiene un comportamiento similar a el de una bobina en un rango de frecuencias de 0 ~40 kHz
+Puede notarse que el pico el cual presenta el Gyrator simulado no se compara con el medido, esto se atribuye a una posible resonancia que se de en la simulación la cual no se da en el circuito real. Otra cosa a notar es que el gyrator tiene un comportamiento similar a el de una bobina en un rango de frecuencias de 0 ~50 kHz.
 También se midió la fase obteniendo el siguiente gráfico.
 \begin{figure}[H]	
 	\centering
@@ -97,16 +98,16 @@ También se midió la fase obteniendo el siguiente gráfico.
 	\caption{Impedancia de entrada del Gyrator fase.}
 	\label{fig:ZinG}
 \end{figure}
- Aquí tambien se puede notar la similtud entre las señales hasta aproximadamente 40 kHz, tambien que el cambio de fase en el gyrator medido no es tan brusco comparado  con el simulado.
+ Aquí tambien se puede notar la similtud entre las señales hasta aproximadamente 50 kHz, tambien que el cambio de fase en el gyrator medido no es tan brusco comparado  con el simulado.
 Finalmente considerando las ultimas mediciones, el rango operativo en el cual se va  a trabajar con el Gyrator será desde 1Hz~40/50 kHz.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \subsection{Elección operacional.}
-El operacional que se eligió fue un operqacion \textbf{TL-084} dado a su $GBP \approx 3MHz$, sus pequeñas corrientes de Bias $I_B \approx 30pA$, su slew-rate $SR \approx 13 \frac{V}{\mu s}$, cuenta con una gran impedancia de entrada, $ r_i \approx 1T \Omega $ y que cuenta con 4 operacionales, la cual es una cualidad notable dado que solamente se podrá utilizar 1 integrado.
+El operacional que se eligió fue un \textbf{TL-084} dado a su $GBP \approx 3MHz$, sus pequeñas corrientes de Bias $I_B \approx 30pA$, su slew-rate $SR \approx 13 \frac{V}{\mu s}$, cuenta con una gran impedancia de entrada, $ r_i \approx 1T \Omega $ y que cuenta con 4 operacionales, la cual es una cualidad notable dado que solamente se podrá utilizar 1 integrado.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
  \flushleft
 \subsection{Filtros de segundo orden.}
-Los filtros a implemetar en este trabajo serán filtros de segundo orden siendo estos Low-Pass, High-Pass, Band-Pass y Band-Reject. Y tendran las siguientes especificaciones de diseño:
+Los filtros a implemetar en este trabajo serán filtros de segundo orden siendo estos Low-Pass, High-Pass, Band-Pass y Band-Reject. Y tendrán las siguientes especificaciones de diseño:
 \begin{table}[H]
 \begin{center}
 \begin{tabular}{|c|c|c|c|}
@@ -161,7 +162,7 @@ H(s)=\frac{s^2LC+s\cdot r_{coil}C}{s^2LC+s\cdot(R+r_{coil})C+1}
  \end{align}
 
 \subsubsection{Circuito utilizando Gyrator.}
-Para la implementación de este filtro utilizando un Gyrator dado a que este usualmente esta referenciado a tierra  se optó por el siguiente diseño:
+Para la implementación de este filtro utilizando un Gyrator, dado a que este usualmente está referenciado a tierra  se optó por el siguiente diseño:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyrHP.PNG}
@@ -200,18 +201,18 @@ Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con g
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndP}
 \end{figure}
-Es de interés mencionar que debido a la resistencia interna de la bobina y su análogo de $R_L$ ofrecen un termino lineal en el numerador de la transferencia, este cero introducido es el culpabla de que a las bajas frecuencias la pendiente correspondiente a un sistema de primer orden. Tambien es observable que a partir de una frecuencia, $f_d \approx 1kHz $, la pendiente aumenta a la de un sistema de segundo orden, tal como es deseado.
+Es de interés mencionar que debido a la resistencia interna de la bobina y su análogo de $R_L$ ofrecen un termino lineal en el numerador de la transferencia, este cero introducido es el culpable de que, a las bajas frecuencias la pendiente, sea correspondiente a la de un sistema de primer orden. Tambien es observable que a partir de una frecuencia, $f_d \approx 1kHz $, la pendiente aumenta a la de un sistema de segundo orden, tal como es deseado.
 %%
 \subsubsection{Elección de componentes.}
-Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) para la cual el filtro debe cumplir esas especificaciones.
+Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) , dado que el filtro debe cumplir esas especificaciones.
 Lo primero que se decidió fue fijar la impedancia de salida del Gyrator siendo esta de $L \approx 10mH $ y $r_{coil} \approx 51\Omega $, para esto se tomaron los siguientes valores: $R_L = 51\Omega \ R_g = 200k\Omega \ C_g = 1nF$
-A partir de esto se decidio una frecuencia de corte de  para que cumpla las especificaciones $f_c =6.1kHz $. Esto define un valor de capacitor $C \approx 68nF$ y finalmente dado a que no debe amplificar para ninguna frecuencia se eligió un valor de R tal que no haya sobrepico\footnote{Cabe aclarar que el valor de $\xi$ para el cual comienza a haber sobrepico es de 0.707} teniendo un valor de $\xi \approx 0.98 $ con $R \approx 750 $
-Vale la pena notar que las aproximaciones que se expresaron en (\ref{eq:basicL2}) siguen vigentes. En este caso se tienen los siguientes valores:
+A partir de esto se eligió una frecuencia de corte para que cumpla las especificaciones siendo esta $f_c =6.1kHz $. Esto define un valor de capacitor $C \approx 68nF$ y finalmente dado a que no debe amplificar para ninguna frecuencia se eligió un valor de R tal que no haya sobrepico\footnote{Cabe aclarar que el valor de $\xi$ para el cual comienza a haber sobrepico es de 0.707} teniendo un valor de $\xi \approx 0.98 $ con $R \approx 750 $.
+	Vale la pena notar que las aproximaciones que se expresaron en (\ref{eq:basicL2}) siguen vigentes. En este caso se tienen los siguientes valores:
 \begin{align}  R<<R_g \implies  \frac{R_g}{R}=  267 \ \ \ \ C_gR_L << 1 \implies C_gR_L=5.1 \cdot 10^{-8} \end{align}
 
 %%
 \subsubsection{Respuesta en frecuencia.}
-Se midió la respuesta en frencuencia del filtro pasa altos, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
+Se midió y calculó la respuesta en frecuencia del filtro pasa altos, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{ImagenesEj2/bodehp.jpg}
@@ -272,7 +273,7 @@ H(s)=\frac{1}{s^2\cdot LC+s\cdot C(R+r_{coil})+1}
 \end{align}
 La cual verifica ser un pasabajos.
 \subsubsection{Circuito utilizando Gyrator.}
-El gyrator tiene la particularidad de que debe estar referenciado a tierra para funcionar como tal, en este caso lo utilizaremos "flotando" para realizar el filtro pasa bajos.La idea que impulsó este diseño fue que el comportamiento de bobina del circuito de la figura (\ref{fig:gyrop}) es visto por el circuito gracias a la impedancia de entrada. En este caso se pensará la R y C como la carga, y se calculó la impedancia de salida del siguiente circuito:
+El gyrator tiene la particularidad de que debe estar referenciado a tierra para funcionar como tal, en este caso lo utilizaremos "flotando" para realizar el filtro pasa bajos.La idea que impulsó este diseño fue que el comportamiento de bobina del circuito de la figura (\ref{fig:gyrop}) es visto por el circuito gracias a la impedancia de entrada. En este caso se pensó la R y C como la carga, y se calculó la impedancia de salida del siguiente circuito:
 
 \begin{figure}[H]	
 	\centering
@@ -324,16 +325,16 @@ Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con g
 \end{figure}
 %%
 \subsubsection{Elección de componentes.}
-Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) para la cual el filtro debe cumplir esas especificaciones.
+Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) , dado que el filtro debe cumplir esas especificaciones.
 Lo primero que se decidió fue fijar la impedancia de salida del Gyrator siendo esta de $L \approx 10mH $ y $r_{coil} \approx 51\Omega $, para esto se tomaron los siguientes valores: $R_L = 51\Omega \ R_g = 200k\Omega \ C_g = 1nF$
-A partir de esto se decidio una frecuencia de corte de  para que cumpla las especificaciones $f_c =1.78kHz $. Esto define un valor de capacitor $C \approx 800nF$ y finalmente dado a que no debe amplificar para ninguna frecuencia se eligió un valor de R tal que no haya sobrepico\footnote{Cabe aclarar que el valor de $\xi$ para el cual comienza a haber sobrepico es de 0.707} teniendo un valor de $\xi \approx 0.8 $ con $R \approx 130 $ y teniendo en cuenta la $r_{coil} = 51\Omega$  
+A partir de esto se eligió una frecuencia de corte para que cumpla las especificaciones siendo esta  $f_c =1.78kHz $. Esto define un valor de capacitor $C \approx 800nF$ y finalmente dado a que no debe amplificar para ninguna frecuencia se eligió un valor de R tal que no haya sobrepico\footnote{Cabe aclarar que el valor de $\xi$ para el cual comienza a haber sobrepico es de 0.707} teniendo un valor de $\xi \approx 0.8 $ con $R \approx 130 $ y teniendo en cuenta la $r_{coil} = 51\Omega$  
 Vale la pena notar que las aproximaciones que se expresaron en (\ref{eq:basicL2}) siguen vigentes. En este caso se tienen los siguientes valores:
 \begin{align}  R<<R_g \implies  \frac{R_g}{R}=  1538 \ \ \ \ C_gR_L << 1 \implies C_gR_L =5.1\cdot 10^{-8} \end{align}
 
 
 %%
 \subsubsection{Respuesta en frecuencia.}
-Se midió la respuesta en frencuencia del filtro pasa altos, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
+Se midió y calculó la respuesta en frecuencia del filtro pasa bajos, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{ImagenesEj2/bodelp.jpg}
@@ -397,7 +398,7 @@ Operando en el circuito se obtiene:
 %\begin{align}\end{align}
 %%
 \subsubsection{Circuito utilizando Gyrator.}
-El circuito propuesto para el filtro Band-Pass es identico a la figura (\ref{fig:basBP}) con la singularidad que intercambiaremos el inductor por un gyrator de la siguiente manera.
+El circuito propuesto para el filtro Band-Pass es idéntico a la figura (\ref{fig:basBP}) con la singularidad que intercambiaremos el inductor por un gyrator de la siguiente manera.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyrBP.PNG}
@@ -419,7 +420,7 @@ Teniendo en cuenta (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se obtiene:
 Vale la pena destacar que (\ref{eq:BPL}) y (\ref{eq:BPG}) son iguales.
 %%
 \subsubsection{Comparación de modelos.}
-Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo una coincidencia en todo el espectro a analizar, teniendo unas pequeñas diferencias para las tensiones que tienden a la continua.
+Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo una coincidencia en todo el espectro a analizar, teniendo unas pequeñas diferencias para las tensiones que tienden a la continua esto se debe al efecto provocado por la $r_{coil}$ la cual hace que cuado $f \rightarrow 0$ la función se establece en $\frac{r_{coil}}{R}$ .
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simBP.PNG}
@@ -435,9 +436,9 @@ Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con g
 %%
 
 \subsubsection{Elección de componentes.}
-Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) para la cual el filtro debe cumplir esas especificaciones.
+Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) , dado que el filtro debe cumplir esas especificaciones.
 Lo primero que se decidió fue fijar la impedancia de salida del Gyrator siendo esta de $L \approx 0.51H $ y $r_{coil} \approx 51\Omega $, para esto se tomaron los siguientes valores: $R_L = 51\Omega \ R_g = 1M\Omega \ C_g = 10nF$
-A partir de esto se decidio una frecuencia de corte de  para que cumpla las especificaciones $f_c =2kHz $. Esto define un valor de capacitor $C \approx 800nF$ y finalmente dado a que no debe amplificar para ninguna frecuencia se eligió un valor de R tal que no haya sobrepico\footnote{Cabe aclarar que el valor de $\xi$ para el cual comienza a haber sobrepico es de 0.707} teniendo un valor de $\xi \approx 7.5 $ con $R \approx 12k\Omega $ y teniendo en cuenta la $r_{coil} = 51\Omega$  
+A partir de esto se eligió una frecuencia de corte para que cumpla las especificaciones siendo esta  $f_c =2kHz $. Esto define un valor de capacitor $C \approx 800nF$ y finalmente dado a que no debe amplificar para ninguna frecuencia se eligió un valor de R tal que no haya sobrepico\footnote{Cabe aclarar que el valor de $\xi$ para el cual comienza a haber sobrepico es de 0.707} teniendo un valor de $\xi \approx 7.5 $ con $R \approx 12k\Omega $ y teniendo en cuenta la $r_{coil} = 51\Omega$  
 Vale la pena notar que las aproximaciones que se expresaron en (\ref{eq:basicL2}) siguen vigentes. En este caso se tienen los siguientes valores:
 \begin{align}  R<<R_g \implies  \frac{R_g}{R}=  84 \ \ \ \ C_gR_L << 1 \implies C_gR_Ls =5.1\cdot 10^{-7}\end{align}
 
@@ -445,7 +446,7 @@ Vale la pena notar que las aproximaciones que se expresaron en (\ref{eq:basicL2}
 
 %%
 \subsubsection{Respuesta en frecuencia.}
-Se midió la respuesta en frencuencia del filtro pasa altos, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
+Se midió y calculó la respuesta en frecuencia del filtro pasa banda, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{ImagenesEj2/bodebp.jpg}
@@ -530,7 +531,7 @@ Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con g
 \end{figure}
 %%
 \subsubsection{Elección de componentes.}
-Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) para la cual el filtro debe cumplir esas especificaciones.
+Se eligieron los componentes teniendo en cuenta la tabla (\ref{tab:specs}) , dado que el filtro debe cumplir esas especificaciones.
 Lo primero que se decidió fue fijar la impedancia de salida del Gyrator siendo esta de $L \approx 0.51H $ y $r_{coil} \approx 51\Omega $, para esto se tomaron los siguientes valores: $R_L = 51\Omega \ R_g = 1M\Omega \ C_g = 10nF$.
  Esto define un valor de capacitor $C \approx 4.7nF$ y finalmente dado a que no debe amplificar para ninguna frecuencia se eligió un valor de R tal que no haya sobrepico\footnote{Cabe aclarar que el valor de $\xi$ para el cual comienza a haber sobrepico es de 0.707} teniendo un valor de $\xi \approx 0.96 $ con $R \approx 20k\Omega $ y teniendo en cuenta la $r_{coil} = 51\Omega$  
 
@@ -540,7 +541,7 @@ Vale la pena notar que las aproximaciones que se expresaron en (\ref{eq:basicL2}
 %%
 \subsubsection{Respuesta en frecuencia.}
 
-Se midió la respuesta en frencuencia del filtro pasa altos, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
+Se midió y calculó la respuesta en frecuencia del filtro rechaza banda, se simuló en \textbf{LTSpice}  tanto el comportamiento con gyrator como el de un inductor. Obteniendo las siguientes gráficas:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{ImagenesEj2/bodebr.jpg}
