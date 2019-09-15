@@ -1,11 +1,9 @@
-Output: Simple BOM
-Type  : SimpleBOM
+Output: Bill of Materials
+Type  : BOM
 From  : Variant [[No Variations]] of Project [Ecualizador.PrjPcb]
-   Generated File[PCB1.BOM]
-   Generated File[PCB1.CSV]
 
 
-Files Generated   : 2
+Files Generated   : 0
 Documents Printed : 0
 
-Finished Output Generation At 17:03:58 On 15/9/2019
+Finished Output Generation At 17:27:54 On 15/9/2019

@@ -71,22 +71,6 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=IWPTYPNU
 
-[GeneratedDocument1]
-DocumentPath=Project Outputs for Ecualizador\Board Information - PCB1.html
-DItemRevisionGUID=
-
-[GeneratedDocument2]
-DocumentPath=Project Outputs for Ecualizador\Ecualizador.REP
-DItemRevisionGUID=
-
-[GeneratedDocument3]
-DocumentPath=Project Outputs for Ecualizador\PCB1.BOM
-DItemRevisionGUID=
-
-[GeneratedDocument4]
-DocumentPath=Project Outputs for Ecualizador\PCB1.CSV
-DItemRevisionGUID=
-
 [Configuration1]
 Name=Sources
 ParameterCount=0
@@ -442,7 +426,7 @@ Configuration4_Item1=CaptionAsName
 Configuration4_Name2=Filter
 Configuration4_Item2=545046300E5446696C74657257726170706572000D46696C7465722E416374697665090F46696C7465722E43726974657269610A04000000000000000000
 Configuration4_Name3=General
-Configuration4_Item3=OpenExported=False|AddToProject=False|ForceFit=False|NotFitted=False|Database=False|DatabasePriority=False|IncludePCBData=False|IncludeVaultData=False|IncludeAlternatives=False|ShowExportOptions=True|TemplateFilename=|BatchMode=5|FormWidth=950|FormHeight=661|SupplierProdQty=1|SupplierAutoQty=False|SupplierUseCachedPricing=False|SupplierCurrency=<none>
+Configuration4_Item3=OpenExported=False|AddToProject=False|ForceFit=False|NotFitted=False|Database=False|DatabasePriority=False|IncludePCBData=True|IncludeVaultData=False|IncludeAlternatives=False|ShowExportOptions=True|TemplateFilename=|BatchMode=5|FormWidth=950|FormHeight=661|SupplierProdQty=1|SupplierAutoQty=False|SupplierUseCachedPricing=False|SupplierCurrency=<none>
 Configuration4_Name4=GroupOrder
 Configuration4_Item4=Comment=True|Footprint=True
 Configuration4_Name5=OutputConfigurationParameter1
