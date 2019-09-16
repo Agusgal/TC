@@ -12,14 +12,21 @@
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
-          <provider selected="true" editor-type-id="text-editor" />
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="36" />
+              <folding>
+                <element signature="e#0#27#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Source/Measurer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="584">
-              <caret line="545" column="46" lean-forward="true" selection-start-line="545" selection-start-column="46" selection-end-line="545" selection-end-column="46" />
+            <state relative-caret-position="289">
+              <caret line="591" column="39" lean-forward="true" selection-start-line="591" selection-start-column="39" selection-end-line="591" selection-end-column="39" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -28,10 +35,22 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/../../../../../csvwritetest.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="323">
+              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Source/Resources.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3230">
-              <caret line="193" column="85" selection-start-line="193" selection-start-column="85" selection-end-line="193" selection-end-column="85" />
+            <state relative-caret-position="143">
+              <caret line="10" selection-start-line="10" selection-end-line="10" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -74,8 +93,8 @@
         <option value="$PROJECT_DIR$/Source/Resource.py" />
         <option value="$PROJECT_DIR$/Source/Bodeador.py" />
         <option value="$PROJECT_DIR$/../../Ej2/Test Symbolic/test.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Source/Resources.py" />
+        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/Source/Measurer.py" />
       </list>
     </option>
@@ -196,14 +215,14 @@
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49776787" weight="0.21603929" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.49702382" weight="0.21603929" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39934534" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3289689" />
       <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Terminal" order="8" weight="0.3289689" />
-      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.50223213" side_tool="true" visible="true" weight="0.21603929" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5029762" side_tool="true" weight="0.21603929" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.3289689" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -272,21 +291,38 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/Resources.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3230">
-          <caret line="193" column="85" selection-start-line="193" selection-start-column="85" selection-end-line="193" selection-end-column="85" />
+        <state relative-caret-position="143">
+          <caret line="10" selection-start-line="10" selection-end-line="10" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/../../../../../csvwritetest.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="323">
+          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
-      <provider selected="true" editor-type-id="text-editor" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#27#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Source/Measurer.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="584">
-          <caret line="545" column="46" lean-forward="true" selection-start-line="545" selection-start-column="46" selection-end-line="545" selection-end-column="46" />
+        <state relative-caret-position="289">
+          <caret line="591" column="39" lean-forward="true" selection-start-line="591" selection-start-column="39" selection-end-line="591" selection-end-column="39" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>

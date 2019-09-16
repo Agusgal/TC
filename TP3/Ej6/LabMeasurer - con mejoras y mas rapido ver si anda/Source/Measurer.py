@@ -203,6 +203,40 @@ class Measurer():
                 else:
                     print("Intente nuevamente con una entrada numerica entre 1 y 7.")
 
+        good_input = False
+        print(
+            "Se desea agregar mediciones sobre frecuencias particulares? [y/n]")
+        while (not good_input):
+            self.particularfreq = input()
+            if (self.particularfreq == 'n' or self.particularfreq == 'N'):
+                self.particularfreq = 0
+                good_input = True
+            elif (self.particularfreq == 'y' or self.particularfreq == 'Y'):
+                self.particularfreq = 1
+                good_input = True
+            else:
+                print(
+                    "Intente nuevamente. [y/n]")
+        self.particular_frequencies=[]
+        if(self.particularfreq):
+
+            good_input = False
+            print("Ingresar frecuencias EN HERTZ y SEPARADAS POR COMA")
+            while (not good_input):
+                particularf = input()
+                particularf = particularf.split(',')
+                for ff in particularf:
+                    try:
+                        ff = float(ff)
+                        if (ff >= 10 and ff<= 15*10**6):
+                            good_input = True
+                            self.particular_frequencies.append(int(ff))
+                        else:
+                            print("Intente nuevamente con una entrada numerica entre 1 y 15M.")
+                            good_input = False
+                    except ValueError:
+                        print("Intente nuevamente con una entrada numerica.")
+
         #Se piden la cantidad de puntos por decada y se valida
         good_input = False
         if(self.freqscale == 'g'):
@@ -235,6 +269,15 @@ class Measurer():
 
         for ff in self.f:
             ff = int(ff)
+
+        temp = 0
+        for pf in self.particular_frequencies:
+            for ff in self.f:
+                if (ff > pf):
+                    self.f = np.insert(self.f, temp, pf)
+                    break
+                temp = temp + 1
+        print(self.f)
 
         #Se pide la tension del generador y se valida
         good_input = False
@@ -398,7 +441,7 @@ class Measurer():
         self.oscilloscope = self.openResources[OSC_RESOURC]
         self.generator = self.openResources[GEN_RESOURC]
         self.bode_input_gathering() #Se pide informacion sobre como se quiere realizar el bode
-
+        self.phasef = self.f
         #AC-COUPLING
         if(self.accoupchoice):
             self.oscilloscope.chan_coup(Resources.SET, self.chan1, Resources.COUP_AC)
@@ -433,6 +476,8 @@ class Measurer():
             for j in [1, 2, 5]:
                 self.chan_divs.append(j*10**(i))
         print(self.chan_divs)  # DEBUG
+        self.chan1_div_index = 0
+        self.chan2_div_index = 0
         for ff in (self.f):
 
             #Cortar hfreject del trigger si freq muy alta
@@ -448,8 +493,6 @@ class Measurer():
             exit_while = False
 
             #Primer fitteo en la pantalla para ambas senales
-            self.chan1_div_index = 0
-            self.chan2_div_index = 0
             if(first_fit):
                 for div in self.chan_divs:
                     self.oscilloscope.chan_div(Resources.SET, self.chan1, div)
@@ -470,17 +513,34 @@ class Measurer():
             #Se fija si con la nueva frecuencia la senal sigue entrando
             while(not self.oscilloscope.is_big_enough(self.chan1)):
                 if(self.chan1_div_index > 0):
-                    self.chan1_div_index =-1
+                    self.chan1_div_index = self.chan1_div_index - 1
                     self.oscilloscope.chan_div(Resources.SET, self.chan1, self.chan_divs[self.chan1_div_index])
                     time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
                 else:
                     break
             while(self.oscilloscope.is_clipping(self.chan1)):
                 if (self.chan1_div_index < len(self.chan_divs) - 2):
-                    self.chan1_div_index = +1
+                    self.chan1_div_index = self.chan1_div_index + 1
                 else:
                     break
                 self.oscilloscope.chan_div(Resources.SET, self.chan1, self.chan_divs[self.chan1_div_index])
+                time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+
+            # Se fija si con la nueva frecuencia la senal sigue entrando
+            while (not self.oscilloscope.is_big_enough(self.chan2)):
+                print(self.chan2_div_index)
+                if (self.chan2_div_index > 0):
+                    self.chan2_div_index = self.chan2_div_index - 1
+                    self.oscilloscope.chan_div(Resources.SET, self.chan2, self.chan_divs[self.chan2_div_index])
+                    time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                else:
+                    break
+            while (self.oscilloscope.is_clipping(self.chan2)):
+                if (self.chan2_div_index < len(self.chan_divs) - 2):
+                    self.chan2_div_index = self.chan2_div_index + 1
+                else:
+                    break
+                self.oscilloscope.chan_div(Resources.SET, self.chan2, self.chan_divs[self.chan2_div_index])
                 time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
 
             #Luego de hacer entrar la senal, pone los filtros para medir
@@ -499,6 +559,11 @@ class Measurer():
             print(float(med[0]))
             print(float(med[1]))
 
+        for i in range(0, len(self.phase), 1):
+            if (self.phase[i] == float(Resources.OOR_VAL)):
+                print("setting phase to 0")
+                self.phase[i] = 0
+
         plt.xscale("log")
         plt.grid(True)
         plt.xlabel("Frecuencia [Hz]")
@@ -514,7 +579,22 @@ class Measurer():
         plt.legend()
         plt.show()
 
-        self.oldfilepath = self.filepath
+        scriptfile = os.path.dirname(__file__)
+
+        if (not os.path.exists(scriptfile + "/../Mediciones/CSV/" + self.filename + ".csv")):
+            self.filepath = scriptfile + "/../Mediciones/CSV/" + self.filename + ".csv"
+        else:
+            for i in range(1, 10, 1):
+                if (not os.path.exists(scriptfile + "/../Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv")):
+                    self.filepath = scriptfile + "/../Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv"
+                    break
+
+        with open(self.filepath, 'w+') as csvfile:
+            writer = csv.writer(csvfile, delimiter=';')
+            writer.writerow(["frequency", "MAG", "PHA"])
+            for i in range(0, len(self.f), 1):
+                writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
+        csvfile.close()
 
         if(not os.path.exists("Mediciones/ParaPlotterTool/" + self.filename + ".xlsx")):
             self.filepath = "Mediciones/ParaPlotterTool/" + self.filename + ".xlsx"
@@ -524,23 +604,7 @@ class Measurer():
                     self.filepath = "Mediciones/ParaPlotterTool/" + self.filename + "(" + str(i) + ")" + ".xlsx"
                     break
 
-        with open(self.filepath) as csvfile:
-            writer = csv.writer(csvfile, delimiter=';')
-            writer.writerow(["frequency", "MAG", "PHA"])
-            for i in range(0, len(self.f), 1):
-                writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
-        csvfile.close()
-
-        self.filepath = self.oldfilepath
-
-        if (not os.path.exists("Mediciones/CSV/" + self.filename + ".csv")):
-            self.filepath = "Mediciones/CSV/" + self.filename + ".csv"
-            for i in range(1, 10, 1):
-                if (not os.path.exists("Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv")):
-                    self.filepath = "Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv"
-                    break
-
-        with open(self.filepath) as csvfile:
+        with open(self.filepath, 'w+') as csvfile:
             writer = csv.writer(csvfile, delimiter=',')
             writer.writerow(["frequency", "MAG", "PHA"])
             for i in range(0, len(self.f), 1):
