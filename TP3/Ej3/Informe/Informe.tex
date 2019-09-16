@@ -28,37 +28,83 @@
 		\centering
 		\includegraphics[width=\linewidth]{../ImagenesVarias/inAmp3Opamp}
 		%TODO revisar footnote imagen 
-		\caption{Clasico amplificador de instrumentación con 3 Opamps}
+		\caption{Clásico amplificador de instrumentación con 3 Opamps}
 	\end{figure}
 	%\footnote{Imagen extraída de: \textit{A designer's guide to Sinstrumentation amplifiers}
 		
-	Como se puede apreciar a la izquierda de la línea punteada se han colocado un par de buffers. El objetivo de los mismos es de el de aumentar significativamente la impedancia de entrada del in-amp para independizarla lo más posible de la impedancias de las fuentes ya que este pueden ser muy altas o estar desbalanceadas. Tambien ofrece la ventaja de no cargar a la fuente, lo cual es de gran relevancia al trabajar con señales pequeñas. Además le otorga una cierta ganancia a la señal de entradate{. Este aspecto del circuito se debe tener en cuenta para evitar la saturación de los op-amps y perder la efectividad del circuito.
+	Como se puede apreciar a la izquierda de la línea punteada se han colocado un par de buffers con ganancia. El objetivo de los mismos es de el de aumentar significativamente la impedancia de entrada del in-amp para independizarla lo más posible de la impedancias de las fuentes ya que este pueden ser muy altas o estar desbalanceadas. También ofrece la ventaja de no cargar a la fuente, lo cual es de gran relevancia al trabajar con señales pequeñas. Además le otorga una cierta ganancia a la señal de entrada. Este aspecto del circuito se debe tener en cuenta para evitar la saturación de los op-amps y perder la efectividad del circuito. Analizaremos esta y otras situaciones en secciones posteriores.
 	En nuestro caso se trabajara con la versión de 4 amplificadores operacionales.
+	
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=\linewidth]{../ImagenesVarias/inAmpSch.png}
 		\caption{Amplificador de instrumentación de 4 op-amps}
 	\end{figure}
-	
-	
-	Es evidente que ambos circuitos son muy similares entre sí
 
 	Haciendo uso de la herramienta de análisis simbólico \textit{SapWin \footnote{SapWin es una programa de análisis y simulación de circuitos desarrollado por la \textit{Universitá degli studi Firenze}}} obtenemos la siguiente expresión para la ganancia ideal de amplificador de instrumentación:
-	
-	$$V_{out}=\frac{-V_1 R_2 R_4 R_7 - 
-					V_1 R_2 R_3 R_7 +
-					V_2 R_2 R_3 R_7+
-					V_2 R_2 R_3 R_6
-					}{R_1 R_4 R_7}$$ 
+	\begin{equation}
+			V_{out}=\frac{-V_1 R_2 R_4 R_7 - 
+			V_1 R_2 R_3 R_7 +
+			V_2 R_2 R_3 R_7+
+			V_2 R_2 R_3 R_6
+		}{R_1 R_4 R_7}
+		\label{eqn:idealTrans}
+	\end{equation}
+
 	
 	Notamos que en la situación ideal tanto las resistencias $R_5$ y $R_9$ no afectan la ganancia del circuito.
 	\subsubsection{Relaciones entre los componentes}
 	Una de las finalidades del amplificador de instrumentación es la de eliminar aquellas señales que sean comunes a las señales de entrada.
+	Por tal motivo comenzaremos por establecer condiciones que nos permitan eliminarlas. 
+	Para eso aplicaremos superposición y analizaremos los efectos de $V_{CM}$ sobre la relación anterior.
 	
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=\linewidth]{../ImagenesVarias/inAmpVCM.png}
+		\caption{Amplificador de instrumentación de 4 op-amps en modo común}
+	\end{figure}
+	Obteniendo como transferencia:
+	\begin{equation}
+		\frac{V_{out}}{V_{CM}}=
+		\frac{-R_2 R_4 R_7 - 
+			R_2 R_3 R_7 +
+			R_2 R_3 R_7+
+			R_2 R_3 R_6
+		}{R_1 R_4 R_7}
+	\end{equation}
+		
+	Como se quiere que aquellas señales comunes a ambas entrada sean eliminadas pedimos $V_{out}=0$.
+	Entonces obtenemos:
+		\begin{equation}
+		 0=\frac{-V_{CM} R_2 R_4 R_7 - 
+				V_{CM} R_2 R_3 R_7 +
+				V_{CM} R_2 R_3 R_7+
+				V_{CM} R_2 R_3 R_6
+			}{R_1 R_4 R_7} 
+		\end{equation}
 	
+	Simplificando
+	\begin{equation}
+		R_7(R_4+R_3)=R3(R7+R6)
+	\end{equation}
+	
+	\begin{equation}
+		R_7R_4+ R_3R_7=R_3R_7+R_3R_6
+	\end{equation}
+	Cancelando los términos comunes a ambos miembros
+	\begin{equation}
+		R_7R_4=R_3R_6
+	\end{equation}
+	Por lo tanto llegamos a:
+	\begin{equation}
+		\frac{R_4}{R_6}=\frac{R_3}{R_7}  %Relación entre las resistencias de la etapa de amplificación
+	\end{equation}
 
-
-	
+	Aplicando estas relaciones a \eqref{eqn:idealTrans} obtenemos:
+	\begin{equation}
+		V_{out} = (V_2-V_1)\left[\frac{R_2}{R_1}(1+\frac{R_3}{R_4})\right]
+	\end{equation}
+ 	
 	
 \begin{thebibliography}{9}
 	
