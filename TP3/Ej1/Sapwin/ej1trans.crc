@@ -1,15 +1,15 @@
-C:\Users\Acer\Desktop\ej1trans.sch
-V1 6 0 1 0
-C7 6 1 1 0
-R7 6 1 1 0
-R6 1 0 1 0
-C6 1 0 1 0
-R1 1 2 1 0
-C2 2 3 1 0
-R3 3 4 1 0
-R4 4 5 1 0
-O1 4 0 3 1
-O2 2 0 3 5
-.OUT 4
-R8 5 6 1 0
+C:\Users\Acer\Desktop\GitHub\TC\TP3\Ej1\Sapwin\ej1trans.sch
+V1 1 0 1 0
+C7 1 2 1 0
+R7 1 2 1 0
+R6 2 0 1 0
+C6 2 0 1 0
+R1 2 3 1 0
+C2 3 5 1 0
+R3 5 6 1 0
+R4 6 4 1 0
+R8 4 1 1 0
+O1 6 0 5 2
+O2 3 0 5 4
+.OUT 6
 .END

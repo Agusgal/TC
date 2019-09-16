@@ -1,0 +1,15 @@
+C:\Users\Acer\Desktop\GitHub\TC\TP3\Ej1\Sapwin\ej1otro.sch
+V1 5 0 1 0
+C6 6 0 1 0
+R6 6 0 1 0
+C7 6 5 1 0
+R7 6 5 1 0
+R1 1 6 1 0
+C2 1 2 1 0
+R3 2 3 1 0
+R4 3 4 1 0
+O1 1 0 2 4
+O2 3 0 2 6
+.OUT 3
+R8 4 5 1 0
+.END

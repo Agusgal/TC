@@ -6,6 +6,8 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage{booktabs}
+
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{subcaption}
@@ -16,7 +18,7 @@
 
 \usepackage{array}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
+\newcommand\underrel[2]{\mathrel{\mathop{#2}\limits_{#1}}}
 \usepackage[american]{circuitikz}
 
 
@@ -352,15 +354,198 @@ V_1=V_3=V_5=V_A
 \begin{equation}
 \frac{V_i \cdot \frac{\left(R_6 // \frac{1}{SC_6}\right)}{\left(R_6 // \frac{1}{SC_6}\right) + \left(R_7 // \frac{1}{SC_7}\right)} - V_A}{\left(R_6 // \frac{1}{SC_6}\right) // \left(R_7 // \frac{1}{SC_7}\right)} = \frac{V_A-V_2}{R_1}
 \label{eq:circ_trans4}
-\end{equation}
+\end{equation} \\
 
 A partir de (\ref{eq:circ_trans1}), (\ref{eq:circ_trans2}), (\ref{eq:circ_trans3}) y (\ref{eq:circ_trans4}) se obtiene:
 
 \begin{equation}
 \hspace{-0.5cm}
-\frac{V_{out}}{V_i} = \frac{S^2 C_2 R_1 R_3 R_6 R_7 (-C_6 R_4 + C_7 R_8) + S C_2 R_1 R_3 (R_6 R_8 - R_4 R_7) + R_4 R_6 R_7}{S^2 C_2 R_1 R_3 R_6 R_8 (C_6 + C_7)+S C_2 R_1 R_3 R_8 (R_7 + R_6) + R_4 R_6 R_7}
+\frac{V_{out}}{V_i} = \frac{S^2 C_2 R_1 R_3 R_6 R_7 (-C_6 R_4 + C_7 R_8) + S C_2 R_1 R_3 (R_6 R_8 - R_4 R_7) + R_4 R_6 R_7}{S^2 C_2 R_1 R_3 R_6 R_7 R_8 (C_6 + C_7)+S C_2 R_1 R_3 R_8 (R_7 + R_6) + R_4 R_6 R_7}
 \label{circ_trans}
 \end{equation}
+
+\subsubsection{Análisis Funcional de los Componentes}
+	
+A continuación se hará un breve análisis funcional de algunos de los componentes del circuito, comenzando con la resistencia $R_8$ ya que esta es la que hace que el convertidor generalizado de impedancia no esté puesto a tierra. Si el GIC estuviera puesto a tierra se podría decir con seguridad, ya que este se encuentra en la configuración que emula inductancias, que el circuito se comportaría como filtro pasa altos.
+
+Sin embargo, de mayor interés son los casos en los que $R_8 \rightarrow \infty$ y $R_8 \rightarrow 0$. Empezaremos por el primer caso.
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\scalebox{0.5}{
+\begin{circuitikz}
+
+\draw
+
+(5,0) node[](V1){}
+	to[short, *-] ++ (-3.4, 0)
+	to[open] ++ (-0.2,0)
+	to[short] ++ (-0.2, 0)
+	to[open] ++ (-0.2,0)
+	to[short] ++ (-0.2, 0)
+
+(V1) to[R, l=$R_1$] ++ (0, -2)
+	node[label = east:$V_2$](V2){}
+	
+(V2) to[C, l=$C_2$] ++ (0, -2)
+	node[](V3){}
+	to[open] ++ (-0.5, 0.5)
+	node[](){$V_3$}
+	to[open] ++ (0.5, -0.5)
+
+(V3) to[R, l=$R_3$] ++ (0, -2)
+	node[label=west:$V_4$](V4){}
+	
+(V4) to[R, l=$R_4$, i^=${i=0}$] ++ (0, -2)
+	node[label=south:$V_5$](V5){}
+
+(V2) to[open] ++ (3, 0)
+	node[op amp, yscale=-1](opamp){}
+
+(opamp.+) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V1)
+	
+(opamp.-) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, -1.5)
+	to[short, -*] (V3)
+
+(opamp.out) to[short] ++ (1, 0)
+	node[label=east:$V_{out}$](Vout){}
+	to[short] ++ (0, -4)
+	to[short, -*] (V4)
+	
+(V4) ++ (-3, 0) node[op amp, xscale=-1](opamp2){}
+
+(opamp2.+) to[short] ++ (0.5, 0)
+	to[short] ++ (0, -1.5)
+	to[short, -*] (V5)
+	
+(opamp2.-) to[short] ++ (0.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V3)
+	
+(opamp2.out) to[short] ++ (0, 2.5)
+	to[short] ++ (2.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V2)
+
+;
+
+\end{circuitikz}
+}\label{fig:circ_r8_infty_1}
+\end{subfigure}
+\begin{subfigure}[t]{0.49\textwidth}
+\centering
+\scalebox{0.5}{
+\begin{circuitikz}
+ 
+ \draw
+
+(5,0) node[label=north:$V_{out}$](V1){}
+	to[short, *-] ++ (-3.4, 0)
+	to[open] ++ (-0.2,0)
+	to[short] ++ (-0.2, 0)
+	to[open] ++ (-0.2,0)
+	to[short] ++ (-0.2, 0)
+
+(V1) to[R, l=$R_1$] ++ (0, -2)
+	node[label = east:$V_{out}$](V2){}
+	
+(V2) to[C, l=$C_2$] ++ (0, -2)
+	node[](V3){}
+	to[open] ++ (-0.5, 0.5)
+	node[](){$V_{out}$}
+	to[open] ++ (0.5, -0.5)
+
+(V3) to[R, l=$R_3$] ++ (0, -2)
+	node[label=south:$V_{out}$](V4){}
+	
+
+(V2) to[open] ++ (3, 0)
+	node[op amp, yscale=-1](opamp){}
+
+(opamp.+) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, 1.5)
+	to[short, -*] (V1)
+	
+(opamp.-) to[short] ++ (-0.5, 0)
+	to[short] ++ (0, -1.5)
+	to[short, -*] (V3)
+
+(opamp.out) to[short] ++ (0, 0)
+	node[label=east:$V_{out}$](Vout){}
+	to[short] ++ (0, -4)
+	to[short, -*] (V4)
+	
+(V4) ++ (-3, 1) node[op amp, xscale=-1](opamp2){}
+
+(opamp2.+) to[short] ++ (0.5, 0)
+	to[short] ++ (0, -0.5)
+	to[short] (V4)
+	
+(opamp2.-) to[short] ++ (0.5, 0)
+	to[short] ++ (0, 0.5)
+	to[short, -*] (V3)
+	
+(opamp2.out) to[short] ++ (0, 3)
+	to[short, -*] (V2)
+
+;
+ 
+\end{circuitikz}
+}
+\label{fig:circ_r8_infty_2}
+\end{subfigure}
+\end{figure}
+
+\textbf{explicar como v1=vout}
+
+\begin{figure}[H]
+\centering
+\scalebox{0.8}{
+\begin{circuitikz}
+ 
+\draw
+	(0,0) node[](Vaux){}
+		to[short, *-*] ++ (-2,0)
+		to[open] ++ (0, -1)
+		to[short] ++ (0, 2)
+		to[R, l=$R_7$] ++ (-3,0)
+		to[open] ++ (0, -2)
+		to[C, l=$C_7$] ++ (3, 0)
+		to[open] ++ (-3, 0)
+		to[short] ++ (0, 2)
+		to[open] ++ (0, -1)
+		to[short, *-*] ++ (-2, 0)
+		node[label=west:$V_i$](){}
+	(Vaux) to[short, *-*] ++ (0, -1)
+		to[open] ++ (-1, 0)
+		to[short] ++ (2, 0)
+		to[R, l=$R_6$] ++ (0, -2)
+		to[open] ++ (-2, 0)
+		to[C, l=$C_6$] ++ (0, 2)
+		to[open] ++ (0, -2)
+		to[short] ++ (2, 0)
+		to[open] ++ (-1,0)
+		to[short, *-] ++ (0, -1)
+		node[ground]{}
+	(Vaux) to[short] ++ (2, 0)
+		node[label=east:$V_{out}$](){}
+;
+\end{circuitikz}
+}
+\label{fig:circ_r8_infty_equivalent}
+\end{figure}
+
+por ende se puede calcular la trnasferencia como el divisor resistivo.
+
+y aca falta hablar banda y hacer graficos de como se mueven los ceros y polos con r6 y r8 tendiendo a 0 e infinito y hacer analisis de sensibilidades etc
+
+\subsubsection{Elección de Componentes y Diseño}
+
 Utilizando las consideraciones de diseño del circuito de low-pass notch:
 $$R_1=R_3=R_4=R_8=R \ \ \ ; \ \ \ R_6=R_7=2QR$$
 $$C_2=C \ \ \ ; \ \ \ C_6=(1-\frac{1}{k^2})\frac{C}{2}  \ \ \ ; \ \ \ C_7=(1+\frac{1}{k^2})\frac{C}{2}$$
@@ -369,26 +554,93 @@ $$k=\left(\frac{\omega_z}{\omega_p} \right) > 1$$
 Se logra obtener la siguiente expresión para el circuito:
 
 \begin{equation}
-\frac{Vo}{Vi} = \frac{\left(\frac{S}{\frac{k}{C R}}\right)^2 + 1}{\left( \frac{S}{\frac{1}{CR}} \right)^2+\frac{SCR}{2Q} + 1}
+\frac{Vo}{Vi} = \frac{\left(\frac{S}{\frac{k}{C R}}\right)^2 + 1}{\left( \frac{S}{\frac{1}{CR}} \right)^2+\frac{SCR}{Q} + 1}
 \label{circ_trans_simple}
 \end{equation}
 
+Finalmente utilizando las consideraciones de los valores de los componentes:
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccc@{}}
+\toprule
+$\omega_p$ & Q & $\omega_z$ \\ \midrule
+13.000 $\frac{rad}{s}$ & 2 & $\sqrt{2}*\omega_p \frac{rad}{s}$ \\ \bottomrule
+\end{tabular}
+\end{table}
+Se logran obtener el valor de k:
 
+\begin{equation}
+k = \sqrt{2}
+\end{equation}
 
-\subsubsection{Análisis de Polos y Ceros}
-\subsubsection{Análisis de Impedancias de Entrada y Salida}
-\subsubsection{Análisis Funcional de los Componentes}
-\subsubsection{Análisis de Sensibilidades}
-\subsubsection{Elección de Componentes y sus Tecnologías}
+Considerando que hay una mayor facilidad de obtener resistores de distintos valores que capacitores, se logra obtener la relación que vincula el valor de la resistencia R en función de la capacitancia C elegida:
+
+\begin{equation}
+R = \frac{\left(\frac{1}{13000}\right) \frac{s}{rad}}{C}
+\end{equation}
+
+Como se desean poseer resistencias pequeñas, ya que el ruido es proporcional a estas, se eligió un valor comercial para la capacitancia C de tal manera que la resistencia R sea del orden de los $10k\Omega$.
+
+$$C=15nF \rightarrow R=5128.2\Omega$$
+
+y quedan fijados los valores de todos los componentes del circuito. A continuación se muestra una tabla con los valores que se deberían utilizar, los valores que se utilizaron en la implementación y los valores finales de los componentes a utilizar.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccc@{}}
+\toprule
+Componente & Valor Teórico & Implementación & Valor Final \\ \midrule
+$C_2$ & $15nF$ & $15nF$ & $15nF$ \\
+$C_7$ & $11.25nF$ & $10nF//1.2nF$ & $11.2nF$ \\
+$C_6$ & $3.75nF$ & $3.3nF//470pF$ & $3.77nF$ \\
+$R_{1,3,4,8}$ & $5128.2 \Omega$ & $5K6\Omega//62K\Omega$ & $5136.1 \Omega$ \\
+$R_{6,7}$ & $20512.82 \Omega$ & $39K\Omega//43K\Omega$ & $20451.21\Omega$ \\ \bottomrule
+\end{tabular}
+\end{table}
+
+Con estos valores se graficó el bode en amplitud y fase del filtro:
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/bodemag_calc.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc.png}
+	\end{subfigure}
+	\label{fig:bode_calc}
+	\caption{Gráficos de Bode para el filtro con los componentes calculados.}
+\end{figure}
 
 \subsection{Simulación del Circuito}
+
+Se procedió a realizar la simulación del circuito.
+
+hablar mas y grafico de bode
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/bodemag_calc_sim.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc_sim.png}
+	\end{subfigure}
+	\label{fig:bode_calc_sim}
+	\caption{Comparación entro los gráficos de bode simulados y calculados teóricamente.}
+\end{figure}
+
+hablar y hablar
+
 \subsubsection{Simulación de la Transferencia}
 \subsubsection{Simulación de la Impedancia de Entrada y Salida}
 \subsubsection{Simulación de las Sensibilidades}
-\subsubsection{Conclusiones Adquiridas}
-
-\subsection{Prototipo del Circuito}
-\subsubsection{Mediciones del Prototipo}
 \subsubsection{Conclusiones Adquiridas}
 
 \subsection{Implementación del Circuito}
