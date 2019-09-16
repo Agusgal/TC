@@ -143,3 +143,4 @@ plt.plot(f, pha, color='green', label="Calculado")
 #plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
 plt.legend()
 plt.show()
+

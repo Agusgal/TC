@@ -181,7 +181,7 @@ class Oscilloscope:
         if(sog == SET):
             self.chan_rang(SET, channel, div*CHAN_DIV_SQUARES)
         elif(sog == GET):
-            return self.chan_rang(GET, channel) / CHAN_DIV_SQUARES
+            return float(self.chan_rang(GET, channel)) / CHAN_DIV_SQUARES
 
     def chan_rang(self, sog, channel, range = 8):    #CHANNEL RANGE
         if (sog == SET):
@@ -317,7 +317,7 @@ class Oscilloscope:
         vmax = float(self.resource.query(':MEASure:VMAX?'))
         vmin = float(self.resource.query(':MEASure:VMIN?'))
         chan_div = float(self.chan_div(GET, channel))
-        if((vmax-vmin) > 4*self.chan_div):
+        if(abs((vmax-vmin)) > 4*chan_div):
             return True
         else:
             return False
