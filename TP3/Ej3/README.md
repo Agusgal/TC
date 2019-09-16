@@ -18,3 +18,4 @@ temperatura, a fin de poder trabajar con señales de continua muy pequeñas.
 * Una razón de rechazo al rizado a la fuente de alimentación muy alto
 * Los modelos de amplificador de instrumentación que abundan en internet usan 3 opamp en vez de 4. El 4° parece que contribuye a la estabilidad de tensión entre las entradas.
 * Un opamp en consideracion es el **NM5534** por su figura de ruido cerca de la unidad y porque tiene muy baja impedancia de salida 
+ **Edit**: No vamos a utilizar el **NM 5534** por su baja impedancia de entrada respecto a la del **TL084**. La de este ultimo es **7** ordenes de magnitud más grande. (COLOCAR EN EL INFORME)
