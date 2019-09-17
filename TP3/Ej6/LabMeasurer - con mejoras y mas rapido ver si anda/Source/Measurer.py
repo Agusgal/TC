@@ -564,20 +564,65 @@ class Measurer():
                 print("setting phase to 0")
                 self.phase[i] = 0
 
-        plt.xscale("log")
-        plt.grid(True)
-        plt.xlabel("Frecuencia [Hz]")
-        plt.ylabel("Amplitud [db]")
-        plt.plot(self.f, self.ratio, label="Amplitud")
-        plt.legend()
-        plt.show()
-        plt.grid(True)
-        plt.xscale("log")
-        plt.xlabel("Frecuencia [Hz]")
-        plt.ylabel("Fase [Grados]")
-        plt.plot(self.f, self.phase, label="Fase")
-        plt.legend()
-        plt.show()
+        good_meas=False
+        while(good_meas):
+
+            plt.xscale("log")
+            plt.grid(True)
+            plt.xlabel("Frecuencia [Hz]")
+            plt.ylabel("Amplitud [db]")
+            plt.plot(self.f, self.ratio, label="Amplitud")
+            plt.legend()
+            plt.show()
+            plt.grid(True)
+            plt.xscale("log")
+            plt.xlabel("Frecuencia [Hz]")
+            plt.ylabel("Fase [Grados]")
+            plt.plot(self.f, self.phase, label="Fase")
+            plt.legend()
+            plt.show()
+
+            good_input = False
+            print(
+                "Se desean eliminar las mediciones a partir de una cierta frecuencia? [y/n]")
+            while (not good_input):
+                self.elim = input()
+                if (self.elim == 'n' or self.elim == 'N'):
+                    self.elim = 0
+                    good_meas = True
+                    good_input = True
+                elif (self.elim == 'y' or self.elim == 'Y'):
+                    self.elim = 1
+                    good_input = True
+                else:
+                    print(
+                        "Intente nuevamente. [y/n]")
+
+            if(self.elim):
+                print("Ingresar frecuencia hasta la cual se quieren guardar las mediciones.")
+                while (not good_input):
+                    self.limitfreq = input()
+                    if (self.limitfreq.isnumeric()):
+                        self.limitfreq = float(self.limitfreq)
+                        if (self.limitfreq >= 1 and self.limitfreq <= 90000):
+                            good_input = True
+                        else:
+                            print("Intente nuevamente con una entrada numerica entre 1 y 90000.")
+                    else:
+                        print("Intente nuevamente con una entrada numerica entre 1 y 90000.")
+
+                freq_temp = 0
+                while(True):
+                    for ff in self.f:
+                        if(ff >  self.limitfreq):
+                            break
+                    freq_temp = freq_temp + 1
+
+                self.ratio = self.ratio[:freq_temp]
+
+                self.phase = self.ratio[:freq_temp]
+
+                self.frequency = self.ratio[:freq_temp]
 
         scriptfile = os.path.dirname(__file__)
 
