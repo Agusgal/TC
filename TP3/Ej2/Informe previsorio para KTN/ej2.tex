@@ -191,13 +191,13 @@ Es de utilidad recordar las aproximiaciones utilizadas hasta ahora:
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo como era esperado una gran coincidencia en las frecuencias bajas y medias, y finalmente difiriendo en las altas como se ve a continuación:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simHP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simHP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor.}
 	\label{fig:gyrInd}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simHPP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simHPP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndP}
 \end{figure}
@@ -225,8 +225,8 @@ Se midió y calculó la respuesta en frecuencia del filtro pasa altos, se simul�
 	\caption{Diagrama BODE High-Pass Fase.}
 	\label{fig:bodehpp}
 \end{figure}
-Se puede observar que...
-\subsubsection{Analisis de resultados.}
+\subsubsection{Analisis de resultados.} 
+Se puede observar que existe una gran coincidencia entre las simulaciones propuestas con la realidad en el rango de frecuencias con el cual se decidió trabajar. Teniendo un filtro High-Pass de segundo orden.\\
 El mayor interés fue puesto en que el circuito cumpla con las especificaciones dadas en la tabla (\ref{tab:specs})
 Obteniendo las siguientes mediciones:
 
@@ -277,7 +277,7 @@ El gyrator tiene la particularidad de que debe estar referenciado a tierra para 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyrfloat.png}
+	\includegraphics[width=\textwidth]{ImagenesEj2/gyrfloat.png}
 	\caption{Gyrator referenciada a la fuente.}
 	\label{fig:gyrfloat}
 \end{figure}
@@ -285,7 +285,7 @@ Para el cual el primer paso será pasivar la fuente y quedará referenciado a ma
 El circuito propuesto fue el siguiente:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyrLP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/gyrLP.PNG}
 	\caption{Filtro Low-Pass implementado con Gyrator.}
 	\label{fig:gyrLP}
 \end{figure}
@@ -313,13 +313,13 @@ Previo a la desición de utilizar el diseño de la figura (\ref{fig:gyrLP}) se i
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo como era esperado una gran coincidencia en las frecuencias bajas y medias, y finalmente difiriendo en las altas como se ve a continuación:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simLP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simLP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor.}
 	\label{fig:gyrIndL}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simLPP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simLPP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndPL}
 \end{figure}
@@ -347,9 +347,9 @@ Se midió y calculó la respuesta en frecuencia del filtro pasa bajos, se simul�
 	\caption{Diagrama BODE Low-Pass Fase.}
 	\label{fig:bodelpp}
 \end{figure}
-Se puede observar que...
 %%
 \subsubsection{Analisis de resultados.}
+Se puede observar que existe una gran coincidencia entre las simulaciones propuestas con la realidad en el rango de frecuencias con el cual se decidió trabajar. Teniendo un filtro Low-Pass de segundo orden.\\
 El mayor interés fue puesto en que el circuito cumpla con las especificaciones dadas en la tabla (\ref{tab:specs})
 Obteniendo las siguientes mediciones:
 
@@ -401,7 +401,7 @@ Operando en el circuito se obtiene:
 El circuito propuesto para el filtro Band-Pass es idéntico a la figura (\ref{fig:basBP}) con la singularidad que intercambiaremos el inductor por un gyrator de la siguiente manera.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyrBP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/gyrBP.PNG}
 	\caption{Filtro Band-Pass implementado con Gyrator.}
 	\label{fig:gyrBP}
 \end{figure}
@@ -423,13 +423,13 @@ Vale la pena destacar que (\ref{eq:BPL}) y (\ref{eq:BPG}) son iguales.
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo una coincidencia en todo el espectro a analizar, teniendo unas pequeñas diferencias para las tensiones que tienden a la continua esto se debe al efecto provocado por la $r_{coil}$ la cual hace que cuado $f \rightarrow 0$ la función se establece en $\frac{r_{coil}}{R}$ .
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simBP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simBP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor.}
 	\label{fig:gyrIndBP}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simBPP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simBPP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndPBP}
 \end{figure}
@@ -459,10 +459,11 @@ Se midió y calculó la respuesta en frecuencia del filtro pasa banda, se simul�
 	\caption{Diagrama BODE Band-Pass Fase.}
 	\label{fig:bodebpp}
 \end{figure}
-Se puede observar que...
+
 %%
 
 \subsubsection{Analisis de resultados.}
+Se puede observar que existe una gran coincidencia entre las simulaciones propuestas con la realidad en el rango de frecuencias con el cual se decidió trabajar. Teniendo un filtro Band-Pass de segundo orden.\\
 El mayor interés fue puesto en que el circuito cumpla con las especificaciones dadas en la tabla (\ref{tab:specs})
 Obteniendo las siguientes mediciones:
 
@@ -498,7 +499,7 @@ Al cual le corresponde una transferencia de la forma:
 \subsubsection{Circuito utilizando Gyrator.}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyrBR.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/gyrBR.PNG}
 	\caption{Filtro Band-Reject implementado con Gyrator.}
 	\label{fig:gyrBR}
 \end{figure}
@@ -519,13 +520,13 @@ Teniendo en cuenta (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se obtiene:
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo como era esperado una gran coincidencia en las frecuencias bajas y medias, y finalmente difiriendo en las altas como se ve a continuación:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simBR.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simBR.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor.}
 	\label{fig:gyrIndBR}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/simBRP.PNG}
+	\includegraphics[width=\textwidth]{ImagenesEj2/simBRP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndPBR}
 \end{figure}
@@ -554,10 +555,9 @@ Se midió y calculó la respuesta en frecuencia del filtro rechaza banda, se sim
 	\caption{Diagrama BODE Band-Reject Fase.}
 	\label{fig:bodebrp}
 \end{figure}
-Se puede observar que...
 %%
 \subsubsection{Analisis de resultados.}
-
+Se puede observar que existe una gran coincidencia entre las simulaciones propuestas con la realidad en el rango de frecuencias con el cual se decidió trabajar. Teniendo un filtro Band-Reject de segundo orden.\\
 El mayor interés fue puesto en que el circuito cumpla con las especificaciones dadas en la tabla (\ref{tab:specs})
 Obteniendo las siguientes mediciones:
 

@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-#df = pd.read_csv('')
+df = pd.read_csv('highpass2.csv',sep = ';')
 
 def not_num(content):
     if content == "0":
@@ -76,9 +76,9 @@ def read_file_spice(filename):
 
     return data
 
-#H = np.asarray(df['CH1'])
-#f = np.asarray(df['CH1'])
-#ph = np.asarray(df['CH1'])
+H = np.asarray(df['MAG'])
+f = np.asarray(df['frequency'])
+ph = np.asarray(df['PHA'])
 
 data = read_file_spice("Gyr.txt")
 HGy = np.asarray(data["abs"])
@@ -118,7 +118,7 @@ fL = np.asarray(data2["f"])
 plt.xscale('log')
 plt.plot(fGy,HGy,'r',label = 'Gyrator Simulado' )
 plt.plot(fL,HL,'g',label = 'Inductor Simulado' )
-#plt.plot(f,H,'y',label = 'Gyrator Medido')
+plt.plot(f,H,'y',label = 'Gyrator Medido')
 plt.plot(fc,Hcalc,'b',label = 'Gyrator Calculado')
 plt.ylabel("Transferencia Módulo [dB]")
 plt.xlabel("Frecuencia [Hz]")
@@ -127,7 +127,7 @@ plt.grid()
 plt.show()
 
 plt.xscale('log')
-#plt.plot(f,ph,'b',label = 'Gyrator Medido')
+plt.plot(f,ph,'y',label = 'Gyrator Medido')
 plt.plot(fc,Hphcalc,'b',label = 'Gyrator Calculado')
 plt.plot(fGy,HGyp,'r',label = 'Gyrator Simulado' )
 plt.plot(fL,HLp,'g',label = 'Inductor Simulado' )

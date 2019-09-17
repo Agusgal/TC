@@ -77,11 +77,11 @@ def read_file_spice(filename):
     return data
 
 
-#df = pd.read_csv('')
+df = pd.read_csv('lowpassbueno.csv')
 
-#H = np.asarray(df['CH1'])
-#f = np.asarray(df['CH1'])
-#ph = np.asarray(df['CH1'])
+H = np.asarray(df['MAG'])
+f = np.asarray(df['frequency'])
+ph = np.asarray(df['PHA'])
 
 data = read_file_spice("Gyr.txt")
 HGy = np.asarray(data["abs"])
@@ -107,7 +107,7 @@ Hphcalc =np.asarray(Hphcalc)*2
 plt.xscale('log')
 plt.plot(fGy,HGy,'r',label = 'Gyrator Simulado' )
 plt.plot(fL,HL,'g',label = 'Inductor Simulado' )
-#plt.plot(f,H,'y',label = 'Gyrator Medido')
+plt.plot(f,H,'y',label = 'Gyrator Medido')
 plt.plot(fc,Hcalc,'b',label = 'Gyrator Calculado')
 plt.ylabel("Transferencia Módulo [dB]")
 plt.xlabel("Frecuencia [Hz]")
@@ -118,7 +118,7 @@ plt.show()
 plt.xscale('log')
 plt.plot(fGy,HGyp,'r',label = 'Gyrator Simulado' )
 plt.plot(fL,HLp,'g',label = 'Inductor Simulado' )
-#plt.plot(f,ph,'b',label = 'Gyrator Medido')
+plt.plot(f,ph,'b',label = 'Gyrator Medido')
 plt.plot(fc,Hphcalc,'y',label = 'Gyrator Calculado')
 plt.ylabel("Transferencia fase [°]")
 plt.xlabel("Frecuencia [Hz]")
