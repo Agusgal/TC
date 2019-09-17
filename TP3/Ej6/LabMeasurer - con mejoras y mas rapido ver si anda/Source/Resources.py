@@ -179,15 +179,27 @@ class Oscilloscope:
 #CHANNEL SET
     def chan_div(self, sog, channel, div = 1):       #CHANNEL DIVISION
         if(sog == SET):
-            self.chan_rang(SET, channel, div*CHAN_DIV_SQUARES)
+            if(channel == CHANNEL_MATH):
+                self.set_math_div(div)
+            else:
+                self.chan_rang(SET, channel, div*CHAN_DIV_SQUARES)
         elif(sog == GET):
-            return float(self.chan_rang(GET, channel)) / CHAN_DIV_SQUARES
+            if(channel == CHANNEL_MATH):
+                return self.get_math_rang() / CHAN_DIV_SQUARES
+            else:
+                return float(self.chan_rang(GET, channel)) / CHAN_DIV_SQUARES
 
     def chan_rang(self, sog, channel, range = 8):    #CHANNEL RANGE
         if (sog == SET):
-            self.resource.write(':CHANnel' + str(channel) + ':RANGe ' + str(range))
+            if(channel == CHANNEL_MATH):
+                self.set_math_rang(range)
+            else:
+                self.resource.write(':CHANnel' + str(channel) + ':RANGe ' + str(range))
         elif (sog == GET):
-            return self.resource.query(':CHANnel' + str(channel) + ':RANGe?')
+            if(channel == CHANNEL_MATH):
+                return self.get_math_rang()
+            else:
+                return self.resource.query(':CHANnel' + str(channel) + ':RANGe?')
 
     def chan_offs(self, sog, channel, offset = 0):   #CHANNEL OFFSET
         if (sog == SET):
@@ -365,6 +377,25 @@ class Oscilloscope:
     def measure_stats(self, f, mintime):
         self.stats_reset(f, mintime)
         return self.resource.query(':MEASure:RESults?')
+
+    #FUNC
+    def set_math_operation(self, oper):
+        self.resource.write(':FUNCtion:OPERation ' + oper)
+
+    def set_math_source(self, chan1, chan2):
+        self.resource.write(':FUNCtion:SOURce1 CHANnel' + str(chan1) +';'+ 'SOURce2 CHANnel' + str(chan2))
+
+    def set_math_rang(self, rang):
+        self.resource.write(':FUNCtion RANGe ' + str(rang))
+
+    def set_math_div(self, div):
+        self.resource.write(':FUNCtion RANGe ' + str(div*CHAN_DIV_SQUARES))
+
+    def get_math_div(self):
+        return float(self.resource.query(':FUNCtion RANGe?'))/ CHAN_DIV_SQUARES
+
+    def get_math_rang(self):
+        return  float(self.resource.query(':FUNCtion RANGe?'))
 
 ##############################################################################################################################################################
 class Generator:

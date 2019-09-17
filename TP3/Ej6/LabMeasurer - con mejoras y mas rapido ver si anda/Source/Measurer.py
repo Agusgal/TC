@@ -325,6 +325,31 @@ class Measurer():
             else:
                 print("Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
 
+        if(self.chan1 == 0 or self.chan2 == 0):
+            good_input = False
+            self.usingmath = True
+            print("Ingresar operacion que se desea utilizar para el canal MATH: [+,-,*]")
+            while (not good_input):
+                self.math_oper = input()
+                if(self.math_oper == '+' or self.math_oper == '-' or self.math_oper == '*'):
+                    good_input = True
+                else:
+                    print("Ingresar +, - o *.")
+            good_input = False
+            print("Ingresar que canales se quieren utilizar como source para math separados por coma. Ejemplo: 2,1")
+            while(not good_input):
+                self.math_sources = self.math_sources.split(',')
+                if(len(self.math_sources) == 2 and
+                    self.math_sources[0] > 0 and
+                    self.math_sources[1] > 0 and
+                    self.math_sources[0] <=4 and
+                    self.math_sources[1] <=4):
+                    good_input = True
+                    self.mathsource1 = self.math_sources[0]
+                    self.mathsource2 = self.math_sources[1]
+                else:
+                    print("Se deben de ingresar los canales de forma numerica y separados por coma. Ejemplo: 3,1")
+
         #Tiempo minimo de establecimiento
         good_input = False
         print("Establecer un tiempo minimo de establecimiento para tomar las mediciones.")
@@ -442,6 +467,9 @@ class Measurer():
         self.generator = self.openResources[GEN_RESOURC]
         self.bode_input_gathering() #Se pide informacion sobre como se quiere realizar el bode
         self.phasef = self.f
+        if(self.usingmath):
+            self.oscilloscope.set_math_operation(self.math_oper)
+            self.oscilloscope.set_math_source(self.mathsource1, self.mathsource2)
         #AC-COUPLING
         if(self.accoupchoice):
             self.oscilloscope.chan_coup(Resources.SET, self.chan1, Resources.COUP_AC)
@@ -567,6 +595,7 @@ class Measurer():
         good_meas=False
         while(good_meas):
 
+            plt.title("VISTA PREVIA DE LA MEDICION, FALTA CONFIRMAR")
             plt.xscale("log")
             plt.grid(True)
             plt.xlabel("Frecuencia [Hz]")
@@ -574,6 +603,7 @@ class Measurer():
             plt.plot(self.f, self.ratio, label="Amplitud")
             plt.legend()
             plt.show()
+            plt.title("VISTA PREVIA DE LA MEDICION, FALTA CONFIRMAR")
             plt.grid(True)
             plt.xscale("log")
             plt.xlabel("Frecuencia [Hz]")
@@ -670,10 +700,6 @@ class Measurer():
 
         self.oscilloscope.measure_tran(self.chan1, self.chan2, self.filename)
 
-
-
-
-
     def ask_which_measurement(self):
         print("Elegir que se quiere hacer: [E]xit, [B]ode o [T]ransitorio.")
         bad_input = True
@@ -695,111 +721,98 @@ class Measurer():
         print("Ingresar nombre del archivo a guardar en la carpeta de Mediciones.")
         self.filename = input()
 
-        print("Ingresar la tension a la que se desea el generador de funciones EN TENSION PICO.")
+        # Se pide la tension del generador y se valida
+        good_input = False
+        print("Ingresar tension pico a pico para el generador de funciones:")
         while (not good_input):
             self.voltage = input()
             try:
                 self.voltage = float(self.voltage)
+                if (self.voltage >= 0.01 and self.voltage <= 10):
+                    good_input = True
+                    self.voltage = self.voltage / 2
+                else:
+                    print("Intente nuevamente con una entrada numerica entre 0.01 y 10.")
             except ValueError:
                 print("Intente nuevamente con una entrada numerica.")
-                if (self.voltage >= 0.001 and self.voltage <= 5):
+
+        # Se pide el primer canal a medir y se valida
+        good_input = False
+        print("Ingresar primer canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
+        while (not good_input):
+            self.chan1 = input()
+            if (self.chan1.isnumeric()):
+                self.chan1 = int(self.chan1)
+                if (
+                        self.chan1 == 1 or self.chan1 == 2 or self.chan1 == 3 or self.chan1 == 4 or self.chan1 == 0):
                     good_input = True
                 else:
-                    print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
+                    print("Intente nuevamente con una entrada numerica entre 0 y 5.")
             else:
-                print("Intente nuevamente con una entrada numerica.")
+                print("Intente nuevamente con una entrada numerica entre 0 y 5.")
 
-                # Se pide la tension del generador y se valida
-                good_input = False
-                print("Ingresar tension para el generador de funciones EN TENSION PICO:")
-                while (not good_input):
-                    self.voltage = input()
-                    try:
-                        self.voltage = float(self.voltage)
-                        if (self.voltage >= 0.001 and self.voltage <= 5):
-                            good_input = True
-                        else:
-                            print("Intente nuevamente con una entrada numerica entre 0.001 y 5.")
-                    except ValueError:
-                        print("Intente nuevamente con una entrada numerica.")
-
-                # Se pide el primer canal a medir y se valida
-                good_input = False
-                print("Ingresar primer canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
-                while (not good_input):
-                    self.chan1 = input()
-                    if (self.chan1.isnumeric()):
-                        self.chan1 = int(self.chan1)
-                        if (
-                                self.chan1 == 1 or self.chan1 == 2 or self.chan1 == 3 or self.chan1 == 4 or self.chan1 == 0):
-                            good_input = True
-                        else:
-                            print("Intente nuevamente con una entrada numerica entre 0 y 5.")
-                    else:
-                        print("Intente nuevamente con una entrada numerica entre 0 y 5.")
-
-                # Se pide el segundo canal para medir y se valida
-                good_input = False
-                print("Ingresar segundo canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
-                while (not good_input):
-                    self.chan2 = input()
-                    if (self.chan2.isnumeric()):
-                        self.chan2 = int(self.chan2)
-                        if (
-                                self.chan2 == 1 or self.chan2 == 2 or self.chan2 == 3 or self.chan2 == 4 or self.chan2 == 0 and self.chan2 != self.chan1):
-                            good_input = True
-                        else:
-                            print(
-                                "Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
-                    else:
-                        print(
-                            "Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
-
-                # Configuracion de canales
-                good_input = False
-                print(
-                    "Se desea utilizar trigger externo?")
-                while (not good_input):
-                    self.trigext = input()
-                    if (self.trigext == 'n' or self.trigext == 'N'):
-                        self.trigext = 0
-                        good_input = True
-                    elif (self.trigext == 'y' or self.trigext == 'Y'):
-                        self.trigext = 1
-                        good_input = True
-                    else:
-                        print(
-                            "Intente nuevamente. [y/n]")
-
-                if (not self.trigext):
-                    # Configuracion de canales
-                    good_input = False
+        # Se pide el segundo canal para medir y se valida
+        good_input = False
+        print("Ingresar segundo canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
+        while (not good_input):
+            self.chan2 = input()
+            if (self.chan2.isnumeric()):
+                self.chan2 = int(self.chan2)
+                if (
+                        self.chan2 == 1 or self.chan2 == 2 or self.chan2 == 3 or self.chan2 == 4 or self.chan2 == 0 and self.chan2 != self.chan1):
+                    good_input = True
+                else:
                     print(
-                        "Se desea usar HF reject y noise reject en el trigger? [y/n]")
-                    while (not good_input):
-                        self.trigfilterchoice = input()
-                        if (self.trigfilterchoice == 'n' or self.trigfilterchoice == 'N'):
-                            self.trigfilterchoice = 0
-                            good_input = True
-                        elif (self.trigfilterchoice == 'y' or self.trigfilterchoice == 'Y'):
-                            self.trigfilterchoice = 1
-                            good_input = True
-                        else:
-                            print(
-                                "Intente nuevamente. [y/n]")
-
-                # Configuracion de canales
-                good_input = False
+                        "Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
+            else:
                 print(
-                    "Se desea utilizar las puntas en x10? [y/n]")
-                while (not good_input):
-                    self.probe10 = input()
-                    if (self.probe10 == 'n' or self.probe10 == 'N'):
-                        self.probe10 = 0
-                        good_input = True
-                    elif (self.probe10 == 'y' or self.probe10 == 'Y'):
-                        self.probe10 = 1
-                        good_input = True
-                    else:
-                        print(
-                            "Intente nuevamente. [y/n]")
+                    "Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
+
+        # Configuracion de canales
+        good_input = False
+        print(
+            "Se desea utilizar trigger externo?")
+        while (not good_input):
+            self.trigext = input()
+            if (self.trigext == 'n' or self.trigext == 'N'):
+                self.trigext = 0
+                good_input = True
+            elif (self.trigext == 'y' or self.trigext == 'Y'):
+                self.trigext = 1
+                good_input = True
+            else:
+                print(
+                    "Intente nuevamente. [y/n]")
+
+        if (not self.trigext):
+            # Configuracion de canales
+            good_input = False
+            print(
+                "Se desea usar HF reject y noise reject en el trigger? [y/n]")
+            while (not good_input):
+                self.trigfilterchoice = input()
+                if (self.trigfilterchoice == 'n' or self.trigfilterchoice == 'N'):
+                    self.trigfilterchoice = 0
+                    good_input = True
+                elif (self.trigfilterchoice == 'y' or self.trigfilterchoice == 'Y'):
+                    self.trigfilterchoice = 1
+                    good_input = True
+                else:
+                    print(
+                        "Intente nuevamente. [y/n]")
+
+        # Configuracion de canales
+        good_input = False
+        print(
+            "Se desea utilizar las puntas en x10? [y/n]")
+        while (not good_input):
+            self.probe10 = input()
+            if (self.probe10 == 'n' or self.probe10 == 'N'):
+                self.probe10 = 0
+                good_input = True
+            elif (self.probe10 == 'y' or self.probe10 == 'Y'):
+                self.probe10 = 1
+                good_input = True
+            else:
+                print(
+                    "Intente nuevamente. [y/n]")
