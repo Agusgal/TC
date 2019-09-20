@@ -89,7 +89,7 @@ def read_file_spice(filename):
 
     return data
 
-data = read_file_spice("Simulacion_highf.txt")
+data = read_file_spice("Simulacion_zout.txt")
 
 f = list(range(10**5, 10**8, 100))
 amp1 = []
@@ -123,13 +123,16 @@ for ff in f:
 
     )
 
+abs=[]
+for mag in data["abs"]:
+    abs.append(10**(mag/20))
 
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Magnitud [dB]")
 plt.grid()
 plt.xscale("log")
-plt.plot(f, amp1, color='green', label="Calculado")
-plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado")
+#plt.plot(f, amp1, color='green', label="Calculado")
+plt.plot(data["f"], abs, color = 'blue', label ="Simulado")
 plt.legend()
 plt.show()
 
@@ -137,7 +140,7 @@ plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Fase [Grados]")
 plt.grid()
 plt.xscale("log")
-plt.plot(f, pha, color='green', label="Calculado")
+#plt.plot(f, pha, color='green', label="Calculado")
 plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
 plt.legend()
 plt.show()

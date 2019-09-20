@@ -263,7 +263,6 @@ class Measurer():
         else:
             if(self.freqscale == 'g'):
                 self.f = np.logspace(np.log10(self.mult*(10**start_freq)), np.log10(self.multstop*(10**stop_freq)), point_per_decade_quantity * (stop_freq - start_freq))
-                print(self.f) #DEBUG
             elif(self.freqscale == 'l'):
                 self.f = np.linspace(start_freq, stop_freq, point_per_decade_quantity)
 
@@ -276,7 +275,10 @@ class Measurer():
                 if (ff > pf):
                     self.f = np.insert(self.f, temp, pf)
                     break
-                temp = temp + 1
+
+                if(temp < len(self.f) -1):
+                    temp = temp + 1
+        print("Frecuencias a medir:")
         print(self.f)
 
         #Se pide la tension del generador y se valida
@@ -325,6 +327,7 @@ class Measurer():
             else:
                 print("Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
 
+        self.usingmath = False
         if(self.chan1 == 0 or self.chan2 == 0):
             good_input = False
             self.usingmath = True
@@ -503,7 +506,6 @@ class Measurer():
         for i in range(-3, 1, 1):
             for j in [1, 2, 5]:
                 self.chan_divs.append(j*10**(i))
-        print(self.chan_divs)  # DEBUG
         self.chan1_div_index = 0
         self.chan2_div_index = 0
         for ff in (self.f):
