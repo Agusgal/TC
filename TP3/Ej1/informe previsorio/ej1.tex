@@ -587,15 +587,16 @@ y quedan fijados los valores de todos los componentes del circuito. A continuaci
 
 \begin{table}[H]
 \centering
-\begin{tabular}{@{}cccc@{}}
+\begin{tabular}{@{}ccccc@{}}
 \toprule
-Componente & Valor Teórico & Implementación & Valor Final \\ \midrule
-$C_2$ & $15nF$ & $15nF$ & $15nF$ \\
-$C_7$ & $11.25nF$ & $10nF//1.2nF$ & $11.2nF$ \\
-$C_6$ & $3.75nF$ & $3.3nF//470pF$ & $3.77nF$ \\
-$R_{1,3,4,8}$ & $5128.2 \Omega$ & $12K\Omega//9K1\Omega$ & $5175.35 \Omega$ \\
-$R_{6,7}$ & $20512.82 \Omega$ & $33K\Omega//22K\Omega$ & $20625\Omega$ \\ \bottomrule
+Componente & Valor Teórico & Implementación & Valor Final & Error \\ \midrule
+$C_2$ & $15nF$ & $15nF$ & $15nF$ & $0\%$ \\
+$C_7$ & $11.25nF$ & $10nF//1.2nF$ & $11.2nF$ & $0.40\%$ \\
+$C_6$ & $3.75nF$ & $3.3nF//470pF$ & $3.77nF$ & $0,53\%$\\
+$R_{1,3,4,8}$ & $5128.2 \Omega$ & $12K\Omega//9K1\Omega$ & $5175.35 \Omega$ & $0,92\%$ \\
+$R_{6,7}$ & $20512.82 \Omega$ & $330K\Omega//22K\Omega$ & $20625\Omega$ & $0,55\%$ \\ \bottomrule
 \end{tabular}
+\label{tab:valores}
 \end{table}
 
 Con estos valores se graficó el bode en amplitud y fase del filtro:
@@ -615,11 +616,23 @@ Con estos valores se graficó el bode en amplitud y fase del filtro:
 	\caption{Gráficos de Bode para el filtro con los componentes calculados.}
 \end{figure}
 
+A continuación se realizó una tabla con los valores significantes de la respuesta en frecuencia.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccc@{}}
+\toprule
+- & $\omega_z$ & $\omega_p$ & $G_{Banda Pasante}$  & $G_{Notch}$ & $G_{Banda Atenuante}$ \\ \midrule
+Valor deseado & $2926Hz$ & $2069Hz$ & $0$ & $-$ & $-$ \\
+Valor calculado & $2930Hz$ & $-$ & $0$ & $-77dB$ & $-7dB$ \\ 
+Error & $0.135\%$ & $-$ & $0\%$ & $-$ & $-$ \\ \bottomrule
+\end{tabular}
+\label{tab:rta_freq_calc}
+\end{table}
+
 \subsection{Simulación del Circuito}
 
-Se procedió a realizar la simulación del circuito.
-
-hablar mas y grafico de bode
+Se procedió a realizar la simulación del circuito con los valores obtenidos mediante los paralelos en la Tabla (\ref{tab:valores}). La primera simulación que se observó fue la respuesta en frecuencia.
 
 \begin{figure}[H]
 	\centering
@@ -636,7 +649,7 @@ hablar mas y grafico de bode
 	\caption{Comparación entro los gráficos de bode simulados y calculados teóricamente.}
 \end{figure}
 
-hablar y hablar
+
 
 \subsubsection{Simulación de la Transferencia}
 \subsubsection{Simulación de la Impedancia de Entrada y Salida}
