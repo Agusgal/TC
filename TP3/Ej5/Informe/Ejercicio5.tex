@@ -298,7 +298,7 @@ Es así que, con los nuevos coeficientes simplificados, se obtiene de (\ref{equ:
 	f_o &=\ \frac{1}{2 \pi} \sqrt{\frac{2R_1 + R_2}{\alpha_H}} = \sqrt{\frac{2R_1 + R_2}{10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right]}} = \\
 	&=\ \sqrt{\frac{2 + \frac{R_2}{R_1}}{10 \left[ 10 + 2 \psi \left(1 - \psi \right) \right]}} \cdot \frac{1}{2 \pi C_2 R_2}
 \end{split}
-\label{equ:fogeneral}
+\label{equ:fosimp}
 \end{equation}
 
 Tomando tanto $\psi = 1$, como $\psi = 0$ se obtiene la misma frecuencia de corte
@@ -340,27 +340,13 @@ Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y 
 En un ecualizador analógico, al modificar una frecuencia dada, se modifica también su fase. Este es un proceso inevitable, el cual se busca reducir tanto como sea posible, buscando también lograr que produzca el cambio de tono deseado. Esto se garantiza realizando que el sistema sea de fase mínima.
 Debido a que, tanto los polos como los ceros del sistema, sin importar el valor de $\psi$, se encuentran en el semiplano izquierdo, se obtiene el menor diagrama de fase posible, en consecuencia, este sistema es de fase mínima.
 
-\begin{center}
-	\textcolor{red}{FASE NO MÍNIMA.}
-\end{center}
+Si se busca conseguir que el sistema sea de fase no mínima, se debe seleccionar los componentes tales que los ceros se encuentren en el semiplano derecho. Para lograr esto, se propone llevar la (\ref{equ:hs}) sea de la forma
 
-%Si se busca conseguir que el sistema sea de fase no mínima, se debe seleccionar los componentes tales que haya cero en el semiplano derecho. Para lograr esto, se propone llevar la (\ref{equ:hs}) sea de la forma
-%
-%\begin{equation*}
-%	H(s) = \frac{a S^2 + b S + c}{a S^2 - b S + c}
-%\end{equation*}
-%
-%Por lo tanto, se toma lo obtenido en (\ref{equ:general}) y se busca que
-%\begin{equation*}
-%	\beta_H = - \delta_H
-%\end{equation*}
-%\begin{equation*}
-%	3 C_{1} R_{1} R_{2} + 2 C_{2} {R_{1}}^{2} + 2 C_{2} R_{1} R_{2} + 2 C_{2} R_{1} R_{3} - 2 C_{2} {R_{2}}^{2} \psi^{2} + 2 C_{2} {R_{2}}^{2} \psi + C_{2} R_{2} R_{3} = 0
-%\end{equation*}
-%\begin{equation*}
-%	R_{3} = \frac{-3 C_{1} R_{1} R_{2} - 2 C_{2} {R_{1}}^{2} - 2 C_{2} R_{1} R_{2} + 2 C_{2} {R_{2}}^{2} \psi^{2} - 2 C_{2} {R_{2}}^{2} \psi }{2 C_{2} R_{1} + C_{2} R_{2}}
-%\end{equation*}
+\begin{equation*}
+	H(s) = \frac{a S^2 - b S + c}{a S^2 + b S + c}
+\end{equation*}
 
+Esto no es posible debido a que los cambios en los componentes modifican también los polos existentes, colocando a estos también en el semiplano derecho, situación que implica que el sistema no sea estable. 
 
 \subsection{Desarrollo del circuito y selección de componentes}
 
@@ -369,7 +355,7 @@ Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecu
 	\log{(f_{med})} = \frac{\log(f_{min}) + \log(f_{max})}{2} = \log(\sqrt{f_{min} f_{max}})
 \end{equation*}
 
-Es así que se necesita una frecuencia cercana a los $77.50 \ Hz$ para las frecuencias bajas, $1.2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales, se seleccionan los elementos deseados, completando la siguiente tabla:
+Es así que se necesita una frecuencia cercana a los $77.50 \ Hz$ para las frecuencias bajas, $1.2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales de ecualizadores, cuyas amplificaciones varían entre $\pm 12 \ db$ y $\pm 15 \ db$, se seleccionan los elementos deseados, completando la siguiente tabla:
 
 \begin{table}[H]
 \begin{center}
@@ -387,7 +373,25 @@ Alta & $100 \ \Omega$ & $1 \ k\Omega$ & $10 \ k\Omega$ & $56 \ nF$ & $5.6 \ nF$ 
 \end{center}
 \end{table}
 
-Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido debido a la impedancia de entrada del circuito total, razón que se expone más adelante en el informe. Otra ventaja que presenta esta disposición es la facilidad que se presenta al calcular la transferencia de entrada del circuito total, ya que debido a teoría de cuadripolos, la primera resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la segunda se obtiene de la suma de cada impedancia de entrada, de la misma forma que la transferencia, es decir, tomando nuevamente los valores de la tabla previamente mencionada y reemplazándola en (\ref{equ:zin}). Es así que se deja en forma de ecuaciones lo dicho anteriormente:
+Se destaca que los valores no necesariamente deben ser exactos, y que se acepta un alejamiento de la frecuencia dada debido al carácter logarítmico de la audición humana.
+
+Por cuestiones de disponibilidad de componentes, se debió utilizar un potenciometro $50 \ k\Omega$ para las frecuencias altas. Para verificar la validez de esto, se debe volver a analizar lo expresado en (\ref{equ:hs}) con las expresiones halladas en el caso más generico, es decir, las representadas en (\ref{equ:general}), ya que no se cumple que $R_3 = 10R_2$. Es por eso que, manteniendo todos los valores expresados en la Tabla (\ref{tabla:valores}), a excepción de $R_2$, y sabiendo que para el caso más genérico la frecuencia de corte viene dada por la expresión
+\begin{equation}
+	f_o = \frac{1}{2\pi} \cdot \sqrt{\frac{2R_1 + R_2}{\alpha_H}}
+	\label{equ:fogeneral}
+\end{equation}
+se determina la frecuencia de dicha instancia es de $8.96 \ kHz$, lo cuál sigue siendo un valor aceptable.
+
+Se podría solventar dicho problema reemplazando $R_3$ por una resistencia de $500 \ k\Omega$ para poder cumplir la condición mencionada. Dicha opción es descartada ya que al realizar esto se observan 2 factores: el primero se encuentra en la frecuencia central del filtro, que al calcularla nuevamente, resulta ser próxima a $1.27 \ kHz$, mientras que el segundo resulta ser la amplificación. Si bien se consigue mayor amplificación, afecta con las demás bandas y además no se cumple con el hecho de respetar los valores de amplificación de ecualizadores comerciales, como se mencionó anteriormente.
+
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/r3comp.png}
+	\caption{Comparación de la transferencia en módulo cambiando $R_3$.}
+	\label{fig:r3comp}
+\end{figure}
+
+Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido a la impedancia de entrada del circuito total, razón que se expone más adelante. Otra ventaja que presenta esta disposición es la facilidad que se presenta al calcular la transferencia de entrada del circuito total, ya que debido a teoría de cuadripolos, la primera resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la segunda se obtiene de la suma de cada impedancia de entrada, de la misma forma que la transferencia, es decir, tomando nuevamente los valores de la tabla previamente mencionada y reemplazándola en (\ref{equ:zin}). Es así que se deja en forma de ecuaciones lo dicho anteriormente:
 
 \begin{equation}
 	H(S) = H_{bajas}(S) \cdot H_{medias}(S) \cdot H_{altas}(S)
@@ -397,7 +401,7 @@ Una vez determinado esto, se optó por colocar las tres instancias en serie, ya 
 \end{equation}
 siendo el subindice representativo de las frecuencias que modifican.
 
-Por otro lado, se buscó reproducir los valores de amplificación de ecualizadores comerciales, los cuales se encuentran entre $\pm 12 \ db$ y $\pm 15 \ db$. Es así que se procede a graficar la respuesta en frecuencia calculada de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0.5$.
+Es así que se procede a graficar la respuesta en frecuencia calculada de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0.5$.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-bode.png}
@@ -435,20 +439,44 @@ Por otro lado, se buscó reproducir los valores de amplificación de ecualizador
 	\label{fig:bode_ph_high}
 \end{figure}
 
-Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase. Cabe destacar el oído humano no detecta cambios en la fase cuando a distintas frecuencias se refiere. Se podría hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero ducho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano.
+Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase. Cabe destacar el oído humano no detecta cambios en la fase cuando a distintas frecuencias se refiere. Se podría hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero ducho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano. También, resulta pertinente destacar los corrimientos que se producen tanto en la fase como en la amplitud al variar las altas frecuencias, lo cual se debe al cambio realizado del potenciometro, el cuál se recuerda que fue cambiado de $1 \ k\Omega$ a $50 \ k\Omega$. En otras palabras, la causa de este fenómeno se debe a que la condición de que $R_3 = 10R_2$ deja de ser valida.
 
-De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total. Debido a que al variar $\psi$ para cada instancia, fijando las demás en $0.5$, resultó indistinto para cada caso, se muestra simplemente una única representación de como depende la impedancia de entrada, en las mismas condiciones que se realizó con la transferencia total del circuito.
+De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$.}
+	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias bajas.}
 	\label{fig:zin_modulo_low}
 \end{figure}
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$.}
+	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias bajas.}
 	\label{fig:zin_ph_low}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
+	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias medias.}
+	\label{fig:zin_modulo_med}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
+	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias medias.}
+	\label{fig:zin_ph_med}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
+	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias altas.}
+	\label{fig:zin_modulo_high}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
+	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias altas.}
+	\label{fig:zin_ph_high}
 \end{figure}
 
 Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciometro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
@@ -469,7 +497,7 @@ Se observa de estas figuras que la impedancia de entrada se comporta de manera r
 
 Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
 
-Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional LM833, debido a su frecuente uso en lo que a audio respecta. Debido a que este dispositivo es dual, como se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, se debe considerar de ahora en más el cambio de fase que este provee al circuito.   
+Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional LM833, debido a su frecuente uso en lo que a audio respecta. Debido a que este dispositivo es dual y que se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, de ahora en más se considera el cambio de fase que este provee al circuito junto con la impedancia que este agrega.   
 
 \begin{center}
 	\textcolor{red}{\textbf{MEDICIONES, SPICE Y TEORICOS.}}
