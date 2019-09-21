@@ -269,15 +269,15 @@ class Measurer():
         for ff in self.f:
             ff = int(ff)
 
-        temp = 0
         for pf in self.particular_frequencies:
+            temp = 0
             for ff in self.f:
                 if (ff > pf):
                     self.f = np.insert(self.f, temp, pf)
                     break
 
-                if(temp < len(self.f) -1):
-                    temp = temp + 1
+                temp = temp + 1
+
         print("Frecuencias a medir:")
         print(self.f)
 
@@ -586,8 +586,8 @@ class Measurer():
             self.ratio.append(float(med[0]))
             self.phase.append(float(med[1]))
 
-            print(float(med[0]))
-            print(float(med[1]))
+            print("Ratio: " + float(med[0]))
+            print("Phase: " + float(med[1]))
 
         for i in range(0, len(self.phase), 1):
             if (self.phase[i] == float(Resources.OOR_VAL)):
