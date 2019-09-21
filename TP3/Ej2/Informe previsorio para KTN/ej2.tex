@@ -307,7 +307,7 @@ Utilizando (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se llega a que:
 Vale la pena destacar que (\ref{eq:LPL}) y (\ref{eq:LPG}) son iguales y que es un filtro de segundo orden.
 %%
 \subsubsection{Diseños alternativos.}
-Previo a la desición de utilizar el diseño de la figura (\ref{fig:gyrLP}) se idearon otras alternativas. Una fue utilizar una salida diferencial sobre el capacitor, una mejora sobre este último era utilizar un restador para que esta salida diferencial quede referenciada a tierra. Otra alternativa encontrada fue la utilizacion de 2 gyrators para formar un  frequency-dependent negative resistance (FDNR) para realizar el filtro; este diseño finalmente fue desechado dado a que para este ultimo se necesitarían 2 operacionales, y dado la limitacion en el integrado se optó por mantener simple el diseño e implementar el diseño final.
+Previo a la desición de utilizar el diseño de la figura (\ref{fig:gyrLP}) se idearon otras alternativas. Una fue utilizar una salida diferencial sobre el capacitor, una mejora sobre este último era utilizar un restador para que esta salida diferencial quede referenciada a tierra. Otra alternativa encontrada fue la utilizacion de 2 gyrators para formar una bobina flotante, para realizar el filtro; este diseño finalmente fue desechado dado a que para este ultimo se necesitarían 2 operacionales, y dado la limitacion en el integrado se optó por mantener simple el diseño e implementar el diseño final.
 %%
 \subsubsection{Comparación de modelos.}
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo como era esperado una gran coincidencia en las frecuencias bajas y medias, y finalmente difiriendo en las altas como se ve a continuación:
@@ -354,7 +354,7 @@ El mayor interés fue puesto en que el circuito cumpla con las especificaciones 
 Obteniendo las siguientes mediciones:
 
 
-En la figura (\ref{fig:fahp}) se puede observar como para frecuencias a partir de 3kHz la atenuación es mayor a 12dB.
+En la figura (\ref{fig:falp}) se puede observar como para frecuencias a partir de 3kHz la atenuación es mayor a 12dB.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{ImagenesEj2/MedicionesGrilla/fa_lp.png}
@@ -362,7 +362,7 @@ En la figura (\ref{fig:fahp}) se puede observar como para frecuencias a partir d
 	\label{fig:falp}
 \end{figure}
 
-En la figura (\ref{fig:fphp}) se puede observar como para frecuencias a partir de 10.5kHz, la atenuación es menor a 1.5dB.
+En la figura (\ref{fig:fplp}) se puede observar como para frecuencias a partir de 10.5kHz, la atenuación es menor a 1.5dB.
 
 \begin{figure}[H]	
 	\centering
