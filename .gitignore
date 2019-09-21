@@ -453,3 +453,5 @@ dmypy.json
 *.log
 *.ipynd_checkpoints
 *checkpoint.ipynb
+*.plt
+*.imp

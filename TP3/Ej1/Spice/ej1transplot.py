@@ -89,11 +89,9 @@ def read_file_spice(filename):
 
     return data
 
-data = read_file_spice("Simulacion.txt")
+data = read_file_spice("Simulacion_highf.txt")
 
-print(np.imag(2+3j))
-
-f = list(range(10, 10**6, 1))
+f = list(range(10**5, 10**8, 100))
 amp1 = []
 pha=[]
 for ff in f:
@@ -131,7 +129,7 @@ plt.ylabel("Magnitud [dB]")
 plt.grid()
 plt.xscale("log")
 plt.plot(f, amp1, color='green', label="Calculado")
-#plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado")
+plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado")
 plt.legend()
 plt.show()
 
@@ -140,7 +138,7 @@ plt.ylabel("Fase [Grados]")
 plt.grid()
 plt.xscale("log")
 plt.plot(f, pha, color='green', label="Calculado")
-#plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
+plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
 plt.legend()
 plt.show()
 
