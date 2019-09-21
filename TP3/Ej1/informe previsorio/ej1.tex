@@ -633,11 +633,62 @@ Error & $0.135\%$ & $0.131\%$ & $0.546\%$ & - & - & - \\ \bottomrule
 \label{tab:rta_freq_calc}
 \end{table}
 
-Al momento de elegir el operacional a utilizar, se tuvo un claro objetivo: se quisieron mantener las especificaciones del filtro fieles a lo calculado en el mayor rango de frecuencias posible. Es por esto, que uno de los principales parámetros a estudiar en la selección del opamp fue el ancho de banda. Cuanto mayor sea este, más fidedigna será la transferencia en las altas frecuencias ya que los polos del dispositivo serán ubicados en mayores frecuencias cuanto más alto sea el ancho de banda.
+\subsubsection{Análisis de Ceros y Polos}
+
+Se realizó un análisis de los ceros y polos de la transferencia ideal calculada tanto con los valores usados en la Tabla (\ref{Tab:valores}) como variando las resistencias $R_6$ y $R_8$.
+A continuación se muestran los ceros y polos con los valores de la Tabla (\ref{Tab:valores}).
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/cerosypolos_calc.PNG}
+	\caption{Ceros y polos de la función transferencia ideal del circuito. Módulo y ángulo de cada cero y polo indicado.}
+	\label{fig:cerosypolos_calc}
+\end{figure}
+
+Se puede observar como los polos y los ceros de la transferencia no se encuentran sobre una circunferencia de mismo radio, sino que los polos tienen una frecuencia de corte menor que la de los ceros. Esto genera que en el diagrama de bode se encuentre primero el polo y luego el cero, por lo que la curva asintótica permanecerá por debajo de la línea del cero para las frecuencias mayores a la frecuencia de notch. Se puede contemplar además como los ceros se sitúan sobre el eje imaginario, por lo que el factor de calidad tenderá a infinito y genera un gran sobrepico, atenuando casi totalmente las frecuencias cuyo valor sean igual al módulo de los ceros.
+
+
+A continuación se realizará un análisis del movimiento de los polos dadas variaciones en las resistencias $R_6$ y $R_8$. Cabe notar que el color más oscuro corresponde con la posición inicial de los ceros y polos.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/polosr6a0.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/cerosr6a0.png}
+	\end{subfigure}
+	\label{fig:r6a0}
+	\caption{Posición de los ceros y polos de la transferencia cuando $R_6$ parte de su valor original y tiende a cero.}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/polosr6ainf.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/cerosr6ainf.png}
+	\end{subfigure}
+	\label{fig:r6ainf}
+	\caption{Posición de los ceros y polos de la transferencia cuando $R_6$ parte de su valor original y tiende a infinito.}
+\end{figure}
+
+Se puede observar en las Figuras
+
+\subsubsection{Elección de los Amplificadores Operacionales}
+
+Al momento de elegir el operacional a utilizar, se tuvo un claro objetivo: se quisieron mantener las especificaciones del filtro fieles a lo calculado en el mayor rango de frecuencias posible. Es por esto, que uno de los principales parámetros a estudiar en la selección del opamp fue el ancho de banda. Cuanto mayor sea este, más fidedigna será la transferencia en las altas frecuencias ya que los polos del dispositivo estarán ubicados en mayores frecuencias cuanto más alto sea el ancho de banda.
 
 Otro parámetro importante fueron aquellos que permiten lograr obtener una señal de salida con una baja distorsión armónica. Esto quiere decir, no se quiso deformar alinealmente a la señal de entrada introduciendo armónicos en esta. Para esto, se consideró la utilización de un amplificador operacional con una alta slew rate.
 
-Finalmente
+Finalmente se optó por utilizar el integrado TL-082 el cual posee dos amplificadores operacionales dentro. Se decidieron utilizar estos operacionales ya que poseen una slew rate alta ($13\frac{V}{\mu s}$ valor típico) en comparación a otros operacionales, un ancho de banda bastante grande ($3MHz$ valor típico) y además posee transistores de tecnología J-FET a la entrada del dispositivo, por lo que tanto la corriente de bias como la tensión de offset serán más bajos que otro operacional con tecnología BJT a la entrada.
 
 \subsection{Simulación del Circuito}
 \label{sec:simulacion}
