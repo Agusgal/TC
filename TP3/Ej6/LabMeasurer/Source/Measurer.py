@@ -595,7 +595,7 @@ class Measurer():
                 self.phase[i] = 0
 
         good_meas=False
-        while(good_meas):
+        while(not good_meas):
 
             plt.title("VISTA PREVIA DE LA MEDICION, FALTA CONFIRMAR")
             plt.xscale("log")
