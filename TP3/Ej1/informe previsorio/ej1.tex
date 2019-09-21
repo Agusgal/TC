@@ -568,7 +568,7 @@ $\omega_p$ & Q & $\omega_z$ \\ \midrule
 13.000 $\frac{rad}{s}$ & 2 & $\sqrt{2}*\omega_p \frac{rad}{s}$ \\ \bottomrule
 \end{tabular}
 \end{table}
-Se logran obtener el valor de k:
+Se logra obtener el valor de k:
 
 \begin{equation}
 k = \sqrt{2}
@@ -625,13 +625,19 @@ A continuación se realizó una tabla con los valores significantes de la respue
 \begin{tabular}{@{}ccccccc@{}}
 \toprule
 - & $\omega_z$ & $\omega_p$ & Q & $G_{Banda Pasante}$  & $G_{Notch}$ & $G_{Banda Atenuante}$ \\ \midrule
-Valor deseado & $2926Hz$ & $2$ & $2069Hz$ & $-$ & $-$ & $-$ \\
-Valor calculado & $2930Hz$ & $2.01$ & $2066,3Hz$ & $0$ & $-76.91dB$ & $-6.08dB$ \\ 
-Error & $0.135\%$ & $0.546\%$ & $0.131\%$ & $-$ & $-$ & $-$ \\ \bottomrule
+Valor deseado & $2926Hz$ & $2069Hz$ & $2$ & - & - & - \\
+Valor calculado & $2930Hz$ & $2066,3Hz$ & $2.01$ & $0$ & $-76.91dB$ & $-6.08dB$ \\ 
+Error & $0.135\%$ & $0.131\%$ & $0.546\%$ & - & - & - \\ \bottomrule
 \end{tabular}
 \caption{Valores significantes teóricos de la respuesta en frecuencia calculada.}
 \label{tab:rta_freq_calc}
 \end{table}
+
+Al momento de elegir el operacional a utilizar, se tuvo un claro objetivo: se quisieron mantener las especificaciones del filtro fieles a lo calculado en el mayor rango de frecuencias posible. Es por esto, que uno de los principales parámetros a estudiar en la selección del opamp fue el ancho de banda. Cuanto mayor sea este, más fidedigna será la transferencia en las altas frecuencias ya que los polos del dispositivo serán ubicados en mayores frecuencias cuanto más alto sea el ancho de banda.
+
+Otro parámetro importante fueron aquellos que permiten lograr obtener una señal de salida con una baja distorsión armónica. Esto quiere decir, no se quiso deformar alinealmente a la señal de entrada introduciendo armónicos en esta. Para esto, se consideró la utilización de un amplificador operacional con una alta slew rate.
+
+Finalmente
 
 \subsection{Simulación del Circuito}
 \label{sec:simulacion}
@@ -657,9 +663,9 @@ Se procedió a realizar la simulación del circuito con los valores obtenidos me
 	\caption{Comparación entre los gráficos de bode simulados y calculados teóricamente.}
 \end{figure}
 
-Utilizando el operacional elegido en la sección \ref{eleccion_componentes}, se observa una respuesta en frecuencia muy similar a a la calculada anteriormente, exceptuando dos puntos de interes.
+Utilizando el operacional elegido en la sección \ref{sec:eleccion_componentes}, se observa una respuesta en frecuencia muy similar a a la calculada anteriormente, exceptuando dos puntos de interes.
 
-La ganancia en la frecuencia de notch es mucho menor a la calculada. Esto es algo esperado, ya que muchas cosas que no se tienen en consideración en los cálculos logran llegar a un resultado mucho más ideal del real.
+La ganancia en la frecuencia de notch es mucho menor a la calculada. Esto es algo esperado, ya que muchas cosas que no se tienen en consideración en los cálculos logran llegar a un resultado mucho más ideal que el real.
 
 Respecto a las altas frecuencias, se puede observar una discrepancia entre lo calculado y lo teórico. Esta diferencia es mucho más grande tendiendo a las frecuencias cerca de los $10MHz$. A continuación se grafica el bode en fase y magnitud entre las frecuencias de los $100KHz$ y los $100MHz$.
 
