@@ -1,20 +1,4 @@
-\documentclass[a4paper]{article}
-
-\include{Header.tex}
-
-\usepackage{float}
-\usepackage{graphicx}
-
-\usepackage[american voltage]{circuitikz}
-
-\usepackage{amsmath}
-
-\usepackage{xcolor}
-
-\usepackage{multirow}
-
-\usepackage{caption}
-\usepackage{subcaption}
+\input{../../Informe/Header.tex}
 
 \begin{document}
 
@@ -36,33 +20,33 @@ La fisiología auditiva se encuentra dada en tres estructuras:
 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Partes-del-oido.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes/Partes-del-oido.png}
 	\caption{Estructura interna del oído.}
 	\label{fig:oido}
 \end{figure}
 
 La señal captada se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo.
 
-El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$\footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: https://en.wikipedia.org/wiki/Audio\_frequency [Accessed 11 Sep. 2019].}. A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}. 
+El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$ \footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: \url{https://en.wikipedia.org/wiki/Audio_frequency} [Accessed 11 Sep. 2019].}. A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}. 
 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
 	\caption{Ganancia del oído externo, medio y total.}
 	\label{fig:oidoganancia}
 \end{figure}
 
-Es así que se presenta una división de las bandas de frecuencia audibles por el oído humano\footnote{``Ecualización Básica: Todo lo que necesitas saber sobre la Ecualización | LANDR Blog'', LANDR Blog, 2019. [Online]. Available: https://blog.landr.com/es/ecualizacion-basica-todo-lo-que-necesitas-saber-sobre-la-ecualizacion/. [Accessed: 11- Sep- 2019].}.
+Es así que se presenta una división de las bandas de frecuencia audibles por el oído humano\footnote{``Ecualización Básica: Todo lo que necesitas saber sobre la Ecualización | LANDR Blog'', LANDR Blog, 2019. [Online]. Available: \url{https://blog.landr.com/es/ecualizacion-basica-todo-lo-que-necesitas-saber-sobre-la-ecualizacion/}. [Accessed: 11- Sep- 2019].}.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth]{Imagenes/FrequencySpectrumDivision.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes/FrequencySpectrumDivision.png}
 	\caption{División del espectro de frecuencias audibles.}
 	\label{fig:divfreq}
 \end{figure}
 
 Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ db$, la segunda posee un umbral mínimo de $60 \ db$. 
 
-Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas\footnote{"Escuchar sin riesgos!", Who.int, 2019. [Online]. Available: https://www.who.int/pbd/deafness/activities/MLS\_Brochure\_Spanish\_lowres\_for\_web.pdf. [Accessed: 11- Sep- 2019].}.
+Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas\footnote{``Escuchar sin riesgos!'', Who.int, 2019. [Online]. Available: \url{https://www.who.int/pbd/deafness/activities/MLS_Brochure_Spanish_lowres_for_web.pdf}. [Accessed: 11- Sep- 2019].}.
 
 \subsection{Funcionamiento de un ecualizador}
 
@@ -336,7 +320,8 @@ Se determina de esta forma que
 Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y ceros del sistema, enfunción de $\psi$ y se realiza un diagrama de polos y ceros en el plano $S$, variando dicho factor. De esta forma se obtiene la Figura (\ref{fig:zplanepsi}).
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{Imagenes/Zplanepsi.png}
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/Zplanepsi.png}
 \caption{Diagrama de polos y ceros variando $\psi$ entre 0 y 1.}
 	\label{fig:zplanepsi}
 \end{figure}
@@ -390,7 +375,7 @@ Se podría solventar dicho problema reemplazando $R_3$ por una resistencia de $5
 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/r3comp.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/r3comp.png}
 	\caption{Comparación de la transferencia en módulo cambiando $R_3$.}
 	\label{fig:r3comp}
 \end{figure}
@@ -408,37 +393,37 @@ siendo el subindice representativo de las frecuencias que modifican.
 Es así que se procede a graficar la respuesta en frecuencia calculada de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0.5$.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-bode.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Low-psi-bode.png}
 	\caption{Diagrama de Bode en amplitud, variando $\psi$ de las frecuencias bajas.}
 	\label{fig:bode_modulo_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-ph.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Low-psi-ph.png}
 	\caption{Diagrama de Bode en fase, variando $\psi$ de las frecuencias bajas.}
 	\label{fig:bode_ph_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-bode.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Medium-psi-bode.png}
 	\caption{Diagrama de Bode en amplitud, variando $\psi$ de las frecuencias medias.}
 	\label{fig:bode_modulo_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-ph.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Medium-psi-ph.png}
 	\caption{Diagrama de Bode en fase, variando $\psi$ de las frecuencias medias.}
 	\label{fig:bode_ph_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-bode.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/High-psi-bode.png}
 	\caption{Diagrama de Bode en amplitud, variando $\psi$ de las frecuencias altas.}
 	\label{fig:bode_modulo_high}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-ph.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/High-psi-ph.png}
 	\caption{Diagrama de Bode en fase, variando $\psi$ de las frecuencias altas.}
 	\label{fig:bode_ph_high}
 \end{figure}
@@ -448,37 +433,37 @@ Es así que se observa que cada instancia genera un cambio en la ganancia simila
 De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias bajas.}
 	\label{fig:zin_modulo_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias bajas.}
 	\label{fig:zin_ph_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias medias.}
 	\label{fig:zin_modulo_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias medias.}
 	\label{fig:zin_ph_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias altas.}
 	\label{fig:zin_modulo_high}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias altas.}
 	\label{fig:zin_ph_high}
 \end{figure}
@@ -486,13 +471,13 @@ De la misma forma, se muestra la impedancia de entrada en función de la frecuen
 Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciometro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
 	\caption{Comparación de impedancias de entrada, en módulo.}
 	\label{fig:zin_comp_mod}
 \end{figure}
 \begin{figure}[H]
 \centering
-		\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
+		\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
 	\caption{Comparación de impedancias de entrada, en fase.}
 	\label{fig:zin_comp_ph}
 \end{figure}
