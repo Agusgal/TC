@@ -1,33 +1,34 @@
-\documentclass[a4paper]{article}
-\usepackage[utf8]{inputenc}
-\usepackage[spanish, es-tabla]{babel}
-
-\usepackage{amsmath}
-\usepackage{amsfonts}
-\usepackage{amssymb}
-
-\usepackage{float}
-\usepackage{graphicx}
-\usepackage{subcaption}
-\captionsetup{compatibility=false}
-
-\usepackage{multirow}
-\setlength{\doublerulesep}{\arrayrulewidth}
-
-\usepackage{array}
-\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-
-\usepackage[american]{circuitikz}
-
-\usepackage{fancyhdr}
-
-\usepackage{units} 
-
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{22.01 Teoría de Circuitos}
-\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
-\rfoot{Página \thepage}
+%\documentclass[a4paper]{article}
+%\usepackage[utf8]{inputenc}
+%\usepackage[spanish, es-tabla]{babel}
+%
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+%\usepackage{amssymb}
+%
+%\usepackage{float}
+%\usepackage{graphicx}
+%\usepackage{subcaption}
+%\captionsetup{compatibility=false}
+%
+%\usepackage{multirow}
+%\setlength{\doublerulesep}{\arrayrulewidth}
+%
+%\usepackage{array}
+%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+%
+%\usepackage[american]{circuitikz}
+%
+%\usepackage{fancyhdr}
+%
+%\usepackage{units} 
+%
+%\pagestyle{fancy}
+%\fancyhf{}
+%\lhead{22.01 Teoría de Circuitos}
+%\rhead{Mechoulam, Lambertucci, Rodriguez, Londero}
+%\rfoot{Página \thepage}
+\input{../../Informe/Header.tex}
 \begin{document}
 
 
@@ -40,14 +41,14 @@ Es de utilidad recordar que la relación entrada-salida de los parametros impeda
 \begin{align} \left(\begin{matrix}V_1\\V_2\end{matrix}\right) =   \left(\begin{matrix}0&-R\\R&0\end{matrix}\right)  \cdot \left(\begin{matrix}I_1\\I_2\end{matrix}\right) \end{align}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyratorsimb.png}
+	\includegraphics[width=0.5\textwidth]{ImagenesEj2/gyratorsimb.png}
 	\caption{Símbolo eléctrico del Gyrator.}
 	\label{fig:gyrsimb}
 \end{figure}
 En la realidad el gyrator es implementado utilizando amplificadores operacionales. Uno de los usos mas populares es para la inversión de impedancias, permitiendo simular un inductor utilizando otros componentes (capacitores y resistencias).La configuración generalmente utilizada es la siguiente:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.5\textwidth]{ImagenesEj2/gyrop.png}
+	\includegraphics[width=0.35\textwidth]{ImagenesEj2/gyrop.png}
 	\caption{Equivalente del circuito Gyrator.}
 	\label{fig:gyrop}
 \end{figure}
@@ -86,7 +87,7 @@ Dado a que la característica mas atractiva del gyrator es  su impedancia de ent
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/ZinG.png}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/ZinG.png}
 	\caption{Impedancia de entrada del Gyrator.}
 	\label{fig:ZinG}
 \end{figure}
@@ -94,7 +95,7 @@ Puede notarse que el pico el cual presenta el Gyrator simulado no se compara con
 También se midió la fase obteniendo el siguiente gráfico.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/ZinGp.png}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/ZinGp.png}
 	\caption{Impedancia de entrada del Gyrator fase.}
 	\label{fig:ZinGp}
 \end{figure}
@@ -165,7 +166,7 @@ H(s)=\frac{s^2LC+s\cdot r_{coil}C}{s^2LC+s\cdot(R+r_{coil})C+1}
 Para la implementación de este filtro utilizando un Gyrator, dado a que este usualmente está referenciado a tierra  se optó por el siguiente diseño:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEj2/gyrHP.PNG}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/gyrHP.PNG}
 	\caption{Filtro High-Pass implementado con Gyrator.}
 	\label{fig:gyrHP}
 \end{figure}
@@ -234,7 +235,7 @@ Obteniendo las siguientes mediciones:
 En la figura (\ref{fig:fahp}) se puede observar como para frecuencias a partir de 3kHz la atenuación es mayor a 14dB.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fa_hp.png}
+	\includegraphics[width=0.8\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fa_hp.png}
 	\caption{Frecuencia de atenuación.}
 	\label{fig:fahp}
 \end{figure}
@@ -243,7 +244,7 @@ En la figura (\ref{fig:fphp}) se puede observar como para frecuencias a partir d
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fp_hp.png}
+	\includegraphics[width=0.8\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fp_hp.png}
 	\caption{Frecuencia de paso.}
 	\label{fig:fphp}
 \end{figure}
@@ -277,7 +278,7 @@ El gyrator tiene la particularidad de que debe estar referenciado a tierra para 
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/gyrfloat.png}
+	\includegraphics[width=0.35\textwidth]{ImagenesEj2/gyrfloat.png}
 	\caption{Gyrator referenciada a la fuente.}
 	\label{fig:gyrfloat}
 \end{figure}
@@ -285,7 +286,7 @@ Para el cual el primer paso será pasivar la fuente y quedará referenciado a ma
 El circuito propuesto fue el siguiente:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/gyrLP.PNG}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/gyrLP.PNG}
 	\caption{Filtro Low-Pass implementado con Gyrator.}
 	\label{fig:gyrLP}
 \end{figure}
@@ -357,7 +358,7 @@ Obteniendo las siguientes mediciones:
 En la figura (\ref{fig:falp}) se puede observar como para frecuencias a partir de 3kHz la atenuación es mayor a 12dB.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fa_lp.png}
+	\includegraphics[width=0.8\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fa_lp.png}
 	\caption{Frecuencia de atenuación.}
 	\label{fig:falp}
 \end{figure}
@@ -366,7 +367,7 @@ En la figura (\ref{fig:fplp}) se puede observar como para frecuencias a partir d
 
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fp_lp.png}
+	\includegraphics[width=0.8\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fp_lp.png}
 	\caption{Frecuencia de paso.}
 	\label{fig:fplp}
 \end{figure}
@@ -423,13 +424,13 @@ Vale la pena destacar que (\ref{eq:BPL}) y (\ref{eq:BPG}) son iguales.
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo una coincidencia en todo el espectro a analizar, teniendo unas pequeñas diferencias para las tensiones que tienden a la continua esto se debe al efecto provocado por la $r_{coil}$ la cual hace que cuado $f \rightarrow 0$ la función se establece en $\frac{r_{coil}}{R}$ .
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/simBP.PNG}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/simBP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor.}
 	\label{fig:gyrIndBP}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/simBPP.PNG}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/simBPP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndPBP}
 \end{figure}
@@ -470,7 +471,7 @@ Obteniendo las siguientes mediciones:
 En la figura (\ref{fig:fcbp}) se puede observar que para la frecuencias especificada en la tabla (\ref{tab:specs}) tendrá la minima atenuación.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth, trim = {0 2.15cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fc_bp.png}
+	\includegraphics[width=0.8\textwidth, trim = {0 2.15cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fc_bp.png}
 	\caption{Frecuencia de corte.}
 	\label{fig:fcbp}
 \end{figure}
@@ -520,13 +521,13 @@ Teniendo en cuenta (\ref{eq:basicL1}) y (\ref{eq:basicL2}) se obtiene:
 Se simuló en \textbf{LTSpice} ambos filtros, siendo estos el implemetnado con gyrator y el implementado con un inductor, obteniendo como era esperado una gran coincidencia en las frecuencias bajas y medias, y finalmente difiriendo en las altas como se ve a continuación:
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/simBR.PNG}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/simBR.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor.}
 	\label{fig:gyrIndBR}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/simBRP.PNG}
+	\includegraphics[width=0.8\textwidth]{ImagenesEj2/simBRP.PNG}
 	\caption{Comparación de modelos Gyrator e Inductor Fase.}
 	\label{fig:gyrIndPBR}
 \end{figure}
@@ -564,7 +565,7 @@ Obteniendo las siguientes mediciones:
 En la figura (\ref{fig:fcbr}) se puede observar que para la frecuencias especificada en la tabla (\ref{tab:specs}) tendrá la máxima atenuación.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fc_br.png}
+	\includegraphics[width=0.8\textwidth, trim = {0 3.35cm 0 2cm},clip]{ImagenesEj2/MedicionesGrilla/fc_br.png}
 	\caption{Frecuencia de corte.}
 	\label{fig:fcbr}
 \end{figure}
