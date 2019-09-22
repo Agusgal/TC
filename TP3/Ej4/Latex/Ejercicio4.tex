@@ -64,7 +64,7 @@ Un caso particular de los amplificadores diferenciales son los amplificadores de
 
 
 %%Intro propuesta:
-En el siguiente ejercicio se diseñará un circuito para posibilitar la medición de presion. Para eso se utilizará el sensor piezoeléctrico MPX2010DP y un amplificador de instrumentación capaz de amplificar la señal proveniente del mismo. El circuito podrá medir en el rango de presiones comprendido entre los $0$ y los $10kP$, para cuyo caso tendrá una salida de entre $0$ y $3,3 Volt$. Al medir la máxima diferencia de presion permitida por el sensor la señal de salida tendrá una amplitud de al menos $3,1 Volts$ y menor a $3,3 Volts$. En caso de medirse una difeencia de presion nula la salida también lo será. El circuito propuesto es el siguiente:
+En el siguiente ejercicio se diseñará un circuito para posibilitar la medición de presion. Para eso se utilizará el sensor piezoeléctrico MPX2010DP y un amplificador de instrumentación capaz de amplificar la señal proveniente del mismo. El circuito podrá medir en el rango de presiones comprendido entre los $0$ y los $10kP$, para cuyo caso tendrá una salida de entre $0$ y $3,3 V$. Al medir la máxima diferencia de presion permitida por el sensor la señal de salida tendrá una amplitud de al menos $3,1 V$ y menor a $3,3 V$. En caso de medirse una difeencia de presion nula la salida también lo será. El circuito propuesto es el siguiente:
 
 
 \begin{figure}[H]
@@ -184,9 +184,10 @@ V_{out} = V_{CM}((1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{
 
 De la ecuación anterior se ven dos cosas, en primer lugar mientras más cerca se esté de la condición de funcionamiento diferencial descrita en \ref{eq:condicion_diferencial} $V_{CM}$ tiende a 0 y la ganancia tiende a:
 
-\begin{equation}
-V_{out} = V_D(1 + \frac{R_4}{R_3})
+\begin{equation}\label{ganancia_diferencial_ideal}
+\boxed{V_{out} = V_D(1 + \frac{R_4}{R_3}) = (V_2 - V_1)(1 + \frac{R_4}{R_3})}
 \end{equation}
+
 
 En segundo lugar, pueden definirse tanto la ganancia diferencial como la ganancia a modo común:
 
@@ -207,6 +208,61 @@ Debido a las dos imperfeccciones que ya se describieron, el balance de las resis
 CMRR   =   20\log(\frac{A_D}{A_{CM}})   = 20\log(\frac{\frac{1}{2}(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})}{1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}})
 \end{equation}
 
-\section{Mediciones y resultados}
+%%Montecarlo de las resistencias hay que agregar
+
+
+\subsection{Comentarios respecto al funcionamiento del sensor}
+
+El dispositivo utilizado para medir la diferencia de presion es un sensor piezoresistivo de silicio. Su principio de funcionamiento es simple: se aprovecha de cambios en la resistencia eléctrica del material que lo constituye generados por la diferencia de presion entre dos entradas. El sensor proporciona una salida de tensión lineal, precisa y directamente proporcional a la presión aplicada. El sensor posee cuatro pines: uno de alimentación, Tierra, y las dos salidas con signos opuestos antes mencionadas. El mismo opera en diferencias de presión entre los $0$ y $10kP$. Según las curvas del fabricante la tensión típica de salida va de $0$ a aproximadamente $25mV$, mientras que para el caso mínimo la misma oscila entre los $-2$ y $22,5mV$ y para el máximo entre los $2$ y los $27,5mV$. Hay que tener en cuenta los valores anteriores a la hora de elegir las resistencias a utilizar, para configurar la ganancia deseada. 
+
+%%Agrego calculos matematicos de presion aca?¿?¿
+
+\section{Implementación práctica}
+
+En primer lugar es necesario fijar la ganancia del circuito mediante la elección de las resistencias. Si se toman los valores típicos de la tensión de salida del sensor y se considera el funcionamiento en modo diferencial ideal dado por \ref{ganancia_diferencial_ideal}, para lograr una tension de salida de como mínimo $3,1V$ se necesita una ganancia igual a $62$, por lo que $\frac{R_4}{R_3} = 61$. Es importante utilizar el mínimo número de resistencias, en lo posible solamente 4, con tal de minimizar el error producido por las tolerancias de las mismas. Con este fin se decidió utilizar resistencias SMD con 1 porciento de tolerancia, de $620k\Omega$ y $10k\Omega$, que dan una ganancia igual a 63, o sea, una tension máxima teórica igual a $3,15V$.
+
+En segundo lugar, se eligió el integrado TL082 de Texas Instruments debido a su gran impedancia de entrada($10^12 \Omega$), la cual permite tener flexibilidad en la elección de las resitencias, y evita cargar la fuente de la señal de entrada lo que podría hacer que la amplitud de la misma disminuyese. 
+%%Comentar sobre CMRR
+Además de lo anterior se propone agregar un potenciómetro de la siguiente manera con el fin de poder regular la ganancia del circuito facilmente:
+
+ 
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+	\draw (leftR2) to[short] ++(0, 1.5) coordinate(leftRg) to[vR, l = $R_G$] (leftRg -| U2.-) to[short] (U2.-);
+\end{circuitikz}
+	\caption{Circuito de medición con potenciómetro.}
+	\label{fig:circuito_con_potenciometro}
+\end{center}
+\end{figure}
+
+Puede demostrarse que la nueva ganancia del circuito al incluir el potenciómetros es igual a:
+
+%%Agregar demostración..
+
+\begin{equation}
+\boxed{A = 1 + \frac{R_4}{R_3} + \frac{2R_2}{R_g}}
+\end{equation}
+
+%%Agregar justificacion de porque estos valores, tiene qeu ver con impedancia de entrada, etc.
+%%Impedancia de entrada es gigante(entarad direcat a opamps)
+%%Desvenatja del circuito esta en CMMR mas bajo comparado al circuito de 3 ver analog devices link en carpeta
+
+
+
+
+
+
 
 \end{document}
