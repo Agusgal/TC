@@ -1,25 +1,10 @@
-\documentclass[a4paper]{article}
-
-\include{Header.tex}
-
-\usepackage{float}
-\usepackage{graphicx}
-
-\usepackage[american voltage]{circuitikz}
-
-\usepackage{amsmath}
-
-\usepackage{xcolor}
-
-\usepackage{multirow}
-
-\usepackage{caption}
-\usepackage{subcaption}
+\input{../../Informe/Header.tex}
 
 \begin{document}
 
 \tableofcontents
 \newpage
+
 \section{aux}
 
 \subsection{Fisiología del oído}
@@ -31,44 +16,44 @@ La fisiología auditiva se encuentra dada en tres estructuras:
 	\item Oído medio:
 	Compuesto por el sistema timpanoosicular (membrana timpánica y los tres huesillos: martillo, yunque y estribo), cumple con la función tanto de transmitir las señales del ambiente, como de proteger las estructuras neurosensoriales del oído interno y de la ventana redonda.
 	\item Oído interno:
-	Constituido por el laberinto óseo y dentro de este, el membranoso. Comprende dos aparatos desde el punto de vista anatómico y funcional: el coclear, encargado de la audición y por ende, del desarrollo del lenguaje, y el vestibular, que es el órgano que se ocupa del equilibrio\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.}.
+	Constituido por el laberinto óseo y dentro de este, el membranoso. Comprende dos aparatos desde el punto de vista anatómico y funcional: el coclear, encargado de la audición y por ende, del desarrollo del lenguaje, y el vestibular, que es el órgano que se ocupa del equilibrio.\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.}
 \end{itemize}
 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Partes-del-oido.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes/Partes-del-oido.png}
 	\caption{Estructura interna del oído.}
 	\label{fig:oido}
 \end{figure}
 
 La señal captada se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo.
 
-El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$\footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: https://en.wikipedia.org/wiki/Audio\_frequency [Accessed 11 Sep. 2019].}. A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}. 
+El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$. \footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: \url{https://en.wikipedia.org/wiki/Audio_frequency} [Accessed 11 Sep. 2019].} A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano.\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}
 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
 	\caption{Ganancia del oído externo, medio y total.}
 	\label{fig:oidoganancia}
 \end{figure}
 
-Es así que se presenta una división de las bandas de frecuencia audibles por el oído humano\footnote{``Ecualización Básica: Todo lo que necesitas saber sobre la Ecualización | LANDR Blog'', LANDR Blog, 2019. [Online]. Available: https://blog.landr.com/es/ecualizacion-basica-todo-lo-que-necesitas-saber-sobre-la-ecualizacion/. [Accessed: 11- Sep- 2019].}.
+Es así que se presenta una división de las bandas de frecuencia audibles por el oído humano\footnote{``Ecualización Básica: Todo lo que necesitas saber sobre la Ecualización | LANDR Blog'', LANDR Blog, 2019. [Online]. Available: \url{https://blog.landr.com/es/ecualizacion-basica-todo-lo-que-necesitas-saber-sobre-la-ecualizacion/}. [Accessed: 11- Sep- 2019].}.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth]{Imagenes/FrequencySpectrumDivision.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes/FrequencySpectrumDivision.png}
 	\caption{División del espectro de frecuencias audibles.}
 	\label{fig:divfreq}
 \end{figure}
 
-Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ db$, la segunda posee un umbral mínimo de $60 \ db$. 
+Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ dB$, la segunda posee un umbral mínimo de $60 \ dB$. 
 
-Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas\footnote{"Escuchar sin riesgos!", Who.int, 2019. [Online]. Available: https://www.who.int/pbd/deafness/activities/MLS\_Brochure\_Spanish\_lowres\_for\_web.pdf. [Accessed: 11- Sep- 2019].}.
+Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas.\footnote{``Escuchar sin riesgos!'', Who.int, 2019. [Online]. Available: \url{https://www.who.int/pbd/deafness/activities/MLS_Brochure_Spanish_lowres_for_web.pdf}. [Accessed: 11- Sep- 2019].}
 
 \subsection{Funcionamiento de un ecualizador}
 
-Un equalizador es un dispositivo que se caracteriza por modificar la amplitud de los coeficientes de Fourier de una señal. En otras palabras, permite modificar la ganancia de de las frecuencias bajas, medias y/o altas de una señal. Para ello, se basa en la combinación de distintos filtros pasa-banda, cuya combinación permite dar con la configuración deseada.
+Un equalizador es un dispositivo que se caracteriza por modificar la amplitud de los coeficientes de Fourier de una señal. En otras palabras, permite modificar la ganancia de de las frecuencias bajas, medias y altas de una señal. Para ello, se basa en la combinación de distintos filtros pasa-banda, cuya combinación permite dar con la configuración deseada.
 
-Existen distintos tipos de ecualizadores, con mayor y menor cantidad de bandas, es decir, filtros selectores que amplifican o atenúan ciertas frecuencias. En el presente informe se desarrolló un filtro de tres bandas. Para ello se analizó el circuito brindado por la cátedra, mostrado en la Figura (\ref{fig:circuitoini}).
+Existen distintos tipos de ecualizadores, con mayor y menor cantidad de bandas, es decir, filtros selectores que amplifican o atenúan ciertas frecuencias. En el presente informe se desarrolló un filtro de tres bandas. Para poder concebir dicho dispositivo, primero se analizó el circuito mostrado en la Figura (\ref{fig:circuitoini}).
 
 \begin{figure}[H]
 \begin{center}
@@ -84,7 +69,7 @@ Existen distintos tipos de ecualizadores, con mayor y menor cantidad de bandas, 
 	\draw (P.right) to[open] ++(-0.5,0) to[short] ++(0,1.5) to[C, l = $C_1$] ++(2.2,0) to[short] ++(0,-1.5);
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
-	\caption{Circuito a analizar.}
+	\caption{Circuito analizado.}
 	\label{fig:circuitoini}
 \end{center}
 \end{figure}
@@ -113,7 +98,7 @@ siendo $0 \leq \psi \leq 1$.
 	\draw (v4) to[R, l_= $R_1$] ++(3,0) node[ocirc,label=right:$V_{out}$]{};
 	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
 \end{circuitikz}
-	\caption{Reemplazando $R_2$ por resistencias fijas.}
+	\caption{Resultado de reemplazar $R_2$ por resistencias fijas.}
 	\label{fig:kennelly1}
 \end{center}
 \end{figure}
@@ -149,7 +134,7 @@ Siendo:
 	Z_{C} = \frac{C_{1} R_{2}^{''} R_{2}^{'} S}{C_{1} R_{2} S + 1}
 \end{equation*}
 
-Nuevamente se aplica Kennelly, pero esta vez para transformar una configuración del tipo T al tipo Pi. Se utiliza la conexión marcada en rojo en la Figura (\ref{fig:kennelly2}).
+Nuevamente se aplica Kennelly, pero esta vez para transformar una configuración del tipo T al tipo Pi. Esto se aplica sobre la conexión marcada en rojo en la Figura (\ref{fig:kennelly2}).
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -165,18 +150,19 @@ Nuevamente se aplica Kennelly, pero esta vez para transformar una configuración
 	
 	\draw (v2) to[generic, l = $Z_{AB}$] (v3);
 	\draw[color=red] (v3) to[short] ++(2,0) node[](aux3){};
-	\draw (aux3) to[short] ++(1,0) node[ocirc,label=right:$V_{out}$]{};
-	
+	\draw (aux3) to[short] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
+	\draw (aux3) to[short] ++(1,0) node[](aux5){};
+		
 	\draw[color=red] (v2) to[short] ++(-2,0) node[](aux4){};
 	\draw (aux4) to[short] ++(-1,0)node[ocirc,label=left:$V_{in}$]{};
-	\draw (A.out) to[short] ++(0.62,0) to[short] ++(0,2);
+	\draw (A.out) -| (aux5.center);
 \end{circuitikz}
 	\caption{Resultado de aplicar el teorema de Kennelly por segunda vez.}
-	%\label{}
+	\label{fig:kenapar}
 \end{center}
 \end{figure}
 
-Obteniendose así:
+De esta forma se obtiene:
 \begin{equation*}
 	Z_{AC} =  \frac{\alpha_{AC} {C_{1}}^{2} C_2 R_{1} R_{2} S^{3} + \beta_{AC} C_1 S^{2}
 		+ \gamma_{AC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}{
@@ -219,7 +205,7 @@ con
 \end{split}
 \end{equation*}
 
-Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (\ref{fig:paralelo}).
+Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (\ref{fig:kenapar}).
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -336,7 +322,8 @@ Se determina de esta forma que
 Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y ceros del sistema, enfunción de $\psi$ y se realiza un diagrama de polos y ceros en el plano $S$, variando dicho factor. De esta forma se obtiene la Figura (\ref{fig:zplanepsi}).
 
 \begin{figure}[H]
-	\includegraphics[width=\textwidth]{Imagenes/Zplanepsi.png}
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/Zplanepsi.png}
 \caption{Diagrama de polos y ceros variando $\psi$ entre 0 y 1.}
 	\label{fig:zplanepsi}
 \end{figure}
@@ -359,7 +346,7 @@ Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecu
 	\log{(f_{med})} = \frac{\log(f_{min}) + \log(f_{max})}{2} = \log(\sqrt{f_{min} f_{max}})
 \end{equation*}
 
-Es así que se necesita una frecuencia cercana a los $77.50 \ Hz$ para las frecuencias bajas, $1.2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales de ecualizadores, cuyas amplificaciones varían entre $\pm 12 \ db$ y $\pm 15 \ db$, se seleccionan los elementos deseados, completando la siguiente tabla:
+Es así que se necesita una frecuencia cercana a los $77.50 \ Hz$ para las frecuencias bajas, $1.2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales de ecualizadores, cuyas amplificaciones varían entre $\pm 12 \ dB$ y $\pm 15 \ dB$, se seleccionan los elementos deseados, completando la siguiente tabla:
 
 \begin{table}[H]
 \begin{center}
@@ -390,7 +377,7 @@ Se podría solventar dicho problema reemplazando $R_3$ por una resistencia de $5
 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/r3comp.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/r3comp.png}
 	\caption{Comparación de la transferencia en módulo cambiando $R_3$.}
 	\label{fig:r3comp}
 \end{figure}
@@ -408,37 +395,37 @@ siendo el subindice representativo de las frecuencias que modifican.
 Es así que se procede a graficar la respuesta en frecuencia calculada de todo el circuito, variando el factor $\psi$ para una instancia por vez, fijando los demás en $0.5$.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-bode.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Low-psi-bode.png}
 	\caption{Diagrama de Bode en amplitud, variando $\psi$ de las frecuencias bajas.}
 	\label{fig:bode_modulo_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Low-psi-ph.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Low-psi-ph.png}
 	\caption{Diagrama de Bode en fase, variando $\psi$ de las frecuencias bajas.}
 	\label{fig:bode_ph_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-bode.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Medium-psi-bode.png}
 	\caption{Diagrama de Bode en amplitud, variando $\psi$ de las frecuencias medias.}
 	\label{fig:bode_modulo_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/Medium-psi-ph.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/Medium-psi-ph.png}
 	\caption{Diagrama de Bode en fase, variando $\psi$ de las frecuencias medias.}
 	\label{fig:bode_ph_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-bode.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/High-psi-bode.png}
 	\caption{Diagrama de Bode en amplitud, variando $\psi$ de las frecuencias altas.}
 	\label{fig:bode_modulo_high}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{Imagenes/High-psi-ph.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes/High-psi-ph.png}
 	\caption{Diagrama de Bode en fase, variando $\psi$ de las frecuencias altas.}
 	\label{fig:bode_ph_high}
 \end{figure}
@@ -448,37 +435,37 @@ Es así que se observa que cada instancia genera un cambio en la ganancia simila
 De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias bajas.}
 	\label{fig:zin_modulo_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias bajas.}
 	\label{fig:zin_ph_low}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias medias.}
 	\label{fig:zin_modulo_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias medias.}
 	\label{fig:zin_ph_med}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
 	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias altas.}
 	\label{fig:zin_modulo_high}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
 	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias altas.}
 	\label{fig:zin_ph_high}
 \end{figure}
@@ -486,13 +473,13 @@ De la misma forma, se muestra la impedancia de entrada en función de la frecuen
 Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciometro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
+	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
 	\caption{Comparación de impedancias de entrada, en módulo.}
 	\label{fig:zin_comp_mod}
 \end{figure}
 \begin{figure}[H]
 \centering
-		\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
+		\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
 	\caption{Comparación de impedancias de entrada, en fase.}
 	\label{fig:zin_comp_ph}
 \end{figure}
@@ -501,7 +488,7 @@ Se observa de estas figuras que la impedancia de entrada se comporta de manera r
 
 Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
 
-Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional LM833, debido a su frecuente uso en lo que a audio respecta. Debido a que este dispositivo es dual y que se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, de ahora en más se considera el cambio de fase que este provee al circuito junto con la impedancia que este agrega.   
+Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, debido a su frecuente uso en lo que a audio respecta, su bajo ruido de entrada y su amplia ganancia de banda pasante, la cual cubre el espectro audible. Debido a que este dispositivo es dual y que se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, de ahora en más se considera el cambio de fase que este provee al circuito junto con la impedancia que este agrega.   
 
 \begin{center}
 	\textcolor{red}{\textbf{MEDICIONES, SPICE Y TEORICOS.}}
