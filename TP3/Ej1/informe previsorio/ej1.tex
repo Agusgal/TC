@@ -7,7 +7,7 @@
 \usepackage{amssymb}
 
 \usepackage{booktabs}
-
+\usepackage[margin=0.8in]{geometry}
 \usepackage{float}
 \usepackage{graphicx}
 \usepackage{subcaption}
@@ -364,187 +364,12 @@ A partir de (\ref{eq:circ_trans1}), (\ref{eq:circ_trans2}), (\ref{eq:circ_trans3
 \label{circ_trans}
 \end{equation}
 
-\subsubsection{Análisis Funcional de los Componentes}
+\subsubsection{Análisis de los Componentes}
 	
-A continuación se hará un breve análisis funcional de algunos de los componentes del circuito, comenzando con la resistencia $R_8$ ya que esta es la que hace que el convertidor generalizado de impedancia no esté puesto a tierra. Si el GIC estuviera puesto a tierra se podría decir con seguridad, ya que este se encuentra en la configuración que emula inductancias, que el circuito se comportaría como filtro pasa altos.
-
-Sin embargo, de mayor interés son los casos en los que $R_8 \rightarrow \infty$ y $R_8 \rightarrow 0$. Empezaremos por el primer caso.
-
-\begin{figure}[H]
-\centering
-\begin{subfigure}[t]{0.49\textwidth}
-\centering
-\scalebox{0.5}{
-\begin{circuitikz}
-
-\draw
-
-(5,0) node[](V1){}
-	to[short, *-] ++ (-3.4, 0)
-	to[open] ++ (-0.2,0)
-	to[short] ++ (-0.2, 0)
-	to[open] ++ (-0.2,0)
-	to[short] ++ (-0.2, 0)
-
-(V1) to[R, l=$R_1$] ++ (0, -2)
-	node[label = east:$V_2$](V2){}
-	
-(V2) to[C, l=$C_2$] ++ (0, -2)
-	node[](V3){}
-	to[open] ++ (-0.5, 0.5)
-	node[](){$V_3$}
-	to[open] ++ (0.5, -0.5)
-
-(V3) to[R, l=$R_3$] ++ (0, -2)
-	node[label=west:$V_4$](V4){}
-	
-(V4) to[R, l=$R_4$, i^=${i=0}$] ++ (0, -2)
-	node[label=south:$V_5$](V5){}
-
-(V2) to[open] ++ (3, 0)
-	node[op amp, yscale=-1](opamp){}
-
-(opamp.+) to[short] ++ (-0.5, 0)
-	to[short] ++ (0, 1.5)
-	to[short, -*] (V1)
-	
-(opamp.-) to[short] ++ (-0.5, 0)
-	to[short] ++ (0, -1.5)
-	to[short, -*] (V3)
-
-(opamp.out) to[short] ++ (1, 0)
-	node[label=east:$V_{out}$](Vout){}
-	to[short] ++ (0, -4)
-	to[short, -*] (V4)
-	
-(V4) ++ (-3, 0) node[op amp, xscale=-1](opamp2){}
-
-(opamp2.+) to[short] ++ (0.5, 0)
-	to[short] ++ (0, -1.5)
-	to[short, -*] (V5)
-	
-(opamp2.-) to[short] ++ (0.5, 0)
-	to[short] ++ (0, 1.5)
-	to[short, -*] (V3)
-	
-(opamp2.out) to[short] ++ (0, 2.5)
-	to[short] ++ (2.5, 0)
-	to[short] ++ (0, 1.5)
-	to[short, -*] (V2)
-
-;
-
-\end{circuitikz}
-}\label{fig:circ_r8_infty_1}
-\end{subfigure}
-\begin{subfigure}[t]{0.49\textwidth}
-\centering
-\scalebox{0.5}{
-\begin{circuitikz}
- 
- \draw
-
-(5,0) node[label=north:$V_{out}$](V1){}
-	to[short, *-] ++ (-3.4, 0)
-	to[open] ++ (-0.2,0)
-	to[short] ++ (-0.2, 0)
-	to[open] ++ (-0.2,0)
-	to[short] ++ (-0.2, 0)
-
-(V1) to[R, l=$R_1$] ++ (0, -2)
-	node[label = east:$V_{out}$](V2){}
-	
-(V2) to[C, l=$C_2$] ++ (0, -2)
-	node[](V3){}
-	to[open] ++ (-0.5, 0.5)
-	node[](){$V_{out}$}
-	to[open] ++ (0.5, -0.5)
-
-(V3) to[R, l=$R_3$] ++ (0, -2)
-	node[label=south:$V_{out}$](V4){}
-	
-
-(V2) to[open] ++ (3, 0)
-	node[op amp, yscale=-1](opamp){}
-
-(opamp.+) to[short] ++ (-0.5, 0)
-	to[short] ++ (0, 1.5)
-	to[short, -*] (V1)
-	
-(opamp.-) to[short] ++ (-0.5, 0)
-	to[short] ++ (0, -1.5)
-	to[short, -*] (V3)
-
-(opamp.out) to[short] ++ (0, 0)
-	node[label=east:$V_{out}$](Vout){}
-	to[short] ++ (0, -4)
-	to[short, -*] (V4)
-	
-(V4) ++ (-3, 1) node[op amp, xscale=-1](opamp2){}
-
-(opamp2.+) to[short] ++ (0.5, 0)
-	to[short] ++ (0, -0.5)
-	to[short] (V4)
-	
-(opamp2.-) to[short] ++ (0.5, 0)
-	to[short] ++ (0, 0.5)
-	to[short, -*] (V3)
-	
-(opamp2.out) to[short] ++ (0, 3)
-	to[short, -*] (V2)
-
-;
- 
-\end{circuitikz}
-}
-\label{fig:circ_r8_infty_2}
-\end{subfigure}
-\end{figure}
-
-\textbf{explicar como v1=vout}
-
-\begin{figure}[H]
-\centering
-\scalebox{0.8}{
-\begin{circuitikz}
- 
-\draw
-	(0,0) node[](Vaux){}
-		to[short, *-*] ++ (-2,0)
-		to[open] ++ (0, -1)
-		to[short] ++ (0, 2)
-		to[R, l=$R_7$] ++ (-3,0)
-		to[open] ++ (0, -2)
-		to[C, l=$C_7$] ++ (3, 0)
-		to[open] ++ (-3, 0)
-		to[short] ++ (0, 2)
-		to[open] ++ (0, -1)
-		to[short, *-*] ++ (-2, 0)
-		node[label=west:$V_i$](){}
-	(Vaux) to[short, *-*] ++ (0, -1)
-		to[open] ++ (-1, 0)
-		to[short] ++ (2, 0)
-		to[R, l=$R_6$] ++ (0, -2)
-		to[open] ++ (-2, 0)
-		to[C, l=$C_6$] ++ (0, 2)
-		to[open] ++ (0, -2)
-		to[short] ++ (2, 0)
-		to[open] ++ (-1,0)
-		to[short, *-] ++ (0, -1)
-		node[ground]{}
-	(Vaux) to[short] ++ (2, 0)
-		node[label=east:$V_{out}$](){}
-;
-\end{circuitikz}
-}
-\label{fig:circ_r8_infty_equivalent}
-\end{figure}
-
-por ende se puede calcular la trnasferencia como el divisor resistivo.
-
-y aca falta hablar banda y hacer graficos de como se mueven los ceros y polos con r6 y r8 tendiendo a 0 e infinito y hacer analisis de sensibilidades etc
+A continuación se hará un breve análisis de la elección de los valores de los componentes y además un análisis funcional de algunos de estos.
 
 \subsubsection{Elección de Componentes y Diseño}
+\label{sec:eleccion_componentes}
 
 Utilizando las consideraciones de diseño del circuito de low-pass notch:
 $$R_1=R_3=R_4=R_8=R \ \ \ ; \ \ \ R_6=R_7=2QR$$
@@ -567,7 +392,7 @@ $\omega_p$ & Q & $\omega_z$ \\ \midrule
 13.000 $\frac{rad}{s}$ & 2 & $\sqrt{2}*\omega_p \frac{rad}{s}$ \\ \bottomrule
 \end{tabular}
 \end{table}
-Se logran obtener el valor de k:
+Se logra obtener el valor de k:
 
 \begin{equation}
 k = \sqrt{2}
@@ -587,15 +412,17 @@ y quedan fijados los valores de todos los componentes del circuito. A continuaci
 
 \begin{table}[H]
 \centering
-\begin{tabular}{@{}cccc@{}}
+\begin{tabular}{@{}ccccc@{}}
 \toprule
-Componente & Valor Teórico & Implementación & Valor Final \\ \midrule
-$C_2$ & $15nF$ & $15nF$ & $15nF$ \\
-$C_7$ & $11.25nF$ & $10nF//1.2nF$ & $11.2nF$ \\
-$C_6$ & $3.75nF$ & $3.3nF//470pF$ & $3.77nF$ \\
-$R_{1,3,4,8}$ & $5128.2 \Omega$ & $12K\Omega//9K1\Omega$ & $5175.35 \Omega$ \\
-$R_{6,7}$ & $20512.82 \Omega$ & $33K\Omega//22K\Omega$ & $20625\Omega$ \\ \bottomrule
+Componente & Valor Teórico & Implementación & Valor Final & Error \\ \midrule
+$C_2$ & $15nF$ & $15nF$ & $15nF$ & $0\%$ \\
+$C_7$ & $11.25nF$ & $10nF//1.2nF$ & $11.2nF$ & $0.40\%$ \\
+$C_6$ & $3.75nF$ & $3.3nF//470pF$ & $3.77nF$ & $0,53\%$\\
+$R_{1,3,4,8}$ & $5128.2 \Omega$ & $12K\Omega//9K1\Omega$ & $5175.35 \Omega$ & $0,92\%$ \\
+$R_{6,7}$ & $20512.82 \Omega$ & $330K\Omega//22K\Omega$ & $20625\Omega$ & $0,55\%$ \\ \bottomrule
 \end{tabular}
+\caption{Valores comerciales finales utilizados.}
+\label{Tab:valores}
 \end{table}
 
 Con estos valores se graficó el bode en amplitud y fase del filtro:
@@ -612,14 +439,126 @@ Con estos valores se graficó el bode en amplitud y fase del filtro:
 		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc.png}
 	\end{subfigure}
 	\label{fig:bode_calc}
-	\caption{Gráficos de Bode para el filtro con los componentes calculados.}
+	\caption{Gráficos de Bode para el filtro con los componentes de valor comercial.}
 \end{figure}
 
+A continuación se realizó una tabla con los valores significantes de la respuesta en frecuencia.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+- & $\omega_z$ & $\omega_p$ & Q & $G_{Banda Pasante}$  & $G_{Notch}$ & $G_{Banda Atenuante}$ \\ \midrule
+Valor deseado & $2926Hz$ & $2069Hz$ & $2$ & - & - & - \\
+Valor calculado & $2930Hz$ & $2066,3Hz$ & $2.01$ & $0$ & $-76.91dB$ & $-6.08dB$ \\ 
+Error & $0.135\%$ & $0.131\%$ & $0.546\%$ & - & - & - \\ \bottomrule
+\end{tabular}
+\caption{Valores significantes teóricos de la respuesta en frecuencia calculada.}
+\label{tab:rta_freq_calc}
+\end{table}
+
+\subsubsection{Análisis de Ceros y Polos}
+
+Se realizó un análisis de los ceros y polos de la transferencia ideal calculada tanto con los valores usados en la Tabla (\ref{Tab:valores}) como variando las resistencias $R_6$ y $R_8$.
+A continuación se muestran los ceros y polos con los valores de la Tabla (\ref{Tab:valores}).
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagenes/cerosypolos_calc.PNG}
+	\caption{Ceros y polos de la función transferencia ideal del circuito. Módulo y ángulo de cada cero y polo indicado.}
+	\label{fig:cerosypolos_calc}
+\end{figure}
+
+Se puede observar como los polos y los ceros de la transferencia no se encuentran sobre una circunferencia de mismo radio, sino que los polos tienen una frecuencia de corte menor que la de los ceros. Esto genera que en el diagrama de bode se encuentre primero el polo y luego el cero, por lo que la curva asintótica permanecerá por debajo de la línea del cero para las frecuencias mayores a la frecuencia de notch. Se puede contemplar además como los ceros se sitúan sobre el eje imaginario, por lo que el factor de calidad tenderá a infinito y genera un gran sobrepico, atenuando casi totalmente las frecuencias cuyo valor sean igual al módulo de los ceros.
+
+
+A continuación se realizará un análisis del movimiento de los polos dadas variaciones en las resistencias $R_6$ y $R_8$. Cabe notar que el color más oscuro corresponde con la posición inicial de los ceros y polos.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/polosr6a0.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr6a0.png}
+	\end{subfigure}
+	\caption{Posición de los ceros y polos de la transferencia cuando $R_6$ parte de su valor original y tiende a cero.}
+	\label{fig:r6a0}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/polosr6ainf.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr6ainf.png}
+	\end{subfigure}
+	\caption{Posición de los ceros y polos de la transferencia cuando $R_6$ parte de su valor original y tiende a infinito.}
+	\label{fig:r6ainf}
+\end{figure}
+
+Se puede observar en las Figuras (\ref{fig:r6a0}) y (\ref{fig:r6ainf}) que cambios en la resistencia $R_6$ genera que los ceros y polos no solo se desplacen horizontalmente sino también que estos transicionen de ser complejos conjugados, a estar ubicados en un mismo punto y eventualmente situarse solamente sobre el eje real, apartándose el uno del otro. Además, es observable como si $R_6$ aumenta de su valor original, disminuirá el sobrepico de los ceros y aumentará el sobrepico de los polos. Si $R_6$ tiende a cero, se contempla como baja el factor de calidad de tanto los ceros como los polos, por lo que el filtro perderá su naturaleza de notch y pasará a asemejarse más a la curva asintótica de la transferencia. Con este análisis se puede llegar a la conclusión que la resistencia $R_6$ regula el factor de calidad del circuito.
+
+
+A continuación se analizará el movimiento de los polos variando la resistencia $R_8$. 
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/polosr8a0.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr8a0.png}
+	\end{subfigure}
+	\caption{Posición de los ceros y polos de la transferencia cuando $R_8$ parte de su valor original y tiende a cero.}
+	\label{fig:r8a0}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/polosr8ainf.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr8ainf.png}
+	\end{subfigure}
+	\caption{Posición de los ceros y polos de la transferencia cuando $R_8$ parte de su valor original y tiende a infinito.}
+	\label{fig:r8ainf}
+\end{figure}
+
+Se contempla en las Figuras (\ref{fig:r8a0}) y (\ref{fig:r8ainf}) como pequeñas variaciones en la resistencia $R_8$ logra generar corrimientos en la frecuencia de notch del circuito, manteniendo aproximadamente su forma. Si las variaciones son muy extremas, se pierde la condición de notch ya que varía mucho el factor de calidad del circuito.
+
+Se puede concluir que la resistencia $R_8$ y sus pares regulan la frecuencia del notch, dentro de ciertos límites en los que la selectividad se conserva aproximadamente.
+
+\subsubsection{Elección de los Amplificadores Operacionales}
+
+Al momento de elegir el operacional a utilizar, se tuvo un claro objetivo: se quisieron mantener las especificaciones del filtro fieles a lo calculado en el mayor rango de frecuencias posible. Es por esto, que uno de los principales parámetros a estudiar en la selección del opamp fue el ancho de banda. Cuanto mayor sea este, más fidedigna será la transferencia en las altas frecuencias ya que los polos del dispositivo estarán ubicados en mayores frecuencias cuanto más alto sea el ancho de banda.
+
+Otro parámetro importante fueron aquellos que permiten lograr obtener una señal de salida con una baja distorsión armónica. Esto quiere decir, no se quiso deformar alinealmente a la señal de entrada introduciendo armónicos en esta. Para esto, se consideró la utilización de un amplificador operacional con una alta slew rate.
+
+Finalmente se optó por utilizar el integrado TL-082 el cual posee dos amplificadores operacionales dentro. Se decidieron utilizar estos operacionales ya que poseen una slew rate alta ($13\frac{V}{\mu s}$ valor típico) en comparación a otros operacionales, un ancho de banda grande ($3MHz$ valor típico para ganancia unitaria) y además posee transistores de tecnología J-FET a la entrada del dispositivo, por lo que tanto la corriente de bias como la tensión de offset serán más bajos que otro operacional con tecnología BJT a la entrada.
+
 \subsection{Simulación del Circuito}
+\label{sec:simulacion}
 
-Se procedió a realizar la simulación del circuito.
+Se realizó la simulación del circuito utilizando el software \textit{LTSpiceXVII}.
 
-hablar mas y grafico de bode
+\subsubsection{Simulación de la Transferencia}
+
+Se procedió a realizar la simulación del circuito con los valores obtenidos mediante los paralelos en la Tabla (\ref{Tab:valores}). La primera simulación que se observó fue la respuesta en frecuencia.
 
 \begin{figure}[H]
 	\centering
@@ -632,26 +571,126 @@ hablar mas y grafico de bode
 	\centering
 		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc_sim.png}
 	\end{subfigure}
+	\caption{Comparación entre los gráficos de bode simulados y calculados teóricamente.}
 	\label{fig:bode_calc_sim}
-	\caption{Comparación entro los gráficos de bode simulados y calculados teóricamente.}
 \end{figure}
 
-hablar y hablar
+Utilizando el operacional elegido en la sección \ref{sec:eleccion_componentes}, se observa una respuesta en frecuencia muy similar a a la calculada anteriormente, exceptuando dos puntos de interes.
 
-\subsubsection{Simulación de la Transferencia}
+La ganancia en la frecuencia de notch es mucho menor a la calculada. Esto es algo esperado, ya que muchas cosas que no se tienen en consideración en los cálculos logran llegar a un resultado mucho más ideal que el real.
+
+Respecto a las altas frecuencias, se puede observar una discrepancia entre lo calculado y lo teórico. Esta diferencia es mucho más grande tendiendo a las frecuencias cerca de los $10MHz$. A continuación se grafica el bode en fase y magnitud entre las frecuencias de los $100KHz$ y los $100MHz$.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/bodemag_calc_sim_highf.png}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc_sim_highf.png}
+	\end{subfigure}
+	\label{fig:bode_calc_sim_highf}
+	\caption{Comparación entre los gráficos de bode simulados y calculados teóricamente para las frecuencias mayores a $100KHz$.}
+\end{figure}
+
+Si bien el operacional elegido posee un gran ancho de banda para mitigar lo más posible estos problemas a las altas frecuencias, como justificado en la sección \ref{sec:eleccion_componentes}, se puede observar que los cálculos realizados con el modelo ideal del operacional poseen una gran diferencia respecto a la simulación, la cual tiene en cuenta los varios polos que posee este dispositivo. Debido a esto, se tendrá en cuenta en la sección \ref{sec:limitaciones} las limitaciones del filtro.
+
 \subsubsection{Simulación de la Impedancia de Entrada y Salida}
+
+Se observó luego la impedancia de entrada y salida del circuito.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\hspace*{-2cm}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/sim_zin.png}
+		\caption{Módulo de la impedancia de entrada.}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.3\textwidth]{Imagenes/sim_zout.png}
+		\caption{Módulo de la impedancia de salida.}
+	\end{subfigure}
+	\label{fig:zin_zout}
+	\caption{Simulación de la impedancia de entrada y salida del circuito.}
+\end{figure}
+
+Se puede ver como tanto la impedancia de entrada como de salida tienden a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que tanto a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra como a la salida se encuentra la impedancia de salida del operacional la cual es muy chica. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, por lo que se deberá tomar un especial cuidado en esta etapa del análisis. 
+
 \subsubsection{Simulación de las Sensibilidades}
-\subsubsection{Conclusiones Adquiridas}
+\textbf{VER QUE CORNO HACER}
 
 \subsection{Implementación del Circuito}
+Se implementó el circuito siguiendo las consideraciones y el análisis realizado en la Sección \ref{sec:eleccion_componentes}. Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. 
 \subsubsection{Mediciones del Circuito y Análisis de Error}
 \subsubsection{Limitaciones del Circuito}
+\label{sec:limitaciones}
+
+slewrate+saturacion ver entrada maxima
+ver alimentacion minima por saturacion y entrada maxima
+ver conjunto de frecuencias donde se puede usar piola
+
+Se ha recopilado a continuación de la hoja de datos del TL-082\footnote{Hoja de datos: Texas Instruments, TL08xx JFET-Input Operational Amplifiers, SLOS081I –FEBRUARY 1977–REVISED MAY 2015} la serie de parámetros utilizados en el análisis de las limitacionnes del circuito.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccc@{}}
+\toprule
+$V_{CC_{max}}$ & $V_{in_{max}}$ & $BW_{unitgain}$ & $V_{in_{max}}$ dada $V_{CC}$ & Slew Rate (SR)\\ \midrule
+$\pm 18V$ & $\pm 15V$ & $3MHz$ & $\approx V_{CC}-1.5V$ & $13\frac{V}{\mu s}$\\ \bottomrule
+\end{tabular}
+\caption{Datos recopilados de la hoja de datos del TL-082.}
+\label{tab:datos_tl082}
+\end{table}
+
+Observando la tabla ya se puede corroborar que la tensión de alimentación no debe sobrepasar los $18V$ y la tensión de entrada no debe sobrepasar los $15V$ nunca. Para el análisis de las limitaciones del circuito, sin embargo, se utilizarán $\pm 15V$ de alimentación como recomendado por el fabricante.
+Luego, teniendo en cuenta que la ganancia máxima del circuito es de $\approx 2dB$, se tiene que
+
+\begin{equation}
+	V_{in_{max}} = \frac{V_{CC} - 1.5V}{G_{max}} = \frac{13.5V}{1.26} = 10.72V
+\end{equation}
+
+Sin embargo, también se debe de tener en cuenta el slew rate en el análisis de la tensión de entrada máxima.
+
+\begin{equation}
+	SR= Max\left( \frac{\partial (G\cdot A\cdot \sin (\omega t))}{\partial t}\right) = V_{in} \cdot \omega \cdot G  
+\end{equation}
+
+Primero se analiza la tensión máxima de entrada en la frecuencia de sobrepico ya que esta posee la ganancia más alta.
+
+\begin{equation}
+	V_{in_{max}} = \frac{SR}{G_{max}\cdot \omega} = \frac{1.64\cdot 10^6\frac{V}{s}}{1686Hz} = 972.71
+\end{equation}
+
+Luego se analiza la tensión máxima de entrada para las frecuencias altas.
+
+\begin{equation}
+	V_{in_{max}} = \frac{SR}{G_{Banda Atenuante}\cdot \omega} = \frac{2.01\cdot 10^6\frac{V}{s}}{f}
+\end{equation}
+
+Por lo que se graficó la tensión máxima de entrada final en función de la frecuencia tomando en consideración los cálculos previos.
+
+\begin{figure} [H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/vin_max.PNG}
+	\caption{Tensión de entrada máxima del circuito en función de la frecuencia teniendo en cuenta distorsiones alineales causadas por el operacional.}
+	\label{fig:vin_max}
+\end{figure}
+
+Luego, el rango de frecuencias en que el circuito opera correctamente, dato conseguido empíricamente, es hasta 1Mhz.
+
 
 \subsection{Conclusiones}
 
 \subsection{Bibliografía Utilizada}
 [1]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 185.
+
 [2]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 186.
+
 [3]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 187.
 
 
