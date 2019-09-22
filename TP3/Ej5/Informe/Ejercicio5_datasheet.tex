@@ -1,9 +1,9 @@
-\input{Header.tex}
+\input{../../Informe/Header.tex}
 
 \begin{document}
 
-
 \subsection{Datasheet}
+
 \begin{center}
 \rule{\textwidth}{1pt}
 \textsc{Control de Tonos y Ecualizador TCG3 \textsuperscript{\textregistered}}
@@ -19,6 +19,8 @@
 		\item Sistema de amplificación y atenuación sobre la totalidad del espectro audible.
 		\item Entrada y salida de audio compatible con conectores de $3.5 \ mm$ mono.
 		\item Amplificación y atenuación de hasta $\pm 15 \ db$.
+		\item Bajo ruido de entrada.
+		\item Cobertura total del espectro audible.
 	\end{itemize}
 	
 	\item[2] \textbf{Descripción}\\
@@ -30,7 +32,7 @@
 			\hline	
 			Tensión & Min & Sugerido & Max & Unidad \\
 			\hline
-			$V_{in}$    & 0 	& 2		   & 2.75	 	& Vpp \\
+			$V_{in}$\footnote{Valores de tensión dados en amplitud pico-pico.}    & 0 	& 2		   & 2.75	 	& V \\
 			$Vcc$       & 10  	& 15       & 18 	& V \\
 			$-Vcc$      & -10 	& -15      & -18 	& V	\\
 			\hline
@@ -43,9 +45,9 @@
 			\hline			
 			\textbf{Banda} & $\mathbf{f_o}$ & $\mathbf{|Z_{in}|}$ & $\mathbf{Arg\left(Z_{in}\right)}$ & \textbf{Ganancia} \\
 			\hline
-			Baja           & 81.1 Hz                     & 181.3 $k\Omega$     & $-36.9^o$                           & $\pm XX \ db$          \\
-			Media          & 1.2 kHz                     & 72.3 $k\Omega$      & $-16.4^o$                           & $\pm XX \ db$          \\
-			Alta           & 9 kHz                       & 66.1 $k\Omega$      & $-2.4^o$                            & $\pm XX \ db$         	\\
+			Baja           & 81.1 Hz                     & 181.3 $k\Omega$     & $-36.9^o$                           & $\pm XX \ dB$          \\
+			Media          & 1.2 kHz                     & 72.3 $k\Omega$      & $-16.4^o$                           & $\pm XX \ dB$          \\
+			Alta           & 9 kHz                       & 66.1 $k\Omega$      & $-2.4^o$                            & $\pm XX \ dB$         	\\
 			\hline
 		\end{tabular}
 	\end{table}
@@ -53,22 +55,30 @@
 \end{enumerate}
 \end{multicols}
 
-%\begin{enumerate}
-%		\item[5] \textbf{Modelo equivalente}\\
-%	
-%		\begin{figure}[H]
-%		\begin{center}
-%		\begin{circuitikz}
-%		\node	[ocirc, label=south:$V_{in}$](vin+){};
-%		\draw	(vin+) -- ++(0.5,0) node[circ](vvin+){};
-%		\draw	(vin+)	to[open] ++(0,-0.75) node[ocirc](vin-){} -- ++(0.5,0) node[circ](vvin-){};
-%		\draw	(vvin+) -- (vvin-);
-%		\draw	(vvin-) to[open] ++(1,-1) node[circ](-vvcc){} -- ++(0,-0.5) node[ocirc, label=south east:$-Vcc$](-vcc){};
-%		\draw	(vvin-) |- (-vvcc) to[short, -*] ++(1.25,0) to[short, -o] ++(0,-0.5);
-%		
-%		\end{circuitikz}
-%		\end{center}
-%		\end{figure}
-%\end{enumerate}
+\begin{enumerate}
+	\item[5] \textbf{Esquemático}\\
+\end{enumerate}
+
+\begin{multicols}{2}
+\centering
+	\begin{figure}[H]
+		\includegraphics[width=0.5\textwidth]{Imagenes/Schematic-1.png}
+	\end{figure}
+	\begin{figure}[H]
+			\includegraphics[width=0.5\textwidth]{Imagenes/Schematic-2.png}
+	\end{figure}
+\end{multicols}
+
+\begin{enumerate}
+	\item[6] \textbf{Conexiones de entrada y salida}\\
+\end{enumerate}
+\begin{multicols}{2}
+	\begin{figure}[H]
+		\includegraphics[width=0.5\textwidth]{Imagenes/Input.png}
+	\end{figure}
+	\begin{figure}[H]
+			\includegraphics[width=0.3\textwidth]{Imagenes/Output.png}
+	\end{figure}
+\end{multicols}
 
 \end{document}
