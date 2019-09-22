@@ -3,10 +3,10 @@ import matplotlib.pyplot as plt
 
 f = list(range(10**1, 10**8, 100))
 v=[]
-v_sat = 6.75
+v_sat = 10.7
 for ff in f:
 
-    v_slew=(4.136*10**6)/ff
+    v_slew=(2.01*10**6)/ff
 
     if(v_slew < v_sat):
         v.append(v_slew)

@@ -647,11 +647,11 @@ $\pm 18V$ & $\pm 15V$ & $3MHz$ & $\approx V_{CC}-1.5V$ & $13\frac{V}{\mu s}$\\ \
 \label{tab:datos_tl082}
 \end{table}
 
-Observando la tabla ya se puede corroborar que la tensión de alimentación no debe sobrepasar los $18V$ y la tensión de entrada no debe sobrepasar los $15V$ nunca.
+Observando la tabla ya se puede corroborar que la tensión de alimentación no debe sobrepasar los $18V$ y la tensión de entrada no debe sobrepasar los $15V$ nunca. Para el análisis de las limitaciones del circuito, sin embargo, se utilizarán $\pm 15V$ de alimentación como recomendado por el fabricante.
 Luego, teniendo en cuenta que la ganancia máxima del circuito es de $\approx 2dB$, se tiene que
 
 \begin{equation}
-	V_{in_{max}} = \frac{V_{CC} - 1.5V}{G_{max}} = \frac{13.5V}{2} = 6.75V
+	V_{in_{max}} = \frac{V_{CC} - 1.5V}{G_{max}} = \frac{13.5V}{1.26} = 10.72V
 \end{equation}
 
 Sin embargo, también se debe de tener en cuenta el slew rate en el análisis de la tensión de entrada máxima.
@@ -660,16 +660,16 @@ Sin embargo, también se debe de tener en cuenta el slew rate en el análisis de
 	SR= Max\left( \frac{\partial (G\cdot A\cdot \sin (\omega t))}{\partial t}\right) = V_{in} \cdot \omega \cdot G  
 \end{equation}
 
-Primero se analiza la tensión máxima de entrada en la frecuencia de sobrepico.
+Primero se analiza la tensión máxima de entrada en la frecuencia de sobrepico ya que esta posee la ganancia más alta.
 
 \begin{equation}
-	V_{in_{max}} = \frac{SR}{G_{max}\cdot \omega} = \frac{0.517\cdot 10^6\frac{V}{s}}{1686Hz} = 306.64V
+	V_{in_{max}} = \frac{SR}{G_{max}\cdot \omega} = \frac{1.64\cdot 10^6\frac{V}{s}}{1686Hz} = 972.71
 \end{equation}
 
 Luego se analiza la tensión máxima de entrada para las frecuencias altas.
 
 \begin{equation}
-	V_{in_{max}} = \frac{SR}{G_{Banda Atenuante}\cdot \omega} = \frac{4.136\cdot 10^6\frac{V}{s}}{f}
+	V_{in_{max}} = \frac{SR}{G_{Banda Atenuante}\cdot \omega} = \frac{2.01\cdot 10^6\frac{V}{s}}{f}
 \end{equation}
 
 Por lo que se graficó la tensión máxima de entrada final en función de la frecuencia tomando en consideración los cálculos previos.
@@ -681,11 +681,16 @@ Por lo que se graficó la tensión máxima de entrada final en función de la fr
 	\label{fig:vin_max}
 \end{figure}
 
+Luego, el rango de frecuencias en que el circuito opera correctamente, dato conseguido empíricamente, es hasta 1Mhz.
+
+
 \subsection{Conclusiones}
 
 \subsection{Bibliografía Utilizada}
 [1]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 185.
+
 [2]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 186.
+
 [3]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 187.
 
 
