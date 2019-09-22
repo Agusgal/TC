@@ -14,17 +14,199 @@
 \usepackage{caption}
 \usepackage{subcaption}
 
+
 \begin{document}
 
-\subsection{Introducción teórica}
-
-En el siguiente ejercicio se diseñará un circuito para posibilitar la medición de presion. Para eso se utilizará el sensor piezoeléctrico MPX2010DP y un amplificador de instrumentación capaz de amplificar la señal proveniente del sensor. El circuito podrá medir en el rango de presiones comprendido entre los $0$ y los $10kP$, para cuyo caso tendrá una salida de entre $0$ y $3,3 Volt$. Al medir la máxima diferencia de presion permitida por el sensor la señal de salida tendrá una amplitud de al menos $3,1 Volts$ y menor a $3,3 Volts$. En caso de medirse una difeencia de presion nula la salida también lo será. El circuito propuesto es el siguiente:
-
-%%Insertar Imagen del circuito utilizado.
+\section{Introducción teórica}
+Los amplificadores diferenciales son dispositivos cuya salida es linealmente proporcional a la diferencia entre sus entradas y que idealmente suprimen cualquier tension común a dichas entradas. Teóricamente, de ser iguales las entradas, la salida debería ser igual a cero, no obstante, dicha afirmación es muy difícil de cumplir en la práctica. Debido a lo anterior, se definen dos modos de operación para un amplificador diferencial, modo común y modo diferencial:
 
 
-Como bien puede apreciarse en la figura anterior, el amplificador de instrumentación cuenta con una configuración dual con solo dos amplificadores operacionales. Ambos están siendo utilizados en su modo no inversor. Para el análisis siguiente se toman ambos op-amps como ideales.
 
-%%Continuará...
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+
+	\node [op amp](U1){};
+	\draw (U1.-) to[short] ++(0, 1) node[](vn){};
+	\draw (vn) to[R, l_ = $R_1$] ++(-3, 0) node[label={[font=\footnotesize]above:$v_1$}](v1){} to[american voltage source, l = $\frac{v_{DM}}{2}$, invert] ++(0, -1.5) node[](comun){};
+	\draw (comun) to[american voltage source, l = $v_{CM}$] ++(-2.5, 0) to[short] ++(0, -0.5) node[ground]{};
+	\draw (U1.+) to[short] ++(0, -1) node[](vp){};
+	\draw (vp) to[R, l = $R_3$] ++(-3, 0) node[label={[font=\footnotesize]below:$v_2$}](v2){} to [american voltage source, l_ = $\frac{v_{DM}}{2}$] (comun);
+	
+	\draw (vn) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (vp) coordinate(leftR4) to[R, l_ = $R_4$] (leftR4 -| U1.out) to[short] ++(0, -0.5) node[ground]{};
+	
+	\draw (U1.out) to[short]	++(0.5, 0) node[ocirc, label=right:$v_{out}$]{};
+
+\end{circuitikz}
+	\caption{Entradas en términos de los componentes en modo común y modo diferencial.}
+	\label{fig:com_dif}
+\end{center}
+\end{figure}
+
+De la figura anterior pueden deducirse las siguientes relaciones:
+
+\begin{equation}\label{eq:v1}
+v_1 = v_{CM} - \frac{-v_{DM}}{2}
+\end{equation}
+
+\begin{equation}\label{eq:v2}
+v_2 = v_{CM} + \frac{v_{DM}}{2}
+\end{equation}
+
+El amplificador operacional en modo diferencial es un caso más general del amplificador de tensión, el cuál por lo general posee uno de sus terminales referenciado a Tierra o $0 Volt$. La ventaja fundamental de la operación en modo diferencial es que de existir alguna señal de ruido común a ambas entradas la misma será cancelada a la salida, por ende los amplificadores diferenciales son útiles en el análisis de pequeñas señales propensas a recibir interferencias, como es el caso de señales biomédicas, circuitos de medición, sensores, etc.
+
+Un caso particular de los amplificadores diferenciales son los amplificadores de instrumentación. Los útlimos cumplen con diferentes características, las cuales los hacen aptos para la instrumentación de pruebas y mediciones; De ahí su nombre. Los AI deben poseer una impedancia de entrada alta en extremo (infinita en caso ideal), una impedancia de salida lo más cercana a cero posible (nula en el caso ideal), una ganancia exacta y estable, y por último un CMRR por lo general, extremadamente elevado(la definición de este parámetro será dada más adelante).
+
+
+
+
+
+
+%%Intro propuesta:
+En el siguiente ejercicio se diseñará un circuito para posibilitar la medición de presion. Para eso se utilizará el sensor piezoeléctrico MPX2010DP y un amplificador de instrumentación capaz de amplificar la señal proveniente del mismo. El circuito podrá medir en el rango de presiones comprendido entre los $0$ y los $10kP$, para cuyo caso tendrá una salida de entre $0$ y $3,3 Volt$. Al medir la máxima diferencia de presion permitida por el sensor la señal de salida tendrá una amplitud de al menos $3,1 Volts$ y menor a $3,3 Volts$. En caso de medirse una difeencia de presion nula la salida también lo será. El circuito propuesto es el siguiente:
+
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito de medición propuesto.}
+	\label{fig:circuito_inicial}
+\end{center}
+\end{figure}
+
+
+
+Como bien puede apreciarse en la figura anterior, el amplificador de instrumentación cuenta con una configuración dual con solo dos amplificadores operacionales. Ambos están siendo utilizados en su modo no inversor. Para el análisis siguiente se trabajarán ambos op-amps como ideales.
+
+Utilizando superposición se pasiva $V_2$ en primer lugar quedando así elpriemr op-amp en su configuración no inversora, mientras que el segundo en una configuración inversora:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out) node[label={[font=\footnotesize]below:$V_{o1}$}](v2){};
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[short] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito con $V_2$ pasivada.}
+	\label{fig:circuito_V2_pasivada}
+\end{center}
+\end{figure}
+
+Utilizando las expresiones para las ganacias ya conocidas se obtiene la tensión a la salida del primer amplificador y la tensión de salida del circuito:
+
+\begin{equation}\label{eq:vo1}
+V_{o1} = V_1\frac{R_1 + R_2}{R_1}
+\end{equation}
+
+\begin{equation}\label{eq:V_out_1}
+V_{out} = \frac{-R_4}{R_3}V_{o1} 
+\end{equation}
+
+Reemplazando \ref{eq:vo1} en \ref{eq:V_out_1}:
+
+\begin{equation}\label{eq:transferencia_1}
+V_{out} = (\frac{-R_4}{R_3})(1 + \frac{R_2}{R_1})V_2
+\end{equation}
+
+Asimismo, si se pasiva la fuente $V_1$ la tensión despues del amplificador número 1 es cero, ya que ambas entradas están conecatdas a Tierra. Entonces el segundo op-amp esta en su configuración no inversora:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[short] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out) node[label={[font=\footnotesize]below:$V_{o1}$}](v2){};;
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito con $V_1$ pasivada.}
+	\label{fig:circuito_V1_pasivada}
+\end{center}
+\end{figure}
+
+\begin{equation}\label{eq:transferencia_2}
+V_{out} = (1 + \frac{R_4}{R_3})V_2
+\end{equation}
+
+Por principio de superposición la salida total será la suma entre las dos transferencias anteriores:
+
+\begin{equation}
+V_{out} = (1 + \frac{R_4}{R_3})V_2 + (\frac{-R_4}{R_3})(1 + \frac{R_2}{R_1})V_1
+\end{equation}
+
+Factorizando la ecuación anterior se llega a:
+
+\begin{equation}\label{eq:transferencia_final}
+V_{out} = (1 + 	\frac{R_4}{R_3})(V_2 - \frac{(1 + \frac{R_2}{R_1})}{(1 + 	\frac{R_3}{R_4})}V_1)
+\end{equation}
+
+
+Sin embargo, no es posible factorizar la expresión anterior con tal de llegar a una ecuación de la forma $Ganancia = \frac{V_{out}}{V_2 - V_1}$, a menos que se cumpla la siguiente condición:
+
+\begin{equation}\label{eq:condicion_diferencial}
+1 + \frac{R_2}{R_1} = 1 + \frac{R_3}{R_4} \Rightarrow \boxed{\frac{R_2}{R_1} = \frac{R_3}{R_4}}
+\end{equation}
+
+Aunque bajo esta condición la ganancia del circuito dependa solamente de ña diferencia de tensiones entre ambas entradas, en la práctica lograr que las resistencias cumplan dicha condición es más complicado de lo que parece. Cualquier desviación generará ruido en la salida, el cual interferirá con la señal que realmente se quiere amplificar. Por ende, ésta variable es de suma importancia a la hora de diseñar e implementar un circuito de esta indole. 
+
+Sabiendo entonces que las resistencias estarán desbalanceadas, pueden plantearse una ganacia en modo diferencial y una ganancia en modo común si se reemplazan \ref{eq:v1} y \ref{eq:v2} en \ref{eq:transferencia_final} y se reordena para lograr uan expresión más limpia:
+
+\begin{equation}
+V_{out} = V_{CM}((1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})) + \frac{V_D}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+De la ecuación anterior se ven dos cosas, en primer lugar mientras más cerca se esté de la condición de funcionamiento diferencial descrita en \ref{eq:condicion_diferencial} $V_{CM}$ tiende a 0 y la ganancia tiende a:
+
+\begin{equation}
+V_{out} = V_D(1 + \frac{R_4}{R_3})
+\end{equation}
+
+En segundo lugar, pueden definirse tanto la ganancia diferencial como la ganancia a modo común:
+
+\begin{equation}\label{eq:ganancia_diferencial}
+A_D = \frac{V_{out}}{V_D} = \frac{1}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+\begin{equation}\label{eq:ganancia_comun}
+A_{CM} = \frac{V_{out}}{V_{CM}} = (1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})
+\end{equation}
+
+Nuevamente se ve en \ref{eq:ganancia_comun} que la misma tiende a 0 a medida que la condiciónd e balance se cumple. Otra posibilidad para eliminar la componente común en la señal de salida es utilizar dos señales cuyo promedio sea igual a 0, en otras palabras, $V_2 = - V_1$ o viceversa. En la práctica, el sensor utilizado devuelve dos señales de es manera para lograr el comportamiento deseado. Que tan exactas sean esa señales será otro factor para tener en cuenta a la hora de determinar la precisión de las mediciones. 
+
+
+Debido a las dos imperfeccciones que ya se describieron, el balance de las resistencias y la igualdad entre las señales de entrada, se define un factor de mérito con el objetivo de describir el funcionamiento de un amplificador de instrumentación, el factor de rechazo a modo común o CMRR por sus siglas en inglés. El CMRR es una medida del rechazo que ofrece la configuración a la entrada de  voltaje común. El mismo es positivos y se mide en decibelios, e idealmente es igual a infinito.
+
+\begin{equation}\label{eq:CMRR}
+CMRR   =   20\log(\frac{A_D}{A_{CM}})   = 20\log(\frac{\frac{1}{2}(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})}{1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}})
+\end{equation}
+
+
 
 \end{document}
