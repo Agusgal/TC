@@ -108,6 +108,7 @@ Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementacion
 En una primera instancia, se puede observar en la Figura (\ref{fig:circ_redibujado}) como el circuito a analizar consiste de un filtro de primer orden compuesto por un convertidor generalizado de impedancia cuya salida se encuentra realimentada a la entrada. Si bien la elección de las impedancias del GIC sugieren que este se comporta como un inductor y que el filtro será de segundo orden, la realimentación por la resistencia $R_8$ al potencial de entrada exige un análisis detallado de la función transferencia del circuito. Este será el primer paso a tomar en el análisis del filtro.
 
 \subsubsection{Análisis de la Función Transferencia}
+\label{sec:fun_trans}
 Para realizar el análisis de la función transferencia se considerarán los amplificadores operacionales como ideales.
 
 \begin{figure}[H]
@@ -543,6 +544,77 @@ Se contempla en las Figuras (\ref{fig:r8a0}) y (\ref{fig:r8ainf}) como pequeñas
 
 Se puede concluir que la resistencia $R_8$ y sus pares regulan la frecuencia del notch, dentro de ciertos límites en los que la selectividad se conserva aproximadamente.
 
+\subsubsection{Análisis de Sensibilidades}
+
+El análisis de sensibilidades es una herramienta fundamental a la hora de diseñar no solo filtros, sino cualquier circuito electrónico. Este análisis permite conocer cuánto cambia un parámetro fundamental del circuito, como por ejemplo la selectividad, dada una variación en otro de sus parámetros, como por ejemplo una resistencia.
+
+La sensibilidad de un parámetro $y$ respecto a otro parámetro $x$ se calcula como
+
+\begin{equation}
+S^y_x = \frac{x}{y} \frac{\partial y}{\partial x}
+\end{equation}
+
+Para el análisis de sensibilidades nos remitiremos a la función transferencia obtenida en la Sección (\ref{sec:fun_trans}) reescrita a continuación.
+
+\[
+\hspace{-0.5cm}
+\frac{V_{out}}{V_i} = \frac{S^2 C_2 R_1 R_3 R_6 R_7 (-C_6 R_4 + C_7 R_8) + S C_2 R_1 R_3 (R_6 R_8 - R_4 R_7) + R_4 R_6 R_7}{S^2 C_2 R_1 R_3 R_6 R_7 R_8 (C_6 + C_7)+S C_2 R_1 R_3 R_8 (R_7 + R_6) + R_4 R_6 R_7}
+\]
+
+Como primer paso, se realizará un análisis de la sensibilidad de la frecuencia de notch $\omega_z$ en función de los componentes resistivos y capacitivos del circuito.
+
+Considerando que
+\begin{equation}
+\omega_z = \frac{1}{\sqrt{C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)}}
+\end{equation}
+
+se halla la derivada parcial de $\omega_z$ respecto de $R_1$ como
+
+\begin{equation}
+\frac{\partial \omega_z}{\partial R_1} = -\frac{1}{2} \frac{C_2 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)}{(C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4))^{\frac{3}{2}}}
+\end{equation}
+
+siendo finalmente la sensibilidad de la frecuencia de notch respecto de la resistencia $R_1$
+
+\begin{equation}
+S^{\omega_z}_{R_1} = - \frac{1}{2}  R_1 \sqrt{C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)} \frac{C_2 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)}{(C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4))^{\frac{3}{2}}} = -\frac{1}{2}
+\end{equation}
+
+De forma análoga se calculó el resto de las sensibilidades de la frecuencia de notch respecto a los componentes resistivos y capacitivos presentados a continuación.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+$S^{\omega_z}_{R_1}$ & $S^{\omega_z}_{C_2}$ & $S^{\omega_z}_{R_3}$ & $S^{\omega_z}_{R_4}$ & $S^{\omega_z}_{R_8}$ & $S^{\omega_z}_{R_6}$ & $S^{\omega_z}_{C_6}$ & $S^{\omega_z}_{R_7}$ & $S^{\omega_z}_{C_7}$  \\ \midrule
+$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}\frac{R_4 C_6}{C_7 R_8 - C_6 R_4}$ & $-\frac{1}{2}\frac{R_8 C_7}{C_7 R_8 - C_6 R_4}$ & $-\frac{1}{2}$ & $\frac{1}{2}\frac{R_4 C_6}{C_7 R_8 - C_6 R_4}$ & $-\frac{1}{2}$ & $-\frac{1}{2} \frac{R_8 C_7}{C_7 R_8 - C_6 R_4}$ \\ \bottomrule
+\end{tabular}
+\caption{Sensibilidades de la frecuencia de notch respecto a los componentes resistivos y capacitivos del circuito.}
+\label{tab:sens_wz}
+\end{table}
+
+Dadas las sensibilidades obtenidas, se puede observar que solamente cuatro de aquellas son distintas de $\pm \frac{1}{2}$. Si no se tuviesen consideraciones para la implementaciones del circuito, se podría intentar minimizar la sensibilidad de la frecuencia de notch respecto a los capacitores, ya que estos son los que tienen una mayor tolerancia. No obstante, utilizando las consideraciones de la implementación del circuito, sucede que las sensibilidades de $R_4$, $R_8$, $C_6$ y $C_7$ son iguales a $\frac{1}{4}(k^2-1)$ por lo que las sensibilidades respecto a estos componentes pueden llegar a tornarse muy alta cuanto más apartados estén los polos de los ceros en módulo. 
+
+A continuación se presentan las sensibilidades de la frecuencia de corte de los polos en función de los componentes resistivos y capacitivos del circuito
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+$S^{\omega_p}_{R_1}$ & $S^{\omega_p}_{C_2}$ & $S^{\omega_p}_{R_3}$ & $S^{\omega_p}_{R_4}$ & $S^{\omega_p}_{R_8}$ & $S^{\omega_p}_{R_6}$ & $S^{\omega_p}_{C_6}$ & $S^{\omega_p}_{R_7}$ & $S^{\omega_p}_{C_7}$  \\ \midrule
+$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}\frac{C_6}{C_6+C_7}$ & $-\frac{1}{2}$ & $-\frac{1}{2} \frac{C_7}{C_7+ C_6}$ \\ \bottomrule
+\end{tabular}
+\caption{Sensibilidades de la frecuencia de los polos respecto a los componentes resistivos y capacitivos del circuito.}
+\label{tab:sens_wp}
+\end{table}
+
+Un resultado interesante es que variaciones en la resistencia $R_4$ no generan cambios en el posicionamiento de los polos, pero si generan cambios en el factor de calidad de ambas singularidades.
+
+Otro resultado interesante de las sensibilidades de tanto los ceros como los polos muestra como una variación en la resistencia $R_1$ de influye de misma manera en el posicionamiento de los polos y ceros por igual, por lo que se podría utilizar un preset en el lugar de esta resistencia para finamente calibrar la respuesta del circuito si esta se ve levemente corrida, sin perturbar la ganancia para las altas frecuencias.
+
+
+El cálculo y la presentación de las sensibilidades de las selectividades de ambas singularidades se omitió por ser de carácter engorroso y resultar en la dependencia de muchos de los parámetros del circuito.
+
 \subsubsection{Elección de los Amplificadores Operacionales}
 
 Al momento de elegir el operacional a utilizar, se tuvo un claro objetivo: se quisieron mantener las especificaciones del filtro fieles a lo calculado en el mayor rango de frecuencias posible. Es por esto, que uno de los principales parámetros a estudiar en la selección del opamp fue el ancho de banda. Cuanto mayor sea este, más fidedigna será la transferencia en las altas frecuencias ya que los polos del dispositivo estarán ubicados en mayores frecuencias cuanto más alto sea el ancho de banda.
@@ -621,8 +693,17 @@ Se observó luego la impedancia de entrada y salida del circuito.
 
 Se puede ver como tanto la impedancia de entrada como de salida tienden a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que tanto a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra como a la salida se encuentra la impedancia de salida del operacional la cual es muy chica. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, por lo que se deberá tomar un especial cuidado en esta etapa del análisis. 
 
-\subsubsection{Simulación de las Sensibilidades}
-\textbf{VER QUE CORNO HACER}
+\subsubsection{Simulación Montecarlo}
+Se utilizó la simulación Montecarlo para observar la dispersión de la respuesta en frecuencia causada por las tolerancias de los componentes. Se utilizó una tolerancia del 5\% para todos los resistores excepto 1\% para las resistencias de 9k1. Para los capacitores se utilizó una tolerancia del 10\%.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/Montecarlo1.PNG}
+	\caption{Simulación de Montecarlo.}
+	\label{fig:montecarlo}
+\end{figure}
+
+Se puede observar una gran dispersión en la frecuencia de notch de aproximadamente $300Hz$ sin tomar en cuenta el caso de más a la derecha.
 
 \subsection{Implementación del Circuito}
 Se implementó el circuito siguiendo las consideraciones y el análisis realizado en la Sección \ref{sec:eleccion_componentes}. Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. 
