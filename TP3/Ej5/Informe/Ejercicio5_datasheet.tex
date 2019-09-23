@@ -1,25 +1,9 @@
-\documentclass[a4paper]{article}
-
-\include{Header.tex}
-
-\usepackage{float}
-\usepackage{graphicx}
-
-\usepackage[american voltage]{circuitikz}
-
-\usepackage{amsmath}
-
-\usepackage{xcolor}
-
-\usepackage{caption}
-\usepackage{subcaption}
-
-\usepackage{multicol}
+\input{../../Informe/Header.tex}
 
 \begin{document}
 
-
 \subsection{Datasheet}
+
 \begin{center}
 \rule{\textwidth}{1pt}
 \textsc{Control de Tonos y Ecualizador TCG3 \textsuperscript{\textregistered}}
@@ -35,47 +19,66 @@
 		\item Sistema de amplificación y atenuación sobre la totalidad del espectro audible.
 		\item Entrada y salida de audio compatible con conectores de $3.5 \ mm$ mono.
 		\item Amplificación y atenuación de hasta $\pm 15 \ db$.
+		\item Bajo ruido de entrada.
+		\item Cobertura total del espectro audible.
 	\end{itemize}
 	
 	\item[2] \textbf{Descripción}\\
 		El \textsc{Control de Tonos y Ecualizador TCG3~\textsuperscript{\textregistered}} es un circuito que permite amplificar y atenuar frecuencias bajas, medias y altas con total independencia entre sí. Posee 3 frecuencias centrales que permiten dicho control. Además cuenta con un regulador de audio, que permite amplificar y atenuar en su totalidad todo el conjunto de frecuencias audibles. El dispositivo requiere una fuente de alimentación para los amplificadores operacionales ($\pm 18 \ V$). Posee entrada y salida audio mono. A su vez cuenta con entradas que permiten de cualquier tipo de señal, ya sea para análisis de esta o calibración del mismo dispositivo.
 	
-	\item[3] \textbf{Alimentación}\\
+	\item[3] \textbf{Alimentación}
 	\begin{table}[H]
 		\begin{tabular}{ccccc}
 			\hline	
 			Tensión & Min & Sugerido & Max & Unidad \\
 			\hline
-			$V_{in}$    & 0 	& 2		   & 2.75	 	& Vpp \\
+			$V_{in}$\footnote{Valores de tensión dados en amplitud pico-pico.}    & 0 	& 2		   & 2.75	 	& V \\
 			$Vcc$       & 10  	& 15       & 18 	& V \\
 			$-Vcc$      & -10 	& -15      & -18 	& V	\\
 			\hline
 		\end{tabular}
 	\end{table}
 		
-	\item[4] \textbf{Valores de interés}\\
-		
+	\item[4] \textbf{Valores de interés}
+	\begin{table}[H]
+		\begin{tabular}{ccccc}
+			\hline			
+			\textbf{Banda} & $\mathbf{f_o}$ & $\mathbf{|Z_{in}|}$ & $\mathbf{Arg\left(Z_{in}\right)}$ & \textbf{Ganancia} \\
+			\hline
+			Baja           & 81.1 Hz                     & 181.3 $k\Omega$     & $-36.9^o$                           & $\pm XX \ dB$          \\
+			Media          & 1.2 kHz                     & 72.3 $k\Omega$      & $-16.4^o$                           & $\pm XX \ dB$          \\
+			Alta           & 9 kHz                       & 66.1 $k\Omega$      & $-2.4^o$                            & $\pm XX \ dB$         	\\
+			\hline
+		\end{tabular}
+	\end{table}
 
 \end{enumerate}
 \end{multicols}
 
 \begin{enumerate}
-		\item[5] \textbf{Modelo equivalente}\\
-	
-		\begin{figure}[H]
-		\begin{center}
-		\begin{circuitikz}
-		\draw	(0,0) to[short] ++(1,0) to[short, -o] ++ (0,0.5)node[label=north:$Vcc$]{};
-		\draw	(0,0) to[open] ++(1,0) to[short] ++ (1,0) to[short] ++(0,-0.5) to[short, -o] ++(0.5,0)node[label=south:$V_{out}$]{};
-		\draw	(0,0) to[open] ++(2,0) to[open] ++(0,-0.5) to[short] ++(0,-0.75) to[short, -o] ++(0.5,0);
-		\draw	(0,0) to[open] ++(2,0) to[open] ++(0,-0.5) to[open] ++(0,-0.75) to[short] ++(0,-0.5) to[short] ++(-1,0) to[short, -o] ++(0,-0.5)node[label=south:$-Vcc$]{};
-		\draw	(0,0) to[short] ++(0,-0.5) to[short, -o] ++(-0.5,0)node[label=south:$V_{s}$]{};
-		\draw	(0,0) to[open] ++(0,-0.5) to[short] ++(0,-0.75) to[short, -o] ++(-0.5,0);
-		\draw	(0,0) to[open] ++(0,-1.25) to[short] ++(0,-0.5) to[short] ++(1,0);
-		\draw	(0,0) to[open] ++(1,-1.25)node[label=$TCG3$]{};	
-		\end{circuitikz}
-		\end{center}
-		\end{figure}
+	\item[5] \textbf{Esquemático}\\
 \end{enumerate}
+
+\begin{multicols}{2}
+\centering
+	\begin{figure}[H]
+		\includegraphics[width=0.5\textwidth]{Imagenes/Schematic-1.png}
+	\end{figure}
+	\begin{figure}[H]
+			\includegraphics[width=0.5\textwidth]{Imagenes/Schematic-2.png}
+	\end{figure}
+\end{multicols}
+
+\begin{enumerate}
+	\item[6] \textbf{Conexiones de entrada y salida}\\
+\end{enumerate}
+\begin{multicols}{2}
+	\begin{figure}[H]
+		\includegraphics[width=0.5\textwidth]{Imagenes/Input.png}
+	\end{figure}
+	\begin{figure}[H]
+			\includegraphics[width=0.3\textwidth]{Imagenes/Output.png}
+	\end{figure}
+\end{multicols}
 
 \end{document}
