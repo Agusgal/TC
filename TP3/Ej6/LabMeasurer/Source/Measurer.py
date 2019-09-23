@@ -586,8 +586,8 @@ class Measurer():
             self.ratio.append(float(med[0]))
             self.phase.append(float(med[1]))
 
-            print("Ratio: " + float(med[0]))
-            print("Phase: " + float(med[1]))
+            print("Ratio: " + str(float(med[0])))
+            print("Phase: " + str(float(med[1])))
 
         for i in range(0, len(self.phase), 1):
             if (self.phase[i] == float(Resources.OOR_VAL)):
