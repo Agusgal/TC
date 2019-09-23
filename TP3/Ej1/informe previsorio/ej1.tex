@@ -48,12 +48,12 @@ Los inductores suelen ser los componentes electrónicos menos ideales a la hora 
 
 Sin embargo, varias limitaciones surgen por el uso de operacionales. La más importante suele ser la dependencia de la ganancia a lazo abierto con la frecuencia y su inconveniente respuesta a altas frecuencias. Esto suele ocasionar que los filtros activos tengan un rango de correcta operación por debajo de hasta los $100Mhz$. Afortunadamente cuanto mayor la frecuencia menores son las dificultades presentadas por el uso de inductores y esto hace que para este rango de frecuencias el inductor vuelva a ser una buena opción a la hora de implementar filtros.
 
-Varias implementaciones de filtros activos han sido utilizadas históricamente, siendo una de estas el método de la síntesis directa. Este método se basa en utilizar distintos convertidores de impedancia como giradores o GICs. En este informe nos centraremos, entre otras cosas, al análisis e implementación de filtros utilizando el método de síntesis directa, comenzando con una breve explicación del funcionamiento de un GIC.
+Varias implementaciones de filtros activos han sido utilizadas históricamente, siendo una de estas el método de la síntesis directa. Este método se basa en utilizar distintos convertidores de impedancia como giradores o GICs. Este informe se centra, en el análisis e implementación de filtros utilizando el método de síntesis directa, entre otras cosas, comenzando con una breve explicación del funcionamiento de un GIC.
 
 \subsubsection{Convertidor Generalizado de Impedancia o GIC}
 Los convertidores generalizados de impedancia o GICs son circuitos activos diseñados para simular impedancias que cambian con la frecuencia. Se puede observar en la Figura (\ref{fig:gic}) una implementación de un GIC.
 
-\begin{figure} [H]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Imagenes/gic.PNG}
 	\caption{Convertidor generalizado de impedancia puesto a tierra[1].}
@@ -102,7 +102,7 @@ Esto demuestra que un GIC se puede utilizar para emular la impedancia que se des
 	\label{fig:gic_ind_fndr}
 \end{figure}
 
-Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor puesto a tierra o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo con un GIC que no está no puesto a tierra.
+Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo con un GIC que no está no puesto a tierra.
 
 
 \subsection{Análisis del Circuito}
@@ -111,7 +111,7 @@ En una primera instancia, se puede observar en la Figura (\ref{fig:circ_redibuja
 
 \subsubsection{Análisis de la Función Transferencia}
 \label{sec:fun_trans}
-Para realizar el análisis de la función transferencia se considerarán los amplificadores operacionales como ideales.
+Para realizar el análisis de la función transferencia se consideran los amplificadores operacionales como ideales.
 
 \begin{figure}[H]
 \centering
@@ -199,7 +199,7 @@ Para realizar el análisis de la función transferencia se considerarán los amp
 \label{fig:circ_redibujado}
 \end{figure}
 
-Realizando un adecuado redibujo del circuito, se puede observar como los operacionales mantendrán a sus entradas el mismo potencial. Como paso siguiente, y para utilizar el método de nodos en aquellos que son mantenidos a un mismo potencial, se debe redibujar nuevamente al circuito aplicando el teorema de Thévenin entre los nodos $V_1$ y tierra. Para esto, se desconecta la realimentación por medio de la resistencia $R_8$ teniendo en cuenta los efectos que esta producen sobre el circuito.
+Redibujando adecuadamente el circuito, se puede observar como los operacionales mantienen a sus entradas el mismo potencial. Como paso siguiente, y para utilizar el método de nodos en aquellos que son mantenidos a un mismo potencial, se debe dibujar nuevamente al circuito aplicando el teorema de Thévenin entre los nodos $V_1$ y tierra. Para esto, se desconecta la realimentación por medio de la resistencia $R_8$ teniendo en cuenta los efectos que esta producen sobre el circuito.
 
 \begin{figure}[H]
 \centering
@@ -327,7 +327,7 @@ Realizando un adecuado redibujo del circuito, se puede observar como los operaci
 \end{subfigure}
 \end{figure}
 
-Se puede observar en la Figura (\ref{fig:circ_thevenin}) como la tensión de Thévenin será el divisor resistivo entre las impedancias equivalentes $Z_7$ y $Z_6$, mientras que la impedancia de Thévenin será el paralelo entre ambas impedancias equivalentes. Resulta entonces:
+Se puede observar en la Figura (\ref{fig:circ_thevenin}) como la tensión de Thévenin será el divisor resistivo entre las impedancias equivalentes $Z_6$ y $Z_7$, siendo estas el resultado del paralelo entre $R_6$ y $C_6$ y entre $R_7$ y $C_7$ respectivamente, mientras que la impedancia de Thévenin será el paralelo entre ambas impedancias equivalentes. Resulta entonces:
 
 \begin{equation}
 V_{Th} = V_i \cdot \frac{\left(R_6 // \frac{1}{SC_6}\right)}{\left(R_6 // \frac{1}{SC_6}\right) + \left(R_7 // \frac{1}{SC_7}\right)}
@@ -337,7 +337,7 @@ V_{Th} = V_i \cdot \frac{\left(R_6 // \frac{1}{SC_6}\right)}{\left(R_6 // \frac{
 R_{Th} = \left(R_6 // \frac{1}{SC_6}\right) // \left(R_7 // \frac{1}{SC_7}\right)
 \end{equation}
 
-Finalmente, con las ecuaciones obtenidas habiendo aplicado el teorema de Thévenin, se aplica el método de los nodos en aquellos nodos cuyo potencial es mantenido igual por los operacionales, resultando en:
+Finalmente, con las ecuaciones obtenidas habiendo aplicado el teorema de Thévenin, se aplica el método de los nodos en aquellos cuyo potencial se mantiene igual por los operacionales, resultando en:
 
 \begin{equation}
 V_1=V_3=V_5=V_A
@@ -369,7 +369,7 @@ A partir de (\ref{eq:circ_trans1}), (\ref{eq:circ_trans2}), (\ref{eq:circ_trans3
 
 \subsubsection{Análisis de los Componentes}
 	
-A continuación se hará un breve análisis de la elección de los valores de los componentes y además un análisis funcional de algunos de estos.
+A continuación se hace un breve análisis de la elección de los valores de los componentes y de la funcionalidad de algunos de estos.
 
 \subsubsection{Elección de Componentes y Diseño}
 \label{sec:eleccion_componentes}
@@ -401,7 +401,7 @@ Se logra obtener el valor de k:
 k = \sqrt{2}
 \end{equation}
 
-Considerando que hay una mayor facilidad de obtener resistores de distintos valores que capacitores, se logra obtener la relación que vincula el valor de la resistencia R en función de la capacitancia C elegida:
+Considerando que hay una mayor facilidad de obtener resistencias de distintos valores que capacitores, se logra obtener la relación que vincula el valor de la resistencia R en función de la capacitancia C elegida:
 
 \begin{equation}
 R = \frac{\left(\frac{1}{13000}\right) \frac{s}{rad}}{C}
@@ -411,7 +411,7 @@ Como se desean poseer resistencias pequeñas, ya que el ruido es proporcional a 
 
 $$C=15nF \rightarrow R=5128.2\Omega$$
 
-y quedan fijados los valores de todos los componentes del circuito. A continuación se muestra una tabla con los valores que se deberían utilizar, los valores que se utilizaron en la implementación y los valores finales de los componentes a utilizar.
+Es así que quedan fijados los valores de todos los componentes del circuito. A continuación se muestra una tabla con los valores que se deben utilizar, los nominales que se utilizaron en la implementación y los reales de dichos componentes.
 
 \begin{table}[H]
 \centering
@@ -428,7 +428,7 @@ $R_{6,7}$ & $20512.82 \Omega$ & $330K\Omega//22K\Omega$ & $20625\Omega$ & $0,55\
 \label{Tab:valores}
 \end{table}
 
-Con estos valores se graficó el bode en amplitud y fase del filtro:
+Con estos valores se graficó el Bode en amplitud y fase del filtro:
 
 \begin{figure}[H]
 	\centering
@@ -445,7 +445,7 @@ Con estos valores se graficó el bode en amplitud y fase del filtro:
 	\caption{Gráficos de Bode para el filtro con los componentes de valor comercial.}
 \end{figure}
 
-A continuación se realizó una tabla con los valores significantes de la respuesta en frecuencia.
+A continuación se presenta una tabla con los valores significantes de la respuesta en frecuencia.
 
 \begin{table}[H]
 \centering
@@ -472,10 +472,9 @@ A continuación se muestran los ceros y polos con los valores de la Tabla (\ref{
 	\label{fig:cerosypolos_calc}
 \end{figure}
 
-Se puede observar como los polos y los ceros de la transferencia no se encuentran sobre una circunferencia de mismo radio, sino que los polos tienen una frecuencia de corte menor que la de los ceros. Esto genera que en el diagrama de bode se encuentre primero el polo y luego el cero, por lo que la curva asintótica permanecerá por debajo de la línea del cero para las frecuencias mayores a la frecuencia de notch. Se puede contemplar además como los ceros se sitúan sobre el eje imaginario, por lo que el factor de calidad tenderá a infinito y genera un gran sobrepico, atenuando casi totalmente las frecuencias cuyo valor sean igual al módulo de los ceros.
+Se puede observar como los polos y los ceros de la transferencia no se encuentran sobre una circunferencia de mismo radio, sino que los polos tienen una frecuencia de corte menor que la de los ceros. Esto genera que en el diagrama de Bode se encuentre primero el polo y luego el cero, por lo que la curva asintótica permanece por debajo de la línea del cero para las frecuencias mayores a la frecuencia de notch. Se puede contemplar además como los ceros se sitúan sobre el eje imaginario, por lo que el factor de calidad tiende a infinito y genera un gran sobrepico, atenuando casi totalmente las frecuencias cuyo valor sean igual al módulo de los ceros.
 
-
-A continuación se realizará un análisis del movimiento de los polos dadas variaciones en las resistencias $R_6$ y $R_8$. Cabe notar que el color más oscuro corresponde con la posición inicial de los ceros y polos.
+Luego, se procede a realizar un análisis del desplazamiento de los polos dadas variaciones en las resistencias $R_6$ y $R_8$. Cabe notar que el color más oscuro corresponde con la posición inicial de los ceros y polos.
 
 \begin{figure}[H]
 	\centering
@@ -507,10 +506,10 @@ A continuación se realizará un análisis del movimiento de los polos dadas var
 	\label{fig:r6ainf}
 \end{figure}
 
-Se puede observar en las Figuras (\ref{fig:r6a0}) y (\ref{fig:r6ainf}) que cambios en la resistencia $R_6$ genera que los ceros y polos no solo se desplacen horizontalmente sino también que estos transicionen de ser complejos conjugados, a estar ubicados en un mismo punto y eventualmente situarse solamente sobre el eje real, apartándose el uno del otro. Además, es observable como si $R_6$ aumenta de su valor original, disminuirá el sobrepico de los ceros y aumentará el sobrepico de los polos. Si $R_6$ tiende a cero, se contempla como baja el factor de calidad de tanto los ceros como los polos, por lo que el filtro perderá su naturaleza de notch y pasará a asemejarse más a la curva asintótica de la transferencia. Con este análisis se puede llegar a la conclusión que la resistencia $R_6$ regula el factor de calidad del circuito.
+Se puede observar en las Figuras (\ref{fig:r6a0}) y (\ref{fig:r6ainf}) que cambios en la resistencia $R_6$ genera que los ceros y polos no solo se desplacen horizontalmente sino también que estos transicionen de ser complejos conjugados, a estar ubicados en un mismo punto y eventualmente situarse solamente sobre el eje real, apartándose el uno del otro. Además, es observable como si $R_6$ aumenta de su valor original, disminuirá el sobrepico de los ceros y aumentará el sobrepico de los polos. Si $R_6$ tiende a cero, se contempla como baja el factor de calidad de tanto los ceros como los polos, por lo que el filtro pierde su naturaleza de notch y pasa a asemejarse más a la curva asintótica de la transferencia. Con este análisis se puede llegar a la conclusión que la resistencia $R_6$ regula el factor de calidad del circuito.
 
 
-A continuación se analizará el movimiento de los polos variando la resistencia $R_8$. 
+A continuación se analiza el desplazamiento de los polos variando la resistencia $R_8$. 
 
 \begin{figure}[H]
 	\centering
@@ -542,7 +541,7 @@ A continuación se analizará el movimiento de los polos variando la resistencia
 	\label{fig:r8ainf}
 \end{figure}
 
-Se contempla en las Figuras (\ref{fig:r8a0}) y (\ref{fig:r8ainf}) como pequeñas variaciones en la resistencia $R_8$ logra generar corrimientos en la frecuencia de notch del circuito, manteniendo aproximadamente su forma. Si las variaciones son muy extremas, se pierde la condición de notch ya que varía mucho el factor de calidad del circuito.
+Se contempla en las Figuras (\ref{fig:r8a0}) y (\ref{fig:r8ainf}) como pequeñas variaciones en la resistencia $R_8$ logra generar corrimientos en la frecuencia de notch del circuito, manteniendo aproximadamente su forma. Si las variaciones son muy extremas, se pierde la condición de notch ya que varía el factor de calidad del circuito.
 
 Se puede concluir que la resistencia $R_8$ y sus pares regulan la frecuencia del notch, dentro de ciertos límites en los que la selectividad se conserva aproximadamente.
 
@@ -556,14 +555,14 @@ La sensibilidad de un parámetro $y$ respecto a otro parámetro $x$ se calcula c
 S^y_x = \frac{x}{y} \frac{\partial y}{\partial x}
 \end{equation}
 
-Para el análisis de sensibilidades nos remitiremos a la función transferencia obtenida en la Sección (\ref{sec:fun_trans}) reescrita a continuación.
+Para el análisis de sensibilidades se remite a la función transferencia obtenida en la Sección (\ref{sec:fun_trans}) reescrita a continuación.
 
 \[
 \hspace{-0.5cm}
 \frac{V_{out}}{V_i} = \frac{S^2 C_2 R_1 R_3 R_6 R_7 (-C_6 R_4 + C_7 R_8) + S C_2 R_1 R_3 (R_6 R_8 - R_4 R_7) + R_4 R_6 R_7}{S^2 C_2 R_1 R_3 R_6 R_7 R_8 (C_6 + C_7)+S C_2 R_1 R_3 R_8 (R_7 + R_6) + R_4 R_6 R_7}
 \]
 
-Como primer paso, se realizará un análisis de la sensibilidad de la frecuencia de notch $\omega_z$ en función de los componentes resistivos y capacitivos del circuito.
+Como primer paso, se realiza un análisis de la sensibilidad de la frecuencia de notch $\omega_z$ en función de los componentes resistivos y capacitivos del circuito.
 
 Considerando que
 \begin{equation}
@@ -595,9 +594,9 @@ $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}\frac{R_4 C_6}{C_
 \label{tab:sens_wz}
 \end{table}
 
-Dadas las sensibilidades obtenidas, se puede observar que solamente cuatro de aquellas son distintas de $\pm \frac{1}{2}$. Si no se tuviesen consideraciones para la implementaciones del circuito, se podría intentar minimizar la sensibilidad de la frecuencia de notch respecto a los capacitores, ya que estos son los que tienen una mayor tolerancia. No obstante, utilizando las consideraciones de la implementación del circuito, sucede que las sensibilidades de $R_4$, $R_8$, $C_6$ y $C_7$ son iguales a $\frac{1}{4}(k^2-1)$ por lo que las sensibilidades respecto a estos componentes pueden llegar a tornarse muy alta cuanto más apartados estén los polos de los ceros en módulo. 
+Dadas las sensibilidades obtenidas, se puede observar que solamente cuatro de aquellas son distintas de $\pm \frac{1}{2}$. Si no se tuviesen consideraciones para la implementaciones del circuito, se podría minimizar la sensibilidad de la frecuencia de notch respecto a los capacitores, ya que estos son los que tienen una mayor tolerancia. No obstante, utilizando las consideraciones de la implementación del circuito, sucede que las sensibilidades de $R_4$, $R_8$, $C_6$ y $C_7$ son iguales a $\frac{1}{4}(k^2-1)$ por lo que las sensibilidades respecto a estos componentes pueden llegar a tornarse muy alta cuanto más apartados estén los polos de los ceros en módulo. 
 
-A continuación se presentan las sensibilidades de la frecuencia de corte de los polos en función de los componentes resistivos y capacitivos del circuito
+A continuación se presentan las sensibilidades de la frecuencia de corte de los polos en función de los componentes resistivos y capacitivos del circuito.
 
 \begin{table}[H]
 \centering
@@ -612,18 +611,18 @@ $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ & $-\fra
 
 Un resultado interesante es que variaciones en la resistencia $R_4$ no generan cambios en el posicionamiento de los polos, pero si generan cambios en el factor de calidad de ambas singularidades.
 
-Otro resultado interesante de las sensibilidades de tanto los ceros como los polos muestra como una variación en la resistencia $R_1$ de influye de misma manera en el posicionamiento de los polos y ceros por igual, por lo que se podría utilizar un preset en el lugar de esta resistencia para finamente calibrar la respuesta del circuito si esta se ve levemente corrida, sin perturbar la ganancia para las altas frecuencias.
+Otro resultado que destaca el análisis de las sensibilidades, tanto de los ceros como los polos, es como una variación en la resistencia $R_1$ de influye de misma manera en el posicionamiento de los polos y ceros por igual, por lo que se puede utilizar un preset en el lugar de esta resistencia para finamente calibrar la respuesta del circuito si esta se ve levemente corrida, sin perturbar la ganancia para las altas frecuencias.
 
 
 El cálculo y la presentación de las sensibilidades de las selectividades de ambas singularidades se omitió por ser de carácter engorroso y resultar en la dependencia de muchos de los parámetros del circuito.
 
 \subsubsection{Elección de los Amplificadores Operacionales}
 
-Al momento de elegir el operacional a utilizar, se tuvo un claro objetivo: se quisieron mantener las especificaciones del filtro fieles a lo calculado en el mayor rango de frecuencias posible. Es por esto, que uno de los principales parámetros a estudiar en la selección del opamp fue el ancho de banda. Cuanto mayor sea este, más fidedigna será la transferencia en las altas frecuencias ya que los polos del dispositivo estarán ubicados en mayores frecuencias cuanto más alto sea el ancho de banda.
+Al momento de elegir el operacional a utilizar, se tuvo un claro objetivo: mantener las especificaciones del filtro fieles a lo calculado en el mayor rango de frecuencias posible. Es por esto que uno de los principales parámetros a estudiar en la selección del opamp fue el ancho de banda. Cuanto mayor sea este, más fidedigna será la transferencia en las altas frecuencias, ya que los polos del dispositivo estarán ubicados en mayores frecuencias cuanto más alto sea el ancho de banda.
 
-Otro parámetro importante fueron aquellos que permiten lograr obtener una señal de salida con una baja distorsión armónica. Esto quiere decir, no se quiso deformar alinealmente a la señal de entrada introduciendo armónicos en esta. Para esto, se consideró la utilización de un amplificador operacional con una alta slew rate.
+Otro parámetro importante fueron aquellos que permiten lograr obtener una señal de salida con una baja distorsión armónica. En otras palabras, se buscó no deformar alinealmente a la señal de entrada introduciendo armónicos en esta. Para ello, se consideró la utilización de un amplificador operacional con un alto slew rate.
 
-Finalmente se optó por utilizar el integrado TL-082 el cual posee dos amplificadores operacionales dentro. Se decidieron utilizar estos operacionales ya que poseen una slew rate alta ($13\frac{V}{\mu s}$ valor típico) en comparación a otros operacionales, un ancho de banda grande ($3MHz$ valor típico para ganancia unitaria) y además posee transistores de tecnología J-FET a la entrada del dispositivo, por lo que tanto la corriente de bias como la tensión de offset serán más bajos que otro operacional con tecnología BJT a la entrada.
+Finalmente se optó por utilizar el integrado TL-082 el cual posee dos amplificadores operacionales dentro. Se decidieron utilizar estos operacionales ya que poseen un slew rate alto ($13\frac{V}{\mu s}$ valor típico) en comparación a otros operacionales, un ancho de banda grande ($3MHz$ valor típico para ganancia unitaria) y además posee transistores de tecnología J-FET a la entrada del dispositivo, por lo que tanto la corriente de bias como la tensión de offset son más bajos que otro operacional con tecnología BJT a la entrada.
 
 \subsection{Simulación del Circuito}
 \label{sec:simulacion}
@@ -649,11 +648,11 @@ Se procedió a realizar la simulación del circuito con los valores obtenidos me
 	\label{fig:bode_calc_sim}
 \end{figure}
 
-Utilizando el operacional elegido en la sección \ref{sec:eleccion_componentes}, se observa una respuesta en frecuencia muy similar a a la calculada anteriormente, exceptuando dos puntos de interes.
+Utilizando el operacional elegido en la sección \ref{sec:eleccion_componentes}, se observa una respuesta en frecuencia muy similar a la calculada anteriormente, exceptuando dos puntos de interes.
 
 La ganancia en la frecuencia de notch es mucho menor a la calculada. Esto es algo esperado, ya que muchas cosas que no se tienen en consideración en los cálculos logran llegar a un resultado mucho más ideal que el real.
 
-Respecto a las altas frecuencias, se puede observar una discrepancia entre lo calculado y lo teórico. Esta diferencia es mucho más grande tendiendo a las frecuencias cerca de los $10MHz$. A continuación se grafica el bode en fase y magnitud entre las frecuencias de los $100KHz$ y los $100MHz$.
+Respecto a las altas frecuencias, se puede observar una discrepancia entre lo calculado y lo teórico. Esta diferencia es mucho más grande tendiendo a las frecuencias cercanas a los $10MHz$. A continuación se grafica el Bode en fase y magnitud entre las frecuencias de los $100KHz$ y los $100MHz$.
 
 \begin{figure}[H]
 	\centering
@@ -670,7 +669,7 @@ Respecto a las altas frecuencias, se puede observar una discrepancia entre lo ca
 	\caption{Comparación entre los gráficos de bode simulados y calculados teóricamente para las frecuencias mayores a $100KHz$.}
 \end{figure}
 
-Si bien el operacional elegido posee un gran ancho de banda para mitigar lo más posible estos problemas a las altas frecuencias, como justificado en la sección \ref{sec:eleccion_componentes}, se puede observar que los cálculos realizados con el modelo ideal del operacional poseen una gran diferencia respecto a la simulación, la cual tiene en cuenta los varios polos que posee este dispositivo. Debido a esto, se tendrá en cuenta en la sección \ref{sec:limitaciones} las limitaciones del filtro.
+Si bien el operacional elegido posee un gran ancho de banda para mitigar lo más posible estos problemas a las altas frecuencias, como justificado en la Sección (\ref{sec:eleccion_componentes}), se puede observar que los cálculos realizados con el modelo ideal del operacional poseen una gran diferencia respecto a la simulación, la cual tiene en cuenta los varios polos que posee este dispositivo. Debido a esto, se tendrá en cuenta en la Sección (\ref{sec:limitaciones}) las limitaciones del filtro.
 
 \subsubsection{Simulación de la Impedancia de Entrada y Salida}
 
@@ -693,7 +692,7 @@ Se observó luego la impedancia de entrada y salida del circuito.
 	\caption{Simulación de la impedancia de entrada y salida del circuito.}
 \end{figure}
 
-Se puede ver como tanto la impedancia de entrada como de salida tienden a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que tanto a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra como a la salida se encuentra la impedancia de salida del operacional la cual es muy chica. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, por lo que se deberá tomar un especial cuidado en esta etapa del análisis. 
+Se puede ver como tanto la impedancia de entrada como de salida tienden a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que tanto a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra como a la salida se encuentra la impedancia de salida del operacional la cual es muy chica. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, por lo que se debe tomar un especial cuidado en esta etapa del análisis. 
 
 \subsubsection{Simulación Montecarlo}
 Se utilizó la simulación Montecarlo para observar la dispersión de la respuesta en frecuencia causada por las tolerancias de los componentes. Se utilizó una tolerancia del 5\% para todos los resistores excepto 1\% para las resistencias de 9k1. Para los capacitores se utilizó una tolerancia del 10\%.
@@ -708,16 +707,13 @@ Se utilizó la simulación Montecarlo para observar la dispersión de la respues
 Se puede observar una gran dispersión en la frecuencia de notch de aproximadamente $300Hz$ sin tomar en cuenta el caso de más a la derecha.
 
 \subsection{Implementación del Circuito}
-Se implementó el circuito siguiendo las consideraciones y el análisis realizado en la Sección \ref{sec:eleccion_componentes}. Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. 
+Se implementó el circuito siguiendo las consideraciones y el análisis realizado en la Sección (\ref{sec:eleccion_componentes}). Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. 
 \subsubsection{Mediciones del Circuito y Análisis de Error}
 \subsubsection{Limitaciones del Circuito}
 \label{sec:limitaciones}
 
-slewrate+saturacion ver entrada maxima
-ver alimentacion minima por saturacion y entrada maxima
-ver conjunto de frecuencias donde se puede usar piola
 
-Se ha recopilado a continuación de la hoja de datos del TL-082\footnote{Hoja de datos: Texas Instruments, TL08xx JFET-Input Operational Amplifiers, SLOS081I –FEBRUARY 1977–REVISED MAY 2015} la serie de parámetros utilizados en el análisis de las limitacionnes del circuito.
+Se ha recopilado, de la hoja de datos del \href{http://www.ti.com/lit/ds/symlink/tl082.pdf}{TL-082}, los parámetros utilizados en el análisis de las limitacionnes del circuito.
 
 \begin{table}[H]
 \centering
@@ -730,7 +726,7 @@ $\pm 18V$ & $\pm 15V$ & $3MHz$ & $\approx V_{CC}-1.5V$ & $13\frac{V}{\mu s}$\\ \
 \label{tab:datos_tl082}
 \end{table}
 
-Observando la tabla ya se puede corroborar que la tensión de alimentación no debe sobrepasar los $18V$ y la tensión de entrada no debe sobrepasar los $15V$ nunca. Para el análisis de las limitaciones del circuito, sin embargo, se utilizarán $\pm 15V$ de alimentación como recomendado por el fabricante.
+Observando la tabla se puede corroborar que la tensión de alimentación no debe sobrepasar los $18V$, mientras que la de entrada no debe sobrepasar los $15V$. Para el análisis de las limitaciones del circuito, sin embargo, se utilizarán $\pm 15V$ de alimentación, valor recomendado por el fabricante.
 Luego, teniendo en cuenta que la ganancia máxima del circuito es de $\approx 2dB$, se tiene que
 
 \begin{equation}
