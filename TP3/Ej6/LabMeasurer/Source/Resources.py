@@ -179,24 +179,24 @@ class Oscilloscope:
 #CHANNEL SET
     def chan_div(self, sog, channel, div = 1):       #CHANNEL DIVISION
         if(sog == SET):
-            if(channel == CHANNEL_MATH):
+            if(channel == CHANNEL_MATH or channel ==0):
                 self.set_math_div(div)
             else:
                 self.chan_rang(SET, channel, div*CHAN_DIV_SQUARES)
         elif(sog == GET):
-            if(channel == CHANNEL_MATH):
+            if(channel == CHANNEL_MATH or channel==0):
                 return self.get_math_rang() / CHAN_DIV_SQUARES
             else:
                 return float(self.chan_rang(GET, channel)) / CHAN_DIV_SQUARES
 
     def chan_rang(self, sog, channel, range = 8):    #CHANNEL RANGE
         if (sog == SET):
-            if(channel == CHANNEL_MATH):
+            if(channel == CHANNEL_MATH or channel == 0):
                 self.set_math_rang(range)
             else:
                 self.resource.write(':CHANnel' + str(channel) + ':RANGe ' + str(range))
         elif (sog == GET):
-            if(channel == CHANNEL_MATH):
+            if(channel == CHANNEL_MATH or channel == 0):
                 return self.get_math_rang()
             else:
                 return self.resource.query(':CHANnel' + str(channel) + ':RANGe?')
@@ -380,7 +380,12 @@ class Oscilloscope:
 
     #FUNC
     def set_math_operation(self, oper):
-        self.resource.write(':FUNCtion:OPERation ' + oper)
+        if(oper == "+"):
+            self.resource.write(':FUNCtion:OPERation ADD')
+        elif(oper == "-"):
+            self.resource.write(':FUNCtion:OPERation SUBT')
+        elif(oper == "*"):
+            self.resource.write(':FUNCtion:OPERation MULT')
 
     def set_math_source(self, chan1, chan2):
         self.resource.write(':FUNCtion:SOURce1 CHANnel' + str(chan1) +';'+ 'SOURce2 CHANnel' + str(chan2))
@@ -395,7 +400,7 @@ class Oscilloscope:
         return float(self.resource.query(':FUNCtion RANGe?'))/ CHAN_DIV_SQUARES
 
     def get_math_rang(self):
-        return  float(self.resource.query(':FUNCtion RANGe?'))
+        return  float(self.resource.query(':FUNCtion:RANGe?'))
 
 ##############################################################################################################################################################
 class Generator:
