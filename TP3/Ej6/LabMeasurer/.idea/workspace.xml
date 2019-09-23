@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="87da218d-05f6-4b71-980f-660a2f481884" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/libraries/R_User_Library.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Bodeador.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Bodeador.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Measurer.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Measurer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Source/Resources.py" beforeDir="false" afterPath="$PROJECT_DIR$/Source/Resources.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -63,7 +63,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="Python.miParser">
+  <component name="RunManager" selected="Python.main">
     <configuration name="Bodeador" type="PythonConfigurationType" factoryName="Python" temporary="true">
       <module name="Bodeador" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -129,8 +129,8 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Python.miParser" />
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.miParser" />
         <item itemvalue="Python.Bodeador" />
       </list>
     </recent_temporary>

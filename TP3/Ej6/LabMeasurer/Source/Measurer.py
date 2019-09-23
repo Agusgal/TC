@@ -341,15 +341,16 @@ class Measurer():
             good_input = False
             print("Ingresar que canales se quieren utilizar como source para math separados por coma. Ejemplo: 2,1")
             while(not good_input):
+                self.math_sources=input()
                 self.math_sources = self.math_sources.split(',')
                 if(len(self.math_sources) == 2 and
-                    self.math_sources[0] > 0 and
-                    self.math_sources[1] > 0 and
-                    self.math_sources[0] <=4 and
-                    self.math_sources[1] <=4):
+                    int(self.math_sources[0]) > 0 and
+                    int(self.math_sources[1]) > 0 and
+                    int(self.math_sources[0]) <=4 and
+                    int(self.math_sources[1]) <=4):
                     good_input = True
-                    self.mathsource1 = self.math_sources[0]
-                    self.mathsource2 = self.math_sources[1]
+                    self.mathsource1 = int(self.math_sources[0])
+                    self.mathsource2 = int(self.math_sources[1])
                 else:
                     print("Se deben de ingresar los canales de forma numerica y separados por coma. Ejemplo: 3,1")
 
