@@ -29,7 +29,6 @@ La fisiología auditiva se encuentra dada en tres estructuras:
 La señal captada se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo.
 
 El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$. \footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: \url{https://en.wikipedia.org/wiki/Audio_frequency} [Accessed 11 Sep. 2019].} A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano.\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
@@ -518,54 +517,54 @@ Cabe destacar que para el desarrollo de este circuito se optó utilizar el ampli
 A continuación, se procede a presentar diagramas de Bode teóricos, simulados y medidos. Para ello, al momento de graficar los resultados teóricos, se fijaron ciertos valores del factor $\psi$ de cada etapa que represente la posición del potenciometro en el modelo físico, siendo $\psi = 0$ amplificación total y $\psi = 1$ atenuación total. Es así que se obtuvieron los siguientes gráficos.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Mod-1.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-1.png}
 	\caption{Diagrama de Bode en amplitud de la primer medición.}
 	\label{fig:CBodes-Mod-1}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Ph-1.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-1.png}
 	\caption{Diagrama de Bode en fase de la primer medición.}
 	\label{fig:CBodes-Ph-1}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Mod-2.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-2.png}
 	\caption{Diagrama de Bode en amplitud de la segunda medición.}
 	\label{fig:CBodes-Mod-2}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Ph-2.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-2.png}
 	\caption{Diagrama de Bode en fase de la segunda medición.}
 	\label{fig:CBodes-Ph-2}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Mod-3.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-3.png}
 	\caption{Diagrama de Bode en amplitud de la tercera medición.}
 	\label{fig:CBodes-Mod-3}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Ph-3.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-3.png}
 	\caption{Diagrama de Bode en fase de la tercera medición.}
 	\label{fig:CBodes-Ph-3}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Mod-1.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-1.png}
 	\caption{Diagrama de Bode en amplitud de la cuarta medición.}
 	\label{fig:CBodes-Mod-4}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/CBodes-Ph-4.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-4.png}
 	\caption{Diagrama de Bode en fase de la cuarta medición.}
 	\label{fig:CBodes-Ph-4}
 \end{figure}
 
-Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia del 1\%, se termina de ver reflejado en las comparaciones previamente hechas.
+Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia del 1\%, se termina de ver reflejado en las comparaciones previamente hechas. De las comparaciones previamente presentadas, se puede concluir que, como los diagramas de Bode, tanto teóricos, como simulados y medidos, se acoplan tan bien, se puede concluir que los diagramas de polos y ceros se corresponden. En otras palabras, los polos y ceros obtenidos en el circuito físico medido son similares a los obtenidos a través del modelo teórico. Finalmente, se destaca que en muy altas frecuencias, los diagramas no se corresponden en su totalidad. Este factor no es de interés y tampoco afecta el uso del circuito ya que estas diferencias se observan a partir de un rango de frecuencias mayor al audible, por lo tanto, el circuito no está destinado a trabajar en dicho intervalo.
 
 \begin{center}
 	\textcolor{red}{\textbf{OBSERVACIÓN, FASES.}}
@@ -574,13 +573,13 @@ Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho 
 Por su parte, por lo visto en la Sección (\ref{sub:desarrollo}), la impedancia de entrada permanece prácticamente constante frente a cambios de $\psi$. De esta forma, se decidió presentar las comparaciones de dicha variable una sola vez, independientemente del valor de $\psi$.
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/ZinCompMod.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/ZinCompMod.png}
 	\caption{Impedancia de entrada en modulo.}
 	\label{fig:ZinCompMod}
 \end{figure}
 \begin{figure}[H]	
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes/ZinCompPh.png}
+	\includegraphics[width=0.9\textwidth]{Imagenes/ZinCompPh.png}
 	\caption{Impedancia de entrada en fase.}
 	\label{fig:ZinCompPh}
 \end{figure}
