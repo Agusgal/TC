@@ -7,6 +7,10 @@
 
 \section{aux}
 
+\subsection{Introducción}
+
+En la siguiente etapa del informe, se presenta el desafío de analizar, confeccionar y evaluar un controlador de tonos. Para ello, primero se decidió observar el funcionamiento del oído humano, ya que de esta forma se logra comprender un poco más como se interpretan las diversas frecuencias por el sistema auditivo, para luego entrar en lo que a la electrónica respecta.
+
 \subsection{Fisiología del oído}
 
 La fisiología auditiva se encuentra dada en tres estructuras:
@@ -28,7 +32,7 @@ La fisiología auditiva se encuentra dada en tres estructuras:
 
 La señal captada se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo.
 
-El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$. \footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: \url{https://en.wikipedia.org/wiki/Audio_frequency} [Accessed 11 Sep. 2019].} A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano.\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}
+El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$.\footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: \url{https://en.wikipedia.org/wiki/Audio_frequency} [Accessed 11 Sep. 2019].} A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano.\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
@@ -44,15 +48,15 @@ Es así que se presenta una división de las bandas de frecuencia audibles por e
 	\label{fig:divfreq}
 \end{figure}
 
-Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ dB$, la segunda posee un umbral mínimo de $60 \ dB$. 
+A partir de aquí, se considera los rangos de frecuencias bajas, medias y altas a las presentadas en la Figura (\ref{fig:divfreq}). Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ dB$, la segunda posee un umbral mínimo de $60 \ dB$. 
 
-Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas.\footnote{``Escuchar sin riesgos!'', Who.int, 2019. [Online]. Available: \url{https://www.who.int/pbd/deafness/activities/MLS_Brochure_Spanish_lowres_for_web.pdf}. [Accessed: 11- Sep- 2019].}
+%Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas.\footnote{``Escuchar sin riesgos!'', Who.int, 2019. [Online]. Available: \url{https://www.who.int/pbd/deafness/activities/MLS_Brochure_Spanish_lowres_for_web.pdf}. [Accessed: 11- Sep- 2019].}
 
 \subsection{Funcionamiento de un ecualizador}
 
-Un equalizador es un dispositivo que se caracteriza por modificar la amplitud de los coeficientes de Fourier de una señal. En otras palabras, permite modificar la ganancia de de las frecuencias bajas, medias y altas de una señal. Para ello, se basa en la combinación de distintos filtros pasa-banda, cuya combinación permite dar con la configuración deseada.
+Un equalizador es un dispositivo que se caracteriza por modificar la amplitud de los coeficientes de Fourier de una señal. En otras palabras, permite modificar la ganancia de las frecuencias bajas, medias y altas de una señal. Para ello, se basa en la combinación de distintos filtros pasa-banda, con amplificación variable, cuya combinación permite dar con la configuración deseada.
 
-Existen distintos tipos de ecualizadores, con mayor y menor cantidad de bandas, es decir, filtros selectores que amplifican o atenúan ciertas frecuencias. En el presente informe se desarrolló un filtro de tres bandas. Para poder concebir dicho dispositivo, primero se analizó el circuito mostrado en la Figura (\ref{fig:circuitoini}).
+Existen distintos tipos de ecualizadores, con mayores y menores grados de libertad sobre las bandas, es decir, filtros selectores que amplifican o atenúan ciertas bandas de frecuencias. En el presente informe se desarrolló un filtro de tres bandas. Para poder concebir dicho dispositivo, primero se analizó el circuito mostrado en la Figura (\ref{fig:circuitoini}).
 
 \begin{figure}[H]
 \begin{center}
@@ -209,10 +213,12 @@ Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (
 \begin{center}
 \begin{circuitikz}
 	\node [op amp](A){};
-	\draw (A.-) to[short] ++(-1,0) to[generic, l = $Z_{AC}^{'}$, i<_ = $I_{C}$] ++(-2,0) node[](v1){} to[short, -o, i<_= $I_{in}$] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
-	\draw[color=red] (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$, i = $I_{B}$] ++(6.5,0) to[short] ++(0,-3);
+	\draw[color=red] (A.-) to[short] ++(-1,0) to[generic, l = $Z_{AC}^{'}$, i<_ = $I_{C}$] ++(-2,0) node[](v1){};
+	\draw (v1) to[short, -o, i<_= $I_{in}$] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
+	\draw (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$, i = $I_{B}$] ++(6.5,0) to[short] ++(0,-3);
 	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
-	\draw (A.-) to[short] ++(-0.5,0) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$, i = $I_{C}$] ++(3,0) to[short] ++(0,-2);
+	\draw (A.-) to[short] ++(-0.5,0) node[](tuvi){};
+	\draw[color=red] (tuvi) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$, i = $I_{C}$] ++(3,0) to[short] ++(0,-2);
 	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
 \end{circuitikz}
 	\caption{Resultado de tomar las impedancias en paralelo.}
