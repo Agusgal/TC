@@ -29,7 +29,6 @@ La fisiología auditiva se encuentra dada en tres estructuras:
 La señal captada se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo.
 
 El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$. \footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: \url{https://en.wikipedia.org/wiki/Audio_frequency} [Accessed 11 Sep. 2019].} A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano.\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth]{Imagenes/Ganancia-del-oido-externo-y-medio.png}
@@ -340,6 +339,7 @@ Si se busca conseguir que el sistema sea de fase no mínima, se debe seleccionar
 Esto no es posible debido a que los cambios en los componentes modifican también los polos existentes, colocando a estos también en el semiplano derecho, situación que implica que el sistema no sea estable. 
 
 \subsection{Desarrollo del circuito y selección de componentes}
+\label{sub:desarrollo}
 
 Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Debido al carácter logarítmico de las frecuencias, se calculan dichos valores de la forma:
 \begin{equation*}
@@ -374,6 +374,10 @@ Por cuestiones de disponibilidad de componentes, se debió utilizar un potenciom
 se determina la frecuencia de dicha instancia es de $8.96 \ kHz$, lo cuál sigue siendo un valor aceptable.
 
 Se podría solventar dicho problema reemplazando $R_3$ por una resistencia de $500 \ k\Omega$ para poder cumplir la condición mencionada. Dicha opción es descartada ya que al realizar esto se observan 2 factores: el primero se encuentra en la frecuencia central del filtro, que al calcularla nuevamente, resulta ser próxima a $1.27 \ kHz$, mientras que el segundo resulta ser la amplificación. Si bien se consigue mayor amplificación, afecta con las demás bandas y además no se cumple con el hecho de respetar los valores de amplificación de ecualizadores comerciales, como se mencionó anteriormente.
+
+\begin{center}
+	\textcolor{red}{\textbf{VER $\Xi$.}}
+\end{center}
 
 \begin{figure}[H]
 \centering
@@ -484,15 +488,124 @@ Se observa de estas figuras que la impedancia de entrada se comporta de manera r
 	\label{fig:zin_comp_ph}
 \end{figure}
 
-\subsection{Mediciones}
+Luego, para evitar enfrentarse a amplias variaciones en cuanto a los modelos presentados anteriormente, se decide utilizar tecnología SMD tanto para las resistencias fijas como para los capacitores. De esta forma, y valiéndose del análisis de Montecarlo del programa LTSpice, se obtiene el sigueinte diagrama de Bode, siendo la tolerancia de los componentes mencionados anteriormente de 1 \%.
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/MC-Mod.png}
+	\caption{Análisis de Montecarlo del diagrama de Bode en amplitud.}
+	\label{fig:MC-Mod}
+\end{figure}
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/MC-Ph.png}
+	\caption{Análisis de Montecarlo del diagrama de Bode en fase.}
+	\label{fig:MC-Ph}
+\end{figure}
+
+Como era de esperarse, se consigue que la variación en el Bode simulado sea mínima, debido a las tolerancias elegidas.
+
+\subsection{Resultados obtenidos}
 
 Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
 
 Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, debido a su frecuente uso en lo que a audio respecta, su bajo ruido de entrada y su amplia ganancia de banda pasante, la cual cubre el espectro audible. Debido a que este dispositivo es dual y que se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, de ahora en más se considera el cambio de fase que este provee al circuito junto con la impedancia que este agrega.   
 
-\begin{center}
-	\textcolor{red}{\textbf{MEDICIONES, SPICE Y TEORICOS.}}
-\end{center} 
+\subsubsection{Comparaciones}
 
+A continuación, se procede a presentar diagramas de Bode teóricos, simulados y medidos. Para ello, al momento de graficar los resultados teóricos, se fijaron ciertos valores del factor $\psi$ de cada etapa que represente la posición del potenciometro en el modelo físico, siendo $\psi = 0$ amplificación total y $\psi = 1$ atenuación total. Es así que se obtuvieron los siguientes gráficos.
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-1.png}
+	\caption{Diagrama de Bode en amplitud de la primer medición.}
+	\label{fig:CBodes-Mod-1}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-1.png}
+	\caption{Diagrama de Bode en fase de la primer medición.}
+	\label{fig:CBodes-Ph-1}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-2.png}
+	\caption{Diagrama de Bode en amplitud de la segunda medición.}
+	\label{fig:CBodes-Mod-2}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-2.png}
+	\caption{Diagrama de Bode en fase de la segunda medición.}
+	\label{fig:CBodes-Ph-2}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-3.png}
+	\caption{Diagrama de Bode en amplitud de la tercera medición.}
+	\label{fig:CBodes-Mod-3}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-3.png}
+	\caption{Diagrama de Bode en fase de la tercera medición.}
+	\label{fig:CBodes-Ph-3}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-1.png}
+	\caption{Diagrama de Bode en amplitud de la cuarta medición.}
+	\label{fig:CBodes-Mod-4}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Ph-4.png}
+	\caption{Diagrama de Bode en fase de la cuarta medición.}
+	\label{fig:CBodes-Ph-4}
+\end{figure}
+
+Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia del 1\%, se termina de ver reflejado en las comparaciones previamente hechas. De las comparaciones previamente presentadas, se puede concluir que, como los diagramas de Bode, tanto teóricos, como simulados y medidos, se acoplan tan bien, se puede concluir que los diagramas de polos y ceros se corresponden. En otras palabras, los polos y ceros obtenidos en el circuito físico medido son similares a los obtenidos a través del modelo teórico. Finalmente, se destaca que en muy altas frecuencias, los diagramas no se corresponden en su totalidad. Este factor no es de interés y tampoco afecta el uso del circuito ya que estas diferencias se observan a partir de un rango de frecuencias mayor al audible, por lo tanto, el circuito no está destinado a trabajar en dicho intervalo.
+
+\begin{center}
+	\textcolor{red}{\textbf{OBSERVACIÓN, FASES.}}
+\end{center}
+
+Por su parte, por lo visto en la Sección (\ref{sub:desarrollo}), la impedancia de entrada permanece prácticamente constante frente a cambios de $\psi$. De esta forma, se decidió presentar las comparaciones de dicha variable una sola vez, independientemente del valor de $\psi$.
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/ZinCompMod.png}
+	\caption{Impedancia de entrada en modulo.}
+	\label{fig:ZinCompMod}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/ZinCompPh.png}
+	\caption{Impedancia de entrada en fase.}
+	\label{fig:ZinCompPh}
+\end{figure}
+
+\subsubsection{Limitaciones}
+
+Finalmente se destaca la limitación que presenta el circuito, en lo que a amplitud de tensión de entrada respecta. Como se destacó previamente, y debido a cuestiones de fabricación, entre cada etapa existe una pequeña diferencia en cuanto a amplificación (y atenuación) máxima se trata. Llegado a cierto punto, y bajo ciertas condiciones, el amplificador operacional satura la tensión de salida o se ve afectado por el efecto de Slew-Rate. De esta forma, se presentan a continuación las condiciones que hacen que cada etapa comience a presentar cambios en la salida.
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.6\textwidth, trim = {0 3.35cm 0 2cm},clip]{Imagenes/F81-3.png}
+	\caption{Alteraciones de la salidas a frecuencias bajas.}
+	\label{fig:F81-3}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.6\textwidth, trim = {0 3.4cm 0 2cm},clip]{Imagenes/F1170-25.png}
+	\caption{Alteraciones de la salidas a frecuencias medias.}
+	\label{fig:F1170-25}
+\end{figure}
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=0.6\textwidth, trim = {0 3.4cm 0 2cm},clip]{Imagenes/F8890-2.png}
+	\caption{Alteraciones de la salidas a frecuencias altas.}
+	\label{fig:F8890-2}
+\end{figure}
+
+Es por esta razón que se toma como límite una tensión de entrada máxima igual a $2 \ V$ (tensión pico a pico), ya que, a dicho valor ya comienza a observarse deformaciones en la salida para las frecuencias más altas, mientras que para las bajas y las medias se requieren tensiones de hasta $3 \ V$ y $2.5 \ V$ respectivamente. Esto se debe a que la etapa que posee mayor amplificación es aquella destinada a alterar las frecuencias altas.
 
 \end{document}
