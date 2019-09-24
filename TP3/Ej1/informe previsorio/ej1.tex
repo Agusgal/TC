@@ -1,44 +1,5 @@
-%\documentclass[a4paper]{article}
-%\usepackage[utf8]{inputenc}
-%\usepackage[spanish, es-tabla]{babel}
-%
-%\usepackage{amsmath}
-%\usepackage{amsfonts}
-%\usepackage{amssymb}
-%
-%\usepackage{booktabs}
-%\usepackage[margin=0.8in]{geometry}
-%\usepackage{float}
-%\usepackage{graphicx}
-%\usepackage{subcaption}
-%\captionsetup{compatibility=false}
-%
-%\usepackage{multirow}
-%\setlength{\doublerulesep}{\arrayrulewidth}
-%
-%\usepackage{array}
-%\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
-%\newcommand\underrel[2]{\mathrel{\mathop{#2}\limits_{#1}}}
-%\usepackage[american]{circuitikz}
-%
-%
-%
-%\usepackage{fancyhdr}
-%
-%\usepackage{units} 
-%
-%\pagestyle{fancy}
-%\fancyhf{}
-%\lhead{22.01 TC}
-%\rhead{Mechoulam, Lambertucci, Rodriguez, Londero, Galdeman}
-%\rfoot{Página \thepage}
 \input{../../Informe/Header.tex}
-
 \begin{document}
-
-\tableofcontents
-\break
-\section{auxiliar}
 
 \subsection{Introducción Teórica}
 
@@ -56,18 +17,22 @@ Los convertidores generalizados de impedancia o GICs son circuitos activos dise�
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{Imagenes/gic.PNG}
-	\caption{Convertidor generalizado de impedancia puesto a tierra[1].}
+	\caption[]{Convertidor generalizado de impedancia puesto a tierra\protect\footnote{}.}
 	\label{fig:gic}
 \end{figure}
+
+\footnotetext{F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 185.}
 
 Estos circuitos están compuestos solamente por resistores, capacitores y amplificadores operacionales, por lo que sobresalen en su uso como emuladores de inductores o capacitores de gran capacidad.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Imagenes/gic_zin.PNG}
-	\caption{Obtención de la impedancia de entrada del convertidor generalizado de impedancia puesto a tierra[2].}
+	\caption[]{Obtención de la impedancia de entrada del convertidor generalizado de impedancia puesto a tierra\protect\footnote{}.}
 	\label{fig:gic_zin}
 \end{figure}
+
+\footnotetext{F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 186.}
 
 Para obtener la impedancia de entrada del GIC basta solamente calcular la corriente de entrada y utilizar la ley de nodos de Kirchhoff en los nodos de potencial V.
 
@@ -98,11 +63,13 @@ Esto demuestra que un GIC se puede utilizar para emular la impedancia que se des
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=1\textwidth]{Imagenes/gic_ind_fndr.PNG}
-	\caption{Utilización de GICs para emular una inductancia a la izquierda y realizar un FNDR o elemento D a la derecha[3].}
+	\caption[]{Utilización de GICs para emular una inductancia a la izquierda y realizar un FNDR o elemento D a la derecha\protect\footnote{}.}
 	\label{fig:gic_ind_fndr}
 \end{figure}
 
-Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo con un GIC que no está no puesto a tierra.
+\footnotetext{F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 187.}
+
+Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo con un GIC que no está puesto a tierra.
 
 
 \subsection{Análisis del Circuito}
@@ -317,6 +284,7 @@ Redibujando adecuadamente el circuito, se puede observar como los operacionales 
 	to[short] ++ (-1, 0)
 	to[V, l=$V_i$] ++ (0, -2)
 	node[ground](){}
+	to[open] ++ (0, -2)
 
 ;
  
@@ -435,11 +403,11 @@ Con estos valores se graficó el Bode en amplitud y fase del filtro:
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/bodemag_calc.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/bodemag_calc.png}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/bodefase_calc.png}
 	\end{subfigure}
 	\label{fig:bode_calc}
 	\caption{Gráficos de Bode para el filtro con los componentes de valor comercial.}
@@ -481,11 +449,11 @@ Luego, se procede a realizar un análisis del desplazamiento de los polos dadas 
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/polosr6a0.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/polosr6a0.png}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr6a0.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/cerosr6a0.png}
 	\end{subfigure}
 	\caption{Posición de los ceros y polos de la transferencia cuando $R_6$ parte de su valor original y tiende a cero.}
 	\label{fig:r6a0}
@@ -496,11 +464,11 @@ Luego, se procede a realizar un análisis del desplazamiento de los polos dadas 
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/polosr6ainf.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/polosr6ainf.png}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr6ainf.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/cerosr6ainf.png}
 	\end{subfigure}
 	\caption{Posición de los ceros y polos de la transferencia cuando $R_6$ parte de su valor original y tiende a infinito.}
 	\label{fig:r6ainf}
@@ -516,11 +484,11 @@ A continuación se analiza el desplazamiento de los polos variando la resistenci
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/polosr8a0.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/polosr8a0.png}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr8a0.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/cerosr8a0.png}
 	\end{subfigure}
 	\caption{Posición de los ceros y polos de la transferencia cuando $R_8$ parte de su valor original y tiende a cero.}
 	\label{fig:r8a0}
@@ -531,11 +499,11 @@ A continuación se analiza el desplazamiento de los polos variando la resistenci
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/polosr8ainf.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/polosr8ainf.png}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/cerosr8ainf.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/cerosr8ainf.png}
 	\end{subfigure}
 	\caption{Posición de los ceros y polos de la transferencia cuando $R_8$ parte de su valor original y tiende a infinito.}
 	\label{fig:r8ainf}
@@ -543,9 +511,10 @@ A continuación se analiza el desplazamiento de los polos variando la resistenci
 
 Se contempla en las Figuras (\ref{fig:r8a0}) y (\ref{fig:r8ainf}) como pequeñas variaciones en la resistencia $R_8$ logra generar corrimientos en la frecuencia de notch del circuito, manteniendo aproximadamente su forma. Si las variaciones son muy extremas, se pierde la condición de notch ya que varía el factor de calidad del circuito.
 
-Se puede concluir que la resistencia $R_8$ y sus pares regulan la frecuencia del notch, dentro de ciertos límites en los que la selectividad se conserva aproximadamente.
+Se puede concluir que la resistencia $R_8$ regula la frecuencia de notch, dentro de ciertos límites en los que la selectividad se conserva aproximadamente.
 
 \subsubsection{Análisis de Sensibilidades}
+\label{sec:sens}
 
 El análisis de sensibilidades es una herramienta fundamental a la hora de diseñar no solo filtros, sino cualquier circuito electrónico. Este análisis permite conocer cuánto cambia un parámetro fundamental del circuito, como por ejemplo la selectividad, dada una variación en otro de sus parámetros, como por ejemplo una resistencia.
 
@@ -611,7 +580,7 @@ $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ & $-\fra
 
 Un resultado interesante es que variaciones en la resistencia $R_4$ no generan cambios en el posicionamiento de los polos, pero si generan cambios en el factor de calidad de ambas singularidades.
 
-Otro resultado que destaca el análisis de las sensibilidades, tanto de los ceros como los polos, es como una variación en la resistencia $R_1$ de influye de misma manera en el posicionamiento de los polos y ceros por igual, por lo que se puede utilizar un preset en el lugar de esta resistencia para finamente calibrar la respuesta del circuito si esta se ve levemente corrida, sin perturbar la ganancia para las altas frecuencias.
+Otro resultado que destaca el análisis de las sensibilidades, tanto de los ceros como los polos, es como una variación en la resistencia $R_1$ o $R_3$ influye de misma manera en el posicionamiento de los polos y ceros por igual, por lo que se puede utilizar un preset en el lugar de esta resistencia para finamente calibrar la respuesta del circuito si esta se ve levemente corrida, sin perturbar la ganancia para las altas frecuencias.
 
 
 El cálculo y la presentación de las sensibilidades de las selectividades de ambas singularidades se omitió por ser de carácter engorroso y resultar en la dependencia de muchos de los parámetros del circuito.
@@ -638,11 +607,11 @@ Se procedió a realizar la simulación del circuito con los valores obtenidos me
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/bodemag_calc_sim.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/bodemag_calc_sim.png}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc_sim.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/bodefase_calc_sim.png}
 	\end{subfigure}
 	\caption{Comparación entre los gráficos de bode simulados y calculados teóricamente.}
 	\label{fig:bode_calc_sim}
@@ -650,7 +619,7 @@ Se procedió a realizar la simulación del circuito con los valores obtenidos me
 
 Utilizando el operacional elegido en la sección \ref{sec:eleccion_componentes}, se observa una respuesta en frecuencia muy similar a la calculada anteriormente, exceptuando dos puntos de interes.
 
-La ganancia en la frecuencia de notch es mucho menor a la calculada. Esto es algo esperado, ya que muchas cosas que no se tienen en consideración en los cálculos logran llegar a un resultado mucho más ideal que el real.
+La ganancia en la frecuencia de notch es mucho menor a la calculada. Esto es algo esperado, ya que muchas cosas que no se tienen en consideración en los cálculos logran llegar a un resultado mucho más ideal que el real, como por ejemplo capacitancias e inductancias parásitas como las resistencias de los componentes, terminales y pistas de cobre.
 
 Respecto a las altas frecuencias, se puede observar una discrepancia entre lo calculado y lo teórico. Esta diferencia es mucho más grande tendiendo a las frecuencias cercanas a los $10MHz$. A continuación se grafica el Bode en fase y magnitud entre las frecuencias de los $100KHz$ y los $100MHz$.
 
@@ -659,11 +628,11 @@ Respecto a las altas frecuencias, se puede observar una discrepancia entre lo ca
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/bodemag_calc_sim_highf.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/bodemag_calc_sim_highf.png}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/bodefase_calc_sim_highf.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/bodefase_calc_sim_highf.png}
 	\end{subfigure}
 	\label{fig:bode_calc_sim_highf}
 	\caption{Comparación entre los gráficos de bode simulados y calculados teóricamente para las frecuencias mayores a $100KHz$.}
@@ -680,21 +649,26 @@ Se observó luego la impedancia de entrada y salida del circuito.
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/sim_zin.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/sim_zin.png}
 		\caption{Módulo de la impedancia de entrada.}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.3\textwidth]{Imagenes/sim_zout.png}
+		\includegraphics[width=1.2\textwidth]{Imagenes/pend.jpg}
 		\caption{Módulo de la impedancia de salida.}
 	\end{subfigure}
 	\label{fig:zin_zout}
 	\caption{Simulación de la impedancia de entrada y salida del circuito.}
 \end{figure}
 
-Se puede ver como tanto la impedancia de entrada como de salida tienden a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que tanto a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra como a la salida se encuentra la impedancia de salida del operacional la cual es muy chica. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, por lo que se debe tomar un especial cuidado en esta etapa del análisis. 
+Se puede ver como la impedancia de entrada tiende a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, ya que a altas frecuencias la impedancia de entrada del circuito se hará comparable con la del generador, por lo que se debe tomar un especial cuidado en esta etapa del análisis.
+
+La impedancia de salida puede observarse como se mantiene casi siempre por debajo de los $100\Omega$. Esto también era un resultado esperable ya que la salida del circuito se encuentra conectado a la salida del primer operacional el cual posee una impedancia de salida muy baja.
+
+Cabe notar que si bien la impedancia de entrada parece anularse para frecuencias mayores a $1Khz$, la impedancia se mantiene en el orden de los $K\Omega$ hasta casi llegar a los $100KHz$. A los $10KHz$ su valor es de $5.027K\Omega$ mientras que su valor a los $100KHz$ es de $563\Omega$. A partir de los $\approx 700KHz$ su valor se mantiene por debajo de los $100\Omega$.
 
 \subsubsection{Simulación Montecarlo}
+\label{sec:mont}
 Se utilizó la simulación Montecarlo para observar la dispersión de la respuesta en frecuencia causada por las tolerancias de los componentes. Se utilizó una tolerancia del 5\% para todos los resistores excepto 1\% para las resistencias de 9k1. Para los capacitores se utilizó una tolerancia del 10\%.
 
 \begin{figure}[H]
@@ -709,9 +683,74 @@ Se puede observar una gran dispersión en la frecuencia de notch de aproximadame
 \subsection{Implementación del Circuito}
 Se implementó el circuito siguiendo las consideraciones y el análisis realizado en la Sección (\ref{sec:eleccion_componentes}). Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. 
 \subsubsection{Mediciones del Circuito y Análisis de Error}
+\label{sec:mediciones}
+
+En una primera instancia se midió la respuesta en frecuencia del filtro presentada a continuación.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/bode_calc_sim_med.PNG}
+	\caption{Diagrama de Bode en módulo medida, simulada y calculada del filtro.}
+	\label{fig:bode_calc_sim_med}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/bodefase_calc_sim_med.PNG}
+	\caption{Diagrama de Bode en fase medida, simulada y calculada del filtro.}
+	\label{fig:bodefase_calc_sim_med}
+\end{figure}
+
+Se presenta también una tabla con los valores más significantes de la medición contrastándola con los valores deseados del filtro.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+- & $\omega_z$ & $G_{Banda Pasante}$  & $G_{Notch}$ & $G_{Banda Atenuante}$ \\ \midrule
+Valor deseado & $2926Hz$ & - & - & - \\
+Valor medido & $2830Hz$ & $0dB$ & $-36.927dB$ & $-6.12dB$ \\
+Error & $3.281\%$ & - & - & - \\ \bottomrule
+\end{tabular}
+\caption{Valores significantes teóricos de la respuesta en frecuencia medida.}
+\label{tab:rta_freq_calc}
+\end{table}
+
+Se puede observar que la implementación del filtro low pass notch se apegó a los cálculos y simulaciones realizadas en casi todas las zonas. Las dos áreas donde la discrepancia es mayor es alrededor de la frecuencia de notch y para frecuencias mayores que $1MHz$. 
+
+El error de la frecuencia de notch se encuentra dentro de la dispersión simulada en la sección \ref{sec:mont} y era esperable con la tecnología de los componentes utilizados. Si se quisiera corregir el error de la frecuencia de notch se podría utilizar un preset en el lugar de ciertas resistencias como discutido en la sección \ref{sec:sens} para calibrar al circuito. Otra opción hubiera sido utilizar resistencias de tecnología SMD para obtener menores tolerancias. Sin embargo, ninguna de estas dos opciones se tuvieron en consideración a la hora de implementar el filtro ya que no era necesario mantener el error por debajo de cierto rango. 
+
+Para las altas frecuencias mucho mayores a la frecuencia de notch, se observa como el sobrepico alrededor de $1Mhz$ es mucho mayor en la respuesta medida que en la simulada. Se presume que esta diferencia se debe al muy bajo valor al que tiende la impedancia de entrada del circuito para frecuencias elevadas. Esto genera que haya una pérdida de información provista por el generador de tensión conectado a la entrada, ya que la impedancia de este se vuelve considerable frente a la impedancia de entrada del filtro. Cabe notar que cuando se menciona a un generador de tensión se refiere a cualquier fuente de información que pueda estar conectado a la entrada del circuito y la impedancia de este sería su impedancia de salida, la cual es vista por el filtro. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/bode_calc_sim_med_highf.PNG}
+	\caption{Diagrama de Bode en fase medida, simulada y calculada del filtro para altas frecuencias y con puntas x1.}
+	\label{fig:bodefase_calc_sim_med_highf}
+\end{figure}
+
+Se descartó la posibilidad de que esta anomalía sea a causa de las puntas del osciloscopio ya que cuando estas fueron agregadas a la simulación el sobrepico del cual se habla aumentó en casi $1dB$, mientras que entre la respuesta medida y simulada se encuentra una diferencia de $\approx 8dB$ como puede observarse en la Figura (\ref{fig:bode_calc_sim_med}).
+
+A continuación se midió la impedancia de entrada y de salida del filtro.
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.1\textwidth]{Imagenes/pend.jpg}
+		\caption{Módulo de la impedancia de entrada medida.}
+	\end{subfigure}
+	\begin{subfigure}[t]{0.49\textwidth}
+	\centering
+		\includegraphics[width=1.1\textwidth]{Imagenes/pend.jpg}
+		\caption{Módulo de la impedancia de salida medida.}
+	\end{subfigure}
+	\label{fig:zin_zout}
+	\caption{Medición de la impedancia de entrada y salida del circuito.}
+\end{figure}
+
 \subsubsection{Limitaciones del Circuito}
 \label{sec:limitaciones}
-
 
 Se ha recopilado, de la hoja de datos del \href{http://www.ti.com/lit/ds/symlink/tl082.pdf}{TL-082}, los parámetros utilizados en el análisis de las limitacionnes del circuito.
 
@@ -760,10 +799,8 @@ Por lo que se graficó la tensión máxima de entrada final en función de la fr
 	\label{fig:vin_max}
 \end{figure}
 
-Luego, el rango de frecuencias en que el circuito opera correctamente, dato conseguido empíricamente, es hasta 1Mhz.
+Luego, el rango de frecuencias en que el circuito opera correctamente estará limitado en su mayoría por dos cosas. La primera es la deformación de la respuesta en frecuencia producida por los polos del amplificador operacional, la cual genera que la ganancia en la banda atenuante del filtro tenga un desvío de $3dB$ al rededor de los $800KHz$. La segunda limitación del rango de frecuencias de correcta operación se debe a la baja impedancia de entrada que ofrece el circuito cuanto más alta es la frecuencia. Esto genera, como ya discutido en la sección \ref{sec:mediciones} una pérdida de información por parte del generador de tensión a la entrada. Cuanto más alta es la frecuencia menor es la impedancia de salida que se requiere en el generador de tensión conectado a la entrada del circuito para que haya una completa transferencia de información. Esta anomalía se comenzaba a hacer más evidente a partir de los $700Khz$. Estas dos cuestiones limitan el rango de frecuencias del circuito por debajo de $\approx 700kHz$.
 
-
-\subsection{Conclusiones}
 
 \subsection{Bibliografía Utilizada}
 [1]F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 185.
