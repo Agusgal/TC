@@ -90,7 +90,11 @@ def read_file_spice(filename):
 
     return data
 
-data = read_file_spice("Simulacion_highf_puntas.txt")
+data = read_file_spice("Simulacion_zout.txt")
+
+abss=[]
+for laconchadelaloraguido in data["abs"]:
+    abss.append(10**(laconchadelaloraguido/20))
 
 f = list(range(10**5, 10**7, 100))
 amp1 = []
@@ -125,15 +129,15 @@ for ff in f:
     )
 
 
-medido_data=pandas.read_csv("bodefiltrocongic_highf.csv", delimiter=';')
+#medido_data=pandas.read_csv("bodefiltrocongic_highf.csv", delimiter=';')
 
 plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Magnitud [dB]")
+plt.ylabel("Impedancia [Ohm]")
 plt.grid()
 plt.xscale("log")
-plt.plot(f, amp1, color='green', label="Calculado")
-plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado + Puntas x1")
-plt.plot(medido_data[['frequency']], medido_data[['MAG']], color = 'red', marker='.', label ="Medido", linestyle='-')
+#plt.plot(f, amp1, color='green', label="Calculado")
+plt.plot(data["f"], abss, color = 'blue', label ="Simulado")
+#plt.plot(medido_data[['frequency']], medido_data[['MAG']], color = 'red', marker='.', label ="Medido", linestyle='-')
 plt.legend()
 plt.show()
 
@@ -141,9 +145,9 @@ plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Fase [Grados]")
 plt.grid()
 plt.xscale("log")
-plt.plot(f, pha, color='green', label="Calculado")
-plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
-plt.plot(medido_data[['frequency']], medido_data[['PHA']], color = 'red', marker='.', label='Medido', linestyle='-')
+#plt.plot(f, pha, color='green', label="Calculado")
+#plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
+#plt.plot(medido_data[['frequency']], medido_data[['PHA']], color = 'red', marker='.', label='Medido', linestyle='-')
 plt.legend()
-plt.show()
+#plt.show()
 

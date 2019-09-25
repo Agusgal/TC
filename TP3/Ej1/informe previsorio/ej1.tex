@@ -335,12 +335,142 @@ A partir de (\ref{eq:circ_trans1}), (\ref{eq:circ_trans2}), (\ref{eq:circ_trans3
 \label{circ_trans}
 \end{equation}
 
-\subsubsection{Análisis de los Componentes}
-	
-A continuación se hace un breve análisis de la elección de los valores de los componentes y de la funcionalidad de algunos de estos.
+\subsubsection{Análisis de Sensibilidades}
+\label{sec:sens}
+
+El análisis de sensibilidades es una herramienta fundamental a la hora de diseñar no solo filtros, sino cualquier circuito electrónico. Este análisis permite conocer cuánto cambia un parámetro fundamental del circuito, como por ejemplo la selectividad, dada una variación en otro de sus parámetros, como por ejemplo una resistencia.
+
+La sensibilidad de un parámetro $y$ respecto a otro parámetro $x$ se calcula como
+
+\begin{equation}
+S^y_x = \frac{x}{y} \frac{\partial y}{\partial x}
+\end{equation}
+
+Para el análisis de sensibilidades se remite a la función transferencia obtenida en la Sección (\ref{sec:fun_trans}) reescrita a continuación.
+
+\[
+\hspace{-0.5cm}
+\frac{V_{out}}{V_i} = \frac{\frac{S^2 C_2 R_1 R_3 (-C_6 R_4 + C_7 R_8)}{R_4} + S \frac{C_2 R_1 R_3 (R_6 R_8 - R_4 R_7)}{R_4 R_6 R_7} + 1}{S^2 \frac{C_2 R_1 R_3 R_8 (C_6 + C_7)}{R_4}+S \frac{C_2 R_1 R_3 R_8 (R_7 + R_6)}{R_4 R_6 R_7} + 1}
+\]
+
+Como primer paso, se realiza un análisis de la sensibilidad de la frecuencia de notch $\omega_z$ en función de los componentes resistivos y capacitivos del circuito.
+
+Considerando que
+\begin{equation}
+\omega_z = \frac{1}{\sqrt{\frac{C_2 R_1 R_3 (C_7 R_8 - C_6 R_4)}{R_4}}}
+\end{equation}
+
+se halla la derivada parcial de $\omega_z$ respecto de $R_1$ como
+
+\begin{equation}
+\frac{\partial \omega_z}{\partial R_1} = -\frac{1}{2} \frac{C_2 R_3 (C_7 R_8 - C_6 R_4)}{(\frac{C_2 R_1 R_3 (C_7 R_8 - C_6 R_4)}{R_4})^{\frac{3}{2}} R_4}
+\end{equation}
+
+siendo finalmente la sensibilidad de la frecuencia de notch respecto de la resistencia $R_1$
+
+\begin{equation}
+S^{\omega_z}_{R_1} = -\frac{1}{2} \frac{C_2 R_3 (C_7 R_8 - C_6 R_4)}{(\frac{C_2 R_1 R_3 (C_7 R_8 - C_6 R_4)}{R_4})^{\frac{3}{2}} R_4} \frac{R_1}{\sqrt{\frac{C_2 R_1 R_3 (C_7 R_8 - C_6 R_4)}{R_4}}} = -\frac{1}{2}
+\end{equation}
+
+Luego, se realiza el mismo procedimiento con $\omega_p$, $Q_p$ y $Q_z$ siendo estas
+
+\begin{equation}
+\omega_p = \frac{1}{\sqrt{\frac{C_2 R_1 R_3 R_8  C_6 C_7}{R_4}}}
+\end{equation}
+
+\begin{equation}
+Q_p = \frac{R_4 R_6 R_7 \sqrt{\frac{C_2 R_1 R_3 R_8 C_6 C_7}{R_4}}}{C_2 R_1 R_3 R_8 (R_7 + R_6)}
+\end{equation}
+
+\begin{equation}
+Q_z = \frac{R_4 R_6 R_7 \sqrt{\frac{C_2 R_1 R_3 (C_7 R_8 - C_6 R_4)}{R_4}}}{C_2 R_1 R_3 (R_6 R_8 - R_4 R_7)}
+\end{equation}
+
+De forma análoga se calculó el resto de las sensibilidades de los parámetros más importantes del circuito respecto a los componentes resistivos y capacitivos presentados a continuación.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+$S^{\omega_z}_{R_1}$ & $S^{\omega_z}_{C_2}$ & $S^{\omega_z}_{R_3}$ & $S^{\omega_z}_{R_4}$ & $S^{\omega_z}_{R_8}$ & $S^{\omega_z}_{R_6}$ & $S^{\omega_z}_{C_6}$ & $S^{\omega_z}_{R_7}$ & $S^{\omega_z}_{C_7}$  \\ \midrule
+$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2} \frac{C_7 R_8}{C_6 R_4 - C_7 R_8}$ & $-\frac{1}{2}\frac{C_7 R_8}{C_7 R_8 - C_6 R_4}$ & $0$ & $\frac{1}{2} \frac{C_6 R_4}{C_7 R_8 - C_6 R_4}$ & $0$ & $-\frac{1}{2} \frac{R_8 C_7}{C_7 R_8 - C_6 R_4}$ \\ \bottomrule
+\end{tabular}
+\caption{Sensibilidades de la frecuencia de notch respecto a los componentes resistivos y capacitivos del circuito.}
+\label{tab:sens_wz}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+$S^{\omega_p}_{R_1}$ & $S^{\omega_p}_{C_2}$ & $S^{\omega_p}_{R_3}$ & $S^{\omega_p}_{R_4}$ & $S^{\omega_p}_{R_8}$ & $S^{\omega_p}_{R_6}$ & $S^{\omega_p}_{C_6}$ & $S^{\omega_p}_{R_7}$ & $S^{\omega_p}_{C_7}$  \\ \midrule
+$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ \\ \bottomrule
+\end{tabular}
+\caption{Sensibilidades de la frecuencia de los polos respecto a los componentes resistivos y capacitivos del circuito.}
+\label{tab:sens_wp}
+\end{table}
+
+\begin{table}[H]
+\centering
+\scalebox{0.9}{
+\hspace*{-2cm}
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+$S^{Q_z}_{R_1}$ & $S^{Q_z}_{C_2}$ & $S^{Q_z}_{R_3}$ & $S^{Q_z}_{R_4}$ & $S^{Q_z}_{R_8}$ & $S^{Q_z}_{R_6}$ & $S^{Q_z}_{C_6}$ & $S^{Q_z}_{R_7}$ & $S^{Q_z}_{C_7}$  \\ \midrule
+$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2} \frac{R_8 (2 C_6 R_4 R_6 - C_7 R_4 R_7 - C_7 R_6 R_8)}{(R_4 R_7 - R_6 R_8)(C_6 R_4 - C_7 R_8)}$ & $\frac{1}{2} \frac{R_8 (2 C_6 R_4 R_6 - C_7 R_4 R_7 - C_7 R_6 R_8)}{(R_4 R_7 - R_6 R_8)(C_6 R_4 - C_7 R_8)}$ & $\frac{R_7 R_4}{R_4 R_7 - R_6 R_8}$ & $-\frac{1}{2}\frac{C_6 R_4}{C_7 R_8 - C_6 R_4}$ & $-\frac{R_8 R_6}{R_4 R_7 - R_6 R_8}$ & $-\frac{1}{2}\frac{C_7 R_8}{C_6 R_4 - C_7 R_8}$ \\ \bottomrule
+\end{tabular}
+}
+\caption{Sensibilidades del factor de calidad de los ceros respecto a los componentes resistivos y capacitivos del circuito.}
+\label{tab:sens_Qz}
+\end{table}
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccccc@{}}
+\toprule
+$S^{Q_p}_{R_1}$ & $S^{Q_p}_{C_2}$ & $S^{Q_p}_{R_3}$ & $S^{Q_p}_{R_4}$ & $S^{Q_p}_{R_8}$ & $S^{Q_p}_{R_6}$ & $S^{Q_p}_{C_6}$ & $S^{Q_p}_{R_7}$ & $S^{Q_p}_{C_7}$  \\ \midrule
+$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{R_7}{R_7 + R_6}$ & $\frac{1}{2}$ & $\frac{R_6}{R_7+R_6}$ & $\frac{1}{2}$ \\ \bottomrule
+\end{tabular}
+\caption{Sensibilidades del factor de calidad de los polos respecto a los componentes resistivos y capacitivos del circuito.}
+\label{tab:sens_Qp}
+\end{table}
+
+En una primera instancia se puede observar como las sensibilidades de $R_1$, $R_3$, $C_2$ resultan ser las mismas para los cuatro parámetros analizados. Esto indica que si se cometiese un error en las frecuencias de corte por la tolerancia de los componentes utilizados, este se podría mitigar calibrando el circuito con cualquiera de los tres susodichos componentes. Como los capacitores variables suelen ser muy caros y de muy poca capacidad, no se tomó en consideración esta opción.
+
+Para continuar con el análisis de sensibilidades, se utilizaron las consideraciones de diseño para el circuito presentadas en la sección \ref{sec:eleccion_componentes}. A continuación se presenta una tabla de sensibilidades con estas consideraciones tomadas en cuenta.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccccc@{}}
+\toprule
+$-$ & $R_1$ & $C_2$ & $R_3$ & $R_4$ & $R_8$ & $R_6$ & $C_6$ & $R_7$ & $C_7$  \\ \midrule
+
+
+$S^\omega_z$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{3}{4}$ & $-\frac{3}{4}$ & $0$ & $\frac{1}{4}$ & $0$ & $-\frac{3}{4}$ \\
+
+
+$S^\omega_p$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ \\
+
+
+$S^Q_z$ & $-\frac{1}{2}$ & $-\frac{1}{2}$  & $-\frac{1}{2}$ & $\uparrow \uparrow$ & $\uparrow \uparrow$ & $\uparrow \uparrow$ & $-\frac{1}{4}$ & $\uparrow \uparrow$ & $\frac{3}{4}$\\
+
+
+$S^Q_p$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}$ & $\frac{1}{2}$ & $\frac{1}{2}$ & $\frac{1}{2}$\\ \bottomrule
+
+
+\end{tabular}
+\caption{Sensibilidades del circuito teniendo en cuenta las consideraciones de diseño. Doble flecha hacia arriba significa sensibilidad tendiendo a infinito.}
+\label{tab:sens}
+\end{table}
+
+Se puede observar en la Tabla (\ref{tab:sens}) como es crucial minimizar las tolerancias de las resistencias $R_4$, $R_8$, $R_6$ y $R_7$ para no afectar la profundidad del notch. 
 
 \subsubsection{Elección de Componentes y Diseño}
 \label{sec:eleccion_componentes}
+
+A continuación se hace un breve análisis de la elección de los valores de los componentes y de la funcionalidad de algunos de estos.
 
 Utilizando las consideraciones de diseño del circuito de low-pass notch:
 $$R_1=R_3=R_4=R_8=R \ \ \ ; \ \ \ R_6=R_7=2QR$$
@@ -375,7 +505,7 @@ Considerando que hay una mayor facilidad de obtener resistencias de distintos va
 R = \frac{\left(\frac{1}{13000}\right) \frac{s}{rad}}{C}
 \end{equation}
 
-Como se desean poseer resistencias pequeñas, ya que el ruido es proporcional a estas, se eligió un valor comercial para la capacitancia C de tal manera que la resistencia R sea del orden de los $10k\Omega$.
+Como se desean poseer resistencias pequeñas, ya que el ruido es proporcional a estas, se eligió un valor comercial para la capacitancia C de tal manera que la resistencia R sea del orden de los $10k\Omega$. Además, se utilizó un preset en la resistencia $R_1$ por razones argumentadas en la sección \ref{sec:sens}.
 
 $$C=15nF \rightarrow R=5128.2\Omega$$
 
@@ -389,7 +519,8 @@ Componente & Valor Teórico & Implementación & Valor Final & Error \\ \midrule
 $C_2$ & $15nF$ & $15nF$ & $15nF$ & $0\%$ \\
 $C_7$ & $11.25nF$ & $10nF//1.2nF$ & $11.2nF$ & $0.40\%$ \\
 $C_6$ & $3.75nF$ & $3.3nF//470pF$ & $3.77nF$ & $0,53\%$\\
-$R_{1,3,4,8}$ & $5128.2 \Omega$ & $12K\Omega//9K1\Omega$ & $5175.35 \Omega$ & $0,92\%$ \\
+$R_{1,3,8}$ & $5128.2 \Omega$ & $12K\Omega//9K1\Omega$ & $5175.35 \Omega$ & $0,92\%$ \\
+$R_4$ & $5128.2 \Omega$ & $Preset$ & $5128.2 \Omega$ & $\approx 0\%$\\
 $R_{6,7}$ & $20512.82 \Omega$ & $330K\Omega//22K\Omega$ & $20625\Omega$ & $0,55\%$ \\ \bottomrule
 \end{tabular}
 \caption{Valores comerciales finales utilizados.}
@@ -459,6 +590,13 @@ Luego, se procede a realizar un análisis del desplazamiento de los polos dadas 
 	\label{fig:r6a0}
 \end{figure}
 
+Observando la transferencia cuando $R_6 \rightarrow 0$ resulta en
+\begin{equation}
+H(s)=-\frac{R_4}{R_8}
+\label{ec:r6a0}
+\end{equation}
+lo cual se comporta como un amplificador operacional en configuración inversora.
+
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[t]{0.49\textwidth}
@@ -474,7 +612,13 @@ Luego, se procede a realizar un análisis del desplazamiento de los polos dadas 
 	\label{fig:r6ainf}
 \end{figure}
 
-Se puede observar en las Figuras (\ref{fig:r6a0}) y (\ref{fig:r6ainf}) que cambios en la resistencia $R_6$ genera que los ceros y polos no solo se desplacen horizontalmente sino también que estos transicionen de ser complejos conjugados, a estar ubicados en un mismo punto y eventualmente situarse solamente sobre el eje real, apartándose el uno del otro. Además, es observable como si $R_6$ aumenta de su valor original, disminuirá el sobrepico de los ceros y aumentará el sobrepico de los polos. Si $R_6$ tiende a cero, se contempla como baja el factor de calidad de tanto los ceros como los polos, por lo que el filtro pierde su naturaleza de notch y pasa a asemejarse más a la curva asintótica de la transferencia. Con este análisis se puede llegar a la conclusión que la resistencia $R_6$ regula el factor de calidad del circuito.
+Para $R_6 \rightarrow \infty$ se tiene que la transferencia resulta
+
+\begin{equation}
+H(s)=-\frac{S^2 (C_2 R_1 R_3 R_7 (C_6 R_4 - C_7 R_8)) - S (C_2 R_1 R_3 R_8) - R_4 R_7}{S^2 (C_2 R_1 R_3 R_7 R_8 (C_6 + C_7) ) + S (C_2 R_1 R_3 R_8) + R_4 R_7}
+\end{equation}
+
+Se puede observar en las Figuras (\ref{fig:r6a0}) y (\ref{fig:r6ainf}) que cambios en la resistencia $R_6$ genera que los ceros y polos no solo se desplacen horizontalmente sino también que estos transicionen de ser complejos conjugados, a estar ubicados en un mismo punto y eventualmente situarse solamente sobre el eje real, apartándose el uno del otro. Además, es observable como si $R_6$ aumenta de su valor original, disminuirá el sobrepico de los ceros y aumentará el sobrepico de los polos. Si $R_6$ tiende a cero, se contempla como baja el factor de calidad de tanto los ceros como los polos, por lo que el filtro pierde su naturaleza de notch y pasa a asemejarse más a la curva asintótica de la transferencia. Esto también puede verse en (\ref{ec:r6a0}). Con este análisis se puede llegar a la conclusión que la resistencia $R_6$ regula el factor de calidad del circuito.
 
 
 A continuación se analiza el desplazamiento de los polos variando la resistencia $R_8$. 
@@ -494,6 +638,13 @@ A continuación se analiza el desplazamiento de los polos variando la resistenci
 	\label{fig:r8a0}
 \end{figure}
 
+Quedando la función transferencia como
+
+\begin{equation}
+H(S) = - \frac{S^2 (C_2 C_6 R_1 R_3 R_6) + S (C_2 R_1 R_3) - R_6}{R_6}
+\label{eq:r8a0}
+\end{equation}
+
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}[t]{0.49\textwidth}
@@ -509,81 +660,15 @@ A continuación se analiza el desplazamiento de los polos variando la resistenci
 	\label{fig:r8ainf}
 \end{figure}
 
-Se contempla en las Figuras (\ref{fig:r8a0}) y (\ref{fig:r8ainf}) como pequeñas variaciones en la resistencia $R_8$ logra generar corrimientos en la frecuencia de notch del circuito, manteniendo aproximadamente su forma. Si las variaciones son muy extremas, se pierde la condición de notch ya que varía el factor de calidad del circuito.
-
-Se puede concluir que la resistencia $R_8$ regula la frecuencia de notch, dentro de ciertos límites en los que la selectividad se conserva aproximadamente.
-
-\subsubsection{Análisis de Sensibilidades}
-\label{sec:sens}
-
-El análisis de sensibilidades es una herramienta fundamental a la hora de diseñar no solo filtros, sino cualquier circuito electrónico. Este análisis permite conocer cuánto cambia un parámetro fundamental del circuito, como por ejemplo la selectividad, dada una variación en otro de sus parámetros, como por ejemplo una resistencia.
-
-La sensibilidad de un parámetro $y$ respecto a otro parámetro $x$ se calcula como
+Resultando en la función transferencia
 
 \begin{equation}
-S^y_x = \frac{x}{y} \frac{\partial y}{\partial x}
+H(S) = \frac{R_6 C_7 R_7 S + R_6 }{S (R_6 R_7 (C_6 + C_7)) + R_6 + R_7}
 \end{equation}
 
-Para el análisis de sensibilidades se remite a la función transferencia obtenida en la Sección (\ref{sec:fun_trans}) reescrita a continuación.
+Se contempla en las Figuras (\ref{fig:r8a0}) y (\ref{fig:r8ainf}) como pequeñas variaciones en la resistencia $R_8$ logra generar corrimientos en la frecuencia de notch del circuito, manteniendo aproximadamente su forma. Si las variaciones son muy extremas, se pierde la condición de notch ya que varía el factor de calidad del circuito. Además, se puede observar en (\ref{eq:r8a0}) como el sistema se vuelve inestable si $R_8$ tiende a cero ya que la tranferencia tendrá un polo doble en el infinito. Si la resistencia $R_8$ tiende a infinito, el sistema se convierte en un pasa altos o pasa bajos dependiendo los valores de los componentes.
 
-\[
-\hspace{-0.5cm}
-\frac{V_{out}}{V_i} = \frac{S^2 C_2 R_1 R_3 R_6 R_7 (-C_6 R_4 + C_7 R_8) + S C_2 R_1 R_3 (R_6 R_8 - R_4 R_7) + R_4 R_6 R_7}{S^2 C_2 R_1 R_3 R_6 R_7 R_8 (C_6 + C_7)+S C_2 R_1 R_3 R_8 (R_7 + R_6) + R_4 R_6 R_7}
-\]
-
-Como primer paso, se realiza un análisis de la sensibilidad de la frecuencia de notch $\omega_z$ en función de los componentes resistivos y capacitivos del circuito.
-
-Considerando que
-\begin{equation}
-\omega_z = \frac{1}{\sqrt{C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)}}
-\end{equation}
-
-se halla la derivada parcial de $\omega_z$ respecto de $R_1$ como
-
-\begin{equation}
-\frac{\partial \omega_z}{\partial R_1} = -\frac{1}{2} \frac{C_2 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)}{(C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4))^{\frac{3}{2}}}
-\end{equation}
-
-siendo finalmente la sensibilidad de la frecuencia de notch respecto de la resistencia $R_1$
-
-\begin{equation}
-S^{\omega_z}_{R_1} = - \frac{1}{2}  R_1 \sqrt{C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)} \frac{C_2 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4)}{(C_2 R_1 R_3 R_6 R_7 (C_7 R_8 - C_6 R_4))^{\frac{3}{2}}} = -\frac{1}{2}
-\end{equation}
-
-De forma análoga se calculó el resto de las sensibilidades de la frecuencia de notch respecto a los componentes resistivos y capacitivos presentados a continuación.
-
-\begin{table}[H]
-\centering
-\begin{tabular}{@{}ccccccccc@{}}
-\toprule
-$S^{\omega_z}_{R_1}$ & $S^{\omega_z}_{C_2}$ & $S^{\omega_z}_{R_3}$ & $S^{\omega_z}_{R_4}$ & $S^{\omega_z}_{R_8}$ & $S^{\omega_z}_{R_6}$ & $S^{\omega_z}_{C_6}$ & $S^{\omega_z}_{R_7}$ & $S^{\omega_z}_{C_7}$  \\ \midrule
-$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $\frac{1}{2}\frac{R_4 C_6}{C_7 R_8 - C_6 R_4}$ & $-\frac{1}{2}\frac{R_8 C_7}{C_7 R_8 - C_6 R_4}$ & $-\frac{1}{2}$ & $\frac{1}{2}\frac{R_4 C_6}{C_7 R_8 - C_6 R_4}$ & $-\frac{1}{2}$ & $-\frac{1}{2} \frac{R_8 C_7}{C_7 R_8 - C_6 R_4}$ \\ \bottomrule
-\end{tabular}
-\caption{Sensibilidades de la frecuencia de notch respecto a los componentes resistivos y capacitivos del circuito.}
-\label{tab:sens_wz}
-\end{table}
-
-Dadas las sensibilidades obtenidas, se puede observar que solamente cuatro de aquellas son distintas de $\pm \frac{1}{2}$. Si no se tuviesen consideraciones para la implementaciones del circuito, se podría minimizar la sensibilidad de la frecuencia de notch respecto a los capacitores, ya que estos son los que tienen una mayor tolerancia. No obstante, utilizando las consideraciones de la implementación del circuito, sucede que las sensibilidades de $R_4$, $R_8$, $C_6$ y $C_7$ son iguales a $\frac{1}{4}(k^2-1)$ por lo que las sensibilidades respecto a estos componentes pueden llegar a tornarse muy alta cuanto más apartados estén los polos de los ceros en módulo. 
-
-A continuación se presentan las sensibilidades de la frecuencia de corte de los polos en función de los componentes resistivos y capacitivos del circuito.
-
-\begin{table}[H]
-\centering
-\begin{tabular}{@{}ccccccccc@{}}
-\toprule
-$S^{\omega_p}_{R_1}$ & $S^{\omega_p}_{C_2}$ & $S^{\omega_p}_{R_3}$ & $S^{\omega_p}_{R_4}$ & $S^{\omega_p}_{R_8}$ & $S^{\omega_p}_{R_6}$ & $S^{\omega_p}_{C_6}$ & $S^{\omega_p}_{R_7}$ & $S^{\omega_p}_{C_7}$  \\ \midrule
-$-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $0$ & $-\frac{1}{2}$ & $-\frac{1}{2}$ & $-\frac{1}{2}\frac{C_6}{C_6+C_7}$ & $-\frac{1}{2}$ & $-\frac{1}{2} \frac{C_7}{C_7+ C_6}$ \\ \bottomrule
-\end{tabular}
-\caption{Sensibilidades de la frecuencia de los polos respecto a los componentes resistivos y capacitivos del circuito.}
-\label{tab:sens_wp}
-\end{table}
-
-Un resultado interesante es que variaciones en la resistencia $R_4$ no generan cambios en el posicionamiento de los polos, pero si generan cambios en el factor de calidad de ambas singularidades.
-
-Otro resultado que destaca el análisis de las sensibilidades, tanto de los ceros como los polos, es como una variación en la resistencia $R_1$ o $R_3$ influye de misma manera en el posicionamiento de los polos y ceros por igual, por lo que se puede utilizar un preset en el lugar de esta resistencia para finamente calibrar la respuesta del circuito si esta se ve levemente corrida, sin perturbar la ganancia para las altas frecuencias.
-
-
-El cálculo y la presentación de las sensibilidades de las selectividades de ambas singularidades se omitió por ser de carácter engorroso y resultar en la dependencia de muchos de los parámetros del circuito.
+Se puede concluir que la resistencia $R_8$ regula tanto la frecuencia de notch como la selectividad de los ceros. Si la resistencia es muy baja, el sistema se torna inestable.
 
 \subsubsection{Elección de los Amplificadores Operacionales}
 
@@ -649,12 +734,12 @@ Se observó luego la impedancia de entrada y salida del circuito.
 	\begin{subfigure}[t]{0.49\textwidth}
 	\hspace*{-2cm}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/sim_zin.png}
+		\includegraphics[width=1.1\textwidth]{Imagenes/sim_zin.png}
 		\caption{Módulo de la impedancia de entrada.}
 	\end{subfigure}
 	\begin{subfigure}[t]{0.49\textwidth}
 	\centering
-		\includegraphics[width=1.2\textwidth]{Imagenes/pend.jpg}
+		\includegraphics[width=1.1\textwidth]{Imagenes/sim_zout.png}
 		\caption{Módulo de la impedancia de salida.}
 	\end{subfigure}
 	\label{fig:zin_zout}
@@ -681,23 +766,23 @@ Se utilizó la simulación Montecarlo para observar la dispersión de la respues
 Se puede observar una gran dispersión en la frecuencia de notch de aproximadamente $300Hz$ sin tomar en cuenta el caso de más a la derecha.
 
 \subsection{Implementación del Circuito}
-Se implementó el circuito siguiendo las consideraciones y el análisis realizado en la Sección (\ref{sec:eleccion_componentes}). Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. 
+Se implementó el circuito de dos maneras distintas para continuar con la investigación acerca de las sensibilidades calculadas y mejorar el aprendizaje de esta herramienta. Se siguieron las consideraciones y el análisis realizado en la Sección \ref{sec:eleccion_componentes} excepto por el preset utilizado en la resistencia $R_1$. En su lugar, se utilizó el mismo paralelo de dos resistencias que para las resistencias de mismo valor. Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. Una vez que se calcule la respuesta en frecuencia del circuito, se colocará el preset en la resistencia $R_1$ y se contrastará el error cometido debido a las tolerancias con el error cometido luego de la calibración, el cual se espera que sea lo más cercano a cero.
 \subsubsection{Mediciones del Circuito y Análisis de Error}
 \label{sec:mediciones}
 
-En una primera instancia se midió la respuesta en frecuencia del filtro presentada a continuación.
+En una primera instancia se midió la respuesta en frecuencia del filtro sin el preset en $R_1$. Se presenta a continuación.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes/bode_calc_sim_med.PNG}
-	\caption{Diagrama de Bode en módulo medida, simulada y calculada del filtro.}
+	\caption{Diagrama de Bode en módulo medida, simulada y calculada del filtro sin preset.}
 	\label{fig:bode_calc_sim_med}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes/bodefase_calc_sim_med.PNG}
-	\caption{Diagrama de Bode en fase medida, simulada y calculada del filtro.}
+	\caption{Diagrama de Bode en fase medida, simulada y calculada del filtro sin preset.}
 	\label{fig:bodefase_calc_sim_med}
 \end{figure}
 
@@ -712,24 +797,37 @@ Valor deseado & $2926Hz$ & - & - & - \\
 Valor medido & $2830Hz$ & $0dB$ & $-36.927dB$ & $-6.12dB$ \\
 Error & $3.281\%$ & - & - & - \\ \bottomrule
 \end{tabular}
-\caption{Valores significantes teóricos de la respuesta en frecuencia medida.}
+\caption{Valores significantes teóricos de la respuesta en frecuencia medida sin preset.}
 \label{tab:rta_freq_calc}
 \end{table}
 
 Se puede observar que la implementación del filtro low pass notch se apegó a los cálculos y simulaciones realizadas en casi todas las zonas. Las dos áreas donde la discrepancia es mayor es alrededor de la frecuencia de notch y para frecuencias mayores que $1MHz$. 
 
-El error de la frecuencia de notch se encuentra dentro de la dispersión simulada en la sección \ref{sec:mont} y era esperable con la tecnología de los componentes utilizados. Si se quisiera corregir el error de la frecuencia de notch se podría utilizar un preset en el lugar de ciertas resistencias como discutido en la sección \ref{sec:sens} para calibrar al circuito. Otra opción hubiera sido utilizar resistencias de tecnología SMD para obtener menores tolerancias. Sin embargo, ninguna de estas dos opciones se tuvieron en consideración a la hora de implementar el filtro ya que no era necesario mantener el error por debajo de cierto rango. 
+El error de la frecuencia de notch se encuentra dentro de la dispersión simulada en la sección \ref{sec:mont} y era esperable con la tecnología de los componentes utilizados y sin una opción de calibración.
 
 Para las altas frecuencias mucho mayores a la frecuencia de notch, se observa como el sobrepico alrededor de $1Mhz$ es mucho mayor en la respuesta medida que en la simulada. Se presume que esta diferencia se debe al muy bajo valor al que tiende la impedancia de entrada del circuito para frecuencias elevadas. Esto genera que haya una pérdida de información provista por el generador de tensión conectado a la entrada, ya que la impedancia de este se vuelve considerable frente a la impedancia de entrada del filtro. Cabe notar que cuando se menciona a un generador de tensión se refiere a cualquier fuente de información que pueda estar conectado a la entrada del circuito y la impedancia de este sería su impedancia de salida, la cual es vista por el filtro. 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes/bode_calc_sim_med_highf.PNG}
-	\caption{Diagrama de Bode en fase medida, simulada y calculada del filtro para altas frecuencias y con puntas x1.}
+	\caption{Diagrama de Bode en fase medida, simulada y calculada del filtro sin preset para altas frecuencias y con puntas x1.}
 	\label{fig:bodefase_calc_sim_med_highf}
 \end{figure}
 
 Se descartó la posibilidad de que esta anomalía sea a causa de las puntas del osciloscopio ya que cuando estas fueron agregadas a la simulación el sobrepico del cual se habla aumentó en casi $1dB$, mientras que entre la respuesta medida y simulada se encuentra una diferencia de $\approx 8dB$ como puede observarse en la Figura (\ref{fig:bode_calc_sim_med}).
+
+A continuación se grafica nuevamente el bode en amplitud medido haciendo un enfoque en la frecuencia de notch.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/bode_calc_sim_med_notch.PNG}
+	\caption{Diagrama de Bode en amplitud medido, simulado y calculado del filtro sin preset con un enfoque en la frecuencia de notch.}
+	\label{fig:bodefase_calc_sim_med_notch}
+\end{figure}
+
+Posteriormente, se decidió colocar el preset en la resistencia $R_1$, calibrar el filtro y realizar nuevamente la medición de los gráficos de Bode.
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ACA PONER MEDICIONES CON PRESET.
 
 A continuación se midió la impedancia de entrada y de salida del filtro.
 
