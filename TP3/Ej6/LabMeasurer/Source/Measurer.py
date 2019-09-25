@@ -10,10 +10,16 @@ import csv
 OSC_RESOURC = 0
 GEN_RESOURC = 1
 
+FIRST_CHANNEL = 0
+SECOND_CHANNEL = 1
+MATH_SOURCE_1 = 2
+MATH_SOURCE_2 = 3
+
 STARTING_DIV_VAL = 0.001
 HFREJECT_CUTOFF = 1*10**5
 HIGH_RES_CUTOFF = 1*10**5
 
+IMPEDANCE = 'Z'
 BODE = 'B'
 EXIT = 'E'
 TRAN = 'T'
@@ -45,6 +51,9 @@ class Measurer():
                             self.bode()  # Se realiza la medicion de bode
                         elif(measurement == TRAN):
                             self.tran()  # Se realiza la medicion del transitorio
+                        elif(measurement == IMPEDANCE):
+                            self.impedance_meas=True
+                            self.bode()  # Se realiza la medicion de bode teniendo en cuenta que se mide una corriente
                 else:
                     print("Error con el generador de funciones.")
             else:
@@ -308,6 +317,7 @@ class Measurer():
                 self.chan1 = int(self.chan1)
                 if (self.chan1 == 1 or self.chan1 == 2 or self.chan1 == 3 or self.chan1 == 4 or self.chan1 == 0):
                     good_input = True
+                    self.chan.append(self.chan1)
                 else:
                     print("Intente nuevamente con una entrada numerica entre 0 y 5.")
             else:
@@ -322,13 +332,14 @@ class Measurer():
                 self.chan2 = int(self.chan2)
                 if (self.chan2 == 1 or self.chan2 == 2 or self.chan2 == 3 or self.chan2 == 4 or self.chan2 == 0 and self.chan2 != self.chan1):
                     good_input = True
+                    self.chan.append(self.chan2)
                 else:
                     print("Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
             else:
                 print("Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
 
         self.usingmath = False
-        if(self.chan1 == 0 or self.chan2 == 0):
+        if(self.chan[FIRST_CHANNEL] == 0 or self.chan[SECOND_CHANNEL] == 0):
             good_input = False
             self.usingmath = True
             print("Ingresar operacion que se desea utilizar para el canal MATH: [+,-,*]")
@@ -349,8 +360,8 @@ class Measurer():
                     int(self.math_sources[0]) <=4 and
                     int(self.math_sources[1]) <=4):
                     good_input = True
-                    self.mathsource1 = int(self.math_sources[0])
-                    self.mathsource2 = int(self.math_sources[1])
+                    self.chan.append(int(self.math_sources[0]))
+                    self.chan.append(int(self.math_sources[1]))
                 else:
                     print("Se deben de ingresar los canales de forma numerica y separados por coma. Ejemplo: 3,1")
 
@@ -462,22 +473,40 @@ class Measurer():
                 print(
                     "Intente nuevamente. [y/n]")
 
+        if(self.impedance_meas):
+            good_input = False
+            print("Ingresar valor de la resistencia sobre la que se mide la corriente. Se dividira la tension medida sobre esta"
+                  "resistencia por el valor ingresado.")
+            while (not good_input):
+                self.impedance_resistor = input()
+                try:
+                    self.impedance_resistor = float(self.impedance_resistor)
+                    if (self.impedance_resistor >= 0.1 and self.impedance_resistor <= 10000000):
+                        good_input = True
+                    else:
+                        print("Intente nuevamente con una entrada numerica entre 0.1 y 10000000.")
+                except ValueError:
+                    print("Intente nuevamente con una entrada numerica.")
 
 
+        print("RECORDATORIO: CONECTAR ALIMENTACION DEL CIRCUITO. PONER PUNTAS EN X10 Y CALIBRARLAS SI ES NECESARIO. PRESIONAR ENTER.")
+        input()
 
     #Esta clase es el algoritmo que setea al generador y osciloscopio en las configuraciones necesarias para cada punto en el que se va a medir
     def bode(self):
         self.oscilloscope = self.openResources[OSC_RESOURC]
         self.generator = self.openResources[GEN_RESOURC]
+        self.chan = []
         self.bode_input_gathering() #Se pide informacion sobre como se quiere realizar el bode
         self.phasef = self.f
+
         if(self.usingmath):
             self.oscilloscope.set_math_operation(self.math_oper)
-            self.oscilloscope.set_math_source(self.mathsource1, self.mathsource2)
+            self.oscilloscope.set_math_source(self.chan[MATH_SOURCE_1], self.chan[MATH_SOURCE_2])
         #AC-COUPLING
         if(self.accoupchoice):
-            self.oscilloscope.chan_coup(Resources.SET, self.chan1, Resources.COUP_AC)
-            self.oscilloscope.chan_coup(Resources.SET, self.chan2, Resources.COUP_AC)
+            for channel in self.chan:
+                self.oscilloscope.chan_coup(Resources.SET, channel, Resources.COUP_AC)
 
         #EXTERNAL TRIGGER
         if(self.trigext):
@@ -487,7 +516,7 @@ class Measurer():
             self.oscilloscope.trig_hfreject(Resources.SET, Resources.TRIG_HFREJ_ON)
 
         #CONFIGURACION DEL OSCILOSCOPIO
-        self.oscilloscope.set_bode_meas(self.chan1, self.chan2) #Se configura al osciloscopio para realizar un bode, mediciones de ratio, phase, etc.
+        self.oscilloscope.set_bode_meas(self.chan[FIRST_CHANNEL], self.chan[SECOND_CHANNEL]) #Se configura al osciloscopio para realizar un bode, mediciones de ratio, phase, etc.
 
         #CONFIGURACION GENERADOR
         self.generator.set_voltage(self.voltage) #Se configura al generador con la tension elegida
@@ -495,8 +524,9 @@ class Measurer():
 
         #PROBETAS
         if(self.probe10):
-            self.oscilloscope.chan_probe(Resources.SET, self.chan1, 10)
-            self.oscilloscope.chan_probe(Resources.SET, self.chan2, 10)
+            for channel in self.chan:
+                if(channel != 0):
+                    self.oscilloscope.chan_probe(Resources.SET, channel, 10)
 
         self.ratio=[]
         self.phase=[]
@@ -507,8 +537,11 @@ class Measurer():
         for i in range(-3, 1, 1):
             for j in [1, 2, 5]:
                 self.chan_divs.append(j*10**(i))
-        self.chan1_div_index = 0
-        self.chan2_div_index = 0
+
+        self.chan_indexes = []
+        for channel in self.chan:
+            self.chan_indexes.append(0)
+
         for ff in (self.f):
 
             #Cortar hfreject del trigger si freq muy alta
@@ -525,54 +558,70 @@ class Measurer():
 
             #Primer fitteo en la pantalla para ambas senales
             if(first_fit):
-                for div in self.chan_divs:
-                    self.oscilloscope.chan_div(Resources.SET, self.chan1, div)
-                    time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
-                    if(not self.oscilloscope.is_clipping(self.chan1)):
-                        break
-                    else:
-                        self.chan1_div_index =+ 1
-                for div in self.chan_divs:
-                    self.oscilloscope.chan_div(Resources.SET, self.chan2, div)
-                    time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
-                    if(not self.oscilloscope.is_clipping(self.chan2)):
-                        break
-                    else:
-                        self.chan2_div_index =+ 1
+                temp=0
+                for channel in self.chan:
+                    for div in self.chan_divs:
+                        self.oscilloscope.chan_div(Resources.SET, channel, div)
+                        time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                        if(not self.oscilloscope.is_clipping(channel)):
+                            break
+                        else:
+                            self.chan_indexes[temp] =+ 1
+                    temp =+ 1
+
+                temp = 0
+                if(self.usingmath):
+                    for channel in self.chan:
+                        if(channel == 0):
+                            for div in self.chan_divs:
+                                self.oscilloscope.chan_div(Resources.SET, channel, div)
+                                time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                                if (not self.oscilloscope.is_clipping(channel)):
+                                    break
+                                else:
+                                    self.chan_indexes[temp] = + 1
+                        temp =+ 1
+
                 first_fit = False
 
             #Se fija si con la nueva frecuencia la senal sigue entrando
-            while(not self.oscilloscope.is_big_enough(self.chan1)):
-                if(self.chan1_div_index > 0):
-                    self.chan1_div_index = self.chan1_div_index - 1
-                    self.oscilloscope.chan_div(Resources.SET, self.chan1, self.chan_divs[self.chan1_div_index])
-                    time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
-                else:
-                    break
-            while(self.oscilloscope.is_clipping(self.chan1)):
-                if (self.chan1_div_index < len(self.chan_divs) - 2):
-                    self.chan1_div_index = self.chan1_div_index + 1
-                else:
-                    break
-                self.oscilloscope.chan_div(Resources.SET, self.chan1, self.chan_divs[self.chan1_div_index])
-                time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
 
-            # Se fija si con la nueva frecuencia la senal sigue entrando
-            while (not self.oscilloscope.is_big_enough(self.chan2)):
-                print(self.chan2_div_index)
-                if (self.chan2_div_index > 0):
-                    self.chan2_div_index = self.chan2_div_index - 1
-                    self.oscilloscope.chan_div(Resources.SET, self.chan2, self.chan_divs[self.chan2_div_index])
+            temp = 0
+            for channel in self.chan:
+                while (not self.oscilloscope.is_big_enough(channel)):
+                    if (self.chan_indexes[temp] > 0):
+                        self.chan_indexes[temp] = self.chan_indexes[temp] - 1
+                        self.oscilloscope.chan_div(Resources.SET, channel, self.chan_divs[self.chan_indexes[temp]])
+                        time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                    else:
+                        break
+                while (self.oscilloscope.is_clipping(channel)):
+                    if (self.chan_indexes[temp] < len(self.chan_divs) - 2):
+                        self.chan_indexes[temp] = self.chan_indexes[temp] + 1
+                    else:
+                        break
+                    self.oscilloscope.chan_div(Resources.SET, channel, self.chan_divs[self.chan_indexes[temp]])
                     time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
-                else:
-                    break
-            while (self.oscilloscope.is_clipping(self.chan2)):
-                if (self.chan2_div_index < len(self.chan_divs) - 2):
-                    self.chan2_div_index = self.chan2_div_index + 1
-                else:
-                    break
-                self.oscilloscope.chan_div(Resources.SET, self.chan2, self.chan_divs[self.chan2_div_index])
-                time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                temp =+ 1
+
+            temp = 0
+            for channel in self.chan:
+                if(channel == 0):
+                    while (not self.oscilloscope.is_big_enough(channel)):
+                        if (self.chan_indexes[temp] > 0):
+                            self.chan_indexes[temp] = self.chan_indexes[temp] - 1
+                            self.oscilloscope.chan_div(Resources.SET, channel, self.chan_divs[self.chan_indexes[temp]])
+                            time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                        else:
+                            break
+                    while (self.oscilloscope.is_clipping(channel)):
+                        if (self.chan_indexes[temp] < len(self.chan_divs) - 2):
+                            self.chan_indexes[temp] = self.chan_indexes[temp] + 1
+                        else:
+                            break
+                        self.oscilloscope.chan_div(Resources.SET, channel, self.chan_divs[self.chan_indexes[temp]])
+                        time.sleep(3 * (1 / (np.power(ff, (1 / 6)))))
+                temp = + 1
 
             #Luego de hacer entrar la senal, pone los filtros para medir
             if(self.acqchoice):
@@ -584,7 +633,10 @@ class Measurer():
 
             med=self.oscilloscope.measure_stats(ff, self.minwaittime)  #Se le pide al osciloscopio las mediciones
             med = med.split(',')
-            self.ratio.append(float(med[0]))
+            if(not self.impedance_meas):
+                self.ratio.append(float(med[0]))
+            else:
+                self.ratio.append( ( ( 10**( (float(med[0])) /20) ) /20) )
             self.phase.append(float(med[1]))
 
             print("Ratio: " + str(float(med[0])))
@@ -592,7 +644,7 @@ class Measurer():
 
         for i in range(0, len(self.phase), 1):
             if (self.phase[i] == float(Resources.OOR_VAL)):
-                print("setting phase to 0")
+                print("WARNING: Error in phase measurement. Setting particular measurement to 0.")
                 self.phase[i] = 0
 
         good_meas=False
@@ -602,7 +654,10 @@ class Measurer():
             plt.xscale("log")
             plt.grid(True)
             plt.xlabel("Frecuencia [Hz]")
-            plt.ylabel("Amplitud [db]")
+            if(not self.impedance_meas):
+                plt.ylabel("Amplitud [db]")
+            else:
+                plt.ylabel("Impedancia [Ohm]")
             plt.plot(self.f, self.ratio, label="Amplitud")
             plt.legend()
             plt.show()
@@ -621,33 +676,36 @@ class Measurer():
             while (not good_input):
                 self.elim = input()
                 if (self.elim == 'n' or self.elim == 'N'):
-                    self.elim = 0
+                    self.elim = False
                     good_meas = True
                     good_input = True
                 elif (self.elim == 'y' or self.elim == 'Y'):
-                    self.elim = 1
+                    self.elim = True
                     good_input = True
                 else:
                     print(
                         "Intente nuevamente. [y/n]")
 
             if(self.elim):
+                good_input = False
                 print("Ingresar frecuencia hasta la cual se quieren guardar las mediciones.")
                 while (not good_input):
                     self.limitfreq = input()
                     if (self.limitfreq.isnumeric()):
-                        self.limitfreq = float(self.limitfreq)
-                        if (self.limitfreq >= 1 and self.limitfreq <= 90000):
+                        self.limitfreq = int(self.limitfreq)
+                        if (self.limitfreq >= 1 and self.limitfreq <= 9000000):
                             good_input = True
                         else:
-                            print("Intente nuevamente con una entrada numerica entre 1 y 90000.")
+                            print("Intente nuevamente con una entrada numerica entre 1 y 9000000.")
                     else:
-                        print("Intente nuevamente con una entrada numerica entre 1 y 90000.")
+                        print("Intente nuevamente con una entrada numerica entre 1 y 9000000.")
 
                 freq_temp = 0
-                while(True):
+                exitwhile = False
+                while(not exitwhile):
                     for ff in self.f:
                         if(ff >  self.limitfreq):
+                            exitwhile = True
                             break
                     freq_temp = freq_temp + 1
 
@@ -668,7 +726,7 @@ class Measurer():
                     break
 
         with open(self.filepath, 'w+') as csvfile:
-            writer = csv.writer(csvfile, delimiter=';')
+            writer = csv.writer(csvfile)
             writer.writerow(["frequency", "MAG", "PHA"])
             for i in range(0, len(self.f), 1):
                 writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
@@ -683,7 +741,7 @@ class Measurer():
                     break
 
         with open(self.filepath, 'w+') as csvfile:
-            writer = csv.writer(csvfile, delimiter=',')
+            writer = csv.writer(csvfile, delimiter=';')
             writer.writerow(["frequency", "MAG", "PHA"])
             for i in range(0, len(self.f), 1):
                 writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
@@ -704,7 +762,8 @@ class Measurer():
         self.oscilloscope.measure_tran(self.chan1, self.chan2, self.filename)
 
     def ask_which_measurement(self):
-        print("Elegir que se quiere hacer: [E]xit, [B]ode o [T]ransitorio.")
+        print("Elegir que se quiere hacer: [E]xit, [B]ode, [T]ransitorio o Impedancia[Z].")
+        self.impedance_meas = False
         bad_input = True
         while(bad_input):
             inp = input()
@@ -712,10 +771,12 @@ class Measurer():
                 return EXIT
             elif(inp == 'B'):
                 return BODE
+            elif(inp == 'Z'):
+                return IMPEDANCE
             elif(inp == 'T'):
                 return TRAN
             else:
-                print("Ingresar nuevamente una entrada alfabetica igual a E, B o T.")
+                print("Ingresar nuevamente una entrada alfabetica igual a E, Z, B o T.")
 
     def tran_input_gathering(self):
 

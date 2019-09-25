@@ -317,22 +317,41 @@ class Oscilloscope:
         elif(sog==GET):
             return self.resource.query(':MEASure:SOURce?')
     def is_clipping(self, channel):
-        self.resource.write(':MEASure:SOURce CHANnel' + str(channel))
-        vmax = float(self.resource.query(':MEASure:VMAX?'))
-        vmin = float(self.resource.query(':MEASure:VMIN?'))
-        if(vmax == float(OOR_VAL) or vmin == float(OOR_VAL)):
-            return True
+        if(channel == 0):
+            self.resource.write(':MEASure:SOURce FUNC')
+            vmax = float(self.resource.query(':MEASure:VMAX?'))
+            vmin = float(self.resource.query(':MEASure:VMIN?'))
+            if (vmax == float(OOR_VAL) or vmin == float(OOR_VAL)):
+                return True
+            else:
+                return False
         else:
-            return False
+            self.resource.write(':MEASure:SOURce CHANnel' + str(channel))
+            vmax = float(self.resource.query(':MEASure:VMAX?'))
+            vmin = float(self.resource.query(':MEASure:VMIN?'))
+            if(vmax == float(OOR_VAL) or vmin == float(OOR_VAL)):
+                return True
+            else:
+                return False
     def is_big_enough(self, channel):
-        self.resource.write(':MEASure:SOURce CHANnel' + str(channel))
-        vmax = float(self.resource.query(':MEASure:VMAX?'))
-        vmin = float(self.resource.query(':MEASure:VMIN?'))
-        chan_div = float(self.chan_div(GET, channel))
-        if(abs((vmax-vmin)) > 4*chan_div):
-            return True
+        if(channel == 0):
+            self.resource.write(':MEASure:SOURce FUNC')
+            vmax = float(self.resource.query(':MEASure:VMAX?'))
+            vmin = float(self.resource.query(':MEASure:VMIN?'))
+            chan_div = float(self.chan_div(GET, channel))
+            if (abs((vmax - vmin)) > 4 * chan_div):
+                return True
+            else:
+                return False
         else:
-            return False
+            self.resource.write(':MEASure:SOURce CHANnel' + str(channel))
+            vmax = float(self.resource.query(':MEASure:VMAX?'))
+            vmin = float(self.resource.query(':MEASure:VMIN?'))
+            chan_div = float(self.chan_div(GET, channel))
+            if(abs((vmax-vmin)) > 4*chan_div):
+                return True
+            else:
+                return False
 
     def get_freq(self, channel):
         if(channel == 0):
