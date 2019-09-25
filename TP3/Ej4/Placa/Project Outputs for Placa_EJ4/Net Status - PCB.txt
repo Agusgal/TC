@@ -1,0 +1,17 @@
+Net Status Report
+Filename     : C:\Users\Abril\Documents\GitHub\TC\TP3\Ej4\Placa\PCB.PcbDoc
+Date         : 9/24/2019
+Time         : 12:22:51 PM
+Time Elapsed : 00:00:00
+
+Nets, Layer, Length
+    -Vcc, Signal Layers Only, 46.053mm
+    GND, Signal Layers Only, 146.1971mm
+    NetR1_2, Signal Layers Only, 48.4356mm
+    NetR2_2, Signal Layers Only, 25.3016mm
+    NetR3_2, Signal Layers Only, 37.8837mm
+    V1, Signal Layers Only, 45.7315mm
+    V2, Signal Layers Only, 25.5805mm
+    Vcc, Signal Layers Only, 67.7748mm
+    Vout, Signal Layers Only, 28.6142mm
+count : 9

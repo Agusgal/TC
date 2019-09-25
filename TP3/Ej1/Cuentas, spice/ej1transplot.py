@@ -1,5 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
+import pandas
 
 # k=np.sqrt(2)
 # Q=2
@@ -89,9 +90,9 @@ def read_file_spice(filename):
 
     return data
 
-data = read_file_spice("Simulacion_highf.txt")
+data = read_file_spice("Simulacion_highf_puntas.txt")
 
-f = list(range(10**5, 10**8, 100))
+f = list(range(10**5, 10**7, 100))
 amp1 = []
 pha=[]
 for ff in f:
@@ -124,12 +125,15 @@ for ff in f:
     )
 
 
+medido_data=pandas.read_csv("bodefiltrocongic_highf.csv", delimiter=';')
+
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Magnitud [dB]")
 plt.grid()
 plt.xscale("log")
 plt.plot(f, amp1, color='green', label="Calculado")
-plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado")
+plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado + Puntas x1")
+plt.plot(medido_data[['frequency']], medido_data[['MAG']], color = 'red', marker='.', label ="Medido", linestyle='-')
 plt.legend()
 plt.show()
 
@@ -139,6 +143,7 @@ plt.grid()
 plt.xscale("log")
 plt.plot(f, pha, color='green', label="Calculado")
 plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
+plt.plot(medido_data[['frequency']], medido_data[['PHA']], color = 'red', marker='.', label='Medido', linestyle='-')
 plt.legend()
 plt.show()
 
