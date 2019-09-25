@@ -77,7 +77,7 @@ Existen distintos tipos de ecualizadores, con mayores y menores grados de libert
 \end{center}
 \end{figure}
 
-Para facilitar el análisis, se reemplaza el potenciometro $R_2$ con dos resistencias fijas, tal que se cumpla $R_2 = R_{2}^{'} + R_{2}^{''} $, considerando que
+Para facilitar el análisis, se reemplaza el potenciómetro $R_2$ con dos resistencias fijas, tal que se cumpla $R_2 = R_{2}^{'} + R_{2}^{''} $, considerando que
 \begin{equation}
 \begin{split}
 	R_{2}^{'} &= \psi R_2\\ R_{2}^{''} &= \left( 1 - \psi \right) R_2
@@ -213,11 +213,11 @@ Luego, se toma el paralelo entre las impedancias marcadas en rojo en la Figura (
 \begin{center}
 \begin{circuitikz}
 	\node [op amp](A){};
-	\draw[color=red] (A.-) to[short] ++(-1,0) to[generic, l = $Z_{AC}^{'}$, i<_ = $I_{C}$] ++(-2,0) node[](v1){};
+	\draw (A.-) to[short] ++(-0.5,0) node[](tuvi){};
+	\draw[color=red] (tuvi)to[generic, l_= $Z_{AC}^{'}$, i<^ = $I_{C}$] ++(-2,0) node[](v1){};
 	\draw (v1) to[short, -o, i<_= $I_{in}$] node[ocirc,label=left:$V_{in}$]{} ++(-1,0);
 	\draw (v1) to[short] ++(0,2.5) to[generic, l = $Z_{AB}$, i = $I_{B}$] ++(6.5,0) to[short] ++(0,-3);
 	\draw (A.+) to[short] ++(-0.5,0) to[short] ++(0,-1) node[ground]{};
-	\draw (A.-) to[short] ++(-0.5,0) node[](tuvi){};
 	\draw[color=red] (tuvi) to[short] ++(0,1.5) to[generic, l_= $Z_{BC}^{'}$, i = $I_{C}$] ++(3,0) to[short] ++(0,-2);
 	\draw (A.out) to[short, -o] ++(2,0) node[ocirc,label=right:$V_{out}$]{};
 \end{circuitikz}
@@ -277,7 +277,7 @@ Además, realizando el ensayo de circuito cerrado, se puede calcular la impedanc
 	\label{equ:zin}
 \end{equation}
 
-Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 \gg R_1$ y $R_3 = 10 \ R_2$, se pueden reescribir los coeficientes de (\ref{equ:hs}), obteniéndose: 
+Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 = 10 \ R_2$ y $R_3 \gg R_1$, se pueden reescribir los coeficientes de (\ref{equ:hs}), obteniéndose: 
 \begin{equation}
 \begin{split}
 	\alpha_H =\ \gamma_H =\ & 10 {C_{2}}^{2} {R_{2}}^{2} R_{1} \left[ 10 + 2 \psi \left(1 - \psi \right) \right] \\
@@ -324,7 +324,7 @@ Se determina de esta forma que
 \end{split}
 \end{equation*}
 
-Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y ceros del sistema, enfunción de $\psi$ y se realiza un diagrama de polos y ceros en el plano $S$, variando dicho factor. De esta forma se obtiene la Figura (\ref{fig:zplanepsi}).
+Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y ceros del sistema, en función de $\psi$ y se realiza un diagrama de polos y ceros en el plano $S$, variando el primer factor mencionado. De esta forma se obtiene la Figura (\ref{fig:zplanepsi}).
 
 \begin{figure}[H]
 	\centering
@@ -370,21 +370,14 @@ Alta & $100 \ \Omega$ & $1 \ k\Omega$ & $10 \ k\Omega$ & $56 \ nF$ & $5.6 \ nF$ 
 \end{center}
 \end{table}
 
-Se destaca que los valores no necesariamente deben ser exactos, y que se acepta un alejamiento de la frecuencia dada debido al carácter logarítmico de la audición humana.
-
-Por cuestiones de disponibilidad de componentes, se debió utilizar un potenciometro $50 \ k\Omega$ para las frecuencias altas. Para verificar la validez de esto, se debe volver a analizar lo expresado en (\ref{equ:hs}) con las expresiones halladas en el caso más generico, es decir, las representadas en (\ref{equ:general}), ya que no se cumple que $R_3 = 10R_2$. Es por eso que, manteniendo todos los valores expresados en la Tabla (\ref{tabla:valores}), a excepción de $R_2$, y sabiendo que para el caso más genérico la frecuencia de corte viene dada por la expresión
+Por cuestiones de disponibilidad de componentes, se debió utilizar un potenciómetro $50 \ k\Omega$ ($R_2$) para las frecuencias altas. Para verificar la validez de esto, se debe volver a analizar lo detallado en (\ref{equ:hs}) con las expresiones halladas en el caso más generico, es decir, las representadas en (\ref{equ:general}), ya que no se cumple que $R_3 = 10R_2$. Es por eso que, manteniendo todos los valores expresados en la Tabla (\ref{tabla:valores}), a excepción de $R_2$, y sabiendo que para el caso más genérico la frecuencia de corte viene dada por la expresión
 \begin{equation}
 	f_o = \frac{1}{2\pi} \cdot \sqrt{\frac{2R_1 + R_2}{\alpha_H}}
 	\label{equ:fogeneral}
 \end{equation}
-se determina la frecuencia de dicha instancia es de $8.96 \ kHz$, lo cuál sigue siendo un valor aceptable.
+se determina la frecuencia de dicha instancia es de $8.96 \ kHz$.
 
 Se podría solventar dicho problema reemplazando $R_3$ por una resistencia de $500 \ k\Omega$ para poder cumplir la condición mencionada. Dicha opción es descartada ya que al realizar esto se observan 2 factores: el primero se encuentra en la frecuencia central del filtro, que al calcularla nuevamente, resulta ser próxima a $1.27 \ kHz$, mientras que el segundo resulta ser la amplificación. Si bien se consigue mayor amplificación, afecta con las demás bandas y además no se cumple con el hecho de respetar los valores de amplificación de ecualizadores comerciales, como se mencionó anteriormente.
-
-\begin{center}
-	\textcolor{red}{\textbf{VER $\Xi$.}}
-\end{center}
-
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.7\textwidth]{Imagenes/r3comp.png}
@@ -392,7 +385,31 @@ Se podría solventar dicho problema reemplazando $R_3$ por una resistencia de $5
 	\label{fig:r3comp}
 \end{figure}
 
-Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido a la impedancia de entrada del circuito total, razón que se expone más adelante. Otra ventaja que presenta esta disposición es la facilidad que se presenta al calcular la transferencia de entrada del circuito total, ya que debido a teoría de cuadripolos, la primera resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la segunda se obtiene de la suma de cada impedancia de entrada, de la misma forma que la transferencia, es decir, tomando nuevamente los valores de la tabla previamente mencionada y reemplazándola en (\ref{equ:zin}). Es así que se deja en forma de ecuaciones lo dicho anteriormente:
+Se destaca el error realizado al obtener las frecuencias finales, las cuales no son exactamente las que se había mencionado anteriormente. Es así que se busca determinar si estas variaciones son aceptables o no. Tomando un error máximo del 5\%, y dado el carácter logarítmico de la audición humana, se calcula el margen máximo y mínimo del error para frecuencia central dada como: 
+\begin{equation*}
+	\log{(f_{med} \pm \delta)} = \log{(f_{med} \pm f_{med}\cdot 0.05)} = \log{(f_{med} \left(1 \pm 0.05\right))}
+\end{equation*}
+
+Es así que se efectúa la siguiente tabla:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccc}
+\hline
+\textbf{Banda} & $\mathbf{log(f_{calculada})}$ & $\mathbf{log(f_{calculada} + \delta)}$ & $\mathbf{log(f_{calculada} - \delta)}$ & $\mathbf{log(f_{real})}$ \\
+\hline
+Baja & 1.89 & 1.91 & 1.87 & 1.91 \\
+Media & 3.07 & 3.09 & 3.06 & 3.07 \\
+Alta & 4 & 4.02 & 3.97 & 3.95 \\
+\hline
+\end{tabular}
+\caption{Margenes de errores máximos y mínimos de las frecuencias centrales.}
+\label{tabla:errores}
+\end{table}
+
+Se concluye que las frecuencias elegidas son aceptables para la tolerancia seleccionada, salvo por la elegida para representar la banda de las altas. En este caso, se está cometiendo un error del 10\%, el cual, si bien no respeta el límite que se había propuesto, se realiza una excepción por las razones previamente explicadas y expuestas en la Figura (\ref{fig:r3comp}), tomando este margen como aceptable. 
+
+Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido a la alta impedancia de entrada del circuito total, razón que se expone más adelante. Otra ventaja que presenta esta disposición es la facilidad al calcular tanto la transferencia del circuito como su impedancia de entrada, ya que debido a teoría de cuadripolos, la primera resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la segunda se obtiene de la suma de cada impedancia de entrada, tomando nuevamente los valores de la tabla previamente mencionada y reemplazándola en (\ref{equ:zin}). Es así que se deja en forma de ecuaciones lo dicho anteriormente:
 
 \begin{equation}
 	H(S) = H_{bajas}(S) \cdot H_{medias}(S) \cdot H_{altas}(S)
@@ -440,7 +457,9 @@ Es así que se procede a graficar la respuesta en frecuencia calculada de todo e
 	\label{fig:bode_ph_high}
 \end{figure}
 
-Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase. Cabe destacar el oído humano no detecta cambios en la fase cuando a distintas frecuencias se refiere. Se podría hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero ducho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano. También, resulta pertinente destacar los corrimientos que se producen tanto en la fase como en la amplitud al variar las altas frecuencias, lo cual se debe al cambio realizado del potenciometro, el cuál se recuerda que fue cambiado de $1 \ k\Omega$ a $50 \ k\Omega$. En otras palabras, la causa de este fenómeno se debe a que la condición de que $R_3 = 10R_2$ deja de ser valida.
+Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase. Cabe destacar el oído humano no detecta cambios en la fase, debido a que no posee forma de comparar dicha variación, es decir, no cuenta con una referencia con la cual contrastar el desfasaje.
+%Se puede hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero dicho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano.
+También, resulta pertinente destacar los corrimientos que se producen tanto en la fase como en la amplitud al variar las altas frecuencias, lo cual se debe al cambio realizado del potenciómetro, el cuál se recuerda que fue cambiado de $1 \ k\Omega$ a $50 \ k\Omega$. En otras palabras, la causa de este fenómeno se debe a que la condición de que $R_3 = 10R_2$ deja de ser valida.
 
 De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
 \begin{figure}[H]
@@ -480,7 +499,7 @@ De la misma forma, se muestra la impedancia de entrada en función de la frecuen
 	\label{fig:zin_ph_high}
 \end{figure}
 
-Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciometro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
+Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciómetro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
@@ -516,11 +535,11 @@ Como era de esperarse, se consigue que la variación en el Bode simulado sea mí
 
 Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
 
-Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, debido a su frecuente uso en lo que a audio respecta, su bajo ruido de entrada y su amplia ganancia de banda pasante, la cual cubre el espectro audible. Debido a que este dispositivo es dual y que se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar a la salida del circuito este último amplificador conectado como un inversor, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, de ahora en más se considera el cambio de fase que este provee al circuito junto con la impedancia que este agrega.   
+Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, debido a su frecuente uso en lo que a audio respecta, su bajo ruido de entrada y su amplia ganancia de banda pasante, la cual cubre el espectro audible\footnote{Texas Instruments, ``LM833-N Dual Audio Operational Amplifier'', LM833 datasheet, Mayo 2004 [Revisado Mayo 2012].}. Debido a que este dispositivo es dual y que se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar este último amplificador a la salida del circuito, conectado como un inversor con un potenciómetro, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, de ahora en más se considera el cambio de fase que este provee al circuito junto con la impedancia que este agrega.   
 
 \subsubsection{Comparaciones}
 
-A continuación, se procede a presentar diagramas de Bode teóricos, simulados y medidos. Para ello, al momento de graficar los resultados teóricos, se fijaron ciertos valores del factor $\psi$ de cada etapa que represente la posición del potenciometro en el modelo físico, siendo $\psi = 0$ amplificación total y $\psi = 1$ atenuación total. Es así que se obtuvieron los siguientes gráficos.
+A continuación, se procede a presentar diagramas de Bode teóricos, simulados y medidos. Para ello, al momento de graficar los resultados teóricos, se fijaron ciertos valores del factor $\psi$ de cada etapa que represente la posición del potenciómetro en el modelo físico, siendo $\psi = 0$ amplificación total y $\psi = 1$ atenuación total. Es así que se obtuvieron los siguientes gráficos.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.9\textwidth]{Imagenes/CBodes-Mod-1.png}
@@ -570,10 +589,10 @@ A continuación, se procede a presentar diagramas de Bode teóricos, simulados y
 	\label{fig:CBodes-Ph-4}
 \end{figure}
 
-Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia del 1\%, se termina de ver reflejado en las comparaciones previamente hechas. De las comparaciones previamente presentadas, se puede concluir que, como los diagramas de Bode, tanto teóricos, como simulados y medidos, se acoplan tan bien, se puede concluir que los diagramas de polos y ceros se corresponden. En otras palabras, los polos y ceros obtenidos en el circuito físico medido son similares a los obtenidos a través del modelo teórico. Finalmente, se destaca que en muy altas frecuencias, los diagramas no se corresponden en su totalidad. Este factor no es de interés y tampoco afecta el uso del circuito ya que estas diferencias se observan a partir de un rango de frecuencias mayor al audible, por lo tanto, el circuito no está destinado a trabajar en dicho intervalo.
+Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia del 1\%, se termina de ver reflejado en las comparaciones previamente hechas. De estas, se puede concluir que, como los diagramas de Bode, tanto teóricos, como simulados y medidos, se acoplan adecuadamente, los diagramas de polos y ceros se corresponden. En otras palabras, los polos y ceros obtenidos en el circuito físico medido son similares a los obtenidos a través del modelo teórico. Finalmente, se destaca que en muy altas frecuencias, los diagramas no se corresponden en su totalidad. Este factor no es de interés y tampoco afecta el uso del circuito ya que estas diferencias se observan a partir de un rango de frecuencias mayor al audible, por lo tanto, el circuito no está destinado a trabajar en dicho intervalo.
 
 \begin{center}
-	\textcolor{red}{\textbf{OBSERVACIÓN, FASES.}}
+	\textcolor{red}{\textbf{FASES.}}
 \end{center}
 
 Por su parte, por lo visto en la Sección (\ref{sub:desarrollo}), la impedancia de entrada permanece prácticamente constante frente a cambios de $\psi$. De esta forma, se decidió presentar las comparaciones de dicha variable una sola vez, independientemente del valor de $\psi$.
