@@ -135,9 +135,61 @@ H(s)=\frac{s^2LC+s\cdot r_{coil}C}{s^2LC+s\cdot(R+r_{coil})C+1}
 
 \subsubsection{Circuito utilizando Gyrator.}
 Para la implementación de este filtro utilizando un Gyrator, dado a que este usualmente está referenciado a tierra  se optó por el siguiente diseño:
-\begin{figure}[H]	
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{ImagenesEj2/gyrHP.PNG}
+	\begin{circuitikz}
+	
+		\draw
+		
+			(0,0) to[short, -o] ++ (0,0) 
+				node[label=west:$V_{in}$](V_IN){}
+				to[R, l=$R$] ++ (3, 0)
+				to[C, l=$C$] ++ (1, 0)
+				to[short, -*] ++ (1,0)
+				node[](ELBOW){}
+				
+			(ELBOW) to[short, -o] ++ (7, 0)
+				node[label=east:$V_{out}$](V_OUT){}
+			
+			(ELBOW) to[short] ++ (0, -2.5)
+				node[](GYRATOR_IN){}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%GYRATOR			
+			
+			(GYRATOR_IN) to[short, -*] ++ (0.5, 0)
+				to[open] ++ (0, 0.5)
+				node[](RL_LEFT){}
+				to[short] ++ (0, -1)
+				node[](CG_LEFT){}
+			
+			(RL_LEFT) to[open] ++ (0, -0.5)
+				to[open] ++ (3, 0)
+				node[op amp](opamp){}
+				to[open] ++ (-0.1, -0.34)
+				node[label=\small{TL-084}]{}	
+						
+			(opamp.+) to[C, l=$C_g$] (CG_LEFT)
+			
+			(opamp.-) to[R, l_=$R_L$] (RL_LEFT)
+			
+			(opamp.up) to[short, -o] ++ (0, 0.5)
+				node[label=east:$+V_{CC}$]{}
+			
+			(opamp.down) to[short, -o] ++ (0, -0.5)
+				node[label=east:$-V_{CC}$]{}
+				
+			(opamp.out) to [short] ++ (0, 1.5)
+				-| (RL_LEFT)
+				to[open] ++ (0, 0.2)
+				to[short, -*] ++ (0,-0.2)
+				
+			(opamp.+) ++ (-0.23, 0) to[R, *-, l=$R_g$] ++ (0, -2)
+				node[ground]{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		;
+	
+	\end{circuitikz}
 	\caption{Filtro High-Pass implementado con Gyrator.}
 	\label{fig:gyrHP}
 \end{figure}
@@ -255,9 +307,67 @@ El gyrator tiene la particularidad de que debe estar referenciado a tierra para 
 \end{figure}
 Para el cual el primer paso será pasivar la fuente y quedará referenciado a masa.De esta manera, el cálculo será análogo al de la sección (\ref{section:zin}) . Por lo cual la impedancia de salida del circuito, conectandole una carga de R y C en serie, proporciona un circuito final, análogo al de la figura (\ref{fig:basLP})
 El circuito propuesto fue el siguiente:
-\begin{figure}[H]	
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\textwidth]{ImagenesEj2/gyrLP.PNG}
+	\begin{circuitikz}
+	
+		\draw
+		
+			(0,0) node[](INIT){}
+				to[short] ++ (0,0)
+				node[](ELBOW){}
+				
+				
+			(ELBOW) to[short] ++ (0,0)
+				to[R, l=$R$] ++ (0, -2)
+				to[C, l=$C$] ++ (0, -1)
+				node[ground]{}			
+			
+			(ELBOW) to[open] ++ (1.5,0)
+				to[short, -o] ++ (6, 0)
+				node[label=east:$V_{out}$](V_OUT){}
+			
+			(ELBOW) to[short] ++ (1.5,0)
+				to[short] ++ (0, -2.5)
+				node[](GYRATOR_IN){}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%GYRATOR			
+			
+			(GYRATOR_IN) to[short, -*] ++ (0.5, 0)
+				to[open] ++ (0, 0.5)
+				node[](RL_LEFT){}
+				to[short] ++ (0, -1)
+				node[](CG_LEFT){}
+			
+			(RL_LEFT) to[open] ++ (0, -0.5)
+				to[open] ++ (3, 0)
+				node[op amp](opamp){}
+				to[open] ++ (-0.1, -0.34)
+				node[label=\small{TL-084}]{}	
+						
+			(opamp.+) to[C, l=$C_g$] (CG_LEFT)
+			
+			(opamp.-) to[R, l_=$R_L$] (RL_LEFT)
+			
+			(opamp.up) to[short, -o] ++ (0, 0.5)
+				node[label=east:$+V_{CC}$]{}
+			
+			(opamp.down) to[short, -o] ++ (0, -0.5)
+				node[label=east:$-V_{CC}$]{}
+				
+			(opamp.out) to [short] ++ (0, 1.5)
+				-| (RL_LEFT)
+				to[open] ++ (0, 0.2)
+				to[short, -*] ++ (0,-0.2)
+				
+			(opamp.+) ++ (-0.23, 0) to[R, *-, l=$R_g$] ++ (0, -2)
+				to[short, -o] ++ (-6, 0)
+				node[label=west:$V_{in}$]{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		;
+	
+	\end{circuitikz}
 	\caption{Filtro Low-Pass implementado con Gyrator.}
 	\label{fig:gyrLP}
 \end{figure}
@@ -371,12 +481,67 @@ Operando en el circuito se obtiene:
 %%
 \subsubsection{Circuito utilizando Gyrator.}
 El circuito propuesto para el filtro Band-Pass es idéntico a la figura (\ref{fig:basBP}) con la singularidad que intercambiaremos el inductor por un gyrator de la siguiente manera.
-\begin{figure}[H]	
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{ImagenesEj2/gyrBP.PNG}
+	\begin{circuitikz}
+	
+		\draw
+		
+			(0,0) to[short, -o] ++ (0,0)
+				node[label=west:$V_{in}$](V_IN){}
+				to[R, l=$R$] ++ (3, 0)
+				to[C, l=$C$,  *-] ++ (0, -2)
+				node[ground]{}
+				to[open] ++ (0,2)
+				to[short, -*] ++ (2,0)
+				node[](ELBOW){}
+				
+			(ELBOW) to[short, -o] ++ (7, 0)
+				node[label=east:$V_{out}$](V_OUT){}
+			
+			(ELBOW) to[short] ++ (0, -2.5)
+				node[](GYRATOR_IN){}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%GYRATOR			
+			
+			(GYRATOR_IN) to[short, -*] ++ (0.5, 0)
+				to[open] ++ (0, 0.5)
+				node[](RL_LEFT){}
+				to[short] ++ (0, -1)
+				node[](CG_LEFT){}
+			
+			(RL_LEFT) to[open] ++ (0, -0.5)
+				to[open] ++ (3, 0)
+				node[op amp](opamp){}
+				to[open] ++ (-0.1, -0.34)
+				node[label=\small{TL-084}]{}	
+						
+			(opamp.+) to[C, l=$C_g$] (CG_LEFT)
+			
+			(opamp.-) to[R, l_=$R_L$] (RL_LEFT)
+			
+			(opamp.up) to[short, -o] ++ (0, 0.5)
+				node[label=east:$+V_{CC}$]{}
+			
+			(opamp.down) to[short, -o] ++ (0, -0.5)
+				node[label=east:$-V_{CC}$]{}
+				
+			(opamp.out) to [short] ++ (0, 1.5)
+				-| (RL_LEFT)
+				to[open] ++ (0, 0.2)
+				to[short, -*] ++ (0,-0.2)
+				
+			(opamp.+) ++ (-0.23, 0) to[R, *-, l=$R_g$] ++ (0, -2)
+				node[ground]{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		;
+	
+	\end{circuitikz}
 	\caption{Filtro Band-Pass implementado con Gyrator.}
 	\label{fig:gyrBP}
 \end{figure}
+
 Para resolver el circuito se plantearon la siguientes ecuaciones:
 \begin{align}V^- = V_{o'}\end{align}
 \begin{align}V_{o'} = A(s)\cdot (V^+-V^-)\end{align}
@@ -472,9 +637,67 @@ Al cual le corresponde una transferencia de la forma:
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=\textwidth]{ImagenesEj2/gyrBR.PNG}
+
+\end{figure}
+
+
+\begin{figure}[H]
+	\centering
+	\begin{circuitikz}
+	
+		\draw
+		
+			(0,0) to[short, -o] ++ (0,0) 
+				node[label=west:$V_{in}$](V_IN){}
+				to[R, l=$R$, -*] ++ (3, 0)
+				node[](ELBOW){}
+				
+			(ELBOW) to[short, -o] ++ (7, 0)
+				node[label=east:$V_{out}$](V_OUT){}
+			
+			(ELBOW) to[C, l=$C$] ++ (0, -2.5)
+				node[](GYRATOR_IN){}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%GYRATOR			
+			
+			(GYRATOR_IN) to[short, -*] ++ (1.5, 0)
+				to[open] ++ (0, 0.5)
+				node[](RL_LEFT){}
+				to[short] ++ (0, -1)
+				node[](CG_LEFT){}
+			
+			(RL_LEFT) to[open] ++ (0, -0.5)
+				to[open] ++ (3, 0)
+				node[op amp](opamp){}
+				to[open] ++ (-0.1, -0.34)
+				node[label=\small{TL-084}]{}	
+						
+			(opamp.+) to[C, l=$C_g$] (CG_LEFT)
+			
+			(opamp.-) to[R, l_=$R_L$] (RL_LEFT)
+			
+			(opamp.up) to[short, -o] ++ (0, 0.5)
+				node[label=east:$+V_{CC}$]{}
+			
+			(opamp.down) to[short, -o] ++ (0, -0.5)
+				node[label=east:$-V_{CC}$]{}
+				
+			(opamp.out) to [short] ++ (0, 1.5)
+				-| (RL_LEFT)
+				to[open] ++ (0, 0.2)
+				to[short, -*] ++ (0,-0.2)
+				
+			(opamp.+) ++ (-0.23, 0) to[R, *-, l=$R_g$] ++ (0, -2)
+				node[ground]{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		;
+	
+	\end{circuitikz}
 	\caption{Filtro Band-Reject implementado con Gyrator.}
 	\label{fig:gyrBR}
 \end{figure}
+
+
 Luego se procedió a analizar el circuito para sacar la función transferencia:
 \begin{align}V^- = V_{o'}\end{align}
 \begin{align}V_{o'} = A(s)\cdot (V^+-V^-)\end{align}
