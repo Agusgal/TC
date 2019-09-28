@@ -271,11 +271,11 @@ Siendo:
 \label{equ:general}
 \end{equation}
 
-Además, realizando el ensayo de circuito cerrado, se puede calcular la impedancia de entrada:
-\begin{equation}
-	Z_{in} = \frac{V_{in}}{I_{in}} = \frac{\left( Z_{AC}^{'} + Z_{BC}^{'} \right) \cdot Z_{AB}}{Z_{AC}^{'} + Z_{BC}^{'} + Z_{AB}}
-	\label{equ:zin}
-\end{equation}
+%Además, se puede calcular la impedancia de entrada:
+%\begin{equation}
+%	Z_{in} = \frac{V_{in}}{I_{in}} = \frac{\left( Z_{AC}^{'} + Z_{BC}^{'} \right) \cdot Z_{AB}}{Z_{AC}^{'} + Z_{BC}^{'} + Z_{AB}}
+%	\label{equ:zin}
+%\end{equation}
 
 Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 = 10 \ R_2$ y $R_3 \gg R_1$, se pueden reescribir los coeficientes de (\ref{equ:hs}), obteniéndose: 
 \begin{equation}
@@ -461,54 +461,69 @@ Es así que se observa que cada instancia genera un cambio en la ganancia simila
 %Se puede hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero dicho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano.
 También, resulta pertinente destacar los corrimientos que se producen tanto en la fase como en la amplitud al variar las altas frecuencias, lo cual se debe al cambio realizado del potenciómetro, el cuál se recuerda que fue cambiado de $1 \ k\Omega$ a $50 \ k\Omega$. En otras palabras, la causa de este fenómeno se debe a que la condición de que $R_3 = 10R_2$ deja de ser valida.
 
-De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
+%De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
+%	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias bajas.}
+%	\label{fig:zin_modulo_low}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
+%	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias bajas.}
+%	\label{fig:zin_ph_low}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
+%	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias medias.}
+%	\label{fig:zin_modulo_med}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
+%	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias medias.}
+%	\label{fig:zin_ph_med}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
+%	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias altas.}
+%	\label{fig:zin_modulo_high}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
+%	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias altas.}
+%	\label{fig:zin_ph_high}
+%\end{figure}
+
+Simulando la impedancia de entrada se obtiene que esta permanece prácticamente constante frente a cambios en $\psi$ de cualquier etapa, es por eso que se grafica esta variable a continuación para todo el sistema:
+
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias bajas.}
-	\label{fig:zin_modulo_low}
+	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Mod.png}
+	\caption{Impedancia de entrada en modulo.}
+	\label{fig:zin_modulo}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias bajas.}
-	\label{fig:zin_ph_low}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias medias.}
-	\label{fig:zin_modulo_med}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias medias.}
-	\label{fig:zin_ph_med}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias altas.}
-	\label{fig:zin_modulo_high}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias altas.}
-	\label{fig:zin_ph_high}
+	\includegraphics[width=0.9\textwidth]{Imagenes/Zin-Ph.png}
+	\caption{Fase de la impedancia de entrada.}
+	\label{fig:zin_ph}
 \end{figure}
 
-Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciómetro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
+Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciómetro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
 	\caption{Comparación de impedancias de entrada, en módulo.}
 	\label{fig:zin_comp_mod}
 \end{figure}
 \begin{figure}[H]
 \centering
-		\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
+		\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
 	\caption{Comparación de impedancias de entrada, en fase.}
 	\label{fig:zin_comp_ph}
 \end{figure}
