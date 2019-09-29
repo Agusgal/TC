@@ -271,11 +271,11 @@ Siendo:
 \label{equ:general}
 \end{equation}
 
-Además, realizando el ensayo de circuito cerrado, se puede calcular la impedancia de entrada:
-\begin{equation}
-	Z_{in} = \frac{V_{out}}{V_{in}} = \frac{\left( Z_{AC}^{'} + Z_{BC}^{'} \right) \cdot Z_{AB}}{Z_{AC}^{'} + Z_{BC}^{'} + Z_{AB}}
-	\label{equ:zin}
-\end{equation}
+%Además, se puede calcular la impedancia de entrada:
+%\begin{equation}
+%	Z_{in} = \frac{V_{in}}{I_{in}} = \frac{\left( Z_{AC}^{'} + Z_{BC}^{'} \right) \cdot Z_{AB}}{Z_{AC}^{'} + Z_{BC}^{'} + Z_{AB}}
+%	\label{equ:zin}
+%\end{equation}
 
 Si se tienen en cuenta las siguientes consideraciones: $C_1 = 10 \ C_2$, $R_3 = 10 \ R_2$ y $R_3 \gg R_1$, se pueden reescribir los coeficientes de (\ref{equ:hs}), obteniéndose: 
 \begin{equation}
@@ -409,13 +409,10 @@ Alta & 4 & 4.02 & 3.97 & 3.95 \\
 
 Se concluye que las frecuencias elegidas son aceptables para la tolerancia seleccionada, salvo por la elegida para representar la banda de las altas. En este caso, se está cometiendo un error del 10\%, el cual, si bien no respeta el límite que se había propuesto, se realiza una excepción por las razones previamente explicadas y expuestas en la Figura (\ref{fig:r3comp}), tomando este margen como aceptable. 
 
-Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido a la alta impedancia de entrada del circuito total, razón que se expone más adelante. Otra ventaja que presenta esta disposición es la facilidad al calcular tanto la transferencia del circuito como su impedancia de entrada, ya que debido a teoría de cuadripolos, la primera resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}), mientras que la segunda se obtiene de la suma de cada impedancia de entrada, tomando nuevamente los valores de la tabla previamente mencionada y reemplazándola en (\ref{equ:zin}). Es así que se deja en forma de ecuaciones lo dicho anteriormente:
+Una vez determinado esto, se optó por colocar las tres instancias en serie, ya que de esta forma se aprovecha mejor la amplificación de cada una, debido a la alta impedancia de entrada del circuito total, razón que se expone más adelante. Otra ventaja que presenta esta disposición es la facilidad al calcular tanto la transferencia del circuito, ya que debido a teoría de cuadripolos, esta resulta del producto de la de cada etapa, obtenida de reemplazar los valores mostrados en la Tabla (\ref{tabla:valores}) en (\ref{equ:hs}). Es así que se deja en forma de ecuación lo dicho anteriormente:
 
 \begin{equation}
 	H(S) = H_{bajas}(S) \cdot H_{medias}(S) \cdot H_{altas}(S)
-\end{equation}
-\begin{equation}
-	Z_{in}(S) = Z_{bajas}(S) + Z_{medias}(S) + Z_{altas}(S)
 \end{equation}
 siendo el subindice representativo de las frecuencias que modifican.
 
@@ -457,60 +454,80 @@ Es así que se procede a graficar la respuesta en frecuencia calculada de todo e
 	\label{fig:bode_ph_high}
 \end{figure}
 
-Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase. Cabe destacar el oído humano no detecta cambios en la fase, debido a que no posee forma de comparar dicha variación, es decir, no cuenta con una referencia con la cual contrastar el desfasaje.
+Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase.
+%Cabe destacar el oído humano no detecta cambios en la fase, debido a que no posee forma de comparar dicha variación, es decir, no cuenta con una referencia con la cual contrastar el desfasaje.
 %Se puede hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero dicho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano.
 También, resulta pertinente destacar los corrimientos que se producen tanto en la fase como en la amplitud al variar las altas frecuencias, lo cual se debe al cambio realizado del potenciómetro, el cuál se recuerda que fue cambiado de $1 \ k\Omega$ a $50 \ k\Omega$. En otras palabras, la causa de este fenómeno se debe a que la condición de que $R_3 = 10R_2$ deja de ser valida.
 
-De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
+%De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
+%	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias bajas.}
+%	\label{fig:zin_modulo_low}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
+%	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias bajas.}
+%	\label{fig:zin_ph_low}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
+%	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias medias.}
+%	\label{fig:zin_modulo_med}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
+%	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias medias.}
+%	\label{fig:zin_ph_med}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
+%	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias altas.}
+%	\label{fig:zin_modulo_high}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
+%	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias altas.}
+%	\label{fig:zin_ph_high}
+%\end{figure}
+
+Simulando la impedancia de entrada se obtiene que esta permanece prácticamente constante frente a cambios en $\psi$ de cualquier etapa, es por eso que se grafica esta variable a continuación para todo el sistema:
+
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias bajas.}
-	\label{fig:zin_modulo_low}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Low-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias bajas.}
-	\label{fig:zin_ph_low}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias medias.}
-	\label{fig:zin_modulo_med}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-Med-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias medias.}
-	\label{fig:zin_ph_med}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Mod.png}
-	\caption{Impedancia de entrada en modulo, variando $\psi$ para las frecuencias altas.}
-	\label{fig:zin_modulo_high}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Zin-High-Ph.png}
-	\caption{Fase de la impedancia de entrada, variando $\psi$ para las frecuencias altas.}
-	\label{fig:zin_ph_high}
+	\includegraphics[width=0.9\textwidth]{Imagenes/Zin.png}
+	\caption{Impedancia de entrada en modulo (en rojo) y fase (en azul).}
+	\label{fig:zin}
 \end{figure}
 
-Se observa de estas figuras que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciómetro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta mucho menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
+Se observa de esta figura que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciómetro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
+	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
 	\caption{Comparación de impedancias de entrada, en módulo.}
 	\label{fig:zin_comp_mod}
 \end{figure}
 \begin{figure}[H]
 \centering
-		\includegraphics[width=0.7\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
+		\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Ph.png}
 	\caption{Comparación de impedancias de entrada, en fase.}
 	\label{fig:zin_comp_ph}
+\end{figure}
+
+Cabe aclarar que a la salida del circuito se colocó un capacitor de $220 \ nF$ para eliminar un pequeño offset existente, proveniente de la salida de los operacionales. Por lo tanto, la impedancia de salida del circuito termina siendo la de dicho capacitor.
+
+De la misma forma que realizó para la impedancia de entrada, se presenta a continuación la de salida:
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{Imagenes/Zout.png}
+	\caption{Impedancia de salida en modulo (en rojo) y fase (en azul).}
+	\label{fig:zout}
 \end{figure}
 
 Luego, para evitar enfrentarse a amplias variaciones en cuanto a los modelos presentados anteriormente, se decide utilizar tecnología SMD tanto para las resistencias fijas como para los capacitores. De esta forma, y valiéndose del análisis de Montecarlo del programa LTSpice, se obtiene el sigueinte diagrama de Bode, siendo la tolerancia de los componentes mencionados anteriormente de 1 \%.
@@ -590,10 +607,6 @@ A continuación, se procede a presentar diagramas de Bode teóricos, simulados y
 \end{figure}
 
 Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia del 1\%, se termina de ver reflejado en las comparaciones previamente hechas. De estas, se puede concluir que, como los diagramas de Bode, tanto teóricos, como simulados y medidos, se acoplan adecuadamente, los diagramas de polos y ceros se corresponden. En otras palabras, los polos y ceros obtenidos en el circuito físico medido son similares a los obtenidos a través del modelo teórico. Finalmente, se destaca que en muy altas frecuencias, los diagramas no se corresponden en su totalidad. Este factor no es de interés y tampoco afecta el uso del circuito ya que estas diferencias se observan a partir de un rango de frecuencias mayor al audible, por lo tanto, el circuito no está destinado a trabajar en dicho intervalo.
-
-\begin{center}
-	\textcolor{red}{\textbf{FASES.}}
-\end{center}
 
 Por su parte, por lo visto en la Sección (\ref{sub:desarrollo}), la impedancia de entrada permanece prácticamente constante frente a cambios de $\psi$. De esta forma, se decidió presentar las comparaciones de dicha variable una sola vez, independientemente del valor de $\psi$.
 \begin{figure}[H]	
