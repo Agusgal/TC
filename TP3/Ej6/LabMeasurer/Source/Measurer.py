@@ -99,6 +99,29 @@ class Measurer():
         stop_freq = 0
         point_per_decade_quantity = 0
 
+        if (self.impedance_meas):
+            print("Se esta actualmente midiendo una impedancia."
+                  "Se utilizara el primer canal que se seleccione como la tension"
+                  "del generador y se utilizara el segundo canal seleccionado"
+                  "como la tension despues de la resistencia que se anade"
+                  "para medir impedancia. Presionar enter.")
+            input()
+            good_input = False
+            print(
+                "Ingresar valor de la resistencia sobre la que se mide la corriente. Se dividira la tension medida sobre esta"
+                "resistencia por el valor ingresado.")
+            while (not good_input):
+                self.impedance_resistor = input()
+                try:
+                    self.impedance_resistor = float(self.impedance_resistor)
+                    if (self.impedance_resistor >= 0.1 and self.impedance_resistor <= 10000000):
+                        good_input = True
+                    else:
+                        print("Intente nuevamente con una entrada numerica entre 0.1 y 10000000.")
+                except ValueError:
+                    print("Intente nuevamente con una entrada numerica.")
+
+
         print("Ingresar nombre del archivo a guardar en la carpeta de Mediciones.")
         while(True):
             self.filename = input()
@@ -124,7 +147,8 @@ class Measurer():
         #Se pide la frecuencia de arranque y se valida
         good_input = False
         if(self.freqscale == 'g'):
-            print("Ingresar el exponente decimal de la frecuencia de arranque. Debe ser entre 1 y 7. Si se quiere multiplicar la frecuencia elegida por un numero de una"
+            print("Ingresar el exponente decimal de la frecuencia de arranque. Debe ser entre 1 y 7. "
+                  "Si se quiere multiplicar la frecuencia elegida por un numero de una"
               "sola cifra, utilizar una coma luego del exponente. Ejemplo para 500KHz: 5,5")
         else:
             print("Ingresar la frecuencia de arraque:")
@@ -170,7 +194,8 @@ class Measurer():
 
         #Se pide la frecuencia final y se valida
         good_input = False
-        print("Ingresar el exponente decimal de la frecuencia final. Debe ser entre 1 y 7. Si se quiere multiplicar la frecuencia elegida por un numero de una"
+        print("Ingresar el exponente decimal de la frecuencia final. Debe ser entre 1 y 7. "
+              "Si se quiere multiplicar la frecuencia elegida por un numero de una"
               "sola cifra, utilizar una coma luego del exponente. Ejemplo para 500KHz: 5.5")
         while (not good_input):
             stop_freq = input()
@@ -473,21 +498,6 @@ class Measurer():
                 print(
                     "Intente nuevamente. [y/n]")
 
-        if(self.impedance_meas):
-            good_input = False
-            print("Ingresar valor de la resistencia sobre la que se mide la corriente. Se dividira la tension medida sobre esta"
-                  "resistencia por el valor ingresado.")
-            while (not good_input):
-                self.impedance_resistor = input()
-                try:
-                    self.impedance_resistor = float(self.impedance_resistor)
-                    if (self.impedance_resistor >= 0.1 and self.impedance_resistor <= 10000000):
-                        good_input = True
-                    else:
-                        print("Intente nuevamente con una entrada numerica entre 0.1 y 10000000.")
-                except ValueError:
-                    print("Intente nuevamente con una entrada numerica.")
-
 
         print("RECORDATORIO: CONECTAR ALIMENTACION DEL CIRCUITO. PONER PUNTAS EN X10 Y CALIBRARLAS SI ES NECESARIO. PRESIONAR ENTER.")
         input()
@@ -516,7 +526,10 @@ class Measurer():
             self.oscilloscope.trig_hfreject(Resources.SET, Resources.TRIG_HFREJ_ON)
 
         #CONFIGURACION DEL OSCILOSCOPIO
-        self.oscilloscope.set_bode_meas(self.chan[FIRST_CHANNEL], self.chan[SECOND_CHANNEL]) #Se configura al osciloscopio para realizar un bode, mediciones de ratio, phase, etc.
+        if(self.impedance_meas):
+            self.oscilloscope.set_impedance_meas(self.chan[FIRST_CHANNEL], self.chan[SECOND_CHANNEL])
+        else:
+            self.oscilloscope.set_bode_meas(self.chan[FIRST_CHANNEL], self.chan[SECOND_CHANNEL]) #Se configura al osciloscopio para realizar un bode, mediciones de ratio, phase, etc.
 
         #CONFIGURACION GENERADOR
         self.generator.set_voltage(self.voltage) #Se configura al generador con la tension elegida
@@ -530,6 +543,7 @@ class Measurer():
 
         self.ratio=[]
         self.phase=[]
+        self.imp=[]
 
         #Algoritmo que se corre para cada punto en el que se va a querer medir.
         first_fit = True
@@ -635,12 +649,17 @@ class Measurer():
             med = med.split(',')
             if(not self.impedance_meas):
                 self.ratio.append(float(med[0]))
+                self.phase.append(float(med[1]))
             else:
-                self.ratio.append( ( ( 10**( (float(med[0])) /20) ) /20) )
-            self.phase.append(float(med[1]))
+                imp = (med[1] / (med[1] - med[0])) * self.impedance_resistor
+                self.phase.append(float(med[2]))
 
-            print("Ratio: " + str(float(med[0])))
-            print("Phase: " + str(float(med[1])))
+            if(self.impedance_meas):
+                print("Impedance: " + str(imp))
+                print("Phase: " + str(float(med[1])))
+            else:
+                print("Ratio: " + str(float(med[0])))
+                print("Phase: " + str(float(med[1])))
 
         for i in range(0, len(self.phase), 1):
             if (self.phase[i] == float(Resources.OOR_VAL)):
@@ -693,12 +712,12 @@ class Measurer():
                     self.limitfreq = input()
                     if (self.limitfreq.isnumeric()):
                         self.limitfreq = int(self.limitfreq)
-                        if (self.limitfreq >= 1 and self.limitfreq <= 9000000):
+                        if (self.limitfreq >= 10 and self.limitfreq <= 9000000):
                             good_input = True
                         else:
-                            print("Intente nuevamente con una entrada numerica entre 1 y 9000000.")
+                            print("Intente nuevamente con una entrada numerica entre 10 y 9000000.")
                     else:
-                        print("Intente nuevamente con una entrada numerica entre 1 y 9000000.")
+                        print("Intente nuevamente con una entrada numerica entre 10 y 9000000.")
 
                 freq_temp = 0
                 exitwhile = False
@@ -711,9 +730,9 @@ class Measurer():
 
                 self.ratio = self.ratio[:freq_temp]
 
-                self.phase = self.ratio[:freq_temp]
+                self.phase = self.phase[:freq_temp]
 
-                self.frequency = self.ratio[:freq_temp]
+                self.frequency = self.frequency[:freq_temp]
 
         scriptfile = os.path.dirname(__file__)
 

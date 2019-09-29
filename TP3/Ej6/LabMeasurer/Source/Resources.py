@@ -74,6 +74,33 @@ class Oscilloscope:
         self.reset()
 
 #MISC
+    def set_impedance_meas(self, channel1, channel2):
+        if (channel1 == 0):
+            self.chan1 = CHANNEL_MATH
+        elif (channel1 == 1):
+            self.chan1 = CHANNEL_1
+        elif (channel1 == 2):
+            self.chan1 = CHANNEL_2
+        elif (channel1 == 3):
+            self.chan1 = CHANNEL_3
+        elif (channel1 == 4):
+            self.chan1 = CHANNEL_4
+        if (channel2 == 0):
+            self.chan2 = CHANNEL_MATH
+        elif (channel2 == 1):
+            self.chan2 = CHANNEL_1
+        elif (channel2 == 2):
+            self.chan2 = CHANNEL_2
+        elif (channel2 == 3):
+            self.chan2 = CHANNEL_3
+        elif (channel2 == 4):
+            self.chan2 = CHANNEL_4
+        self.set_vpp_meas(channel1)
+        self.set_vpp_meas(channel2)
+        self.set_phase_meas(channel1, channel2)
+        self.set_sleep_time_stats(REST_TIME)
+        self.stat_set(STATS_MEAN)
+
     def set_bode_meas(self, channel1, channel2):
         if(channel1 == 0):
             self.chan1 = CHANNEL_MATH
@@ -384,6 +411,12 @@ class Oscilloscope:
         else:
             self.resource.write(':MEASure:SOURce CHANnel' + str(channel1) + ',CHANnel' + str(channel2))
         self.resource.write(':MEASure:VRATio')
+    def set_vpp_meas(self, channel):
+        if (channel == 0):
+            self.resource.write(':MEASure:SOURce ' + CHANNEL_MATH)
+        else:
+            self.resource.write(':MEASure:SOURce CHANnel' + str(channel))
+        self.resource.write(':MEASure:VPP')
     def stats_reset(self, f, mintime):
         self.resource.write(':MEASure:STATistics:RESet')
         freqtime = 8*(1/(np.power(f, (1/6))))

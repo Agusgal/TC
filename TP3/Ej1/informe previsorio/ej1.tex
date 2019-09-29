@@ -69,12 +69,12 @@ Esto demuestra que un GIC se puede utilizar para emular la impedancia que se des
 
 \footnotetext{F. Sergio, Design with operational amplifiers and analog integrated circuits, 4th ed. New York [etc.]: McGraw-Hill, 1988, p. 187.}
 
-Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo con un GIC que no está puesto a tierra.
+Como se puede observar en la Figura (\ref{fig:gic_ind_fndr}), dos implementaciones muy utilizadas de los GICs puestos a tierra son la de un inductor o un FNDR. Sin embargo, estas implementaciones poseen varias limitaciones a la hora de realizar el diseño de un filtro ya que por la naturaleza interna de los amplificadores operacionales, se debe tener en cuenta que debe haber un camino para la continua que pueda ser utilizada para polarizar correctamente los transistores en el interior de los operacionales. En el siguiente circuito se analizará e implementará un filtro activo.
 
 
 \subsection{Análisis del Circuito}
 
-En una primera instancia, se puede observar en la Figura (\ref{fig:circ_redibujado}) como el circuito a analizar consiste de un filtro de primer orden compuesto por un convertidor generalizado de impedancia cuya salida se encuentra realimentada a la entrada. Si bien la elección de las impedancias del GIC sugieren que este se comporta como un inductor y que el filtro será de segundo orden, la realimentación por la resistencia $R_8$ al potencial de entrada exige un análisis detallado de la función transferencia del circuito. Este será el primer paso a tomar en el análisis del filtro.
+En una primera instancia, se puede observar en la Figura (\ref{fig:circ_redibujado}) como el circuito a analizar consiste de un filtro de primer orden junto a un circuito similar a un convertidor generalizado de impedancia. Si bien la elección de las impedancias del circuito familiar a un GIC sugieren que este se comporta como un inductor y que el filtro será de segundo orden, la realimentación por la resistencia $R_8$ al potencial de entrada exige un análisis detallado de la función transferencia del circuito. Este será el primer paso a tomar en el análisis del filtro.
 
 \subsubsection{Análisis de la Función Transferencia}
 \label{sec:fun_trans}
@@ -763,7 +763,7 @@ Se utilizó la simulación Montecarlo para observar la dispersión de la respues
 	\label{fig:montecarlo}
 \end{figure}
 
-Se puede observar una gran dispersión en la frecuencia de notch de aproximadamente $300Hz$ sin tomar en cuenta el caso de más a la derecha.
+Se puede observar una gran dispersión en la frecuencia de notch de más de $300Hz$.
 
 \subsection{Implementación del Circuito}
 Se implementó el circuito de dos maneras distintas para continuar con la investigación acerca de las sensibilidades calculadas y mejorar el aprendizaje de esta herramienta. Se siguieron las consideraciones y el análisis realizado en la Sección \ref{sec:eleccion_componentes} excepto por el preset utilizado en la resistencia $R_1$. En su lugar, se utilizó el mismo paralelo de dos resistencias que para las resistencias de mismo valor. Se decidió utilizar una placa 5x5, resistores al 1\% y 5\% y capacitores de film al 10\%. También se optó por utilizar dos capacitores de desacople de tecnología SMD con un valor de $100nF$ colocados lo más próximo al operacional como posible. Una vez que se calcule la respuesta en frecuencia del circuito, se colocará el preset en la resistencia $R_1$ y se contrastará el error cometido debido a las tolerancias con el error cometido luego de la calibración, el cual se espera que sea lo más cercano a cero.
@@ -798,7 +798,7 @@ Valor medido & $2830Hz$ & $0dB$ & $-36.927dB$ & $-6.12dB$ \\
 Error & $3.281\%$ & - & - & - \\ \bottomrule
 \end{tabular}
 \caption{Valores significantes teóricos de la respuesta en frecuencia medida sin preset.}
-\label{tab:rta_freq_calc}
+\label{tab:rta_freq_med_sinpreset}
 \end{table}
 
 Se puede observar que la implementación del filtro low pass notch se apegó a los cálculos y simulaciones realizadas en casi todas las zonas. Las dos áreas donde la discrepancia es mayor es alrededor de la frecuencia de notch y para frecuencias mayores que $1MHz$. 
@@ -825,9 +825,44 @@ A continuación se grafica nuevamente el bode en amplitud medido haciendo un enf
 	\label{fig:bodefase_calc_sim_med_notch}
 \end{figure}
 
-Posteriormente, se decidió colocar el preset en la resistencia $R_1$, calibrar el filtro y realizar nuevamente la medición de los gráficos de Bode.
+Posteriormente, se decidió colocar el preset en la resistencia $R_1$, calibrar el filtro y realizar nuevamente la medición de los gráficos de Bode. En las Figuras (\ref{fig:bode_calc_sim_med}) y (\ref{fig:bodefase_calc_sim_med_cal}) se pueden observar los gráficos de Bode obtenidos luego de la calibración. En la Figura (\ref{fig:bode_calc_sim_med_cal_notch}) se hace un enfoque en la frecuencia de notch donde se puede observar que el error cometido es muy bajo.
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%ACA PONER MEDICIONES CON PRESET.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/bode_calc_sim_med_calibrado.PNG}
+	\caption{Diagrama de Bode en módulo medida, simulada y calculada del filtro con preset calibrado.}
+	\label{fig:bode_calc_sim_med_cal}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/bodefase_calc_sim_med_calibrado.PNG}
+	\caption{Diagrama de Bode en fase medida, simulada y calculada del filtro con preset calibrado.}
+	\label{fig:bodefase_calc_sim_med_cal}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes/bode_calc_sim_med_calibrado_notch.PNG}
+	\caption{Diagrama de Bode en módulo medida, simulada y calculada del filtro con preset calibrado con un enfoque en la frecuencia de notch.}
+	\label{fig:bode_calc_sim_med_cal_notch}
+\end{figure}
+
+
+Se puede observar como la frecuencia de notch ha sido desplazada correctamente hacia aquella deseada mediante el uso del preset sin cambios notorios en la selectividad del circuito. Los valores más significantes de la respuesta en frecuencia son presentados a continuación en la Tabla (\ref{tab:rta_freq_med_conpreset}).
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}ccccccc@{}}
+\toprule
+- & $\omega_z$ & $G_{Banda Pasante}$  & $G_{Notch}$ & $G_{Banda Atenuante}$ \\ \midrule
+Valor deseado & $2926Hz$ & - & - & - \\
+Valor medido & $2927.2Hz$ & $0dB$ & $-40.584dB$ & $-6.05dB$ \\
+Error & $0.00041\%$ & - & - & - \\ \bottomrule
+\end{tabular}
+\caption{Valores significantes teóricos de la respuesta en frecuencia medida sin preset.}
+\label{tab:rta_freq_med_conpreset}
+\end{table}
 
 A continuación se midió la impedancia de entrada y de salida del filtro.
 
