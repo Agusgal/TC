@@ -651,7 +651,8 @@ class Measurer():
                 self.ratio.append(float(med[0]))
                 self.phase.append(float(med[1]))
             else:
-                imp = (med[1] / (med[1] - med[0])) * self.impedance_resistor
+                imp = (float(med[1]) / (float(med[1]) - float(med[0]))) * self.impedance_resistor
+                self.imp.append(imp)
                 self.phase.append(float(med[2]))
 
             if(self.impedance_meas):
@@ -675,9 +676,10 @@ class Measurer():
             plt.xlabel("Frecuencia [Hz]")
             if(not self.impedance_meas):
                 plt.ylabel("Amplitud [db]")
+                plt.plot(self.f, self.ratio, label="Amplitud")
             else:
                 plt.ylabel("Impedancia [Ohm]")
-            plt.plot(self.f, self.ratio, label="Amplitud")
+                plt.plot(self.f, self.imp, label="Impedancia")
             plt.legend()
             plt.show()
             plt.title("VISTA PREVIA DE LA MEDICION, FALTA CONFIRMAR")
