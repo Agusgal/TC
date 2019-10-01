@@ -105,7 +105,7 @@
 		V_{out} = (V_2-V_1)\left[\frac{R_2}{R_1}(1+\frac{R_3}{R_4})\right]
 	\end{equation}
 En nuestro afán de conseguir una amplificación de 137,32 se realizaron las siguientes consideraciones en busca de conseguir la configuración más simétrica posible.
-En primer lugar dadas las limitaciones en las tolerancias de los componentes se decidió implementar un amplificador de instrumentación con una ganancia de 137,5 veces. Sí bien se podría haber intentado calibrar la ganancia del mismo mediante el uso de resistores variables, debemos tener en cuenta que los presets no son ajustables con la suficiente precisión y estos además cuentan con su correspondiente tolerancia. Además a causa de vibraciones o movimientos bruscos los mismos podrían descalibrarse forzando al usuario a chequear sus valores previo al uso. 
+En primer lugar dadas las limitaciones de las tolerancias de los componentes se decidió implementar un amplificador de instrumentación con una ganancia de 137,5 veces. Sí bien se podría haber intentado calibrar la ganancia del mismo mediante el uso de resistores variables, debemos tener en cuenta que los presets no son ajustables con la suficiente precisión y estos además cuentan con su correspondiente tolerancia. Por otro lado a causa de vibraciones o movimientos bruscos los mismos podrían cambiar su valor forzando al usuario a chequear sus valores previo al uso. 
 En segundo lugar se eligieron que las resistencias $R_3$ y  $R_4$ tomasen el mismo valor. Este decisión obligara a que $R_7$ y  $R_6$ también sean iguales. Por lo tanto conseguimos mucha simetría en la primera etapa
 
 \begin{equation}
@@ -131,16 +131,94 @@ Luego se eligió $R_2$ del mismo orden de magnitud que $R_1$ de forma tal que el
  	    $R_9$		& 130K$\Omega$     & 1\%        \\   
 		$R_{9'}$	& 7,5K$\Omega$     & 1\%        \\
 			\end{tabular}
-		\caption{Tabla de valores de componentes al 1\%}
+		\caption{Tabla de valores de componentes del IN-AMP al 1\%}
 \end{table}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../ImagenesVarias/IN-AMP-CON-VALORES.png}
+	\caption{IN-AMP con los valores elegidos}
+\end{figure}
+
   Cabe destacar que el orden de magnitud de los componentes se baso en que los amplificadores de instrumentación comerciales son fabricados con resistencias en el orden de los K-ohms.
   
-  Como fue antes mencionado, el amplificador de instrumentación debe poseer, idealmente, impedancia de entrada infinita. Para poder aproximarnos lo más posible a este ideal se decidio utilizar el amplificador operacional \textbf{TL084} que posee una impedancia de entrada de 1 Tera-Ohm ($10^{12}\Omega$). Otra ventaja de elegir este operacional es que se consiguen en packs de 4 op-amps dentro de un mismo integrado lo cual disminuye las variaciones por cambios de temperatura dado que se encuentran los 4 bajo las mismas condiciones de operación.
+  Como fue antes mencionado, el amplificador de instrumentación debe poseer, idealmente, impedancia de entrada infinita. Para poder aproximarnos lo más posible a este ideal se decidió utilizar el amplificador operacional \textbf{TL084} que posee una impedancia de entrada de 1 Tera-Ohm ($10^{12}\Omega$). Otra ventaja de elegir este operacional es que se consiguen en un solo integrado que contiene a los de 4 op-amps dentro de un mismo integrado lo cual disminuye las variaciones por cambios de temperatura dado que se encuentran los 4 bajo las mismas condiciones de operación.
+  
+  
+\subsection{Respuesta en frecuencia}
+Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango de las frecuencias medias a bajas. Esta configuración exhibe un comportamiento del tipo pasabajos lo que provoca que no se obtenga la ganancia esperada a frecuencias elevadas.
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{../ImagenesVarias/BODE_MAG.PNG}
+	\caption{Bode de Magnitud}
+\end{figure}
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
 \subsection{Generación de señales con puente de Wheatstone}
+Se diseño un puente de WheatStone para la generación de señales.
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.25\textheight]{../ImagenesVarias/wheatstone.png}
+	\caption{Puente de WheatStone}
+\end{figure}
+
+Este método emula a un sensor que utilice un sistema tipo puente con un resistor variable que puede llegar a cambiar de valor según la temperatura, presión u alguna otra que ocasiona que su valor cambie.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{../ImagenesVarias/wheatstoneInAmp.png}
+	\caption{IN-AMP con puente de WheatStone Acoplado}
+\end{figure}
+
+La tensión suministrada en la parte superior del puente permite que las variaciones de resistencia se traduzcan en una señal eléctrica.
+Sin embargo es necesario poseer una cierta referencia para poder determinar si de hecho ocurrió un cambio. Es por es que el amplificador de instrumentación se vale del puente y de sus 2 bornes de salida para llevar acabo esta detección. La rama del puente que cuenta con sus resistores fijos proporcionara la tensión de referencia.
+A la entrada del amplificador de instrumentación se le proporcionaran 2 señales. En primer tendremos la señal de referencia y por el otro la señal portadora de la perturbación.
+Debemos notar que dado el diseño del amplificador de instrumentación de no haber diferencias entre las dos señales entonces en el caso ideal se debería observar una salida nula. 
+
+Para el armado del puente se eligieron resistores con tolerancias del 1\% para mantener el puente lo más balanceado posible y maximizar el rechazo en modo común.
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lll}
+		Componente  		& Valor        	& Tolerancia \\
+		\\
+		$R_1$       		& 10K$\Omega$   & 1\%        \\
+		$R_2$       		& 10K$\Omega$ 	& 1\%        \\
+		$R_{2'}$ Preset      & 1K$\Omega$ 	& 10\%        \\
+		$R_3$  				& 10K$\Omega$   & 1\%        \\
+		$R_4$ 				& 10K$\Omega$   & 1\%		\\
+	\end{tabular}
+	\caption{Tabla de valores de componentes del puente de WheatStone al 1\%}
+\end{table}
+
+El preset nos permite generar de manera artificial "la perturbación" sobre la señal.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{../ImagenesDeOsciloscopio/WheatStone1tierra1c1R.png}
+	\caption{Amplificación de diferencias con puente de WheatStone}
+\end{figure}
+Notese la escala de las señales.
+\subsubsection{Análisis de Tolerancias en el puente de WheatStone}
+
 
 \subsubsection{Señales con y sin referencia a tierra}
+
+
 
  	
 \begin{thebibliography}{9}
