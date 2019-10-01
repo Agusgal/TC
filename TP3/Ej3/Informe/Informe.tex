@@ -117,24 +117,30 @@ Luego se eligió $R_2$ del mismo orden de magnitud que $R_1$ de forma tal que el
 \begin{table}[H]
 	\centering
 	\begin{tabular}{lll}
-		Componente  & Valor        	& Tolerancia \\
+		Componente  & Valor        	   & Tolerancia \\
 		\\
-		$R_1$       & 2K$\Omega$   	& 1\%        \\
-		$R_2$       & 130K$\Omega$ 	& 1\%        \\
-		$R_{2'}$  	& 7,5K$\Omega$  & 1\%        \\
-		$R_3$ 		& 10K$\Omega$   & 1\%			\\
-		$R_4$		& 10K$\Omega$   & 1\%           \\
-	    $R_5$		& 10K$\Omega$   & 1\%           \\
-	    $R_6$		& 10K$\Omega$   & 1\%           \\
-	    $R_7$		& 10K$\Omega$   & 1\%           \\
-	    $R_8$		& 2K$\Omega$     & 1\%           \\
- 	    $R_9$		& 130K$\Omega$     & 1\%       \\   
-		$R_{9'}$	& 7,5K$\Omega$     & 1\%       \\
+		$R_1$       & 2K$\Omega$   	   & 1\%        \\
+		$R_2$       & 130K$\Omega$ 	   & 1\%        \\
+		$R_{2'}$  	& 7,5K$\Omega$     & 1\%        \\
+		$R_3$ 		& 10K$\Omega$      & 1\%		\\
+		$R_4$		& 10K$\Omega$      & 1\%        \\
+	    $R_5$		& 10K$\Omega$      & 1\%        \\
+	    $R_6$		& 10K$\Omega$      & 1\%        \\
+	    $R_7$		& 10K$\Omega$      & 1\%        \\
+	    $R_8$		& 2K$\Omega$       & 1\%        \\
+ 	    $R_9$		& 130K$\Omega$     & 1\%        \\   
+		$R_{9'}$	& 7,5K$\Omega$     & 1\%        \\
 			\end{tabular}
-		\caption{Tabla de valores de componentes al 1$%$}
+		\caption{Tabla de valores de componentes al 1\%}
 \end{table}
   Cabe destacar que el orden de magnitud de los componentes se baso en que los amplificadores de instrumentación comerciales son fabricados con resistencias en el orden de los K-ohms.
+  
+  Como fue antes mencionado, el amplificador de instrumentación debe poseer, idealmente, impedancia de entrada infinita. Para poder aproximarnos lo más posible a este ideal se decidio utilizar el amplificador operacional \textbf{TL084} que posee una impedancia de entrada de 1 Tera-Ohm ($10^{12}\Omega$). Otra ventaja de elegir este operacional es que se consiguen en packs de 4 op-amps dentro de un mismo integrado lo cual disminuye las variaciones por cambios de temperatura dado que se encuentran los 4 bajo las mismas condiciones de operación.
+  
+  
 \subsection{Generación de señales con puente de Wheatstone}
+
+\subsubsection{Señales con y sin referencia a tierra}
 
  	
 \begin{thebibliography}{9}
