@@ -104,7 +104,36 @@
 	\begin{equation}
 		V_{out} = (V_2-V_1)\left[\frac{R_2}{R_1}(1+\frac{R_3}{R_4})\right]
 	\end{equation}
+En nuestro afán de conseguir una amplificación de 137,32 se realizaron las siguientes consideraciones en busca de conseguir la configuración más simétrica posible.
+En primer lugar dadas las limitaciones en las tolerancias de los componentes se decidió implementar un amplificador de instrumentación con una ganancia de 137,5 veces. Sí bien se podría haber intentado calibrar la ganancia del mismo mediante el uso de resistores variables, debemos tener en cuenta que los presets no son ajustables con la suficiente precisión y estos además cuentan con su correspondiente tolerancia. Además a causa de vibraciones o movimientos bruscos los mismos podrían descalibrarse forzando al usuario a chequear sus valores previo al uso. 
+En segundo lugar se eligieron que las resistencias $R_3$ y  $R_4$ tomasen el mismo valor. Este decisión obligara a que $R_7$ y  $R_6$ también sean iguales. Por lo tanto conseguimos mucha simetría en la primera etapa
 
+\begin{equation}
+	V_{out} = (V_2-V_1)\left[2 \frac{R_2}{R_1}\right]
+\end{equation}
+
+Luego se eligió $R_2$ del mismo orden de magnitud que $R_1$ de forma tal que el factor de \textbf{2} que apareció previamente sea cancelado y $R_2$ controle por completo la ganancia. Esta $R_2$ fue armada mediante 2 resistores SMD en serie.
+
+\begin{table}[H]
+	\centering
+	\begin{tabular}{lll}
+		Componente  & Valor        	& Tolerancia \\
+		\\
+		$R_1$       & 2K$\Omega$   	& 1\%        \\
+		$R_2$       & 130K$\Omega$ 	& 1\%        \\
+		$R_{2'}$  	& 7,5K$\Omega$  & 1\%        \\
+		$R_3$ 		& 10K$\Omega$   & 1\%			\\
+		$R_4$		& 10K$\Omega$   & 1\%           \\
+	    $R_5$		& 10K$\Omega$   & 1\%           \\
+	    $R_6$		& 10K$\Omega$   & 1\%           \\
+	    $R_7$		& 10K$\Omega$   & 1\%           \\
+	    $R_8$		& 2K$\Omega$     & 1\%           \\
+ 	    $R_9$		& 130K$\Omega$     & 1\%       \\   
+		$R_{9'}$	& 7,5K$\Omega$     & 1\%       \\
+			\end{tabular}
+		\caption{Tabla de valores de componentes al 1$%$}
+\end{table}
+  Cabe destacar que el orden de magnitud de los componentes se baso en que los amplificadores de instrumentación comerciales son fabricados con resistencias en el orden de los K-ohms.
 \subsection{Generación de señales con puente de Wheatstone}
 
  	
