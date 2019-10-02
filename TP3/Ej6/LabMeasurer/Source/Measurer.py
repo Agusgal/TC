@@ -19,6 +19,7 @@ STARTING_DIV_VAL = 0.001
 HFREJECT_CUTOFF = 1*10**5
 HIGH_RES_CUTOFF = 1*10**5
 
+EASTER = 'guidin'
 IMPEDANCE = 'Z'
 BODE = 'B'
 EXIT = 'E'
@@ -33,8 +34,8 @@ class Measurer():
         self.frequency = 0      #Frecuencia del generador a usar
         self.openResources=[]   #Recursos abiertos
         logging.info("Creando resource manager.")
-        #self.resourceManager = visa.ResourceManager('@sim') #Para simular un instrumento
-        self.resourceManager = visa.ResourceManager()
+        self.resourceManager = visa.ResourceManager('@sim') #Para simular un instrumento
+        #self.resourceManager = visa.ResourceManager()
         if(len(self.resourceManager.list_resources()) != 0): #Me fijo si hay instrumentos disponibles
             print("Conectarse al osciloscopio.")
             if(self.connect(OSC_RESOURC)):          #Se realiza la coneccion al osciloscopio
@@ -49,11 +50,12 @@ class Measurer():
                             user_exit = True
                         elif(measurement == BODE):
                             self.bode()  # Se realiza la medicion de bode
-                        elif(measurement == TRAN):
-                            self.tran()  # Se realiza la medicion del transitorio
                         elif(measurement == IMPEDANCE):
                             self.impedance_meas=True
                             self.bode()  # Se realiza la medicion de bode teniendo en cuenta que se mide una corriente
+                            self.impedance_meas=False
+                        elif(measurement == EASTER):
+                            print("Ay che.")
                 else:
                     print("Error con el generador de funciones.")
             else:
@@ -100,16 +102,16 @@ class Measurer():
         point_per_decade_quantity = 0
 
         if (self.impedance_meas):
-            print("Se esta actualmente midiendo una impedancia."
-                  "Se utilizara el primer canal que se seleccione como la tension"
-                  "del generador y se utilizara el segundo canal seleccionado"
-                  "como la tension despues de la resistencia que se anade"
+            print("Se esta actualmente midiendo una impedancia.\n"
+                  "Se utilizara el primer canal que se seleccione como la tension\n"
+                  "del generador y se utilizara el segundo canal seleccionado\n"
+                  "como la tension despues de la resistencia que se anade\n"
                   "para medir impedancia. Presionar enter.")
             input()
             good_input = False
             print(
-                "Ingresar valor de la resistencia sobre la que se mide la corriente. Se dividira la tension medida sobre esta"
-                "resistencia por el valor ingresado.")
+                "Ingresar valor de la resistencia sobre la que se mide la corriente.\n"
+                "Se dividira la tension medida sobre esta resistencia por el valor ingresado.")
             while (not good_input):
                 self.impedance_resistor = input()
                 try:
@@ -147,8 +149,8 @@ class Measurer():
         #Se pide la frecuencia de arranque y se valida
         good_input = False
         if(self.freqscale == 'g'):
-            print("Ingresar el exponente decimal de la frecuencia de arranque. Debe ser entre 1 y 7. "
-                  "Si se quiere multiplicar la frecuencia elegida por un numero de una"
+            print("Ingresar el exponente decimal de la frecuencia de arranque. Debe ser entre 1 y 7.\n"
+                  "Si se quiere multiplicar la frecuencia elegida por un numero de una\n"
               "sola cifra, utilizar una coma luego del exponente. Ejemplo para 500KHz: 5,5")
         else:
             print("Ingresar la frecuencia de arraque:")
@@ -194,9 +196,13 @@ class Measurer():
 
         #Se pide la frecuencia final y se valida
         good_input = False
-        print("Ingresar el exponente decimal de la frecuencia final. Debe ser entre 1 y 7. "
-              "Si se quiere multiplicar la frecuencia elegida por un numero de una"
-              "sola cifra, utilizar una coma luego del exponente. Ejemplo para 500KHz: 5.5")
+
+        if(self.freqscale == 'g'):
+            print("Ingresar el exponente decimal de la frecuencia final. Debe ser entre 1 y 7.\n"
+                  "Si se quiere multiplicar la frecuencia elegida por un numero de una\n"
+              "sola cifra, utilizar una coma luego del exponente. Ejemplo para 500KHz: 5,5")
+        else:
+            print("Ingresar la frecuencia de arraque:")
         while (not good_input):
             stop_freq = input()
             if (stop_freq.find(',') != -1):
@@ -262,7 +268,7 @@ class Measurer():
                 for ff in particularf:
                     try:
                         ff = float(ff)
-                        if (ff >= 10 and ff<= 15*10**6):
+                        if (ff >= 1 and ff<= 15*10**6):
                             good_input = True
                             self.particular_frequencies.append(int(ff))
                         else:
@@ -281,7 +287,7 @@ class Measurer():
             point_per_decade_quantity = input()
             if (point_per_decade_quantity.isnumeric()):
                 point_per_decade_quantity = float(point_per_decade_quantity)
-                if (point_per_decade_quantity >= 1 and point_per_decade_quantity <= 10000):
+                if (point_per_decade_quantity >= 1 and point_per_decade_quantity <= 1000):
                     good_input = True
                 else:
                     print("Intente nuevamente con una entrada numerica entre 1 y 10000.")
@@ -304,13 +310,21 @@ class Measurer():
             ff = int(ff)
 
         for pf in self.particular_frequencies:
+            inserted = False
             temp = 0
-            for ff in self.f:
-                if (ff > pf):
-                    self.f = np.insert(self.f, temp, pf)
-                    break
-
-                temp = temp + 1
+            if(pf < self.f[0]):
+                self.f=np.insert(self.f, 0, pf)
+            else:
+                for ff in self.f:
+                    if (ff <= pf):
+                        pass
+                    else:
+                        self.f = np.insert(self.f, temp, pf)
+                        inserted=True
+                        break
+                    temp = temp + 1
+                if(not inserted):
+                    self.f=np.insert(self.f,temp,pf)
 
         print("Frecuencias a medir:")
         print(self.f)
@@ -336,6 +350,8 @@ class Measurer():
         print("Ingresar primer canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
         print("Se tomaran los canales de la siguiente forma para los settings de las mediciones:")
         print("Primer canal ---> Segundo canal")
+        if(self.impedance_meas):
+            print("Recordar que se debe elegir la tension del generador como el primer canal y la\ntension despues de la resistencia como segundo canal.")
         while (not good_input):
             self.chan1 = input()
             if (self.chan1.isnumeric()):
@@ -499,7 +515,8 @@ class Measurer():
                     "Intente nuevamente. [y/n]")
 
 
-        print("RECORDATORIO: CONECTAR ALIMENTACION DEL CIRCUITO. PONER PUNTAS EN X10 Y CALIBRARLAS SI ES NECESARIO. PRESIONAR ENTER.")
+        print("RECORDATORIO: CONECTAR ALIMENTACION DEL CIRCUITO. \nPONER PUNTAS EN X10 Y CALIBRARLAS SI ES NECESARIO.\n"
+              "PRESIONAR ENTER PARA COMENZAR LA MEDICION.")
         input()
 
     #Esta clase es el algoritmo que setea al generador y osciloscopio en las configuraciones necesarias para cada punto en el que se va a medir
@@ -651,12 +668,12 @@ class Measurer():
                 self.ratio.append(float(med[0]))
                 self.phase.append(float(med[1]))
             else:
-                imp = (float(med[1]) / (float(med[1]) - float(med[0]))) * self.impedance_resistor
-                self.imp.append(imp)
+                self.curimp = (float(med[1]) / (float(med[0]) - float(med[1]))) * self.impedance_resistor
+                self.imp.append(self.curimp)
                 self.phase.append(float(med[2]))
 
             if(self.impedance_meas):
-                print("Impedance: " + str(imp))
+                print("Impedance: " + str(self.curimp))
                 print("Phase: " + str(float(med[1])))
             else:
                 print("Ratio: " + str(float(med[0])))
@@ -723,18 +740,14 @@ class Measurer():
 
                 freq_temp = 0
                 exitwhile = False
-                while(not exitwhile):
-                    for ff in self.f:
-                        if(ff >  self.limitfreq):
-                            exitwhile = True
-                            break
-                    freq_temp = freq_temp + 1
-
-                self.ratio = self.ratio[:freq_temp]
-
-                self.phase = self.phase[:freq_temp]
-
-                self.frequency = self.frequency[:freq_temp]
+                for ff in self.f:
+                    if(ff >  self.limitfreq):
+                        self.f.remove(self.f.index(ff))
+                        self.phase.remove(self.f.index(ff))
+                        if(self.impedance_meas):
+                            self.imp.remove(self.f.index(ff))
+                        else:
+                            self.ratio.remove(self.f.index(ff))
 
         scriptfile = os.path.dirname(__file__)
 
@@ -768,136 +781,19 @@ class Measurer():
                 writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
         csvfile.close()
 
-    def tran(self):
-        self.oscilloscope = self.openResources[OSC_RESOURC]
-        self.generator = self.openResources[GEN_RESOURC]
-
-        self.tran_input_gathering()  # Se pide informacion sobre como se quiere realizar el bode
-
-        if(self.probe10):
-            self.oscilloscope.chan_probe(Resources.SET, self.chan1, 10)
-            self.oscilloscope.chan_probe(Resources.SET, self.chan2, 10)
-        self.generator.set_voltage(self.voltage)  # Se configura al generador con la tension elegida
-        self.generator.set_frequency(self.frequency)
-
-        self.oscilloscope.measure_tran(self.chan1, self.chan2, self.filename)
-
     def ask_which_measurement(self):
-        print("Elegir que se quiere hacer: [E]xit, [B]ode, [T]ransitorio o Impedancia[Z].")
+        print("Elegir que se quiere hacer: [E]xit, [B]ode o Impedancia[Z].")
         self.impedance_meas = False
         bad_input = True
         while(bad_input):
             inp = input()
-            if(inp == 'E'):
+            if(inp == 'E' or inp == 'e'):
                 return EXIT
-            elif(inp == 'B'):
+            elif(inp == 'B' or inp == 'b'):
                 return BODE
-            elif(inp == 'Z'):
+            elif(inp == 'Z' or inp == 'z'):
                 return IMPEDANCE
-            elif(inp == 'T'):
-                return TRAN
+            elif(inp=='guidin'):
+                return EASTER
             else:
-                print("Ingresar nuevamente una entrada alfabetica igual a E, Z, B o T.")
-
-    def tran_input_gathering(self):
-
-        good_input = False
-
-        print("Ingresar nombre del archivo a guardar en la carpeta de Mediciones.")
-        self.filename = input()
-
-        # Se pide la tension del generador y se valida
-        good_input = False
-        print("Ingresar tension pico a pico para el generador de funciones:")
-        while (not good_input):
-            self.voltage = input()
-            try:
-                self.voltage = float(self.voltage)
-                if (self.voltage >= 0.01 and self.voltage <= 10):
-                    good_input = True
-                    self.voltage = self.voltage / 2
-                else:
-                    print("Intente nuevamente con una entrada numerica entre 0.01 y 10.")
-            except ValueError:
-                print("Intente nuevamente con una entrada numerica.")
-
-        # Se pide el primer canal a medir y se valida
-        good_input = False
-        print("Ingresar primer canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
-        while (not good_input):
-            self.chan1 = input()
-            if (self.chan1.isnumeric()):
-                self.chan1 = int(self.chan1)
-                if (
-                        self.chan1 == 1 or self.chan1 == 2 or self.chan1 == 3 or self.chan1 == 4 or self.chan1 == 0):
-                    good_input = True
-                else:
-                    print("Intente nuevamente con una entrada numerica entre 0 y 5.")
-            else:
-                print("Intente nuevamente con una entrada numerica entre 0 y 5.")
-
-        # Se pide el segundo canal para medir y se valida
-        good_input = False
-        print("Ingresar segundo canal para medir. Ingresar 0 si se quiere seleccionar el canal MATH.")
-        while (not good_input):
-            self.chan2 = input()
-            if (self.chan2.isnumeric()):
-                self.chan2 = int(self.chan2)
-                if (
-                        self.chan2 == 1 or self.chan2 == 2 or self.chan2 == 3 or self.chan2 == 4 or self.chan2 == 0 and self.chan2 != self.chan1):
-                    good_input = True
-                else:
-                    print(
-                        "Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
-            else:
-                print(
-                    "Intente nuevamente con una entrada numerica entre 0 y 5 y que sea distinta del primer canal.")
-
-        # Configuracion de canales
-        good_input = False
-        print(
-            "Se desea utilizar trigger externo?")
-        while (not good_input):
-            self.trigext = input()
-            if (self.trigext == 'n' or self.trigext == 'N'):
-                self.trigext = 0
-                good_input = True
-            elif (self.trigext == 'y' or self.trigext == 'Y'):
-                self.trigext = 1
-                good_input = True
-            else:
-                print(
-                    "Intente nuevamente. [y/n]")
-
-        if (not self.trigext):
-            # Configuracion de canales
-            good_input = False
-            print(
-                "Se desea usar HF reject y noise reject en el trigger? [y/n]")
-            while (not good_input):
-                self.trigfilterchoice = input()
-                if (self.trigfilterchoice == 'n' or self.trigfilterchoice == 'N'):
-                    self.trigfilterchoice = 0
-                    good_input = True
-                elif (self.trigfilterchoice == 'y' or self.trigfilterchoice == 'Y'):
-                    self.trigfilterchoice = 1
-                    good_input = True
-                else:
-                    print(
-                        "Intente nuevamente. [y/n]")
-
-        # Configuracion de canales
-        good_input = False
-        print(
-            "Se desea utilizar las puntas en x10? [y/n]")
-        while (not good_input):
-            self.probe10 = input()
-            if (self.probe10 == 'n' or self.probe10 == 'N'):
-                self.probe10 = 0
-                good_input = True
-            elif (self.probe10 == 'y' or self.probe10 == 'Y'):
-                self.probe10 = 1
-                good_input = True
-            else:
-                print(
-                    "Intente nuevamente. [y/n]")
+                print("Ingresar nuevamente una entrada alfabetica igual a E, Z o B.")
