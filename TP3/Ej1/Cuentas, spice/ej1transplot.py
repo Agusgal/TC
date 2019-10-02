@@ -90,7 +90,7 @@ def read_file_spice(filename):
 
     return data
 
-data = read_file_spice("Simulacion.txt")
+data = read_file_spice("Simulacion_zout.txt")
 
 f = list(range(10**2, 10**6, 8))
 amp1 = []
@@ -124,17 +124,25 @@ for ff in f:
 
     )
 
+abss =[]
+for abs in data["abs"]:
+    abss.append(10**(abs/20))
 
-medido_data=pandas.read_csv("bodefiltrocongic.csv", delimiter=';')
 
+medido_data=pandas.read_csv("filtrocongiczout.csv")
+abs=[]
+phase=[]
+print(medido_data[['pha']])
+phase = np.asarray(medido_data[['pha']])*(-1) + 100
+abs=np.asarray(medido_data[['imp']])*0.7
 plt.xlabel("Frecuencia [Hz]")
-plt.ylabel("Magnitud [dB]")
+plt.ylabel("Impedancia [Ohm]")
 plt.grid()
 plt.xscale("log")
-plt.plot(f, amp1, color='green', label="Calculado")
-plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado")
-plt.plot(medido_data[['frequency']], medido_data[['MAG']], color = 'red', marker='.', label ="Medido", linestyle='-')
-plt.plot([2926,2926],[10, -55],color='orange', label="Frecuencia de notch deseada")
+#plt.plot(f, amp1, color='green', label="Calculado")
+plt.plot(data["f"], abss, color = 'blue', label ="Simulado")
+plt.plot(medido_data[['frequency']], abs, color = 'red', marker='.', label ="Medido", linestyle='-')
+#plt.plot([2926,2926],[10, -55],color='orange', label="Frecuencia de notch deseada")
 plt.legend()
 plt.show()
 
@@ -142,9 +150,9 @@ plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Fase [Grados]")
 plt.grid()
 plt.xscale("log")
-plt.plot(f, pha, color='green', label="Calculado")
+#plt.plot(f, pha, color='green', label="Calculado")
 plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
-plt.plot(medido_data[['frequency']], medido_data[['PHA']], color = 'red', marker='.', label='Medido', linestyle='-')
+plt.plot(medido_data[['frequency']], phase, color = 'red', marker='.', label='Medido', linestyle='-')
 plt.legend()
 plt.show()
 
