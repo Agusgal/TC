@@ -13,7 +13,7 @@
 
 \begin{document}
 	\subsection{Introducción}
-	Los amplificadores de instrumentación, también conocidos como \textbf{IN-AMP},  son utilizados para amplificar con alta precisión las señales provenientes de diversas unidades de adquisición de datos que no poseen la amplitud suficiente como para poder ser aprovechada siendo muy susceptible a contaminación por ruido . Sin embargo, amplificar no es el único objetivo de este dispositivo. Si así fuese entonces bastaría con utilizar un amplificador operacional corriente.
+	Los amplificadores de instrumentación, también conocidos como \textbf{IN-AMP},  son utilizados para amplificar con alta precisión las señales provenientes de diversas unidades de adquisición de datos que no poseen la amplitud suficiente o estan demasiado contaminadas por ruido externo como para poder ser aprovechadas.
 	\subsubsection{Diferencias entre \textbf{IN-AMP} y \textbf{OP AMP}}
 	A simple vista un \textbf{IN-AMP} puede ser fácilmente confundido con un \textbf{OP AMP} dado que tiene varios rasgos en común. En primer lugar ambos dispositivos amplifican una señal diferencial, es decir que multiplican por un cierto factor la diferencia de potencial entre sus terminales de entrada. Por otro lado también poseen una elevada impedancia de entrada (del orden de los Megaohms) y una muy baja impedancia de salida de unos pocos ohms.
 	No obstante, podemos notar algunas diferencias fundamentales entre ambos. Por ejemplo, para configurar la ganancia a lazo cerrado de un amplificador operacional se debe ajustar mediante resistores de retro-alimentación externos mientras que en un amplificador de instrumentación la ganancia puede venir predefinida por el fabricante o ajustada mediante una única \textbf{resistencia externa} denominada usualmente como \textbf{$R_{gain}$}.
@@ -144,7 +144,51 @@ Luego se eligió $R_2$ del mismo orden de magnitud que $R_1$ de forma tal que el
   
   Como fue antes mencionado, el amplificador de instrumentación debe poseer, idealmente, impedancia de entrada infinita. Para poder aproximarnos lo más posible a este ideal se decidió utilizar el amplificador operacional \textbf{TL084} que posee una impedancia de entrada de 1 Tera-Ohm ($10^{12}\Omega$). Otra ventaja de elegir este operacional es que se consiguen en un solo integrado que contiene a los de 4 op-amps dentro de un mismo integrado lo cual disminuye las variaciones por cambios de temperatura dado que se encuentran los 4 bajo las mismas condiciones de operación.
   
-  
+\subsection{Efecto de las tolerancias}
+Cuando se plantearon los primeros amplificadores diferenciales se utilizaron configuraciones simples como la exhibida debajo, ya se conocía que los resistores $R_1$, $R_2$, $R_3$ y $R_4$ debían estar apropiadamente balanceados con el fin de maximizar el rechazo en modo común. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\linewidth]{../ImagenesVarias/AmplificadorDiferencial.PNG}
+	\caption{Amplificador diferencial}
+\end{figure}  
+
+Sin embargo las tolerancias de los componentes no lo permiten. Es por tal motivo que para alcanzar dicha precisión los fabricantes construyen dichas resistencias durante el proceso de fabricación del IC con el fin de minimizar esas diferencias.
+
+El modelo más sofisticado y robusto que se implemento presenta mejoras muy notables por sobre su antecesor. No obstante, estas mejoras también traen nuevos desafíos dado que se añaden más componentes resistivos al sistema.
+
+Usando resistencias al 1\% obtenemos la siguiente simulación de Montecarlo para en modo diferencial
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{../ImagenesDeSimulaciones/MonteCarloModoDiferencialGrande.png}
+	\caption{Montecarlo en modo diferencial}
+\end{figure}  
+Como podemos notar, las tolerancias no afectan significativamente su desempeño en modo diferencial.
+
+Sin embargo podemos realizar más observaciones en cuanto a su desempeño en modo comúm
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{../ImagenesDeSimulaciones/MonteCarloModoComunGrande1V.png}
+	\caption{Montecarlo en modo común con 1 Vpp de entrada}
+\end{figure} 
+Este gráfico de bode pone en evidencia la importancia de que las resistencias poseean la mayor precisión posible.
+
+Si la tensión en modo común se reduce vemos como mejora el rechazo en modo común.
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{../ImagenesDeSimulaciones/MonteCarloModoComunGrande100mv.png}
+	\caption{Montecarlo en modo común con 100 mv de entrada}
+\end{figure} 
+
+También se intento ver los alcances de rechazo común frente a una continua
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{../ImagenesDeOsciloscopio/ModoComunContinua.png}
+	\caption{Rampa de 0 a 20V}
+\end{figure} 
+
+Vemos como el circuito es capaz de soportar hasta unos 5V de continua (como indica el cursor) antes de salir de su zona de operación.
+
 \subsection{Respuesta en frecuencia}
 Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango de las frecuencias medias a bajas. Esta configuración exhibe un comportamiento del tipo pasabajos lo que provoca que no se obtenga la ganancia esperada a frecuencias elevadas.
 \begin{figure}[H]
@@ -152,6 +196,8 @@ Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango
 	\includegraphics[height=0.3\textheight]{../ImagenesVarias/BODE_MAG.PNG}
 	\caption{Bode de Magnitud}
 \end{figure}
+
+
   
   
   
