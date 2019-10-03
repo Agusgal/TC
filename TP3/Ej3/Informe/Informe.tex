@@ -152,7 +152,7 @@ Cuando se plantearon los primeros amplificadores diferenciales se utilizaron con
 	\caption{Amplificador diferencial}
 \end{figure}  
 
-Sin embargo las tolerancias de los componentes no lo permiten. Es por tal motivo que para alcanzar dicha precisión los fabricantes construyen dichas resistencias durante el proceso de fabricación del IC con el fin de minimizar esas diferencias.
+Sin embargo las tolerancias de los componentes no lo permiten. Es por tal motivo que para alcanzar dicha precisión los fabricantes construyen dichas resistencias, mediante técnicas láser durante el proceso de fabricación del IC con el fin de minimizar esas diferencias.
 
 El modelo más sofisticado y robusto que se implemento presenta mejoras muy notables por sobre su antecesor. No obstante, estas mejoras también traen nuevos desafíos dado que se añaden más componentes resistivos al sistema.
 
@@ -216,7 +216,7 @@ Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango
   
   
 \subsection{Generación de señales con puente de Wheatstone}
-Se diseño un puente de WheatStone para la generación de señales.
+Se diseño un puente de WheatStone para la generación de señales compuestas.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.25\textheight]{../ImagenesVarias/wheatstone.png}
@@ -263,6 +263,8 @@ Notese la escala de las señales.
 
 
 \subsubsection{Señales con y sin referencia a tierra}
+El amplificador de instrumentación es destacado por su capacidad de suprimir el ruido presente en una señal diferencial. La clave de este dispositivo esta en que la contaminación es la misma para ambos canales.
+Al compartir la referencia entre el generador de la señal y el \textbf{IN-AMP} ambos estan sujetos a la misma contaminación externa que se genera respecto de su potencial de referencia (GND). Por el otro lado si estos dos no comparten referencia entonces dichas contaminaciones se generaran contra tensiones de referencia diferentes lo cual provocara que se adicione al ruido en las terminales del amplificador de instrumentación  
 
 
 
