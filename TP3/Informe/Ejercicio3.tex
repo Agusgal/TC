@@ -262,8 +262,20 @@ Notese la escala de las señales.
 
 
 \subsubsection{Señales con y sin referencia a tierra}
-El amplificador de instrumentación es destacado por su capacidad de suprimir el ruido presente en una señal diferencial. La clave de este dispositivo esta en que la contaminación es la misma para ambos canales.
-Al compartir la referencia entre el generador de la señal y el \textbf{IN-AMP} ambos estan sujetos a la misma contaminación externa que se genera respecto de su potencial de referencia (GND). Por el otro lado si estos dos no comparten referencia entonces dichas contaminaciones se generaran contra tensiones de referencia diferentes lo cual provocara que se adicione al ruido en las terminales del amplificador de instrumentación  
+La problemática al medir señales con entrada flotante, como pueden ser por ejemplo los transformadores o cualquier otro señal que se encuentre aislada de tierra radica en el hecho que las corrientes de bias del amplificador de instrumentación, no tanto las inherentes al dispositivo por cuestiones de fabricación, sino más bien aquellas desarrolladas por el aumento de la temperatura. Es de mayor relevancia en los \textbf{IN-AMP} desarrollados con transistores \textbf{FET} que, aunque tiene menores corrientes de bias a temperatura ambiente, estas se duplican cada 11 grados centigrados. Estas corrientes provocan que el amplificador de instrumentación conmute más rápidamente observándose cierto "ruido" en la señal de salida. Se recomienda siempre colocar un camino entre la fuente flotante y ground. Esto se puede lograr utilizando un resistor de entre $1M\Omega$ y  $10\Omega$
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatStoneTierra1.png}
+	\caption{Amplificación de diferencias con puente de WheatStone con conexión a ground}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatstoneAislado.png}
+	\caption{Amplificación de diferencias con puente de WheatStone con conexión a ground}
+\end{figure}
+
 
 
 
