@@ -279,9 +279,9 @@ Donde $\rho$ es la densidad del líquido (en caso de ser agua $997\frac{kg}{m^3}
 
 \section{Implementación práctica}
 
-En primer lugar es necesario fijar la ganancia del circuito mediante la elección de las resistencias. Si se toman los valores típicos de la tensión de salida del sensor y se considera el funcionamiento en modo diferencial ideal dado por \ref{ganancia_diferencial_ideal}, para lograr una tension de salida de como mínimo $3,1V$ se necesita una ganancia como mínimo igual a $124$, por lo que $\frac{R_4}{R_3} = 123$. Es importante utilizar el mínimo número de resistencias, en lo posible solamente 4, con tal de minimizar el error producido por las tolerancias de las mismas. Con este fin se decidió utilizar resistencias SMD con 1 porciento de tolerancia, de $150lk\Omega$ y $1,2k\Omega$, que dan una ganancia igual a $126$, o sea, una tension máxima teórica igual a $3,15V$.
+En primer lugar es necesario fijar la ganancia del circuito mediante la elección de las resistencias. Si se toman los valores típicos de la tensión de salida del sensor y se considera el funcionamiento en modo diferencial ideal dado por \ref{ganancia_diferencial_ideal}, para lograr una tension de salida de como mínimo $3,1V$ se necesita una ganancia como mínimo igual a $124$, por lo que $\frac{R_4}{R_3} = 123$. Es importante utilizar el mínimo número de resistencias, en lo posible solamente 4, con tal de minimizar el error producido por las tolerancias de las mismas. Con este fin se decidió utilizar resistencias SMD con 1 porciento de tolerancia, de $150k\Omega$ y $1,2k\Omega$, que dan una ganancia igual a $126$, o sea, una tension máxima teórica igual a $3,15V$.
 
-En segundo lugar, se eligió el integrado TL082 de Texas Instruments debido a su gran impedancia de entrada($10^{12} \Omega$), la cual permite tener flexibilidad en la elección de las resitencias, y evita cargar la fuente de la señal de entrada lo que podría hacer que la amplitud de la misma disminuyese. 
+En segundo lugar, se eligió el integrado $LM833$ de Texas Instruments debido a su gran impedancia de entrada, la cual permite tener flexibilidad en la elección de las resitencias, y evita cargar la fuente de la señal de entrada lo que podría hacer que la amplitud de la misma disminuyese. 
 %%Comentar sobre CMRR 
 Además de lo anterior se propone agregar un potenciómetro de la siguiente manera con el fin de poder regular la ganancia del circuito facilmente:
 
@@ -316,10 +316,46 @@ Puede demostrarse que la nueva ganancia del circuito al incluir el potenciómetr
 \end{equation}
 
 %%Agregar justificacion de porque estos valores, tiene qeu ver con impedancia de entrada, etc.
-%%Impedancia de entrada es gigante(entarad direcat a opamps)
 %%Desvenatja del circuito esta en CMMR mas bajo comparado al circuito de 3 ver analog devices link en carpeta
 
 
+\subsubsection{Mediciones}
+
+En primer lugar se conectaron ambas entradas de circuito al mismo generador y se midi\'o la salida el mismo, obteniendose los siguietes resultados:
+
+
+\begin{table}[H]
+\hspace*{-2cm} 
+\begin{tabular}{c c c}
+\hline
+$V_{in}$ & $V_{out}$ & $A_{CM}$ \\ \hline
+&& \\ \hline
+&& \\ \hline\\
+&& \\ \hline\\
+&& \\ \hline\\
+&& \\ \hline\\
+&& \\ \hline\\
+&& \\ \hline
+\end{tabular}
+\caption{Ganancia modo com\'un}
+\label{tabla:ganancia_comun}
+\end{table}
+
+
+De la tabla anterior puede verse que al nivel de tension m\'axmo que seest\'a manejando ($3,3V$), la tension en modo com\'un a la salida del circuito es menor al umbral de ruido, por ende no afecta al funcionamiento del circuito. 
+
+
+
+Por otro lado se hicieron las mediciones de la ganancia a modo diferencial del circuito. El primer inconveniente que se tuvo con la metodolog\'ia empleada fue que al conectar n generador distinto a cada entrada, debido a que no estan en fase, la salida oscilaba entre dos valores. Para resolverlo se arm\'o un circuito inversor con una ganancia igual a $-1$ y as\'i utilizar solamente un generador para probar la ganancia en modo diferencial. Finalente se estiul\'o al circuito con una senal por un lado y la inversa por otro, asi si la primera val\'ia $10mV$ la entrada diferencial ser\'ia igual a $20mV$.
+
+
+%%Agregar valores ganancia diferencial 
+
+
+
+\section{Medicion de volumen}
+
+\section{Conclusiones}
 
 
 
