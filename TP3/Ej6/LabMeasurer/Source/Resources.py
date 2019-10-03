@@ -33,6 +33,7 @@ REF_CENTER = 'CENTer'
 TRIG_NORMAL = 'NORMAL'
 TRIG_SLOPE_POSITIVE =  'POSitive'
 TRIG_HFREJ_ON = 'ON'
+TRIG_NREJ_ON = 'ON'
 TRIG_HFREJ_OFF = 'OFF'
 TRIG_EXTERNAL = 'EXTernal'
 ###################################################################################
@@ -223,6 +224,11 @@ class Oscilloscope:
     def trig_hfreject(self, sog, mode):
         if(sog==SET):
             self.resource.write(':TRIGger:HFReject ' + mode)
+        elif(sog==GET):
+            return self.resource.query(':TRIGger:HFReject?')
+    def trig_noisereject(self, sog, mode):
+        if(sog==SET):
+            self.resource.write(':TRIGger:NREJect ' + mode)
         elif(sog==GET):
             return self.resource.query(':TRIGger:HFReject?')
     def trig_source(self, sog, mode):

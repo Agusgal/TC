@@ -6,6 +6,7 @@ from Source import Resources
 import matplotlib.pyplot as plt
 import os
 import csv
+import cmath
 
 OSC_RESOURC = 0
 GEN_RESOURC = 1
@@ -16,7 +17,7 @@ MATH_SOURCE_1 = 2
 MATH_SOURCE_2 = 3
 
 STARTING_DIV_VAL = 0.001
-HFREJECT_CUTOFF = 1*10**5
+HFREJECT_CUTOFF = 5*10**4
 HIGH_RES_CUTOFF = 1*10**5
 
 EASTER = 'guidin'
@@ -34,8 +35,8 @@ class Measurer():
         self.frequency = 0      #Frecuencia del generador a usar
         self.openResources=[]   #Recursos abiertos
         logging.info("Creando resource manager.")
-        self.resourceManager = visa.ResourceManager('@sim') #Para simular un instrumento
-        #self.resourceManager = visa.ResourceManager()
+        #self.resourceManager = visa.ResourceManager('@sim') #Para simular un instrumento
+        self.resourceManager = visa.ResourceManager()
         if(len(self.resourceManager.list_resources()) != 0): #Me fijo si hay instrumentos disponibles
             print("Conectarse al osciloscopio.")
             if(self.connect(OSC_RESOURC)):          #Se realiza la coneccion al osciloscopio
@@ -102,7 +103,7 @@ class Measurer():
         point_per_decade_quantity = 0
 
         if (self.impedance_meas):
-            print("Se esta actualmente midiendo una impedancia.\n"
+            print("Se esta actualmente midiendo una impedancia de entrada.\n"
                   "Se utilizara el primer canal que se seleccione como la tension\n"
                   "del generador y se utilizara el segundo canal seleccionado\n"
                   "como la tension despues de la resistencia que se anade\n"
@@ -335,10 +336,10 @@ class Measurer():
         while (not good_input):
             self.voltage = input()
             try:
-                self.voltage = float(self.voltage)
-                if (self.voltage >= 0.01 and self.voltage <= 10):
+                self.voltage = float(self.voltage)/2
+                if (self.voltage >= 0.01 and self.voltage/2 <= 10):
                     good_input = True
-                    self.voltage = self.voltage/2
+                    self.voltage = self.voltage
                 else:
                     print("Intente nuevamente con una entrada numerica entre 0.01 y 10.")
             except ValueError:
@@ -578,6 +579,8 @@ class Measurer():
             #Cortar hfreject del trigger si freq muy alta
             if(ff > HFREJECT_CUTOFF):
                 self.oscilloscope.trig_hfreject(Resources.SET, Resources.TRIG_HFREJ_OFF)
+            else:
+                self.oscilloscope.trig_noisereject(Resources.SET, Resources.TRIG_NREJ_ON)
 
             #Para ver si quepa la senal sacar filtros
             self.oscilloscope.acq_type(Resources.SET, Resources.ACQUIRE_TYPE_NORMAL)
@@ -668,19 +671,30 @@ class Measurer():
                 self.ratio.append(float(med[0]))
                 self.phase.append(float(med[1]))
             else:
-                self.curimp = (float(med[1]) / (float(med[0]) - float(med[1]))) * self.impedance_resistor
-                self.imp.append(self.curimp)
-                self.phase.append(float(med[2]))
 
-            if(self.impedance_meas):
-                print("Impedance: " + str(self.curimp))
-                print("Phase: " + str(float(med[1])))
+                vpp1 = float(med[0])
+                vpp2 = float(med[1])
+                pha = np.radians(float(med[2]))
+
+                v1=cmath.rect(vpp1, 0)
+                v2=cmath.rect(vpp2, pha)
+
+                self.impedance=( ( v2 * self.impedance_resistor ) / ( v1 - v2 ) )
+
+                self.imp.append(abs(self.impedance))
+                self.phase.append(np.rad2deg(cmath.phase(self.impedance)))
+
+            if (self.impedance_meas):
+                print("Frequency: " + str(float(med[2])))
+                print("Impedance: " + str(abs(self.impedance)))
+                print("Phase: " + str(np.rad2deg(cmath.phase(self.impedance))))
             else:
+                print("Frequency: " + str(float(med[2])))
                 print("Ratio: " + str(float(med[0])))
                 print("Phase: " + str(float(med[1])))
 
         for i in range(0, len(self.phase), 1):
-            if (self.phase[i] == float(Resources.OOR_VAL)):
+            if(self.phase[i] == float(Resources.OOR_VAL)):
                 print("WARNING: Error in phase measurement. Setting particular measurement to 0.")
                 self.phase[i] = 0
 
@@ -742,47 +756,47 @@ class Measurer():
                 exitwhile = False
                 for ff in self.f:
                     if(ff >  self.limitfreq):
-                        self.f.remove(self.f.index(ff))
-                        self.phase.remove(self.f.index(ff))
+                        self.f=np.delete(self.f,self.f.index(ff))
+                        self.phase=np.delete(self.phase,self.f.index(ff))
                         if(self.impedance_meas):
-                            self.imp.remove(self.f.index(ff))
+                            self.imp=np.delete(self.imp,self.f.index(ff))
                         else:
-                            self.ratio.remove(self.f.index(ff))
+                            self.ratio=np.delete(self.imp,self.f.index(ff))
 
         scriptfile = os.path.dirname(__file__)
 
-        if (not os.path.exists(scriptfile + "/../Mediciones/CSV/" + self.filename + ".csv")):
-            self.filepath = scriptfile + "/../Mediciones/CSV/" + self.filename + ".csv"
+        if(not self.impedance_meas):
+
+            if (not os.path.exists(scriptfile + "/../Mediciones/Bode/" + self.filename + ".csv")):
+                self.filepath = scriptfile + "/../Mediciones/Bode/" + self.filename + ".csv"
+            else:
+                for i in range(1, 10, 1):
+                    if (not os.path.exists(scriptfile + "/../Mediciones/Bode/" + self.filename + "(" + str(i) + ")" + ".csv")):
+                        self.filepath = scriptfile + "/../Mediciones/Bode/" + self.filename + "(" + str(i) + ")" + ".csv"
+                        break
         else:
-            for i in range(1, 10, 1):
-                if (not os.path.exists(scriptfile + "/../Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv")):
-                    self.filepath = scriptfile + "/../Mediciones/CSV/" + self.filename + "(" + str(i) + ")" + ".csv"
-                    break
+            if (not os.path.exists(scriptfile + "/../Mediciones/Impedance/" + self.filename + ".csv")):
+                self.filepath = scriptfile + "/../Mediciones/Impedance/" + self.filename + ".csv"
+            else:
+                for i in range(1, 10, 1):
+                    if (not os.path.exists(scriptfile + "/../Mediciones/Impedance/" + self.filename + "(" + str(i) + ")" + ".csv")):
+                        self.filepath = scriptfile + "/../Mediciones/Impedance/" + self.filename + "(" + str(i) + ")" + ".csv"
+                        break
 
         with open(self.filepath, 'w+') as csvfile:
             writer = csv.writer(csvfile)
-            writer.writerow(["frequency", "MAG", "PHA"])
-            for i in range(0, len(self.f), 1):
-                writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
-        csvfile.close()
-
-        if(not os.path.exists("Mediciones/ParaPlotterTool/" + self.filename + ".xlsx")):
-            self.filepath = "Mediciones/ParaPlotterTool/" + self.filename + ".xlsx"
-        else:
-            for i in range (1, 10, 1):
-                if(not os.path.exists("Mediciones/ParaPlotterTool/" + self.filename + "(" + str(i) + ")" + ".xlsx")):
-                    self.filepath = "Mediciones/ParaPlotterTool/" + self.filename + "(" + str(i) + ")" + ".xlsx"
-                    break
-
-        with open(self.filepath, 'w+') as csvfile:
-            writer = csv.writer(csvfile, delimiter=';')
-            writer.writerow(["frequency", "MAG", "PHA"])
-            for i in range(0, len(self.f), 1):
-                writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
+            if(not self.impedance_meas):
+                writer.writerow(["frequency", "MAG", "PHA"])
+                for i in range(0, len(self.f), 1):
+                    writer.writerow([str(self.f[i]), str(self.ratio[i]), str(self.phase[i])])
+            else:
+                writer.writerow(["frequency", "Z", "PHA"])
+                for i in range(0, len(self.f), 1):
+                    writer.writerow([str(self.f[i]), str(self.imp[i]), str(self.phase[i])])
         csvfile.close()
 
     def ask_which_measurement(self):
-        print("Elegir que se quiere hacer: [E]xit, [B]ode o Impedancia[Z].")
+        print("Elegir que se quiere hacer: [E]xit, [B]ode o Impedancia de entrada[Z].")
         self.impedance_meas = False
         bad_input = True
         while(bad_input):
