@@ -1,14 +1,3 @@
-%\documentclass[a4paper]{article}
-%\usepackage[spanish]{babel}
-%\usepackage[utf8]{inputenc}
-%\usepackage{float}
-%\usepackage{graphicx}
-%\usepackage[american voltage]{circuitikz}
-%\usepackage{amsmath}
-%\usepackage{xcolor}
-%\usepackage{caption}
-%\usepackage{subcaption}
-%\usepackage[bottom]{footmisc}
 \include{Header.tex}
 
 	\subsection{Introducción}
@@ -75,11 +64,11 @@
 	Como se quiere que aquellas señales comunes a ambas entrada sean eliminadas pedimos $V_{out}=0$.
 	Entonces obtenemos:
 		\begin{equation}
-		 0=\frac{-V_{CM} R_2 R_4 R_7 - 
+		 \frac{-V_{CM} R_2 R_4 R_7 - 
 				V_{CM} R_2 R_3 R_7 +
 				V_{CM} R_2 R_3 R_7+
 				V_{CM} R_2 R_3 R_6
-			}{R_1 R_4 R_7} 
+			}{R_1 R_4 R_7} = 0
 		\end{equation}
 	
 	Simplificando
@@ -188,6 +177,12 @@ También se intento ver los alcances de rechazo común frente a una continua
 
 Vemos como el circuito es capaz de soportar hasta unos 5V de continua (como indica el cursor) antes de salir de su zona de operación.
 
+\subsection{Función del $R_5$ y montaje en DC}
+La resistencia de feedback $R_5$ entre el op-amp de feedback y la etapa de entrada tiene el efecto de estabilizar los potenciales en la etapa de entrada. Este op-amp a su vez nos permite introducir una offset de DC a la señal de salida.
+
+Para poder introducir un offset de DC a la salida del circuito basta con alterar el potencial del borne inversor del cuarto op-amp.
+
+
 \subsection{Respuesta en frecuencia}
 Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango de las frecuencias medias a bajas. Esta configuración exhibe un comportamiento del tipo pasabajos lo que provoca que no se obtenga la ganancia esperada a frecuencias elevadas.
 \begin{figure}[H]
@@ -195,6 +190,8 @@ Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango
 	\includegraphics[height=0.3\textheight]{./ImagenesVarias/BODE_MAG.PNG}
 	\caption{Bode de Magnitud}
 \end{figure}
+
+Si bien el circuito deja de funcionar en condiciones optimas a altas frecuencias, el mismo tampoco esta diseñado para operar bajo ese estado de operación.
 
   
 \subsection{Generación de señales con puente de Wheatstone}
@@ -241,13 +238,16 @@ El preset nos permite generar de manera artificial "la perturbación" sobre la s
 	\caption{Amplificación de diferencias con puente de WheatStone}
 \end{figure}
 Notese la escala de las señales.
-\subsubsection{Análisis de Tolerancias en el puente de WheatStone}
+\subsubsection{Análisis de Tolerancias en el puente de Wheatstone}
 Para poder generar señales compuesta de precisión es necesario crear un puente cuyas resistencias tengan la mínima tolerancia posible, para esto se utilizaron resistencias con tolerancias del 1\%. Sin embargo con el fin de poder generar diversas señales, a expensas de precisión, se utilizo un preset para generarlas.
 
 \begin{equation}
-V_1 = \frac{R_2+\Delta R_2}{R_1+R_2}
+V_1 = \frac{R_2+\Delta R_2}{R_1\Delta R_2+R_2+\Delta R_2}
 \end{equation}
-
+\begin{equation}
+V_2 = \frac{R_3+\Delta R_3}
+{R_3+\Delta R_3+R_4+\Delta R_4}
+\end{equation}
 
 
 
@@ -258,13 +258,13 @@ La problemática al medir señales con entrada flotante, como pueden ser por eje
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatStoneTierra1.png}
-	\caption{Amplificación de diferencias con puente de WheatStone con conexión a ground}
+	\caption{Amplificación de diferencias con puente de Wheatstone con conexión a ground}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatstoneAislado.png}
-	\caption{Amplificación de diferencias con puente de WheatStone con entrada flotante}
+	\caption{Amplificación de diferencias con puente de Wheatstone con entrada flotante}
 \end{figure}
 
 
@@ -272,7 +272,20 @@ Debe tenerse especial cuidado al medir y generar estas señales dado que al aisl
 
 \subsection{Conclusiones}
 
-De la experiencia del diseño y estudio del amplificador de instrumentación podemos decir que se trata de un circuito muy robusto y útil para obtener señales más nitidas. Cabe destacar que a pesar de la robustez del mismo, se deben de tener en cuenta los limites de operación del mismo. Es decir frecuencias medias a bajas y tensiones de modo común deben mantenerse los más bajas posibles
+De la experiencia del diseño y estudio del amplificador de instrumentación podemos decir que se trata de un circuito muy robusto y útil para obtener señales más nítidas como muestra la imagen debajo.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/sinfiltrosSeno.png}
+	\caption{Señal senoidal de baja amplitud recuperada  y amplificada}
+\end{figure}
+
+
+ Cabe destacar que a pesar de la robustez del mismo, se deben de tener en cuenta los limites de operación del mismo. Es decir frecuencias medias a bajas y tensiones de modo común deben mantenerse los más bajas posibles para garantizar un buen rendimiento.
+Cuando se estén midiendo señales flotantes se debe controlar la temperatura del \textbf{IC} si es que esta fabricado a base de transistores JFET.
+Recomendamos la lectura de \textit{A designer's guide to instrumentation amplifiers}
+
+
  	
 \begin{thebibliography}{9}
 	
