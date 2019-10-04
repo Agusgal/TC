@@ -744,7 +744,7 @@ Se observó luego la impedancia de entrada y salida del circuito.
 	\caption{Simulación de la impedancia de entrada y salida del circuito.}
 \end{figure}
 
-Se puede ver como la impedancia de entrada tiende a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, ya que a altas frecuencias la impedancia de entrada del circuito se hará comparable con la del generador, por lo que se debe tomar un especial cuidado en esta etapa del análisis.
+Se puede ver como la impedancia de entrada tiende a un valor nulo cuanto más alta la frecuencia. Esto era esperable ya que a la entrada se encuentran dos capacitores cuyo camino a través de ellos lleva a tierra, tornando despreciable a aquellas impedancias que se encuentren en paralelo a estos a las altas frecuencias. Esto puede llegar a traer varios problemas a la hora de realizar las mediciones del filtro una vez implementado, ya que a altas frecuencias la impedancia de entrada del circuito se hará comparable con la del generador, por lo que se debe tomar un especial cuidado en esta etapa del análisis.
 
 La impedancia de salida puede observarse como se mantiene casi siempre por debajo de los $100\Omega$. Esto también era un resultado esperable ya que la salida del circuito se encuentra conectado a la salida del primer operacional el cual posee una impedancia de salida muy baja.
 
