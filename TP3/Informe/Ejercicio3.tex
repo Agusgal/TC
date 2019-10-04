@@ -1,11 +1,11 @@
 
 	\subsection{Introducción}
-	Los amplificadores de instrumentación, también conocidos como \textbf{IN-AMP},  son utilizados para amplificar con alta precisión las señales provenientes de diversas unidades de adquisición de datos que no poseen la amplitud suficiente o estan demasiado contaminadas por ruido externo como para poder ser aprovechadas.
+	Los amplificadores de instrumentación, también conocidos como \textbf{IN-AMP}, son utilizados para amplificar con alta precisión las señales provenientes de diversas unidades de adquisición de datos que no poseen la amplitud suficiente o están demasiado contaminadas por ruido externo como para poder ser aprovechadas.
 	\subsubsection{Diferencias entre \textbf{IN-AMP} y \textbf{OP AMP}}
-	A simple vista un \textbf{IN-AMP} puede ser fácilmente confundido con un \textbf{OP AMP} dado que tiene varios rasgos en común. En primer lugar ambos dispositivos amplifican una señal diferencial, es decir que multiplican por un cierto factor la diferencia de potencial entre sus terminales de entrada. Por otro lado también poseen una elevada impedancia de entrada (del orden de los Megaohms) y una muy baja impedancia de salida de unos pocos ohms.
+	A simple vista un \textbf{IN-AMP} puede ser fácilmente confundido con un \textbf{OP AMP} dado que tienen varios rasgos en común. En primer lugar ambos dispositivos amplifican una señal diferencial, es decir que multiplican por un cierto factor la diferencia de potencial entre sus terminales de entrada. Por otro lado también poseen una elevada impedancia de entrada (del orden de los $M\Omega$) y una muy baja impedancia de salida de unos pocos ohms.
 	No obstante, podemos notar algunas diferencias fundamentales entre ambos. Por ejemplo, para configurar la ganancia a lazo cerrado de un amplificador operacional se debe ajustar mediante resistores de retro-alimentación externos mientras que en un amplificador de instrumentación la ganancia puede venir predefinida por el fabricante o ajustada mediante una única \textbf{resistencia externa} denominada usualmente como \textbf{$R_{gain}$}.
-	En caso de que se desee amplificar una señal diferencial el amplificador de instrumentación eliminara cualquier componente de señal común a ambas entradas como puede ser un offset de continua o simplemente ruido. Esta característica es la que hace especiales a los amplificadores de instrumentación ya que permiten reducir de manera significativa el ruido de las señales recibidas.  
-	Por el contrario, los amplificadores operacionales tradicionales que no están diseñados para eliminar este tipo señales no deseadas.
+	En caso de que se desee amplificar una señal diferencial el amplificador de instrumentación eliminará cualquier componente de señal común a ambas entradas como puede ser un offset de continua o simplemente ruido. Esta característica es la que hace especiales a los amplificadores de instrumentación ya que permiten reducir de manera significativa el ruido de las señales recibidas.  
+	Por el contrario, los amplificadores operacionales tradicionales no están diseñados para eliminar este tipo de señales no deseadas.
 
 	
 	\subsection{Características del IN-AMP}
@@ -19,8 +19,8 @@
 	\end{figure}
 	%\footnote{Imagen extraída de: \textit{A designer's guide to Sinstrumentation amplifiers}
 		
-	Como se puede apreciar a la izquierda de la línea punteada se han colocado un par de buffers con ganancia. El objetivo de los mismos es de el de aumentar significativamente la impedancia de entrada del in-amp para independizarla lo más posible de la impedancias de las fuentes ya que este pueden ser muy altas o estar desbalanceadas. También ofrece la ventaja de no cargar a la fuente, lo cual es de gran relevancia al trabajar con señales pequeñas. Además le otorga una cierta ganancia a la señal de entrada. Este aspecto del circuito se debe tener en cuenta para evitar la saturación de los op-amps y perder la efectividad del circuito. Analizaremos esta y otras situaciones en secciones posteriores.
-	En nuestro caso se trabajara con la versión de 4 amplificadores operacionales.
+	Como se puede apreciar a la izquierda de la línea punteada se han colocado un par de amplificadores con alta impedancia de entrada. El objetivo de los mismos es el de aumentar significativamente la impedancia de entrada del in-amp para independizarla lo más posible de las impedancias de las fuentes ya que estas pueden ser muy altas o estar desbalanceadas. También ofrece la ventaja de no cargar a la fuente, lo cual es de gran relevancia al trabajar con señales pequeñas. Además le otorga una cierta ganancia a la señal de entrada. Este aspecto del circuito se debe tener en cuenta para evitar la saturación de los op-amps y perder la efectividad del circuito. Analizaremos esta y otras situaciones en secciones posteriores.
+	En nuestro caso se trabajará con una implementación con 4 amplificadores operacionales.
 	
 	\begin{figure}[H]
 		\centering
@@ -91,9 +91,9 @@
 	\begin{equation}
 		V_{out} = (V_2-V_1)\left[\frac{R_2}{R_1}(1+\frac{R_3}{R_4})\right]
 	\end{equation}
-En nuestro afán de conseguir una amplificación de 137,32 se realizaron las siguientes consideraciones en busca de conseguir la configuración más simétrica posible.
-En primer lugar dadas las limitaciones de las tolerancias de los componentes se decidió implementar un amplificador de instrumentación con una ganancia de 137,5 veces. Sí bien se podría haber intentado calibrar la ganancia del mismo mediante el uso de resistores variables, debemos tener en cuenta que los presets no son ajustables con la suficiente precisión y estos además cuentan con su correspondiente tolerancia. Por otro lado a causa de vibraciones o movimientos bruscos los mismos podrían cambiar su valor forzando al usuario a chequear sus valores previo al uso. 
-En segundo lugar se eligieron que las resistencias $R_3$ y  $R_4$ tomasen el mismo valor. Este decisión obligara a que $R_7$ y  $R_6$ también sean iguales. Por lo tanto conseguimos mucha simetría en la primera etapa
+En el afán de conseguir una amplificación de 137,32 se realizaron las siguientes consideraciones en busca de conseguir la configuración más simétrica posible.
+En primer lugar dadas las limitaciones de las tolerancias de los componentes se decidió implementar un amplificador de instrumentación con una ganancia de 137,5 veces. Si bien se podría haber intentado calibrar la ganancia del mismo mediante el uso de resistores variables, debemos tener en cuenta que los presets no son ajustables con la suficiente precisión. Además, dado que la implementación carecerá de un gabinete, por causa de vibraciones o movimientos bruscos los mismos podrían cambiar su valor forzando al usuario a chequear sus valores previo al uso. 
+En segundo lugar se eligieron que las resistencias $R_3$ y  $R_4$ tomasen el mismo valor. Esta decisión obligará a que $R_7$ y  $R_6$ también sean iguales. Por lo tanto conseguimos mucha simetría en la primera etapa.
 
 \begin{equation}
 	V_{out} = (V_2-V_1)\left[2 \frac{R_2}{R_1}\right]
@@ -124,10 +124,10 @@ Luego se eligió $R_2$ del mismo orden de magnitud que $R_1$ de forma tal que el
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{./ImagenesVarias/IN-AMP-CON-VALORES.png}
-	\caption{IN-AMP con los valores elegidos}
+	\caption{IN-AMP con los valores elegidos.}
 \end{figure}
 
-  Cabe destacar que el orden de magnitud de los componentes se baso en que los amplificadores de instrumentación comerciales son fabricados con resistencias en el orden de los K-ohms.
+  Cabe destacar que el orden de magnitud de los componentes se basó en que los amplificadores de instrumentación comerciales son fabricados con resistencias en el orden de los K-ohms.
   
   Como fue antes mencionado, el amplificador de instrumentación debe poseer, idealmente, impedancia de entrada infinita. Para poder aproximarnos lo más posible a este ideal se decidió utilizar el amplificador operacional \textbf{TL084} que posee una impedancia de entrada de 1 Tera-Ohm ($10^{12}\Omega$). Otra ventaja de elegir este operacional es que se consiguen en un solo integrado que contiene a los de 4 op-amps dentro de un mismo integrado lo cual disminuye las variaciones por cambios de temperatura dado que se encuentran los 4 bajo las mismas condiciones de operación.
   
@@ -136,38 +136,38 @@ Cuando se plantearon los primeros amplificadores diferenciales se utilizaron con
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\linewidth]{./ImagenesVarias/AmplificadorDiferencial.PNG}
-	\caption{Amplificador diferencial}
+	\caption{Amplificador diferencial.}
 \end{figure}  
 
 Sin embargo las tolerancias de los componentes no lo permiten. Es por tal motivo que para alcanzar dicha precisión los fabricantes construyen dichas resistencias, mediante técnicas láser durante el proceso de fabricación del IC con el fin de minimizar esas diferencias.
 
-El modelo más sofisticado y robusto que se implemento presenta mejoras muy notables por sobre su antecesor. No obstante, estas mejoras también traen nuevos desafíos dado que se añaden más componentes resistivos al sistema.
+El modelo más sofisticado y robusto que se implementó presenta mejoras muy notables por sobre su antecesor. No obstante, estas mejoras también traen nuevos desafíos dado que se añaden más componentes resistivos al sistema.
 
-Usando resistencias al 1\% obtenemos la siguiente simulación de Montecarlo para en modo diferencial
+Usando resistencias al 1\% obtenemos la siguiente simulación de Montecarlo para en modo diferencial.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{./ImagenesDeSimulaciones/MonteCarloModoDiferencialGrande.png}
-	\caption{Montecarlo en modo diferencial}
+	\caption{Montecarlo en modo diferencial.}
 \end{figure}  
 Como podemos notar, las tolerancias no afectan significativamente su desempeño en modo diferencial.
 
-Sin embargo podemos realizar más observaciones en cuanto a su desempeño en modo comúm
+Sin embargo podemos realizar más observaciones en cuanto a su desempeño en modo común.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeSimulaciones/MonteCarloModoComunGrande1V.png}
-	\caption{Montecarlo en modo común con 1 Vpp de entrada}
+	\caption{Montecarlo en modo común con 1 Vpp de entrada.}
 \end{figure} 
-Este gráfico de bode pone en evidencia la importancia de que las resistencias poseean la mayor precisión posible.
+Este gráfico de bode pone en evidencia la importancia de que las resistencias posean la mayor precisión posible.
 
 Si la tensión en modo común se reduce vemos como mejora el rechazo en modo común.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeSimulaciones/MonteCarloModoComunGrande100mv.png}
-	\caption{Montecarlo en modo común con 100 mv de entrada}
+	\caption{Montecarlo en modo común con 100 mv de entrada.}
 \end{figure} 
 
-También se intento ver los alcances de rechazo común frente a una continua
+También se intentó ver los alcances de rechazo común frente a una continua
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/ModoComunContinua.png}
@@ -183,36 +183,35 @@ Para poder introducir un offset de DC a la salida del circuito basta con alterar
 
 
 \subsection{Respuesta en frecuencia}
-Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango de las frecuencias medias a bajas. Esta configuración exhibe un comportamiento del tipo pasabajos lo que provoca que no se obtenga la ganancia esperada a frecuencias elevadas.
+Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango de las frecuencias medias a bajas. Esta configuración exhibe un comportamiento del tipo pasa-bajos lo que provoca que no se obtenga la ganancia esperada a frecuencias elevadas.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesVarias/BODE_MAG.PNG}
-	\caption{Bode de Magnitud}
+	\caption{Bode de Magnitud.}
 \end{figure}
 
 Si bien el circuito deja de funcionar en condiciones optimas a altas frecuencias, el mismo tampoco esta diseñado para operar bajo ese estado de operación.
-
-  
+ 
 \subsection{Generación de señales con puente de Wheatstone}
 Se diseño un puente de WheatStone para la generación de señales compuestas.
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.25\textheight]{./ImagenesVarias/wheatstone.png}
-	\caption{Puente de WheatStone}
+	\caption{Puente de WheatStone.}
 \end{figure}
 
-Este método emula a un sensor que utilice un sistema tipo puente con un resistor variable que puede llegar a cambiar de valor según la temperatura, presión u alguna otra que ocasiona que su valor cambie.
+Este método emula a un sensor que utiliza un sistema tipo puente con un resistor cuyo valor puede cambiar según la temperatura, presión u otros parámetros.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesVarias/wheatstoneInAmp.png}
-	\caption{IN-AMP con puente de WheatStone Acoplado}
+	\caption{IN-AMP con puente de WheatStone Acoplado.}
 \end{figure}
 
 La tensión suministrada en la parte superior del puente permite que las variaciones de resistencia se traduzcan en una señal eléctrica.
-Sin embargo es necesario poseer una cierta referencia para poder determinar si de hecho ocurrió un cambio. Es por es que el amplificador de instrumentación se vale del puente y de sus 2 bornes de salida para llevar acabo esta detección. La rama del puente que cuenta con sus resistores fijos proporcionara la tensión de referencia.
-A la entrada del amplificador de instrumentación se le proporcionaran 2 señales. En primer tendremos la señal de referencia y por el otro la señal portadora de la perturbación.
-Debemos notar que dado el diseño del amplificador de instrumentación de no haber diferencias entre las dos señales entonces en el caso ideal se debería observar una salida nula. 
+Sin embargo es necesario poseer una cierta referencia para poder determinar si de hecho ocurrió un cambio. Es por esto que el amplificador de instrumentación se vale del puente y de sus 2 bornes de salida para llevar acabo esta detección. La rama del puente que cuenta con sus resistores fijos proporcionará la tensión de referencia.
+A la entrada del amplificador de instrumentación se le proporcionarán 2 señales. En primer lugar tendremos la señal de referencia y por otro la señal portadora de la perturbación.
+Debemos notar que, dado el diseño del amplificador de instrumentación, de no haber diferencias entre las dos señales se debería observar una salida nula idealmente.
 
 Para el armado del puente se eligieron resistores con tolerancias del 1\% para mantener el puente lo más balanceado posible y maximizar el rechazo en modo común.
 \begin{table}[H]
@@ -226,7 +225,7 @@ Para el armado del puente se eligieron resistores con tolerancias del 1\% para m
 		$R_3$  				& 10K$\Omega$   & 1\%        \\
 		$R_4$ 				& 10K$\Omega$   & 1\%		\\
 	\end{tabular}
-	\caption{Tabla de valores de componentes del puente de WheatStone al 1\%}
+	\caption{Tabla de valores de componentes del puente de WheatStone al 1\%.}
 \end{table}
 
 El preset nos permite generar de manera artificial "la perturbación" sobre la señal.
@@ -236,9 +235,9 @@ El preset nos permite generar de manera artificial "la perturbación" sobre la s
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatStone1tierra1c1R.png}
 	\caption{Amplificación de diferencias con puente de WheatStone}
 \end{figure}
-Notese la escala de las señales.
+Nótese la escala de las señales.
 \subsubsection{Análisis de Tolerancias en el puente de Wheatstone}
-Para poder generar señales compuesta de precisión es necesario crear un puente cuyas resistencias tengan la mínima tolerancia posible, para esto se utilizaron resistencias con tolerancias del 1\%. Sin embargo con el fin de poder generar diversas señales, a expensas de precisión, se utilizo un preset para generarlas.
+Para poder generar señales compuesta de precisión es necesario crear un puente cuyas resistencias tengan la mínima tolerancia posible, para esto se utilizaron resistencias al 1\%. Sin embargo con el fin de poder generar diversas señales, a expensas de precisión, se utilizo un preset para generarlas.
 
 \begin{equation}
 V_1 = \frac{R_2+\Delta R_2}{R_1+\Delta R_1+R_2+\Delta R_2}
@@ -249,24 +248,21 @@ V_2 = \frac{R_3+\Delta R_3}
 \end{equation}
 
 Estas tensiones de salida estarán sujetas a las tolerancias de los resistores elegidos.
-Para el diseño del mismo se eligieron valores nominales tales que el denominador se encuentre por sobre el numerador lo suficiente como minimizar el efecto de las tolerancias. Así como un preset de baja denominación.
-
-
-
+Para el diseño del mismo se eligieron valores nominales tales que el denominador se encuentre por sobre el numerador lo suficiente como para minimizar el efecto de las tolerancias. Así también se eligió un preset de baja denominación.
 
 \subsubsection{Señales con y sin referencia a tierra}
-La problemática al medir señales con entrada flotante, como pueden ser por ejemplo los transformadores o cualquier otro señal que se encuentre aislada de tierra radica en el hecho que las corrientes de bias del amplificador de instrumentación, no tanto las inherentes al dispositivo por cuestiones de fabricación, sino más bien aquellas desarrolladas por el aumento de la temperatura. Es de mayor relevancia en los \textbf{IN-AMP} desarrollados con transistores \textbf{FET} que, aunque tiene menores corrientes de bias a temperatura ambiente, estas se duplican cada 11 grados centigrados. Estas corrientes provocan que el amplificador de instrumentación conmute más rápidamente observándose cierto "ruido" en la señal de salida. Se recomienda siempre colocar un camino entre la fuente flotante y ground. Esto se puede lograr utilizando un resistor de entre $1M\Omega$ y  $10\Omega$
+La problemática al medir señales con entrada flotante, como pueden ser por ejemplo los transformadores o cualquier otra señal que se encuentre aislada de tierra radica en el hecho que las corrientes de bias del amplificador de instrumentación, no tanto las inherentes al dispositivo por cuestiones de fabricación, sino más bien aquellas desarrolladas por el aumento de la temperatura. Es de mayor relevancia en los \textbf{IN-AMP} desarrollados con transistores \textbf{FET} que, aunque tiene menores corrientes de bias a temperatura ambiente, estas se duplican cada 11 grados centígrados. Estas corrientes provocan que el amplificador de instrumentación conmute más rápidamente observándose cierto "ruido" en la señal de salida. Se recomienda siempre colocar un camino entre la fuente flotante y tierra. Esto se puede lograr utilizando un resistor de entre $1M\Omega$ y  $10\Omega$.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatStoneTierra1.png}
-	\caption{Amplificación de diferencias con puente de Wheatstone con conexión a ground}
+	\caption{Amplificación de diferencias con puente de Wheatstone con conexión a ground.}
 \end{figure}
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatstoneAislado.png}
-	\caption{Amplificación de diferencias con puente de Wheatstone con entrada flotante}
+	\caption{Amplificación de diferencias con puente de Wheatstone con entrada flotante.}
 \end{figure}
 
 
@@ -279,13 +275,13 @@ De la experiencia del diseño y estudio del amplificador de instrumentación pod
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/sinfiltrosSeno.png}
-	\caption{Señal senoidal de baja amplitud recuperada  y amplificada}
+	\caption{Señal senoidal de baja amplitud recuperada y amplificada.}
 \end{figure}
 
 
- Cabe destacar que a pesar de la robustez del mismo, se deben de tener en cuenta los limites de operación del mismo. Es decir frecuencias medias a bajas y tensiones de modo común deben mantenerse los más bajas posibles para garantizar un buen rendimiento.
-Cuando se estén midiendo señales flotantes se debe controlar la temperatura del \textbf{IC} si es que esta fabricado a base de transistores JFET.
-Recomendamos la lectura de \textit{A designer's guide to instrumentation amplifiers}
+ Cabe destacar que a pesar de la robustez del mismo, se deben de tener en cuenta los límites de operación del mismo. Es decir frecuencias medias a bajas y tensiones de modo común deben mantenerse los más bajas posibles para garantizar un buen rendimiento.
+Cuando se estén midiendo señales flotantes se debe controlar la temperatura del \textbf{IC} si es que está fabricado a base de transistores J-FET.
+Recomendamos la lectura de \textit{A designer's guide to instrumentation amplifiers}.
 
 
  	
