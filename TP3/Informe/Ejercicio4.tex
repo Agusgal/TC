@@ -1,23 +1,5 @@
-\documentclass[a4paper]{article}
 
-\include{Header.tex}
-
-\usepackage{float}
-\usepackage{graphicx}
-
-\usepackage[american voltage]{circuitikz}
-
-\usepackage{amsmath}
-
-\usepackage{xcolor}
-
-\usepackage{caption}
-\usepackage{subcaption}
-
-
-\begin{document}
-
-\section{Introducción teórica}
+\subsection{Introducción teórica}
 Los amplificadores diferenciales son dispositivos cuya salida es linealmente proporcional a la diferencia entre sus entradas y que idealmente suprimen cualquier tension común a dichas entradas. Teóricamente, de ser iguales las entradas, la salida debería ser igual a cero, no obstante, dicha afirmación es muy difícil de cumplir en la práctica. Debido a lo anterior, se definen dos modos de operación para un amplificador diferencial, modo común y modo diferencial:
 
 
@@ -209,7 +191,7 @@ CMRR   =   20\log(\frac{A_D}{A_{CM}})   = 20\log(\frac{\frac{1}{2}(1 + \frac{1 +
 \end{equation}
 
 %%Montecarlo de las resistencias hay que agregar
-\subsection{Análiss teórico de error}
+\subsubsection{Análiss teórico de error}
 Cualquier amplificador de instrumentación será insensible a $v_{CM}$ mientras se cumpla que los amplificadores sean ideales y la relación \ref{eq:condicion_diferencial} sea cierta. Si se considera que al menos el comportamiento de loas amplificadores se asemeja al ideal se puede analizar como las discordancias entre los valores nominales y reales de las resistencias afectan al circuito. En general puede decirse que si la condición de puente esta desbalanceada el circuito responderá tanto a $v_D$ como a $v_{CM}$.
 
 Si se introduce un factor de desbalance $\epsilon$ y se asume que solo uno de los cuatro resistores posee una desviación de su valor nominal expresamos a $R_2$ como:
@@ -264,7 +246,7 @@ A_D = \frac{1}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2(1 - \epsilon)}{R
 A_{CM} = \frac{V_{out}}{V_{CM}} = (1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}})
 \end{equation}
 
-\subsection{Comentarios respecto al funcionamiento del sensor}
+\subsubsection{Comentarios respecto al funcionamiento del sensor}
 
 El dispositivo utilizado para medir la diferencia de presion es un sensor piezoresistivo de silicio. Su principio de funcionamiento es simple: se aprovecha de cambios en la resistencia eléctrica del material que lo constituye generados por la diferencia de presion entre dos entradas. El sensor proporciona una salida de tensión lineal, precisa y directamente proporcional a la presión aplicada. El sensor posee cuatro pines: uno de alimentación, Tierra, y las dos salidas con signos opuestos antes mencionadas. El mismo opera en diferencias de presión entre los $0$ y $10kP$. Según las curvas del fabricante la tensión típica de salida va de $0$ a aproximadamente $25mV$, mientras que para el caso mínimo la misma oscila entre los $-2$ y $22,5mV$ y para el máximo entre los $2$ y los $27,5mV$. Hay que tener en cuenta los valores anteriores a la hora de elegir las resistencias a utilizar, para configurar la ganancia deseada. 
 
@@ -277,7 +259,7 @@ P = \rho gh
 Donde $\rho$ es la densidad del líquido (en caso de ser agua $997\frac{kg}{m^3}$), $g$ es la aceleración de la gravedad ($9,7968\frac{m}{s^2}$ en la ciudad de Buenos Aires) y $h$ es la profundidad a la que está sumergido el objeto en metros. Con estos datos e debería sumergir un objeto hasta los $1,02$ metros de profundidad para llegar a los $10kPa$, la presión máxima que es capaz de medir el sensor utilizado. 
 
 
-\section{Implementación práctica}
+\subsection{Implementación práctica}
 
 En primer lugar es necesario fijar la ganancia del circuito mediante la elección de las resistencias. Si se toman los valores típicos de la tensión de salida del sensor y se considera el funcionamiento en modo diferencial ideal dado por \ref{ganancia_diferencial_ideal}, para lograr una tension de salida de como mínimo $3,1V$ se necesita una ganancia como mínimo igual a $124$, por lo que $\frac{R_4}{R_3} = 123$. Es importante utilizar el mínimo número de resistencias, en lo posible solamente 4, con tal de minimizar el error producido por las tolerancias de las mismas. Con este fin se decidió utilizar resistencias SMD con 1 porciento de tolerancia, de $150k\Omega$ y $1,2k\Omega$, que dan una ganancia igual a $126$, o sea, una tension máxima teórica igual a $3,15V$.
 
@@ -382,7 +364,7 @@ CMRR = 20\log(\frac{128}{0,008}) = \boxed{84 dBS}
 El valor del $CMRR$ es menor al t\'ipico otorgado por el fabricante ($100dBs$) y en el rango de potenciales manejado es aceptable considerado la funcion del circuito. Una pregunta que surge al analizar dicho valor es porque no se acerca mas al ideal. En el mejor de los casos el rechazo deberia dar en el orden de los cientos de $dBS$(idealmente infinito). No obstante lo anterior, las resistencias deben estr perfectamente balanceadas para cuplir dicha condici\'on, hecho que en la pr\'actica no se da. Adem\'as, una caracter\'istica que diferencia a la configuraci\'on usada de otras mas usuales como por ejemplo el circuito del ejercicio 3 de este mismo informe es su falta de simetria. Si se sigue el recorrido de la primera senal, la misma pasa por un no inversor para luego ser invertida, mientras que la segunda senal pasa solamente por un no inversor. Esta diferencia de fase, genera que cuando se tienen que restar las senales, la operacion no da excatamente cero. En el caso del circuito desarrollado en el inciso anterior, debido a su alto grado de simetria ambas senales tienen la misma fase a la salida y el rechazo es aun mayor. Por ende no solo los valores reales de los componentes tienen que ser consideados cuando se disena un amplificador de instrumentacion, sino que tambien la simetria y distrubucion del mismo. 
 
 
-Como \'utimo comentario respecto a la medicion de la ganancia diferencial, anteriormente se coment\'o que existe un problema para medir con dos generados dessincronizados. Una manera arreglar el desfase entre generadores es realizar un circuito no inversor simple con ganancia igual a $$-1$ para obtener la misma senal que la del generador pero invertida. Luego la tension diferencial ser\'a igual al doble de la tensio del generador. Se prob\'o esta soluci\'on y se obtuvieron resultados identicos a los de la tabla \ref{table:ganancia_diferencial}.
+Como último comentario respecto a la medicion de la ganancia diferencial, anteriormente se comentó que existe un problema para medir con dos generados dessincronizados. Una manera arreglar el desfase entre generadores es realizar un circuito no inversor simple con ganancia igual a $-1$ para obtener la misma senal que la del generador pero invertida. Luego la tension diferencial ser\'a igual al doble de la tensio del generador. Se prob\'o esta soluci\'on y se obtuvieron resultados identicos a los de la tabla \ref{table:ganancia_diferencial}.
 
 En ultimo lugar se presentan los resultados de las mediciones con el tubo de agua:
 
@@ -411,7 +393,7 @@ $1,02$  & $3,255$ & 10,2\\ \hline
 Cuando se deja el sensor con las dos bocas al aire se mide un offset de $5mV$, el cual entra en el rango de tensiones medidas con ambas entradas en modo comun anteriormente. Por los resultados obtendos y debido a la calibracion previa del circuito se obtiene una tension igual a $3,255V$ pasados la diferencia de presion maxima del sensor. 
 
 
-\section{Medicion de volumen}
+\subsection{Medicion de volumen}
 
 Se sabe que la presion esta dada por:
 
@@ -452,10 +434,6 @@ V_l = \frac{\pi R^2V_{OutAmplificador}}{g\rho*315} \Longleftrightarrow V_l = k*V
 Por ende se obtuvo una expresion que relaciona la tension de salida de circuito con el volumen del contenedor para una ganancia dada. Si se chequean las unidades correspondientes se ve que las mismas concuerdan. En un principio lo anterior significar\'ia que no es necesario modificar el circuito para calcular el volumen del contenedor, solamente se cambiar\'ian los valores de la ganancia y de la densidad en caso de usarse otro l'iquido que no sea agua. A pesar de eso, es necesario teer en cuanta la limitaci\'on del volumen m\'aximo y la presion m\'axima medible con el sensor.
 
 
-\section{Conclusiones}
+\subsection{Conclusiones}
 
 En esta experiencia de laboratorio se arm\'o un amplificador amplificador que tendr\'ia que cumplir con ciertos criterios para poder ser aplicado en la medici\'on de senales de pequena amplitud. LA primera de dichas condiciones era la de una gran imedancia de entrada la cual queda cumplida con la eleecion del amplificador operacional y la configuracion misma del circuito. La segunda y m\'as importante, es un rechazo de modo com\'un alto, considerando que se apunta a un rechazo en el orden de los $100dBs$ para poder eliminar el ruido de la medicion, los resultados obtenidos son satisfacotrios. M\'as a\'un si se tiene en consideracion la falta de simetria del circuito desarrollado. Por ultimo, los valores obtenidos en la medicion de la columna de agua corresponden a las tensiones teoricas propuestas. Gracias al valor del $CMRR$, se asegura eliminar casi todo el ruido que pueda interponerse en la medicion logrando asi un funcionamiento adecuado como amplificador de instrumentacion.
-
-
-
-\end{document}
