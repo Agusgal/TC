@@ -196,23 +196,6 @@ Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango
 	\caption{Bode de Magnitud}
 \end{figure}
 
-
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
   
 \subsection{Generación de señales con puente de Wheatstone}
 Se diseño un puente de WheatStone para la generación de señales compuestas.
@@ -259,6 +242,14 @@ El preset nos permite generar de manera artificial "la perturbación" sobre la s
 \end{figure}
 Notese la escala de las señales.
 \subsubsection{Análisis de Tolerancias en el puente de WheatStone}
+Para poder generar señales compuesta de precisión es necesario crear un puente cuyas resistencias tengan la mínima tolerancia posible, para esto se utilizaron resistencias con tolerancias del 1\%. Sin embargo con el fin de poder generar diversas señales, a expensas de precisión, se utilizo un preset para generarlas.
+
+\begin{equation}
+V_1 = \frac{R_2+\Delta R_2}{R_1+R_2}
+\end{equation}
+
+
+
 
 
 \subsubsection{Señales con y sin referencia a tierra}
@@ -273,12 +264,15 @@ La problemática al medir señales con entrada flotante, como pueden ser por eje
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatstoneAislado.png}
-	\caption{Amplificación de diferencias con puente de WheatStone con conexión a ground}
+	\caption{Amplificación de diferencias con puente de WheatStone con entrada flotante}
 \end{figure}
 
 
+Debe tenerse especial cuidado al medir y generar estas señales dado que al aislar el generador de señales se debe tener cuidado de no cortocircuitar las tierras del osciloscopio para obtener mediciones verídicas.
 
+\subsection{Conclusiones}
 
+De la experiencia del diseño y estudio del amplificador de instrumentación podemos decir que se trata de un circuito muy robusto y útil para obtener señales más nitidas. Cabe destacar que a pesar de la robustez del mismo, se deben de tener en cuenta los limites de operación del mismo. Es decir frecuencias medias a bajas y tensiones de modo común deben mantenerse los más bajas posibles
  	
 \begin{thebibliography}{9}
 	
