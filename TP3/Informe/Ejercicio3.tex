@@ -1,4 +1,3 @@
-\include{Header.tex}
 
 	\subsection{Introducción}
 	Los amplificadores de instrumentación, también conocidos como \textbf{IN-AMP},  son utilizados para amplificar con alta precisión las señales provenientes de diversas unidades de adquisición de datos que no poseen la amplitud suficiente o estan demasiado contaminadas por ruido externo como para poder ser aprovechadas.
@@ -242,12 +241,15 @@ Notese la escala de las señales.
 Para poder generar señales compuesta de precisión es necesario crear un puente cuyas resistencias tengan la mínima tolerancia posible, para esto se utilizaron resistencias con tolerancias del 1\%. Sin embargo con el fin de poder generar diversas señales, a expensas de precisión, se utilizo un preset para generarlas.
 
 \begin{equation}
-V_1 = \frac{R_2+\Delta R_2}{R_1\Delta R_2+R_2+\Delta R_2}
+V_1 = \frac{R_2+\Delta R_2}{R_1+\Delta R_1+R_2+\Delta R_2}
 \end{equation}
 \begin{equation}
 V_2 = \frac{R_3+\Delta R_3}
 {R_3+\Delta R_3+R_4+\Delta R_4}
 \end{equation}
+
+Estas tensiones de salida estarán sujetas a las tolerancias de los resistores elegidos.
+Para el diseño del mismo se eligieron valores nominales tales que el denominador se encuentre por sobre el numerador lo suficiente como minimizar el efecto de las tolerancias. Así como un preset de baja denominación.
 
 
 
