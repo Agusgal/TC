@@ -1,285 +1,439 @@
-%\documentclass[a4paper]{article}
-%\usepackage[spanish]{babel}
-%\usepackage[utf8]{inputenc}
-%\usepackage{float}
-%\usepackage{graphicx}
-%\usepackage[american voltage]{circuitikz}
-%\usepackage{amsmath}
-%\usepackage{xcolor}
-%\usepackage{caption}
-%\usepackage{subcaption}
-%\usepackage[bottom]{footmisc}
-\include{Header.tex}
 
-	\subsection{Introducción}
-	Los amplificadores de instrumentación, también conocidos como \textbf{IN-AMP},  son utilizados para amplificar con alta precisión las señales provenientes de diversas unidades de adquisición de datos que no poseen la amplitud suficiente o estan demasiado contaminadas por ruido externo como para poder ser aprovechadas.
-	\subsubsection{Diferencias entre \textbf{IN-AMP} y \textbf{OP AMP}}
-	A simple vista un \textbf{IN-AMP} puede ser fácilmente confundido con un \textbf{OP AMP} dado que tiene varios rasgos en común. En primer lugar ambos dispositivos amplifican una señal diferencial, es decir que multiplican por un cierto factor la diferencia de potencial entre sus terminales de entrada. Por otro lado también poseen una elevada impedancia de entrada (del orden de los Megaohms) y una muy baja impedancia de salida de unos pocos ohms.
-	No obstante, podemos notar algunas diferencias fundamentales entre ambos. Por ejemplo, para configurar la ganancia a lazo cerrado de un amplificador operacional se debe ajustar mediante resistores de retro-alimentación externos mientras que en un amplificador de instrumentación la ganancia puede venir predefinida por el fabricante o ajustada mediante una única \textbf{resistencia externa} denominada usualmente como \textbf{$R_{gain}$}.
-	En caso de que se desee amplificar una señal diferencial el amplificador de instrumentación eliminara cualquier componente de señal común a ambas entradas como puede ser un offset de continua o simplemente ruido. Esta característica es la que hace especiales a los amplificadores de instrumentación ya que permiten reducir de manera significativa el ruido de las señales recibidas.  
-	Por el contrario, los amplificadores operacionales tradicionales que no están diseñados para eliminar este tipo señales no deseadas.
+\subsection{Introducción teórica}
+Los amplificadores diferenciales son dispositivos cuya salida es linealmente proporcional a la diferencia entre sus entradas y que idealmente suprimen cualquier tension común a dichas entradas. Teóricamente, de ser iguales las entradas, la salida debería ser igual a cero, no obstante, dicha afirmación es muy difícil de cumplir en la práctica. Debido a lo anterior, se definen dos modos de operación para un amplificador diferencial, modo común y modo diferencial:
 
-	
-	\subsection{Características del IN-AMP}
-	El circuito a analizar es una variante de los famosos amplificadores de instrumentación que utilizan 3 amplificadores operacionales que se puede observar en la figura debajo.
-	%Imagen del amplificador de instrumentación con 3 op-amps
-	\begin{figure}[H]
-		\centering		
-		\includegraphics[width=\linewidth]{./ImagenesVarias/inAmp3Opamp}
-		%TODO revisar footnote imagen 
-		\caption{Clásico amplificador de instrumentación con 3 Opamps}
-	\end{figure}
-	%\footnote{Imagen extraída de: \textit{A designer's guide to Sinstrumentation amplifiers}
-		
-	Como se puede apreciar a la izquierda de la línea punteada se han colocado un par de buffers con ganancia. El objetivo de los mismos es de el de aumentar significativamente la impedancia de entrada del in-amp para independizarla lo más posible de la impedancias de las fuentes ya que este pueden ser muy altas o estar desbalanceadas. También ofrece la ventaja de no cargar a la fuente, lo cual es de gran relevancia al trabajar con señales pequeñas. Además le otorga una cierta ganancia a la señal de entrada. Este aspecto del circuito se debe tener en cuenta para evitar la saturación de los op-amps y perder la efectividad del circuito. Analizaremos esta y otras situaciones en secciones posteriores.
-	En nuestro caso se trabajara con la versión de 4 amplificadores operacionales.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\linewidth]{./ImagenesVarias/inAmpSch.png}
-		\caption{Amplificador de instrumentación de 4 op-amps}
-	\end{figure}
 
-	Haciendo uso de la herramienta de análisis simbólico \textit{SapWin \footnote{SapWin es una programa de análisis y simulación de circuitos desarrollado por la \textit{Universitá degli studi Firenze}}} obtenemos la siguiente expresión para la ganancia ideal de amplificador de instrumentación:
-	\begin{equation}
-			V_{out}=\frac{-V_1 R_2 R_4 R_7 - 
-			V_1 R_2 R_3 R_7 +
-			V_2 R_2 R_3 R_7+
-			V_2 R_2 R_3 R_6
-		}{R_1 R_4 R_7}
-		\label{eqn:idealTrans}
-	\end{equation}
 
-	
-	Notamos que en la situación ideal tanto las resistencias $R_5$ y $R_9$ no afectan la ganancia del circuito.
-	\subsubsection{Relaciones entre los componentes}
-	Una de las finalidades del amplificador de instrumentación es la de eliminar aquellas señales que sean comunes a las señales de entrada.
-	Por tal motivo comenzaremos por establecer condiciones que nos permitan eliminarlas. 
-	Para eso aplicaremos superposición y analizaremos los efectos de $V_{CM}$ sobre la relación anterior.
-	
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=\linewidth]{./ImagenesVarias/inAmpVCM.png}
-		\caption{Amplificador de instrumentación de 4 op-amps en modo común}
-	\end{figure}
-	Obteniendo como transferencia:
-	\begin{equation}
-		\frac{V_{out}}{V_{CM}}=
-		\frac{-R_2 R_4 R_7 - 
-			R_2 R_3 R_7 +
-			R_2 R_3 R_7+
-			R_2 R_3 R_6
-		}{R_1 R_4 R_7}
-	\end{equation}
-		
-	Como se quiere que aquellas señales comunes a ambas entrada sean eliminadas pedimos $V_{out}=0$.
-	Entonces obtenemos:
-		\begin{equation}
-		 0=\frac{-V_{CM} R_2 R_4 R_7 - 
-				V_{CM} R_2 R_3 R_7 +
-				V_{CM} R_2 R_3 R_7+
-				V_{CM} R_2 R_3 R_6
-			}{R_1 R_4 R_7} 
-		\end{equation}
-	
-	Simplificando
-	\begin{equation}
-		R_7(R_4+R_3)=R3(R7+R6)
-	\end{equation}
-	
-	\begin{equation}
-		R_7R_4+ R_3R_7=R_3R_7+R_3R_6
-	\end{equation}
-	Cancelando los términos comunes a ambos miembros
-	\begin{equation}
-		R_7R_4=R_3R_6
-	\end{equation}
-	Por lo tanto llegamos a:
-	\begin{equation}
-		\frac{R_4}{R_6}=\frac{R_3}{R_7}  %Relación entre las resistencias de la etapa de amplificación
-	\end{equation}
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
 
-	Aplicando estas relaciones a \eqref{eqn:idealTrans} obtenemos:
-	\begin{equation}
-		V_{out} = (V_2-V_1)\left[\frac{R_2}{R_1}(1+\frac{R_3}{R_4})\right]
-	\end{equation}
-En nuestro afán de conseguir una amplificación de 137,32 se realizaron las siguientes consideraciones en busca de conseguir la configuración más simétrica posible.
-En primer lugar dadas las limitaciones de las tolerancias de los componentes se decidió implementar un amplificador de instrumentación con una ganancia de 137,5 veces. Sí bien se podría haber intentado calibrar la ganancia del mismo mediante el uso de resistores variables, debemos tener en cuenta que los presets no son ajustables con la suficiente precisión y estos además cuentan con su correspondiente tolerancia. Por otro lado a causa de vibraciones o movimientos bruscos los mismos podrían cambiar su valor forzando al usuario a chequear sus valores previo al uso. 
-En segundo lugar se eligieron que las resistencias $R_3$ y  $R_4$ tomasen el mismo valor. Este decisión obligara a que $R_7$ y  $R_6$ también sean iguales. Por lo tanto conseguimos mucha simetría en la primera etapa
+	\node [op amp](U1){};
+	\draw (U1.-) to[short] ++(0, 1) node[](vn){};
+	\draw (vn) to[R, l_ = $R_1$] ++(-3, 0) node[label={[font=\footnotesize]above:$v_1$}](v1){} to[american voltage source, l = $\frac{v_{DM}}{2}$, invert] ++(0, -1.5) node[](comun){};
+	\draw (comun) to[american voltage source, l = $v_{CM}$] ++(-2.5, 0) to[short] ++(0, -0.5) node[ground]{};
+	\draw (U1.+) to[short] ++(0, -1) node[](vp){};
+	\draw (vp) to[R, l = $R_3$] ++(-3, 0) node[label={[font=\footnotesize]below:$v_2$}](v2){} to [american voltage source, l_ = $\frac{v_{DM}}{2}$] (comun);
+	
+	\draw (vn) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (vp) coordinate(leftR4) to[R, l_ = $R_4$] (leftR4 -| U1.out) to[short] ++(0, -0.5) node[ground]{};
+	
+	\draw (U1.out) to[short]	++(0.5, 0) node[ocirc, label=right:$v_{out}$]{};
 
-\begin{equation}
-	V_{out} = (V_2-V_1)\left[2 \frac{R_2}{R_1}\right]
+\end{circuitikz}
+	\caption{Entradas en términos de los componentes en modo común y modo diferencial.}
+	\label{fig:com_dif}
+\end{center}
+\end{figure}
+
+De la figura anterior pueden deducirse las siguientes relaciones:
+
+\begin{equation}\label{eq:v1}
+v_1 = v_{CM} - \frac{-v_{DM}}{2}
 \end{equation}
 
-Luego se eligió $R_2$ del mismo orden de magnitud que $R_1$ de forma tal que el factor de \textbf{2} que apareció previamente sea cancelado y $R_2$ controle por completo la ganancia. Esta $R_2$ fue armada mediante 2 resistores SMD en serie.
+\begin{equation}\label{eq:v2}
+v_2 = v_{CM} + \frac{v_{DM}}{2}
+\end{equation}
+
+El amplificador operacional en modo diferencial es un caso más general del amplificador de tensión, el cuál por lo general posee uno de sus terminales referenciado a Tierra o $0 Volt$. La ventaja fundamental de la operación en modo diferencial es que de existir alguna señal de ruido común a ambas entradas la misma será cancelada a la salida, por ende los amplificadores diferenciales son útiles en el análisis de pequeñas señales propensas a recibir interferencias, como es el caso de señales biomédicas, circuitos de medición, sensores, etc.
+
+Un caso particular de los amplificadores diferenciales son los amplificadores de instrumentación. Los útlimos cumplen con diferentes características, las cuales los hacen aptos para la instrumentación de pruebas y mediciones; De ahí su nombre. Los AI deben poseer una impedancia de entrada alta en extremo (infinita en caso ideal), una impedancia de salida lo más cercana a cero posible (nula en el caso ideal), una ganancia exacta y estable, y por último un CMRR por lo general, extremadamente elevado(la definición de este parámetro será dada más adelante).
+
+
+
+
+
+
+%%Intro propuesta:
+En el siguiente ejercicio se diseñará un circuito para posibilitar la medición de presion. Para eso se utilizará el sensor piezoeléctrico MPX2010DP y un amplificador de instrumentación capaz de amplificar la señal proveniente del mismo. El circuito podrá medir en el rango de presiones comprendido entre los $0$ y los $10kP$, para cuyo caso tendrá una salida de entre $0$ y $3,3 V$. Al medir la máxima diferencia de presion permitida por el sensor la señal de salida tendrá una amplitud de al menos $3,1 V$ y menor a $3,3 V$. En caso de medirse una difeencia de presion nula la salida también lo será. El circuito propuesto es el siguiente:
+
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito de medición propuesto.}
+	\label{fig:circuito_inicial}
+\end{center}
+\end{figure}
+
+
+
+Como bien puede apreciarse en la figura anterior, el amplificador de instrumentación cuenta con una configuración dual con solo dos amplificadores operacionales. Ambos están siendo utilizados en su modo no inversor. Para el análisis siguiente se trabajarán ambos op-amps como ideales.
+
+Utilizando superposición se pasiva $V_2$ en primer lugar quedando así elpriemr op-amp en su configuración no inversora, mientras que el segundo en una configuración inversora:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out) node[label={[font=\footnotesize]below:$V_{o1}$}](v2){};
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[short] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito con $V_2$ pasivada.}
+	\label{fig:circuito_V2_pasivada}
+\end{center}
+\end{figure}
+
+Utilizando las expresiones para las ganacias ya conocidas se obtiene la tensión a la salida del primer amplificador y la tensión de salida del circuito:
+
+\begin{equation}\label{eq:vo1}
+V_{o1} = V_1\frac{R_1 + R_2}{R_1}
+\end{equation}
+
+\begin{equation}\label{eq:V_out_1}
+V_{out} = \frac{-R_4}{R_3}V_{o1} 
+\end{equation}
+
+Reemplazando \ref{eq:vo1} en \ref{eq:V_out_1}:
+
+\begin{equation}\label{eq:transferencia_1}
+V_{out} = (\frac{-R_4}{R_3})(1 + \frac{R_2}{R_1})V_2
+\end{equation}
+
+Asimismo, si se pasiva la fuente $V_1$ la tensión despues del amplificador número 1 es cero, ya que ambas entradas están conecatdas a Tierra. Entonces el segundo op-amp esta en su configuración no inversora:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[short] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out) node[label={[font=\footnotesize]below:$V_{o1}$}](v2){};;
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito con $V_1$ pasivada.}
+	\label{fig:circuito_V1_pasivada}
+\end{center}
+\end{figure}
+
+\begin{equation}\label{eq:transferencia_2}
+V_{out} = (1 + \frac{R_4}{R_3})V_2
+\end{equation}
+
+Por principio de superposición la salida total será la suma entre las dos transferencias anteriores:
+
+\begin{equation}
+V_{out} = (1 + \frac{R_4}{R_3})V_2 + (\frac{-R_4}{R_3})(1 + \frac{R_2}{R_1})V_1
+\end{equation}
+
+Factorizando la ecuación anterior se llega a:
+
+\begin{equation}\label{eq:transferencia_final}
+V_{out} = (1 + 	\frac{R_4}{R_3})(V_2 - \frac{(1 + \frac{R_2}{R_1})}{(1 + 	\frac{R_3}{R_4})}V_1)
+\end{equation}
+
+
+Sin embargo, no es posible factorizar la expresión anterior con tal de llegar a una ecuación de la forma $Ganancia = \frac{V_{out}}{V_2 - V_1}$, a menos que se cumpla la siguiente condición:
+
+\begin{equation}\label{eq:condicion_diferencial}
+1 + \frac{R_2}{R_1} = 1 + \frac{R_3}{R_4} \Rightarrow \boxed{\frac{R_2}{R_1} = \frac{R_3}{R_4}}
+\end{equation}
+
+Aunque bajo esta condición la ganancia del circuito dependa solamente de ña diferencia de tensiones entre ambas entradas, en la práctica lograr que las resistencias cumplan dicha condición es más complicado de lo que parece. Cualquier desviación generará ruido en la salida, el cual interferirá con la señal que realmente se quiere amplificar. Por ende, ésta variable es de suma importancia a la hora de diseñar e implementar un circuito de esta indole. 
+
+Sabiendo entonces que las resistencias estarán desbalanceadas, pueden plantearse una ganacia en modo diferencial y una ganancia en modo común si se reemplazan \ref{eq:v1} y \ref{eq:v2} en \ref{eq:transferencia_final} y se reordena para lograr uan expresión más limpia:
+
+\begin{equation}\label{eq:ganancias_no_ideales}
+V_{out} = V_{CM}((1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})) + \frac{V_D}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+De la ecuación anterior se ven dos cosas, en primer lugar mientras más cerca se esté de la condición de funcionamiento diferencial descrita en \ref{eq:condicion_diferencial} $V_{CM}$ tiende a 0 y la ganancia tiende a:
+
+\begin{equation}\label{ganancia_diferencial_ideal}
+\boxed{V_{out} = V_D(1 + \frac{R_4}{R_3}) = (V_2 - V_1)(1 + \frac{R_4}{R_3})}
+\end{equation}
+
+
+En segundo lugar, pueden definirse tanto la ganancia diferencial como la ganancia a modo común:
+
+\begin{equation}\label{eq:ganancia_diferencial}
+A_D = \frac{V_{out}}{V_D} = \frac{1}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+\begin{equation}\label{eq:ganancia_comun}
+A_{CM} = \frac{V_{out}}{V_{CM}} = (1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})
+\end{equation}
+
+Nuevamente se ve en \ref{eq:ganancia_comun} que la misma tiende a 0 a medida que la condiciónd e balance se cumple. Otra posibilidad para eliminar la componente común en la señal de salida es utilizar dos señales cuyo promedio sea igual a 0, en otras palabras, $V_2 = - V_1$ o viceversa. En la práctica, el sensor utilizado devuelve dos señales de es manera para lograr el comportamiento deseado. Que tan exactas sean esa señales será otro factor para tener en cuenta a la hora de determinar la precisión de las mediciones. 
+
+
+Debido a las dos imperfeccciones que ya se describieron, el balance de las resistencias y la igualdad entre las señales de entrada, se define un factor de mérito con el objetivo de describir el funcionamiento de un amplificador de instrumentación, el factor de rechazo a modo común o CMRR por sus siglas en inglés. El CMRR es una medida del rechazo que ofrece la configuración a la entrada de  voltaje común. El mismo es positivos y se mide en decibelios, e idealmente es igual a infinito.
+
+\begin{equation}\label{eq:CMRR}
+CMRR   =   20\log(\frac{A_D}{A_{CM}})   = 20\log(\frac{\frac{1}{2}(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})}{1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}})
+\end{equation}
+
+%%Montecarlo de las resistencias hay que agregar
+\subsubsection{Análiss teórico de error}
+Cualquier amplificador de instrumentación será insensible a $v_{CM}$ mientras se cumpla que los amplificadores sean ideales y la relación \ref{eq:condicion_diferencial} sea cierta. Si se considera que al menos el comportamiento de loas amplificadores se asemeja al ideal se puede analizar como las discordancias entre los valores nominales y reales de las resistencias afectan al circuito. En general puede decirse que si la condición de puente esta desbalanceada el circuito responderá tanto a $v_D$ como a $v_{CM}$.
+
+Si se introduce un factor de desbalance $\epsilon$ y se asume que solo uno de los cuatro resistores posee una desviación de su valor nominal expresamos a $R_2$ como:
+
+\begin{equation}\label{R_2_epsilon}
+R_2(1 - \epsilon)
+\end{equation} 
+
+Si se propone que los resistores tienen una tolerancia igual a $p$ el peor caso posible es cuando, por ejemplo, la relación $\frac{R_3}{R_4}$ es maximizada y $\frac{R_2}{R_1}$ es minimizada. La anterior se cumple cuando $R_3$ y $R_1$ son maximizadas y $R_4$ y $R_2$ son minimizadas.Pero para que la condición de balance siga cumpliendose las resistencias minimizadas deben ser multiplicadas por $(1 + p)$ y las maximizadas por $(1 - p)$:
+
+\begin{equation}
+\frac{R_3(1 - p)}{R_4(1 + p)} = \frac{R_2(1 + p)}{R_1(1 - p)}
+\end{equation}
+
+Reagrupando:
+
+\begin{equation}
+\frac{R_3}{R_4} = \frac{R_2(1 + p)^2}{R_1(1 - p)^2}
+\end{equation}
+
+Para $p \gg 1$ se cumple que  $\frac{1}{(1 + p)} \cong (1 - p)$, entonces:
+
+\begin{equation}
+\frac{R_3}{R_4} = \frac{R_2(1 + p)^2}{R_1(1 - p)^2} \cong	 \frac{R_2(1 - p)^2}{R_4(1 - p)^2} \cong \frac{R_2(1 - 4p)}{R_4}
+\end{equation}
+
+Lo anterior si se consideran los terminos de $p^n$ con $n > 2$ como cercanos a $0$. Ahora bien, si se compara la ecuación anterior con \ref{R_2_epsilon} se llega a la siguiente conclusión:
+
+\begin{equation}
+|\epsilon|_{max} \cong 4p
+\end{equation}
+
+
+
+Si se reemplaza $\epsilon$ en \ref{eq:ganancias_no_ideales}:
+
+\begin{equation}
+V_{out} = V_{CM}((1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}})) + \frac{V_D}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+Si nuevamente se separa $V_{out}$ en:
+
+\begin{equation}
+V_{out} = A_DV_D + D_{CM}V_{CM}
+\end{equation}
+
+\begin{equation}
+A_D = \frac{1}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+\begin{equation}
+A_{CM} = \frac{V_{out}}{V_{CM}} = (1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}})
+\end{equation}
+
+\subsubsection{Comentarios respecto al funcionamiento del sensor}
+
+El dispositivo utilizado para medir la diferencia de presion es un sensor piezoresistivo de silicio. Su principio de funcionamiento es simple: se aprovecha de cambios en la resistencia eléctrica del material que lo constituye generados por la diferencia de presion entre dos entradas. El sensor proporciona una salida de tensión lineal, precisa y directamente proporcional a la presión aplicada. El sensor posee cuatro pines: uno de alimentación, Tierra, y las dos salidas con signos opuestos antes mencionadas. El mismo opera en diferencias de presión entre los $0$ y $10kP$. Según las curvas del fabricante la tensión típica de salida va de $0$ a aproximadamente $25mV$, mientras que para el caso mínimo la misma oscila entre los $-2$ y $22,5mV$ y para el máximo entre los $2$ y los $27,5mV$. Hay que tener en cuenta los valores anteriores a la hora de elegir las resistencias a utilizar, para configurar la ganancia deseada. 
+
+Por último se mencionan las ecuaciones manjeadas para el cálculo de presion. La presión hidrostática en un contenedor líquido depende solamente de tres factores y viene dada por la siguiente expresion:
+
+\begin{equation}
+P = \rho gh
+\end{equation}
+
+Donde $\rho$ es la densidad del líquido (en caso de ser agua $997\frac{kg}{m^3}$), $g$ es la aceleración de la gravedad ($9,7968\frac{m}{s^2}$ en la ciudad de Buenos Aires) y $h$ es la profundidad a la que está sumergido el objeto en metros. Con estos datos e debería sumergir un objeto hasta los $1,02$ metros de profundidad para llegar a los $10kPa$, la presión máxima que es capaz de medir el sensor utilizado. 
+
+
+\subsection{Implementación práctica}
+
+En primer lugar es necesario fijar la ganancia del circuito mediante la elección de las resistencias. Si se toman los valores típicos de la tensión de salida del sensor y se considera el funcionamiento en modo diferencial ideal dado por \ref{ganancia_diferencial_ideal}, para lograr una tension de salida de como mínimo $3,1V$ se necesita una ganancia como mínimo igual a $124$, por lo que $\frac{R_4}{R_3} = 123$. Es importante utilizar el mínimo número de resistencias, en lo posible solamente 4, con tal de minimizar el error producido por las tolerancias de las mismas. Con este fin se decidió utilizar resistencias SMD con 1 porciento de tolerancia, de $150k\Omega$ y $1,2k\Omega$, que dan una ganancia igual a $126$, o sea, una tension máxima teórica igual a $3,15V$.
+
+En segundo lugar, se eligió el integrado $LM833$ de Texas Instruments debido a su gran impedancia de entrada, la cual permite tener flexibilidad en la elección de las resitencias, y evita cargar la fuente de la señal de entrada lo que podría hacer que la amplitud de la misma disminuyese. 
+%%Comentar sobre CMRR 
+Además de lo anterior se propone agregar un potenciómetro de la siguiente manera con el fin de poder regular la ganancia del circuito facilmente:
+
+ 
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+	\draw (leftR2) to[short] ++(0, 1.5) coordinate(leftRg) to[vR, l = $R_G$] (leftRg -| U2.-) to[short] (U2.-);
+\end{circuitikz}
+	\caption{Circuito de medición con potenciómetro.}
+	\label{fig:circuito_con_potenciometro}
+\end{center}
+\end{figure}
+
+Puede demostrarse que la nueva ganancia del circuito al incluir el potenciómetros es igual a:
+
+%%Agregar demostración..
+
+\begin{equation}
+\boxed{A = 1 + \frac{R_4}{R_3} + \frac{2R_2}{R_g}}
+\end{equation}
+
+%%Agregar justificacion de porque estos valores, tiene qeu ver con impedancia de entrada, etc.
+%%Desvenatja del circuito esta en CMMR mas bajo comparado al circuito de 3 ver analog devices link en carpeta
+
+
+\subsubsection{Mediciones}
+La primera medicion que se realizo fue la de la ganancia a modo comun. Para poder medirla se conectaron ambas entradas del circuito al mismo generador y se estimul\'o el circuito con una entrada continua. Las tensiones fueron medidas con un mult\'imetro de banco debido a que se trabaj con valores demasiado pequenos.
+
 
 \begin{table}[H]
-	\centering
-	\begin{tabular}{lll}
-		Componente  & Valor        	   & Tolerancia \\
-		\\
-		$R_1$       & 2K$\Omega$   	   & 1\%        \\
-		$R_2$       & 130K$\Omega$ 	   & 1\%        \\
-		$R_{2'}$  	& 7,5K$\Omega$     & 1\%        \\
-		$R_3$ 		& 10K$\Omega$      & 1\%		\\
-		$R_4$		& 10K$\Omega$      & 1\%        \\
-	    $R_5$		& 10K$\Omega$      & 1\%        \\
-	    $R_6$		& 10K$\Omega$      & 1\%        \\
-	    $R_7$		& 10K$\Omega$      & 1\%        \\
-	    $R_8$		& 2K$\Omega$       & 1\%        \\
- 	    $R_9$		& 130K$\Omega$     & 1\%        \\   
-		$R_{9'}$	& 7,5K$\Omega$     & 1\%        \\
-			\end{tabular}
-		\caption{Tabla de valores de componentes del IN-AMP al 1\%}
+\centering
+\begin{tabular}{cccc}\hline
+$V_{in}(V_{DC})$ & $V_{out}(mV_{DC})$ & $A_{CM}$ & $A_{CM} (dBs)$ \\
+\hline
+$0,25$ & $4$ & $0,008$ & $-41,9$ \\
+$0,5$   & $4,2$  & $0,0084$ & $-41,51$ \\
+$1$  & $4,5$ & $0,0045$ & $-46,9$\\
+$1,5$  & $5$ & $0,0033$ & $-49,54$\\
+$2$  & $5,5$ & $0,00275$ & $-57,23$\\
+$2,5$  & $5,9$ & $0,00236$ & $-52,54$\\
+$3$  & $7,1$ & $0,00366$ & $-52,51$\\
+$3,3$  & $8,4$ & $0,00254$ & $-51,88$\\
+$5$  & $10,3$ & $0,00206$ & $-53,72$\\
+$7,5$  & $14$ & $0,00187$ & $-54,57$\\ \hline
+\end{tabular}
+\caption{Ganancia modo com\'un}
+\label{table:ganancia_comun}
 \end{table}
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{./ImagenesVarias/IN-AMP-CON-VALORES.png}
-	\caption{IN-AMP con los valores elegidos}
-\end{figure}
 
-  Cabe destacar que el orden de magnitud de los componentes se baso en que los amplificadores de instrumentación comerciales son fabricados con resistencias en el orden de los K-ohms.
-  
-  Como fue antes mencionado, el amplificador de instrumentación debe poseer, idealmente, impedancia de entrada infinita. Para poder aproximarnos lo más posible a este ideal se decidió utilizar el amplificador operacional \textbf{TL084} que posee una impedancia de entrada de 1 Tera-Ohm ($10^{12}\Omega$). Otra ventaja de elegir este operacional es que se consiguen en un solo integrado que contiene a los de 4 op-amps dentro de un mismo integrado lo cual disminuye las variaciones por cambios de temperatura dado que se encuentran los 4 bajo las mismas condiciones de operación.
-  
-\subsection{Efecto de las tolerancias}
-Cuando se plantearon los primeros amplificadores diferenciales se utilizaron configuraciones simples como la exhibida debajo, ya se conocía que los resistores $R_1$, $R_2$, $R_3$ y $R_4$ debían estar apropiadamente balanceados con el fin de maximizar el rechazo en modo común. 
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\linewidth]{./ImagenesVarias/AmplificadorDiferencial.PNG}
-	\caption{Amplificador diferencial}
-\end{figure}  
-
-Sin embargo las tolerancias de los componentes no lo permiten. Es por tal motivo que para alcanzar dicha precisión los fabricantes construyen dichas resistencias, mediante técnicas láser durante el proceso de fabricación del IC con el fin de minimizar esas diferencias.
-
-El modelo más sofisticado y robusto que se implemento presenta mejoras muy notables por sobre su antecesor. No obstante, estas mejoras también traen nuevos desafíos dado que se añaden más componentes resistivos al sistema.
-
-Usando resistencias al 1\% obtenemos la siguiente simulación de Montecarlo para en modo diferencial
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=\textwidth]{./ImagenesDeSimulaciones/MonteCarloModoDiferencialGrande.png}
-	\caption{Montecarlo en modo diferencial}
-\end{figure}  
-Como podemos notar, las tolerancias no afectan significativamente su desempeño en modo diferencial.
-
-Sin embargo podemos realizar más observaciones en cuanto a su desempeño en modo comúm
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.3\textheight]{./ImagenesDeSimulaciones/MonteCarloModoComunGrande1V.png}
-	\caption{Montecarlo en modo común con 1 Vpp de entrada}
-\end{figure} 
-Este gráfico de bode pone en evidencia la importancia de que las resistencias poseean la mayor precisión posible.
-
-Si la tensión en modo común se reduce vemos como mejora el rechazo en modo común.
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.3\textheight]{./ImagenesDeSimulaciones/MonteCarloModoComunGrande100mv.png}
-	\caption{Montecarlo en modo común con 100 mv de entrada}
-\end{figure} 
-
-También se intento ver los alcances de rechazo común frente a una continua
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/ModoComunContinua.png}
-	\caption{Rampa de 0 a 20V}
-\end{figure} 
-
-Vemos como el circuito es capaz de soportar hasta unos 5V de continua (como indica el cursor) antes de salir de su zona de operación.
-
-\subsection{Respuesta en frecuencia}
-Los amplificadores de instrumentación obtienen su mejor rendimiento en la rango de las frecuencias medias a bajas. Esta configuración exhibe un comportamiento del tipo pasabajos lo que provoca que no se obtenga la ganancia esperada a frecuencias elevadas.
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.3\textheight]{./ImagenesVarias/BODE_MAG.PNG}
-	\caption{Bode de Magnitud}
-\end{figure}
+De la tabla anterior puede verse que al nivel de tension m\'aximo que se est\'a manejando ($3,3V$), la tension en modo com\'un a la salida del circuito es menor al umbral de ruido, por ende no afecta al funcionamiento del mismo. 
 
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-\subsection{Generación de señales con puente de Wheatstone}
-Se diseño un puente de WheatStone para la generación de señales compuestas.
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.25\textheight]{./ImagenesVarias/wheatstone.png}
-	\caption{Puente de WheatStone}
-\end{figure}
+Por otro lado se hicieron las mediciones de la ganancia a modo diferencial. El primer inconveniente que se tuvo con la metodolog\'ia empleada fue que al conectar n generador distinto a cada entrada, debido a que no estaban en fase, la salida oscilaba entre dos valores. Por consiguiente, se decidi\'o medir la tension de salida conectando una entrada a Tierra y otra al generador. 
 
-Este método emula a un sensor que utilice un sistema tipo puente con un resistor variable que puede llegar a cambiar de valor según la temperatura, presión u alguna otra que ocasiona que su valor cambie.
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.3\textheight]{./ImagenesVarias/wheatstoneInAmp.png}
-	\caption{IN-AMP con puente de WheatStone Acoplado}
-\end{figure}
-
-La tensión suministrada en la parte superior del puente permite que las variaciones de resistencia se traduzcan en una señal eléctrica.
-Sin embargo es necesario poseer una cierta referencia para poder determinar si de hecho ocurrió un cambio. Es por es que el amplificador de instrumentación se vale del puente y de sus 2 bornes de salida para llevar acabo esta detección. La rama del puente que cuenta con sus resistores fijos proporcionara la tensión de referencia.
-A la entrada del amplificador de instrumentación se le proporcionaran 2 señales. En primer tendremos la señal de referencia y por el otro la señal portadora de la perturbación.
-Debemos notar que dado el diseño del amplificador de instrumentación de no haber diferencias entre las dos señales entonces en el caso ideal se debería observar una salida nula. 
-
-Para el armado del puente se eligieron resistores con tolerancias del 1\% para mantener el puente lo más balanceado posible y maximizar el rechazo en modo común.
 \begin{table}[H]
-	\centering
-	\begin{tabular}{lll}
-		Componente  		& Valor        	& Tolerancia \\
-		\\
-		$R_1$       		& 10K$\Omega$   & 1\%        \\
-		$R_2$       		& 10K$\Omega$ 	& 1\%        \\
-		$R_{2'}$ Preset      & 1K$\Omega$ 	& 10\%        \\
-		$R_3$  				& 10K$\Omega$   & 1\%        \\
-		$R_4$ 				& 10K$\Omega$   & 1\%		\\
-	\end{tabular}
-	\caption{Tabla de valores de componentes del puente de WheatStone al 1\%}
+\centering
+\begin{tabular}{cccc}\hline
+$V_{in}(mV)$ & $V_{out}(V)$ & $A_{CM}$ & $A_{CM} (dBs)$ \\
+\hline
+$7$   & $0,8$  & $114,28$ & $41,16$ \\
+$9$  & $1,07$ & $118,9$ & $41,5$\\
+$11$  & $1,33$ & $121$ & $41,65$\\
+$13$  & $1,61$ & $123,84$ & $41,85$\\
+$15$  & $1,87$ & $124,7$ & $41,91$\\
+$18$  & $2,26$ & $125,55$ & $41,97$\\
+$20$  & $2,54$ & $127$ & $42$\\
+$22$  & $2,8$ & $127,27$ & $42,1$\\
+$25$  & $3,2$ & $128$ & $42,14$\\
+$26$  & $3,34$ & $128,46$ & $42,17$\\
+$30$  & $3,8$ & $126,7$ & $42$\\
+$40$  & $5,22$ & $130,5$ & $42,31$\\
+$50$  & $6,56$ & $131,2$ & $42,35$\\
+$70$  & $9,18$ & $131,14$ & $42,35$\\ \hline
+\end{tabular}
+\caption{Ganancia modo diferencial}
+\label{table:ganancia_diferencial}
 \end{table}
 
-El preset nos permite generar de manera artificial "la perturbación" sobre la señal.
+Si se toma como referencia $25mV$, es decir el valor de tension m\'axima te\'orica que el sensor puede otorgar, el rechazo a modo comun es igual a:
 
-\begin{figure}[H]
-	\centering
-	\includegraphics[height=0.3\textheight]{./ImagenesDeOsciloscopio/WheatStone1tierra1c1R.png}
-	\caption{Amplificación de diferencias con puente de WheatStone}
-\end{figure}
-Notese la escala de las señales.
-\subsubsection{Análisis de Tolerancias en el puente de WheatStone}
+\begin{equation}
+CMRR = 20\log(\frac{128}{0,008}) = \boxed{84 dBS}
+\end{equation}
+
+El valor del $CMRR$ es menor al t\'ipico otorgado por el fabricante ($100dBs$) y en el rango de potenciales manejado es aceptable considerado la funcion del circuito. Una pregunta que surge al analizar dicho valor es porque no se acerca mas al ideal. En el mejor de los casos el rechazo deberia dar en el orden de los cientos de $dBS$(idealmente infinito). No obstante lo anterior, las resistencias deben estr perfectamente balanceadas para cuplir dicha condici\'on, hecho que en la pr\'actica no se da. Adem\'as, una caracter\'istica que diferencia a la configuraci\'on usada de otras mas usuales como por ejemplo el circuito del ejercicio 3 de este mismo informe es su falta de simetria. Si se sigue el recorrido de la primera senal, la misma pasa por un no inversor para luego ser invertida, mientras que la segunda senal pasa solamente por un no inversor. Esta diferencia de fase, genera que cuando se tienen que restar las senales, la operacion no da excatamente cero. En el caso del circuito desarrollado en el inciso anterior, debido a su alto grado de simetria ambas senales tienen la misma fase a la salida y el rechazo es aun mayor. Por ende no solo los valores reales de los componentes tienen que ser consideados cuando se disena un amplificador de instrumentacion, sino que tambien la simetria y distrubucion del mismo. 
 
 
-\subsubsection{Señales con y sin referencia a tierra}
-El amplificador de instrumentación es destacado por su capacidad de suprimir el ruido presente en una señal diferencial. La clave de este dispositivo esta en que la contaminación es la misma para ambos canales.
-Al compartir la referencia entre el generador de la señal y el \textbf{IN-AMP} ambos estan sujetos a la misma contaminación externa que se genera respecto de su potencial de referencia (GND). Por el otro lado si estos dos no comparten referencia entonces dichas contaminaciones se generaran contra tensiones de referencia diferentes lo cual provocara que se adicione al ruido en las terminales del amplificador de instrumentación  
+Como último comentario respecto a la medicion de la ganancia diferencial, anteriormente se comentó que existe un problema para medir con dos generados dessincronizados. Una manera arreglar el desfase entre generadores es realizar un circuito no inversor simple con ganancia igual a $-1$ para obtener la misma senal que la del generador pero invertida. Luego la tension diferencial ser\'a igual al doble de la tensio del generador. Se prob\'o esta soluci\'on y se obtuvieron resultados identicos a los de la tabla \ref{table:ganancia_diferencial}.
+
+En ultimo lugar se presentan los resultados de las mediciones con el tubo de agua:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}\hline
+$Altura columna(m)$ & $V_{out}(V)$ & $Presion(kP)$ \\
+\hline
+$0$   & $0,005$ &   \\
+$0,1$  & $0,323$ & 1 \\
+$0,15$  & $0,416$ & 1,5 \\
+$0,34$  & $1,031$ & 5,1 \\
+$0,51$  & $1,588$ & 5,1\\
+$0,59$  & $1,815$ & 5,9\\
+$0,74$  & $2,337$ & 7,4\\
+$0,79$  & $2,508$ & 7,9\\
+$0,88$  & $2,795$ & 8,8\\
+$0,9$  & $2,858$ & 9\\
+$0,96$  & $3,083$ & 9,6\\
+$1,02$  & $3,255$ & 10,2\\ \hline
+\end{tabular}
+\caption{Mediciones presion}
+\label{table:presion}
+\end{table}
+
+Cuando se deja el sensor con las dos bocas al aire se mide un offset de $5mV$, el cual entra en el rango de tensiones medidas con ambas entradas en modo comun anteriormente. Por los resultados obtendos y debido a la calibracion previa del circuito se obtiene una tension igual a $3,255V$ pasados la diferencia de presion maxima del sensor. 
 
 
+\subsection{Medicion de volumen}
 
- 	
-\begin{thebibliography}{9}
-	
-	\bibitem{Franco} 
-	SERGIO, F. (2002). Design with operational amplifiers and analog integrated circuits. New York [etc.]: McGraw-Hill, pp.73-91.	
-	
-	\bibitem{Coughlin} 
-	R. Coughlin and F. Driscoll, Circuitos integrados lineales y amplificadores operacionales. México: Prentice-Hall Hispanoamericana, 1998.
-	
-	\bibitem{dguideinamp}
-	C. Kitchin and L. Counts, A designer's guide to instrumentation amplifiers. Norwood, Mass.: Analog Devices, 2006.
-	
-	\bibitem{an244}
-	Jeffrey R. Riskin, A User's guide to IC instrumentation amplifiers. Norwood, Mass.: Analog Devices.
-	
-\end{thebibliography}
+Se sabe que la presion esta dada por:
+
+\begin{equation}
+P = \rho gh 
+\end{equation}
+
+Y el volumen en un contenedr cil\'indrico es:
+ 
+\begin{equation}
+V_l = \pi R^2h 
+\end{equation}
+
+Se despeja $h$ de la primera ecuaci\'on y se tiene:
+
+\begin{equation}\label{eq:volumen}
+V_l = \frac{\pi R^2P}{g\rho}
+\end{equation} 
+
+Adem\'as la presion medida tiene una relacion lineal con la salida del sensor, la cual puede encontrarse en la datasheet del mismo. Basicamente se tiene una recta con pendiente $2,5\frac{mV}{kP}$:
+
+\begin{equation}
+V_{OutSensor} = 2,5P
+\end{equation}
+
+Si tenemos en cuenta que amplificamos la senal $126$ veces:
+
+\begin{equation}
+V_{OutAmplificador} = V_{OutSensor}*2,5*126 \Longrightarrow P = \frac{V_{OutAmplificador}}{315}
+\end{equation}
+
+La ecuacion anterior nos da la relacion entre la tension de salida del amplificador (en $mV$) y la presion medida (en $kP$). Si se reemplaza $P$ en \ref{eq:volumen}:
+
+\begin{equation}
+V_l = \frac{\pi R^2V_{OutAmplificador}}{g\rho*315} \Longleftrightarrow V_l = k*V_{OutAmp}
+\end{equation} 
+
+Por ende se obtuvo una expresion que relaciona la tension de salida de circuito con el volumen del contenedor para una ganancia dada. Si se chequean las unidades correspondientes se ve que las mismas concuerdan. En un principio lo anterior significar\'ia que no es necesario modificar el circuito para calcular el volumen del contenedor, solamente se cambiar\'ian los valores de la ganancia y de la densidad en caso de usarse otro l'iquido que no sea agua. A pesar de eso, es necesario teer en cuanta la limitaci\'on del volumen m\'aximo y la presion m\'axima medible con el sensor.
+
+
+\subsection{Conclusiones}
+
+En esta experiencia de laboratorio se arm\'o un amplificador amplificador que tendr\'ia que cumplir con ciertos criterios para poder ser aplicado en la medici\'on de senales de pequena amplitud. LA primera de dichas condiciones era la de una gran imedancia de entrada la cual queda cumplida con la eleecion del amplificador operacional y la configuracion misma del circuito. La segunda y m\'as importante, es un rechazo de modo com\'un alto, considerando que se apunta a un rechazo en el orden de los $100dBs$ para poder eliminar el ruido de la medicion, los resultados obtenidos son satisfacotrios. M\'as a\'un si se tiene en consideracion la falta de simetria del circuito desarrollado. Por ultimo, los valores obtenidos en la medicion de la columna de agua corresponden a las tensiones teoricas propuestas. Gracias al valor del $CMRR$, se asegura eliminar casi todo el ruido que pueda interponerse en la medicion logrando asi un funcionamiento adecuado como amplificador de instrumentacion.
