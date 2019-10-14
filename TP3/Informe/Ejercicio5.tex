@@ -4,24 +4,24 @@ En la siguiente etapa del informe, se presenta el desafío de analizar, confecci
 
 \subsection{Fisiología del oído}
 
-La fisiología auditiva se encuentra dada en tres estructuras:
-\begin{itemize}
-	\item Oído externo:
-	Este conforma parte del órgano periférico encargado de la conducción de estímulos externos, transmitiendolos hacia el canal auditivo externo. Las paredes rígidas de este último evitan que el sonido sea absorbido por por los demás tejidos blandos.
-	\item Oído medio:
-	Compuesto por el sistema timpanoosicular (membrana timpánica y los tres huesillos: martillo, yunque y estribo), cumple con la función tanto de transmitir las señales del ambiente, como de proteger las estructuras neurosensoriales del oído interno y de la ventana redonda.
-	\item Oído interno:
-	Constituido por el laberinto óseo y dentro de este, el membranoso. Comprende dos aparatos desde el punto de vista anatómico y funcional: el coclear, encargado de la audición y por ende, del desarrollo del lenguaje, y el vestibular, que es el órgano que se ocupa del equilibrio.\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.}
-\end{itemize}
+%La fisiología auditiva se encuentra dada en tres estructuras:
+%\begin{itemize}
+%	\item Oído externo:
+%	Este conforma parte del órgano periférico encargado de la conducción de estímulos externos, transmitiendolos hacia el canal auditivo externo. Las paredes rígidas de este último evitan que el sonido sea absorbido por por los demás tejidos blandos.
+%	\item Oído medio:
+%	Compuesto por el sistema timpanoosicular (membrana timpánica y los tres huesillos: martillo, yunque y estribo), cumple con la función tanto de transmitir las señales del ambiente, como de proteger las estructuras neurosensoriales del oído interno y de la ventana redonda.
+%	\item Oído interno:
+%	Constituido por el laberinto óseo y dentro de este, el membranoso. Comprende dos aparatos desde el punto de vista anatómico y funcional: el coclear, encargado de la audición y por ende, del desarrollo del lenguaje, y el vestibular, que es el órgano que se ocupa del equilibrio\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.}.
+%\end{itemize}
+
+Cualquier señal captada por el odio humano se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo\footnote{Diamante, V. (2004). Otorrinolaringología y afecciones conexas. Buenos Aires: El Ateneo.}.
 
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.5\textwidth]{Imagenes/Partes-del-oido.png}
+	\includegraphics[width=0.6\textwidth]{Imagenes/Partes-del-oido.png}
 	\caption{Estructura interna del oído.}
 	\label{fig:oido}
 \end{figure}
-
-La señal captada se caracteriza por poseer una amplitud variable, la cual crece hasta alcanzar un máximo, para luego decrecer abruptamente. Además, dependiendo de la frecuencia de dicha onda, varía el sitio de la cóclea donde se presenta la máxima amplitud. De esta forma, el pico de amplitud se presenta en las inmediaciones del vértice de la cóclea para las frecuencias bajas (graves), mientras que para las altas (agudas), en la vecindad del vestíbulo.
 
 El ser humano puede detectar frecuencias entre los $20 \ Hz$ y los $20 \ kHz$.\footnote{En.wikipedia.org. (2019). Audio frequency. [online] Available at: \url{https://en.wikipedia.org/wiki/Audio_frequency} [Accessed 11 Sep. 2019].} A continuación, se realiza un detenimiento en el análisis de la ganancia del oído medio y externo. Es así que se muestra en la Figura (\ref{fig:oidoganancia}) la ganancia del oído externo, medio y la suma de ambas. Se destaca como las frecuencias menores a $1500 \ Hz$ no son prácticamente alteradas por el oído externo, mientras que la ganancia del oído medio se asemeja a un filtro pasa-banda al rededor de $1 \ kHz$. Finalmente, se puede decir que la suma de ambas converge en un gran filtro pasa-banda, cuyo pico máximo se encuentra cercano a los $3 \ kHz$. Es importante esta observación, ya que dicho filtro es el que determina el espectro audible por el ser humano.\footnote{S. Rosen and P. Howell, Signals and systems for speech and hearing, 2nd ed. 2011.}
 \begin{figure}[H]
@@ -39,7 +39,8 @@ Es así que se presenta una división de las bandas de frecuencia audibles por e
 	\label{fig:divfreq}
 \end{figure}
 
-A partir de aquí, se considera los rangos de frecuencias bajas, medias y altas a las presentadas en la Figura (\ref{fig:divfreq}). Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ dB$, la segunda posee un umbral mínimo de $60 \ dB$. 
+A partir de aquí, se considera los rangos de frecuencias bajas, medias y altas a las presentadas en la Figura (\ref{fig:divfreq}).
+%Cabe destacar que las señales existentes en el ambiente pueden ser detectadas de dos formas distintas: mediante la vía aérea, es decir, a través el mecanismo explicado previamente, y mediante vibraciones óseas del cráneo. Mientras que el umbral de adución de la primera es teóricamente de $0 \ dB$, la segunda posee un umbral mínimo de $60 \ dB$. 
 
 %Para finalizar esta sección, se define cuando una persona sufre de una perdida de audición. Esta se da un individuo no puede oír o posee un umbral de audición mayor o igual a 25 dB. Para alcanzar esto, se debe superar el nivel máximo de exposición sin riesgos, el cual es de $85 \ dB$ durante 8 horas.\footnote{``Escuchar sin riesgos!'', Who.int, 2019. [Online]. Available: \url{https://www.who.int/pbd/deafness/activities/MLS_Brochure_Spanish_lowres_for_web.pdf}. [Accessed: 11- Sep- 2019].}
 
@@ -163,7 +164,16 @@ De esta forma se obtiene:
 		 C_2 S \left( C_1 R_{2} S + 1 \right)
 		\left(C_1 R_1 R_{2} S + R_1 + R_{2}^{''}\right)}
 \end{equation*}
-con
+\begin{equation*}
+	Z_{BC} =
+	\frac{ \left( R_1 R_{2} + 2 R_{2}^{'} R_{2}^{''} \right ){C_{1}}^{2} C_2 R_1 R_{2} S^{3} +
+	\beta_{BC} C_1 S^{2} + \gamma_{BC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}
+	{C_2 S \left(C_1 R_{2} S + 1\right) \left(C_1 R_1 R_{2} S + R_1 + R_{2}^{'} \right)}
+\end{equation*}
+\begin{equation*}
+	Z_{AB} = \frac{3 C_1 R_1 R_{2} S + 3 R_1 + 2 R_{2}^{'} + R_{2}^{''}}{C_1 R_{2} S + 1}
+\end{equation*}
+siendo para la primera:
 \begin{equation*}
 \begin{split}
 	\alpha_{AC} = R_{1} R_{2} + 2 {C_{1}}^{2} C_2 R_{2}^{'} R_{2}^{''}
@@ -177,18 +187,7 @@ con
 		C_2 {R_{1}}^{2} + C_2 R_1 R_{2}^{'} + C_2 R_1 R_{2}^{''} + C_2 R_{2}^{'} R_{2}^{''}
 \end{split}
 \end{equation*}
-
-\begin{equation*}
-	Z_{AB} = \frac{3 C_1 R_1 R_{2} S + 3 R_1 + 2 R_{2}^{'} + R_{2}^{''}}{C_1 R_{2} S + 1}
-\end{equation*}
-
-\begin{equation*}
-	Z_{BC} =
-	\frac{ \left( R_1 R_{2} + 2 R_{2}^{'} R_{2}^{''} \right ){C_{1}}^{2} C_2 R_1 R_{2} S^{3} +
-	\beta_{BC} C_1 S^{2} + \gamma_{BC} S + 2 R_1 + R_{2}^{'} + R_{2}^{''}}
-	{C_2 S \left(C_1 R_{2} S + 1\right) \left(C_1 R_1 R_{2} S + R_1 + R_{2}^{'} \right)}
-\end{equation*}
-con
+mientras que para la segunda:
 \begin{equation*}
 \begin{split}
 	\beta_{BC} =\ & 2 C_1 R_1 {R_{2}}^{2} + 2C_2 {R_{1}}^{2} R_{2} + C_2 R_1 R_{2} R_{2}^{'} + C_2 R_1 R_{2} R_{2}^{''} + 2 C_2 R_1 R_{2}^{'} R_{2}^{''} + 
@@ -250,8 +249,7 @@ Nuevamente, considerando $A_o \rightarrow \infty$ se obtiene
 	{\gamma_H S^{2} + \delta_H S + 2 R_{1} + R_{2}}
 	\label{equ:hs}
 \end{equation}
-
-Siendo: 
+siendo: 
 \begin{equation}
 \begin{split}
 	\alpha_H =\ & C_{1} C_{2} {R_{1}}^{2} R_{2} - 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi^{2} + 2 C_{1} C_{2} R_{1} {R_{2}}^{2} \psi + C_{1} C_{2} R_{1} R_{2} R_{3}\\
@@ -315,7 +313,7 @@ Se determina de esta forma que
 \end{split}
 \end{equation*}
 
-Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y ceros del sistema, en función de $\psi$ y se realiza un diagrama de polos y ceros en el plano $S$, variando el primer factor mencionado. De esta forma se obtiene la Figura (\ref{fig:zplanepsi}).
+Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y ceros del sistema, en función de $\psi$ y se realiza un diagrama de polos y ceros en el plano $S$, variando el primer factor mencionado. De esta forma se llega a la Figura (\ref{fig:zplanepsi}).
 
 \begin{figure}[H]
 	\centering
@@ -324,7 +322,7 @@ Además, mediante el uso de (\ref{equ:hs}), se calculan los respectivos polos y 
 	\label{fig:zplanepsi}
 \end{figure}
 
-En un ecualizador analógico, al modificar una frecuencia dada, se modifica también su fase. Este es un proceso inevitable, el cual se busca reducir tanto como sea posible, buscando también lograr que produzca el cambio de tono deseado. Esto se garantiza realizando que el sistema sea de fase mínima.
+En un ecualizador analógico, al modificar una frecuencia dada, se modifica también su fase. Este es un proceso inevitable, el cual se busca reducir tanto como sea posible, logrando también que produzca el cambio de tono deseado. Esto se garantiza realizando que el sistema sea de fase mínima.
 Debido a que, tanto los polos como los ceros del sistema, sin importar el valor de $\psi$, se encuentran en el semiplano izquierdo, se obtiene el menor diagrama de fase posible, en consecuencia, este sistema es de fase mínima.
 
 Si se busca conseguir que el sistema sea de fase no mínima, se debe seleccionar los componentes tales que los ceros se encuentren en el semiplano derecho. Para lograr esto, se propone llevar la (\ref{equ:hs}) sea de la forma
@@ -341,6 +339,7 @@ Esto no es posible debido a que los cambios en los componentes modifican tambié
 Teniendo en cuenta lo expresado en la primer sección, se procede a elegir frecuencias de corte para cada una de las instancias. Recordando el que el espectro auditivo del ser humano abarca desde los $20 \ Hz$ a los $20 \ kHz$, y considerando lo mostrado en la Figura (\ref{fig:divfreq}), se decide buscar una frecuencia representativa para cada parte del espectro (bajos, medios y altos). Debido al carácter logarítmico de las frecuencias, se calculan dichos valores de la forma:
 \begin{equation*}
 	\log{(f_{med})} = \frac{\log(f_{min}) + \log(f_{max})}{2} = \log(\sqrt{f_{min} f_{max}})
+	\label{equ:felegida}
 \end{equation*}
 
 Es así que se necesita una frecuencia cercana a los $77.50 \ Hz$ para las frecuencias bajas, $1.2 \ kHz$ para las medias y $10 \ kHz$ para las altas. De esta forma, y pensando en valores comerciales de ecualizadores, cuyas amplificaciones varían entre $\pm 12 \ dB$ y $\pm 15 \ dB$, se seleccionan los elementos deseados, completando la siguiente tabla:
@@ -376,7 +375,7 @@ Se podría solventar dicho problema reemplazando $R_3$ por una resistencia de $5
 	\label{fig:r3comp}
 \end{figure}
 
-Se destaca el error realizado al obtener las frecuencias finales, las cuales no son exactamente las que se había mencionado anteriormente. Es así que se busca determinar si estas variaciones son aceptables o no. Tomando un error máximo del 5\%, y dado el carácter logarítmico de la audición humana, se calcula el margen máximo y mínimo del error para frecuencia central dada como: 
+Se destaca el error realizado al obtener las frecuencias finales, las cuales no son exactamente las que se obtuvieron gracias a (\ref{equ:felegida}). Es así que se busca determinar si estas variaciones son aceptables o no. Tomando un error máximo del 5\%, y dado el carácter logarítmico de la audición humana, se calcula el margen máximo y mínimo del error para frecuencia central dada como: 
 \begin{equation*}
 	\log{(f_{med} \pm \delta)} = \log{(f_{med} \pm f_{med}\cdot 0.05)} = \log{(f_{med} \left(1 \pm 0.05\right))}
 \end{equation*}
@@ -448,7 +447,7 @@ Es así que se procede a graficar la respuesta en frecuencia calculada de todo e
 Es así que se observa que cada instancia genera un cambio en la ganancia similar, en torno a la frecuencia seleccionada en la Tabla (\ref{tabla:valores}). De la misma forma se da en los cambios de fase.
 %Cabe destacar el oído humano no detecta cambios en la fase, debido a que no posee forma de comparar dicha variación, es decir, no cuenta con una referencia con la cual contrastar el desfasaje.
 %Se puede hacer un detenimiento en las bandas que se encuentran en el entorno de la frecuencia de corte en las Figuras (\ref{fig:bode_ph_low}), (\ref{fig:bode_ph_med}) y (\ref{fig:bode_ph_high}), pero dicho intervalo sigue siendo lo suficientemente grande como para ser detectado por el oído humano.
-También, resulta pertinente destacar los corrimientos que se producen tanto en la fase como en la amplitud al variar las altas frecuencias, lo cual se debe al cambio realizado del potenciómetro, el cuál se recuerda que fue cambiado de $1 \ k\Omega$ a $50 \ k\Omega$. En otras palabras, la causa de este fenómeno se debe a que la condición de que $R_3 = 10R_2$ deja de ser valida.
+También, resulta pertinente destacar los corrimientos que se producen tanto en la fase como en la amplitud al variar las altas frecuencias, lo cual se debe al cambio realizado del potenciómetro. En otras palabras, la causa de este fenómeno se debe a que la condición de que $R_3 = 10R_2$ deja de ser valida.
 
 %De la misma forma, se muestra la impedancia de entrada en función de la frecuencia para el circuito total, variando $\psi$ para una instancia y fijando las demás en $0.5$.
 %\begin{figure}[H]
@@ -488,7 +487,7 @@ También, resulta pertinente destacar los corrimientos que se producen tanto en 
 %	\label{fig:zin_ph_high}
 %\end{figure}
 
-Simulando la impedancia de entrada se obtiene que esta permanece prácticamente constante frente a cambios en $\psi$ de cualquier etapa, es por eso que se grafica esta variable a continuación para todo el sistema:
+Simulando la impedancia de entrada se obtiene que esta permanece prácticamente constante frente a cambios en $\psi$ de cualquier etapa, es por eso que se grafica esta variable a continuación para todo el sistema una única vez:
 
 \begin{figure}[H]
 \centering
@@ -497,7 +496,7 @@ Simulando la impedancia de entrada se obtiene que esta permanece prácticamente 
 	\label{fig:zin}
 \end{figure}
 
-Se observa de esta figura que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. También se observa que tanto el módulo como la fase de dicha variable es prácticamente independiente de $\psi$, es decir, de cuanto se gire el potenciómetro $R_2$. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
+Se observa de esta figura que la impedancia de entrada se comporta de manera resistiva a altas frecuencias, mientras que en las bajas y medias comienza a verse un efecto capacitivo, sin llegar a ser este más grande que el resistivo. Como se mencionó anteriormente, presentar cada instancia en serie es más conveniente que en paralelo, debido a la variable previamente analizada. Esto se observa en las Figuras (\ref{fig:zin_comp_mod}) y (\ref{fig:zin_comp_ph}). La impedancia de entrada en la disposición en paralelo se obtiene justamente del paralelo de la de cada instancia, siendo esta menor que la seleccionada. Es así que se aprovecha mejor la disposición en serie que en paralelo. 
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth, trim = {0 0 0 1.35cm}, clip]{Imagenes/Z-Paralelo-Vs-Serie-Mod.png}
@@ -511,7 +510,7 @@ Se observa de esta figura que la impedancia de entrada se comporta de manera res
 	\label{fig:zin_comp_ph}
 \end{figure}
 
-Cabe aclarar que a la salida del circuito se colocó un capacitor de $220 \ nF$ para eliminar un pequeño offset existente, proveniente de la salida de los operacionales. Por lo tanto, la impedancia de salida del circuito termina siendo la de dicho capacitor.
+Cabe aclarar que a la salida del circuito se colocó un capacitor de $220 \ nF$ para eliminar un pequeño offset existente, proveniente de la salida de los operacionales (del orden de los milivolts). Por lo tanto, la impedancia de salida del circuito termina siendo la de dicho capacitor.
 
 De la misma forma que realizó para la impedancia de entrada, se presenta a continuación la de salida:
 \begin{figure}[H]
@@ -541,7 +540,7 @@ Como era de esperarse, se consigue que la variación en el Bode simulado sea mí
 
 \subsection{Resultados obtenidos}
 
-Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
+Hasta ahora se han presentado diagramas de Bode y de impedancias de entrada teóricos y simulados. En esta sección se procede a comparar los resultados ya observados en contraste con análisis de las mismas variables pero esta vez, resultantes de simulaciones en LTSpice y mediciones. Para ello se decide fijar para cada etapa un valor de $\psi$ y presentar dicho resultado.
 
 Cabe destacar que para el desarrollo de este circuito se optó utilizar el amplificador operacional \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, debido a su frecuente uso en lo que a audio respecta, su bajo ruido de entrada y su amplia ganancia de banda pasante, la cual cubre el espectro audible\footnote{Texas Instruments, ``LM833-N Dual Audio Operational Amplifier'', LM833 datasheet, Mayo 2004 [Revisado Mayo 2012].}. Debido a que este dispositivo es dual y que se requiere un total de tres amplificadores, se utilizan dos LM833, dejando un operacional sin usar. Para aprovecharlo, se decide colocar este último amplificador a la salida del circuito, conectado como un inversor con un potenciómetro, para de esta forma utilizarlo como un controlador de volumen. Por lo tanto, de ahora en más se considera el cambio de fase que este provee al circuito junto con la impedancia que este agrega.   
 
@@ -597,7 +596,7 @@ A continuación, se procede a presentar diagramas de Bode teóricos, simulados y
 	\label{fig:CBodes-Ph-4}
 \end{figure}
 
-Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia del 1\%, se termina de ver reflejado en las comparaciones previamente hechas. De estas, se puede concluir que, como los diagramas de Bode, tanto teóricos, como simulados y medidos, se acoplan adecuadamente, los diagramas de polos y ceros se corresponden. En otras palabras, los polos y ceros obtenidos en el circuito físico medido son similares a los obtenidos a través del modelo teórico. Finalmente, se destaca que en muy altas frecuencias, los diagramas no se corresponden en su totalidad. Este factor no es de interés y tampoco afecta el uso del circuito ya que estas diferencias se observan a partir de un rango de frecuencias mayor al audible, por lo tanto, el circuito no está destinado a trabajar en dicho intervalo.
+Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho de poseer componentes con tolerancia baja, se termina de ver reflejado en las comparaciones previamente hechas. De estas, se puede concluir que, como los diagramas de Bode, tanto teóricos, como simulados y medidos, se acoplan adecuadamente, los diagramas de polos y ceros se corresponden. En otras palabras, los polos y ceros obtenidos en el circuito físico medido son similares a los obtenidos a través del modelo teórico. Finalmente, se destaca que en muy altas frecuencias, los diagramas no se corresponden en su totalidad. Este factor no es de interés y tampoco afecta el uso del circuito ya que estas diferencias se observan a partir de un rango de frecuencias mayor al audible, por lo tanto, el circuito no está destinado a trabajar en dicho intervalo.
 
 %Por su parte, por lo visto en la Sección (\ref{sub:desarrollo}), la impedancia de entrada permanece prácticamente constante frente a cambios de $\psi$. De esta forma, se decidió presentar las comparaciones de dicha variable una sola vez, independientemente del valor de $\psi$.
 %\begin{figure}[H]	
@@ -615,7 +614,7 @@ Como se mostró en las Figuras (\ref{fig:MC-Mod}) y (\ref{fig:MC-Ph}), el hecho 
 
 \subsubsection{Limitaciones}
 
-Finalmente se destaca la limitación que presenta el circuito, en lo que a amplitud de tensión de entrada respecta. Como se destacó previamente, y debido a cuestiones de fabricación, entre cada etapa existe una pequeña diferencia en cuanto a amplificación (y atenuación) máxima se trata. Llegado a cierto punto, y bajo ciertas condiciones, el amplificador operacional satura la tensión de salida o se ve afectado por el efecto de Slew-Rate. De esta forma, se presentan a continuación las condiciones que hacen que cada etapa comience a presentar cambios en la salida.
+Luego se destaca la limitación que presenta el circuito, en lo que a amplitud de tensión de entrada respecta. Como se destacó previamente, y debido a cuestiones de fabricación, entre cada etapa existe una pequeña diferencia en cuanto a amplificación (y atenuación) máxima se trata. Llegado a cierto punto, y bajo ciertas condiciones, el amplificador operacional satura la tensión de salida o se ve alterado por el efecto de Slew-Rate. De esta forma, se presentan a continuación las condiciones que hacen que cada etapa comience a presentar cambios en la salida.
 \begin{figure}[H]	
 	\centering
 	\includegraphics[width=0.6\textwidth, trim = {0 3.35cm 0 2cm},clip]{Imagenes/F81-3.png}
@@ -636,3 +635,7 @@ Finalmente se destaca la limitación que presenta el circuito, en lo que a ampli
 \end{figure}
 
 Es por esta razón que se toma como límite una tensión de entrada máxima igual a $2 \ V$ (tensión pico a pico), ya que, a dicho valor ya comienza a observarse deformaciones en la salida para las frecuencias más altas, mientras que para las bajas y las medias se requieren tensiones de hasta $3 \ V$ y $2.5 \ V$ respectivamente. Esto se debe a que la etapa que posee mayor amplificación es aquella destinada a alterar las frecuencias altas.
+
+\subsubsection{Aplicación}
+
+Finalmente se realiza un breve comentario acerca su implementación. Se procedió a introducir a la entrada del circuito senoidales de una frecuencia dada, mientras que a la salida se colocaron parlantes para poder escuchar como esta resulta afectada por cada instancia. Posteriormente se procedió realizar un experimento similar, pero esta vez colocando música a la entrada, más específicamente, ``Come as you are'' de Nirvana. Dicha experiencia fue grabada y se anexa en video junto con el informe. 

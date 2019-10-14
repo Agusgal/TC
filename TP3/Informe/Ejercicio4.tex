@@ -1,0 +1,425 @@
+
+\subsection{Introducción teórica}
+Los amplificadores diferenciales son dispositivos cuya salida es linealmente proporcional a la diferencia entre sus entradas y que idealmente suprimen cualquier tensión común a dichas entradas. Teóricamente, de ser iguales, la salida debe ser cero, no obstante, dicha afirmación es difícil de cumplir en la práctica. Debido a lo anterior, se definen dos modos de operación para un amplificador diferencial, modo común y modo diferencial:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+
+	\node [op amp](U1){};
+	\draw (U1.-) to[short] ++(0, 1) node[](vn){};
+	\draw (vn) to[R, l_ = $R_1$] ++(-3, 0) node[label={[font=\footnotesize]above:$v_1$}](v1){} to[american voltage source, l = $\frac{v_{DM}}{2}$, invert] ++(0, -1.5) node[](comun){};
+	\draw (comun) to[american voltage source, l = $v_{CM}$] ++(-2.5, 0) to[short] ++(0, -0.5) node[ground]{};
+	\draw (U1.+) to[short] ++(0, -1) node[](vp){};
+	\draw (vp) to[R, l = $R_3$] ++(-3, 0) node[label={[font=\footnotesize]below:$v_2$}](v2){} to [american voltage source, l_ = $\frac{v_{DM}}{2}$] (comun);
+	
+	\draw (vn) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (vp) coordinate(leftR4) to[R, l_ = $R_4$] (leftR4 -| U1.out) to[short] ++(0, -0.5) node[ground]{};
+	
+	\draw (U1.out) to[short]	++(0.5, 0) node[ocirc, label=right:$v_{out}$]{};
+
+\end{circuitikz}
+	\caption{Entradas en términos de los componentes en modo común y modo diferencial.}
+	\label{fig:com_dif}
+\end{center}
+\end{figure}
+
+De la figura anterior pueden deducirse las siguientes relaciones:
+
+\begin{equation}\label{eq:v1}
+v_1 = v_{CM} - \frac{-v_{DM}}{2}
+\end{equation}
+
+\begin{equation}\label{eq:v2}
+v_2 = v_{CM} + \frac{v_{DM}}{2}
+\end{equation}
+
+El amplificador operacional en modo diferencial es un caso más general del amplificador de tensión, el cuál por lo general posee uno de sus terminales referenciado a tierra o $0 \ V$. La ventaja fundamental de la operación en modo diferencial es que de existir alguna señal de ruido común a ambas entradas la misma es cancelada a la salida, por ende los amplificadores diferenciales son útiles en el análisis de pequeñas señales propensas a recibir interferencias, como es el caso de señales biomédicas, circuitos de medición, sensores, etc.
+
+Un caso particular de los amplificadores diferenciales son los amplificadores de instrumentación. Los útlimos cumplen con diferentes características, las cuales los hacen aptos para la instrumentación de pruebas y mediciones, de ahí su nombre. Los AI deben poseer una impedancia de entrada alta en extremo (infinita en caso ideal), una impedancia de salida lo más cercana a cero posible (nula en el caso ideal), una ganancia exacta y estable, y por último un CMRR por lo general, extremadamente elevado (la definición de este parámetro se desarrolla más adelante).
+
+En la siguiente sección se diseña un circuito para posibilitar la medición de presión. Para eso se utiliza el sensor piezoeléctrico MPX2010DP y un amplificador de instrumentación capaz de amplificar la señal proveniente del mismo. El circuito puede medir en el rango de presiones comprendido entre los $0 \ P$ y los $10 \ kP$, para cuyo caso tiene una salida de entre $0 \ V$ a $3,3 \ V$. Al medir la máxima diferencia de presión permitida por el sensor la señal de salida tiene una amplitud de al menos $3,1 \ V$ y menor a $3,3 \ V$. En caso de medirse una diferencia de presión nula, la salida también lo será. El circuito propuesto es el siguiente:
+
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito de medición propuesto.}
+	\label{fig:circuito_inicial}
+\end{center}
+\end{figure}
+
+
+
+Como bien puede apreciarse en la figura anterior, el amplificador de instrumentación cuenta con una configuración dual. Ambos operacionales son utilizados utilizados en su modo no inversor. Para el análisis siguiente se trabaja con ambos op-amps como ideales.
+
+Utilizando superposición se pasiva $V_2$ en primer lugar quedando así el priemr op-amp en su configuración no inversora, mientras que el segundo en una configuración inversora:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out) node[label={[font=\footnotesize]below:$V_{o1}$}](v2){};
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[short] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito con $V_2$ pasivada.}
+	\label{fig:circuito_V2_pasivada}
+\end{center}
+\end{figure}
+
+Utilizando las expresiones para las ganacias ya conocidas se obtiene la tensión a la salida del primer amplificador y la tensión de salida del circuito:
+
+\begin{equation}\label{eq:vo1}
+V_{o1} = V_1\frac{R_1 + R_2}{R_1}
+\end{equation}
+
+\begin{equation}\label{eq:V_out_1}
+V_{out} = \frac{-R_4}{R_3}V_{o1} 
+\end{equation}
+
+Reemplazando (\ref{eq:vo1}) en (\ref{eq:V_out_1}):
+
+\begin{equation}\label{eq:transferencia_1}
+V_{out} = (\frac{-R_4}{R_3})(1 + \frac{R_2}{R_1})V_2
+\end{equation}
+
+Asimismo, si se pasiva la fuente $V_1$, la tensión posterior al amplificador número 1 es cero, ya que ambas entradas están conecatdas a tierra. Es así que el segundo op-amp está en su configuración no inversora:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[short] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out) node[label={[font=\footnotesize]below:$V_{o1}$}](v2){};;
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+\end{circuitikz}
+	\caption{Circuito con $V_1$ pasivada.}
+	\label{fig:circuito_V1_pasivada}
+\end{center}
+\end{figure}
+
+\begin{equation}\label{eq:transferencia_2}
+V_{out} = (1 + \frac{R_4}{R_3})V_2
+\end{equation}
+
+Por principio de superposición, la salida total resulta de la suma entre las dos transferencias anteriores:
+
+\begin{equation}
+V_{out} = (1 + \frac{R_4}{R_3})V_2 + (\frac{-R_4}{R_3})(1 + \frac{R_2}{R_1})V_1
+\end{equation}
+
+Factorizando la ecuación anterior se llega a:
+
+\begin{equation}\label{eq:transferencia_final}
+V_{out} = (1 + 	\frac{R_4}{R_3})(V_2 - \frac{(1 + \frac{R_2}{R_1})}{(1 + 	\frac{R_3}{R_4})}V_1)
+\end{equation}
+
+
+Sin embargo, no es posible factorizar la expresión anterior con tal de llegar a una ecuación de la forma $Ganancia = \frac{V_{out}}{V_2 - V_1}$, a menos que se cumpla la siguiente condición:
+
+\begin{equation}\label{eq:condicion_diferencial}
+1 + \frac{R_2}{R_1} = 1 + \frac{R_3}{R_4} \Rightarrow \boxed{\frac{R_2}{R_1} = \frac{R_3}{R_4}}
+\end{equation}
+
+Aunque bajo esta condición la ganancia del circuito depende solamente de la diferencia de tensiones entre ambas entradas, en la práctica lograr que las resistencias cumplan dicha condición es más complicado de lo que parece. Cualquier desviación genera ruido en la salida, el cual interfiere con la señal que realmente se quiere amplificar. Por ende, esta variable es de suma importancia a la hora de diseñar e implementar un circuito de esta índole. 
+
+Sabiendo entonces que las resistencias se encuentran desbalanceadas, puede plantearse una ganancia en modo diferencial y una ganancia en modo común si se reemplazan (\ref{eq:v1}) y (\ref{eq:v2}) en (\ref{eq:transferencia_final}) y se reordena para lograr una expresión más limpia:
+
+\begin{equation}\label{eq:ganancias_no_ideales}
+V_{out} = V_{CM}((1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})) + \frac{V_D}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+De la ecuación anterior se ven dos cosas, en primer lugar mientras más cerca se esté de la condición de funcionamiento diferencial descrita en (\ref{eq:condicion_diferencial}), $V_{CM}$ tiende a 0 y la ganancia tiende a:
+
+\begin{equation}\label{ganancia_diferencial_ideal}
+\boxed{V_{out} = V_D(1 + \frac{R_4}{R_3}) = (V_2 - V_1)(1 + \frac{R_4}{R_3})}
+\end{equation}
+
+
+En segundo lugar, pueden definirse tanto la ganancia diferencial como la ganancia a modo común:
+
+\begin{equation}\label{eq:ganancia_diferencial}
+A_D = \frac{V_{out}}{V_D} = \frac{1}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+\begin{equation}\label{eq:ganancia_comun}
+A_{CM} = \frac{V_{out}}{V_{CM}} = (1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})
+\end{equation}
+
+Nuevamente se ve en (\ref{eq:ganancia_comun}) que la misma tiende a 0 a medida que la condición de balance se cumple. Otra posibilidad para eliminar la componente común en la señal de salida es utilizar dos señales cuyo promedio sea igual a 0, en otras palabras, $V_2 = - V_1$ o viceversa. En la práctica, el sensor utilizado devuelve dos señales de esa manera para lograr el comportamiento deseado. Que tan exactas sean esa señales será otro factor para tener en cuenta a la hora de determinar la precisión de las mediciones. 
+
+Debido a las dos imperfecciones que ya se describieron, el balance de las resistencias y la igualdad entre las señales de entrada, se define un factor de mérito con el objetivo de describir el funcionamiento de un amplificador de instrumentación, el factor de rechazo a modo común o CMRR por sus siglas en inglés. El CMRR es una medida del rechazo que ofrece la configuración a la entrada de  voltaje común. El mismo es positivo y se mide en decibelios, e idealmente es igual a infinito.
+
+\begin{equation}\label{eq:CMRR}
+CMRR   =   20\log(\frac{A_D}{A_{CM}})   = 20\log(\frac{\frac{1}{2}(1 + \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}})}{1 - \frac{1 + \frac{R_2}{R_1}}{1 + \frac{R_3}{R_4}}})
+\end{equation}
+
+\subsubsection{Análisis teórico de error}
+
+Cualquier amplificador de instrumentación es insensible a $V_{CM}$, mientras se cumpla que los amplificadores sean ideales y la relación (\ref{eq:condicion_diferencial}) sea cierta. Si se considera que al menos el comportamiento de los amplificadores se asemeja al ideal se puede analizar como las discordancias entre los valores nominales y reales de las resistencias afectan al circuito. En general puede decirse que si la condición de puente esta desbalanceada el circuito responde tanto a $V_D$ como a $V_{CM}$.
+
+Si se introduce un factor de desbalance $\epsilon$ y se asume que solo uno de los cuatro resistores posee una desviación de su valor nominal, se puede expresar a $R_2$ como:
+
+\begin{equation}\label{R_2_epsilon}
+R_2(1 - \epsilon)
+\end{equation} 
+
+Si se propone que los resistores tienen una tolerancia igual a $p$, el peor caso posible se da cuando, por ejemplo, la relación $\frac{R_3}{R_4}$ es maximizada y $\frac{R_2}{R_1}$ es minimizada. Lo anterior se cumple cuando $R_3$ y $R_1$ son maximizadas y $R_4$ y $R_2$ son minimizadas. Para que la condición de balance siga cumpliendose las resistencias minimizadas deben ser multiplicadas por $(1 + p)$ y las maximizadas por $(1 - p)$:
+
+\begin{equation}
+\frac{R_3(1 - p)}{R_4(1 + p)} = \frac{R_2(1 + p)}{R_1(1 - p)}
+\end{equation}
+
+Reagrupando:
+
+\begin{equation}
+\frac{R_3}{R_4} = \frac{R_2(1 + p)^2}{R_1(1 - p)^2}
+\end{equation}
+
+Para $p \gg 1$ se cumple que  $\frac{1}{(1 + p)} \cong (1 - p)$, entonces:
+
+\begin{equation}
+\frac{R_3}{R_4} = \frac{R_2(1 + p)^2}{R_1(1 - p)^2} \cong	 \frac{R_2(1 - p)^2}{R_4(1 - p)^2} \cong \frac{R_2(1 - 4p)}{R_4}
+\end{equation}
+
+Lo anterior si se consideran los terminos de $p^n$ con $n > 2$ como cercanos a $0$. Ahora bien, si se compara la ecuación anterior con \ref{R_2_epsilon} se llega a la siguiente conclusión:
+
+\begin{equation}
+|\epsilon|_{max} \cong 4p
+\end{equation}
+
+
+
+Si se reemplaza $\epsilon$ en \ref{eq:ganancias_no_ideales}:
+
+\begin{equation}
+V_{out} = V_{CM}((1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}})) + \frac{V_D}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+Si nuevamente se separa $V_{out}$ en:
+
+\begin{equation}
+V_{out} = A_DV_D + D_{CM}V_{CM}
+\end{equation}
+
+\begin{equation}
+A_D = \frac{1}{2}((1 + \frac{R_4}{R_3})(1 + \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}}))
+\end{equation}
+
+\begin{equation}
+A_{CM} = \frac{V_{out}}{V_{CM}} = (1 + \frac{R_4}{R_3})(1 - \frac{1 + \frac{R_2(1 - \epsilon)}{R_1}}{1 + \frac{R_3}{R_4}})
+\end{equation}
+
+En la pr\'actica se usaron resistencias con $1 \%$ de tolerancia, evaluando en $\epsilon$ y en las expresiones anteriores el rechazo a modo com\'n ronda los $90 \ dB$.
+
+\subsubsection{Comentarios respecto al funcionamiento del sensor}
+
+El dispositivo utilizado para medir la diferencia de presi\'on es un sensor piezoresistivo de silicio. Su principio de funcionamiento es simple: se aprovecha de cambios en la resistencia eléctrica del material que lo constituye generados por la diferencia de presión entre dos entradas. El sensor proporciona una salida de tensión lineal, precisa y directamente proporcional a la presión aplicada. El sensor posee cuatro pines: uno de alimentación, tierra, y las dos salidas con signos opuestos antes mencionadas. El mismo opera en diferencias de presión entre los $0 \ kP$ y $10 \ kP$. Según las curvas del fabricante la tensión típica de salida va de $0 \ mV$ a aproximadamente $25 \ mV$, mientras que para el caso mínimo la misma oscila entre los $-2 \ mV$ y $22,5 \ mV$ y para el máximo entre los $2 \ mV$ y los $27,5 \ mV$. Se debe tener en cuenta los valores anteriores a la hora de elegir las resistencias a utilizar para configurar la ganancia deseada. 
+
+Por último se mencionan las ecuaciones manejadas para el cálculo de presi\'on. La presión hidrostática en un contenedor líquido depende solamente de tres factores y viene dada por la siguiente ecuaci\'on:
+
+\begin{equation}
+P = \rho gh
+\end{equation}
+
+Donde $\rho$ es la densidad del líquido (en caso de ser agua $997\frac{kg}{m^3}$), $g$ es la aceleración de la gravedad ($9,7968\frac{m}{s^2}$ en la ciudad de Buenos Aires) y $h$ es la profundidad a la que está sumergido el objeto en metros. Con estos datos se debe sumergir un objeto hasta los $1,02$ metros de profundidad para llegar a los $10 \ kPa$, la presión máxima que es capaz de medir el sensor utilizado. 
+
+
+\subsection{Implementación práctica}
+
+En primer lugar es necesario fijar la ganancia del circuito mediante la elección de las resistencias. Si se toman los valores típicos de la tensión de salida del sensor y se considera el funcionamiento en modo diferencial ideal dado por (\ref{ganancia_diferencial_ideal}), para lograr una tension de salida de como mínimo $3,1 \ V$ se necesita una ganancia como mínimo igual a $124$, por lo que $\frac{R_4}{R_3} = 123$. Es importante utilizar el mínimo número de resistencias, en lo posible solamente 4, con tal de minimizar el error producido por las tolerancias de las mismas. Con este fin se decidió utilizar resistencias SMD con $1 \%$ de tolerancia, de $150 \ k\Omega$ y $1,2 \ k\Omega$, que dan una ganancia igual a $126$, es decir, una tensión máxima teórica igual a $3,15 \ V$. Adem\'as, en cada etapa individual del amplificador tiene que tenerse cuidado con no superar el nivel de alimentaci\'on. Por ejemplo, si se analiza la etapa inicial, la entrada $V_1$ pasa por un circuito no inversor primero, que de tener mucha ganancia satura al circuito. 
+
+En segundo lugar, se eligió el integrado $LM833$ de Texas Instruments debido a su gran impedancia de entrada frecuencias bajas, la cual permite tener flexibilidad en la elección de las resistencias, y evita cargar la fuente de la señal de entrada lo que podría hacer que la amplitud de la misma disminuyese. Su valor de rechazo a modo com\'un tambi\'en cumple con la condici\'on inicial (es igual a $100 \ dB$).
+
+Además de lo anterior se propone agregar un potenciómetro de la siguiente manera con el fin de poder regular la ganancia del circuito fácilmente:
+ 
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\node [op amp](U1){};
+	\draw (U1.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_1$] ++(0,-2) node[ground]{};
+	\draw (U1.-) to[short] ++(-0.5, 0) node[](vn1){} to[R, l = $R_1$] ++(-2.5, 0) to[short] ++(0, -1.5) node[ground]{};
+	\draw (vn1) to[short] ++(0, 1) coordinate(leftR2) to[R, l = $R_2$] (leftR2 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[open] (4.5, -0.5) node[op amp](U2){};
+	\draw (U2.-) to[R, l = $R_3$] (U1.out);
+	\draw (U2.+) to[short] ++(-0.5, 0) to[sinusoidal voltage source, l = $V_2$] ++(0,-2) node[ground]{};
+	\draw (U2.-) to[short] ++(0, 1) coordinate(leftR4) to[R, l = $R_4$] (leftR4 -| U2.out) to[short] (U2.out);
+	\draw (U2.out) to[short] ++(0.5, 0) node[ocirc, label=right:$V_{out}$]{};
+	
+	\draw (leftR2) to[short] ++(0, 1.5) coordinate(leftRg) to[vR, l = $R_G$] (leftRg -| U2.-) to[short] (U2.-);
+\end{circuitikz}
+	\caption{Circuito de medición con potenciómetro.}
+	\label{fig:circuito_con_potenciometro}
+\end{center}
+\end{figure}
+
+Puede demostrarse que la nueva ganancia del circuito al incluir el potenciómetros es igual a:
+
+\begin{equation}
+\boxed{A = 1 + \frac{R_4}{R_3} + \frac{2R_2}{R_g}}
+\end{equation}
+
+Por \'ultimo, pensando que la señal de salida del circuito va a ser interpretada por un microcontrolador, es necesario regular la tensi\'on de salida para que frente a picos en la entrada no hayan picos en la salida. Con este fin se propone colocar un diodo Zener de $3,3 \ V$ entre la salida y tierra con una resistencia en serie. El valor de dicha resistencia depende de las corrientes que se manejen, en este caso en el orden de los $10 \ mA$.
+
+\subsubsection{Mediciones}
+
+La primera medici\'on que se realiz\'o fue la de la ganancia a modo com\'un. Para poder medirla, se conectaron ambas entradas del circuito al mismo generador y se estimul\'o el circuito con una entrada continua. Las tensiones fueron medidas con un mult\'imetro de banco debido a que se trabaj\'o con valores pequeños.
+
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}\hline
+$V_{in} \ [V_{DC}]$ & $V_{out} \ [mV_{DC}]$ & $A_{CM}$ & $A_{CM} \ [dB]$ \\
+\hline
+$0,25$ & $4$ & $0,008$ & $-41,9$ \\
+$0,5$   & $4,2$  & $0,0084$ & $-41,51$ \\
+$1$  & $4,5$ & $0,0045$ & $-46,9$\\
+$1,5$  & $5$ & $0,0033$ & $-49,54$\\
+$2$  & $5,5$ & $0,00275$ & $-57,23$\\
+$2,5$  & $5,9$ & $0,00236$ & $-52,54$\\
+$3$  & $7,1$ & $0,00366$ & $-52,51$\\
+$3,3$  & $8,4$ & $0,00254$ & $-51,88$\\
+$5$  & $10,3$ & $0,00206$ & $-53,72$\\
+$7,5$  & $14$ & $0,00187$ & $-54,57$\\ \hline
+\end{tabular}
+\caption{Ganancia modo com\'un}
+\label{table:ganancia_comun}
+\end{table}
+
+
+De la tabla anterior puede verse que al nivel de tension m\'aximo que se est\'a manejando ($3,3 \ V$), la tensión en modo com\'un a la salida del circuito es menor al umbral de ruido, por ende no afecta al funcionamiento del mismo y eso indica un buen nivel de rechazo.
+
+Por otro lado se hicieron las mediciones de la ganancia a modo diferencial. El primer inconveniente que se tuvo con la metodolog\'ia empleada fue que al conectar un generador distinto a cada entrada, debido a que no estaban en fase, la salida oscilaba entre dos valores. Por consiguiente, se decidi\'o medir la tension de salida conectando una entrada a Tierra y otra al generador. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}\hline
+$V_{in} \ [mV]$ & $V_{out} \ [V]$ & $A_{CM}$ & $A_{CM} \ [dB]$ \\
+\hline
+$7$   & $0,8$  & $114,28$ & $41,16$ \\
+$9$  & $1,07$ & $118,9$ & $41,5$\\
+$11$  & $1,33$ & $121$ & $41,65$\\
+$13$  & $1,61$ & $123,84$ & $41,85$\\
+$15$  & $1,87$ & $124,7$ & $41,91$\\
+$18$  & $2,26$ & $125,55$ & $41,97$\\
+$20$  & $2,54$ & $127$ & $42$\\
+$22$  & $2,8$ & $127,27$ & $42,1$\\
+$25$  & $3,2$ & $128$ & $42,14$\\
+$26$  & $3,34$ & $128,46$ & $42,17$\\
+$30$  & $3,8$ & $126,7$ & $42$\\
+$40$  & $5,22$ & $130,5$ & $42,31$\\
+$50$  & $6,56$ & $131,2$ & $42,35$\\
+$70$  & $9,18$ & $131,14$ & $42,35$\\ \hline
+\end{tabular}
+\caption{Ganancia modo diferencial}
+\label{table:ganancia_diferencial}
+\end{table}
+
+Si se toma como referencia $25 \ mV$, es decir el valor de tension m\'axima te\'orica que el sensor puede otorgar, el rechazo a modo común es igual a:
+
+\begin{equation}
+CMRR = 20\log(\frac{128}{0,008}) = \boxed{84 dBS}
+\end{equation}
+
+El valor del $CMRR$ es menor al t\'ipico otorgado por el fabricante ($100 \ dB$) y en el rango de potenciales manejado es aceptable considerado la función del circuito. Una pregunta que surge al analizar dicho valor es porque no se acerca mas al ideal. En el mejor de los casos el rechazo debe dar en el orden de los cientos de $dB$ (idealmente infinito). No obstante lo anterior, las resistencias deben estar perfectamente balanceadas para cumplir dicha condici\'on, hecho que en la pr\'actica no se da. Adem\'as, una caracter\'istica que diferencia a la configuraci\'on usada de otras más usuales como por ejemplo el circuito de la Sección (\ref{seccion:3}) de este mismo informe, es su falta de simetría. Si se sigue el recorrido de la primera señal, la misma pasa por un no inversor para luego ser invertida, mientras que la segunda pasa solamente por un no inversor. Esta diferencia de fase, genera que cuando se tienen que restar a la salida, la operaci\'on no de exactamente cero. En el caso del circuito desarrollado en la sección previamente mencionada, debido a su alto grado de simetr\'ia, ambas señales tienen la misma fase a la salida y el rechazo es a\'un mayor. Por ende no solo los valores reales de los componentes tienen que ser considerados cuando se diseña un amplificador de instrumentación, sino que también la simetría y distribución del mismo. 
+
+Como último comentario respecto a la medición de la ganancia diferencial, anteriormente se comentó que existe un problema para medir con dos generados desincronizados. Una manera arreglar el desfase entre generadores es realizar un circuito no inversor simple con ganancia igual a $-1$ para obtener la misma señal que la del generador pero invertida. Luego la tensi\'on diferencial ser\'a igual al doble de la tensi\'on del generador. Se prob\'o esta soluci\'on y se obtuvieron resultados idénticos a los de la tabla \ref{table:ganancia_diferencial}.
+
+En ultimo lugar se presentan los resultados de las mediciones con el tubo de agua, para la obtenci\'on de las mismas se calibr\'o primero el preset para que la ganancia quedara en el rango deseado:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}\hline
+$Altura \ columna \ [m]$ & $V_{out} \ [V]$ & $Presion \ [kP]$ \\
+\hline
+$0$   & $0,005$ &   \\
+$0,1$  & $0,323$ & 1 \\
+$0,15$  & $0,416$ & 1,5 \\
+$0,34$  & $1,031$ & 5,1 \\
+$0,51$  & $1,588$ & 5,1\\
+$0,59$  & $1,815$ & 5,9\\
+$0,74$  & $2,337$ & 7,4\\
+$0,79$  & $2,508$ & 7,9\\
+$0,88$  & $2,795$ & 8,8\\
+$0,9$  & $2,858$ & 9\\
+$0,96$  & $3,083$ & 9,6\\
+$1,02$  & $3,255$ & 10,2\\ \hline
+\end{tabular}
+\caption{Mediciones presion}
+\label{table:presion}
+\end{table}
+
+Cuando se deja el sensor con las dos bocas al aire se mide un offset de $5 \ mV$, el cual entra en el rango de tensiones medidas con ambas entradas en modo común. Se obtuvo una tensión igual a $3,255 \ V$ pasados la diferencia de presion maxima del sensor. Los dem\'as datos concuerdan con el modelo lineal de presi\'on utilizado y se ajustan a a ganancia te\'orica del circuito.
+
+\subsection{Medicion de volumen}
+
+Se sabe que la presión esta dada por:
+
+\begin{equation}
+P = \rho gh 
+\end{equation}
+
+Y el volumen en un contenedr cil\'indrico es:
+ 
+\begin{equation}
+V_l = \pi R^2h 
+\end{equation}
+
+Se despeja $h$ de la primera ecuaci\'on y se tiene:
+
+\begin{equation}\label{eq:volumen}
+V_l = \frac{\pi R^2P}{g\rho}
+\end{equation} 
+
+Adem\'as la presión medida tiene una relación lineal con la salida del sensor, la cual puede encontrarse en la datasheet del mismo. Básicamente se tiene una recta con pendiente $2,5\frac{mV}{kP}$:
+
+\begin{equation}
+V_{OutSensor} = 2,5P
+\end{equation}
+
+Si tenemos en cuenta que amplificamos la señal $126$ veces:
+
+\begin{equation}
+V_{OutAmplificador} = V_{OutSensor}*2,5*126 \Longrightarrow P = \frac{V_{OutAmplificador}}{315}
+\end{equation}
+
+La ecuación anterior nos da la relación entre la tensión de salida del amplificador (en $mV$) y la presión medida (en $kP$). Si se reemplaza $P$ en (\ref{eq:volumen}):
+
+\begin{equation}
+V_l = \frac{\pi R^2V_{OutAmplificador}}{g\rho*315} \Longleftrightarrow V_l = k*V_{OutAmp}
+\end{equation} 
+
+Por ende se obtuvo una expresión que relaciona la tension de salida de circuito con el volumen del contenedor para una ganancia dada. Si se chequean las unidades correspondientes se ve que las mismas concuerdan. En un principio lo anterior significar\'ia que no es necesario modificar el circuito para calcular el volumen del contenedor, solamente se cambiar\'ian los valores de la ganancia y de la densidad en caso de usarse otro l'iquido que no sea agua. A pesar de eso, es necesario tener en cuanta la limitaci\'on del volumen m\'aximo y la presion m\'axima medible con el sensor.
+
+
+\subsection{Conclusiones}
+
+En esta experiencia de laboratorio se arm\'o un amplificador amplificador que tendr\'ia que cumplir con ciertos criterios para poder ser aplicado en la medici\'on de señales de pequeña amplitud. LA primera de dichas condiciones era la de una gran impedancia de entrada la cual queda cumplida con la elección del amplificador operacional y la configuración misma del circuito. La segunda y m\'as importante, es un rechazo de modo com\'un alto, considerando que se apunta a un rechazo en el orden de los $100 \ dB$ para poder eliminar el ruido de la medición, los resultados obtenidos son satisfactorios. M\'as a\'un si se tiene en consideración la falta de simetría del circuito desarrollado. Por ultimo, los valores obtenidos en la medición de la columna de agua corresponden a las tensiones teóricas propuestas. Gracias al valor del $CMRR$, se asegura eliminar casi todo el ruido que pueda interponerse en la medición logrando así un funcionamiento adecuado como amplificador de instrumentación.
