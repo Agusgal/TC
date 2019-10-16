@@ -685,11 +685,11 @@ class Measurer():
                 self.phase.append(np.rad2deg(cmath.phase(self.impedance)))
 
             if (self.impedance_meas):
-                print("Frequency: " + str(float(med[2])))
+                #print("Frequency: " + str(float(med[2])))
                 print("Impedance: " + str(abs(self.impedance)))
                 print("Phase: " + str(np.rad2deg(cmath.phase(self.impedance))))
             else:
-                print("Frequency: " + str(float(med[2])))
+                #print("Frequency: " + str(float(med[2])))
                 print("Ratio: " + str(float(med[0])))
                 print("Phase: " + str(float(med[1])))
 
@@ -767,20 +767,20 @@ class Measurer():
 
         if(not self.impedance_meas):
 
-            if (not os.path.exists(scriptfile + "/../Mediciones/Bode/" + self.filename + ".csv")):
-                self.filepath = scriptfile + "/../Mediciones/Bode/" + self.filename + ".csv"
+            if (not os.path.exists(scriptfile + "/../Mediciones/CSV/Bode/" + self.filename + ".csv")):
+                self.filepath = scriptfile + "/../Mediciones/CSV/Bode/" + self.filename + ".csv"
             else:
                 for i in range(1, 10, 1):
-                    if (not os.path.exists(scriptfile + "/../Mediciones/Bode/" + self.filename + "(" + str(i) + ")" + ".csv")):
-                        self.filepath = scriptfile + "/../Mediciones/Bode/" + self.filename + "(" + str(i) + ")" + ".csv"
+                    if (not os.path.exists(scriptfile + "/../Mediciones/CSV/Bode/" + self.filename + "(" + str(i) + ")" + ".csv")):
+                        self.filepath = scriptfile + "/../Mediciones/CSV/Bode/" + self.filename + "(" + str(i) + ")" + ".csv"
                         break
         else:
-            if (not os.path.exists(scriptfile + "/../Mediciones/Impedance/" + self.filename + ".csv")):
-                self.filepath = scriptfile + "/../Mediciones/Impedance/" + self.filename + ".csv"
+            if (not os.path.exists(scriptfile + "/../Mediciones/CSV/Impedance/" + self.filename + ".csv")):
+                self.filepath = scriptfile + "/../Mediciones/CSV/Impedance/" + self.filename + ".csv"
             else:
                 for i in range(1, 10, 1):
-                    if (not os.path.exists(scriptfile + "/../Mediciones/Impedance/" + self.filename + "(" + str(i) + ")" + ".csv")):
-                        self.filepath = scriptfile + "/../Mediciones/Impedance/" + self.filename + "(" + str(i) + ")" + ".csv"
+                    if (not os.path.exists(scriptfile + "/../Mediciones/CSV/Impedance/" + self.filename + "(" + str(i) + ")" + ".csv")):
+                        self.filepath = scriptfile + "/../Mediciones/CSV/Impedance/" + self.filename + "(" + str(i) + ")" + ".csv"
                         break
 
         with open(self.filepath, 'w+') as csvfile:
