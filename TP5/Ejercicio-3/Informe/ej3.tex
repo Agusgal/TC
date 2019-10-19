@@ -1,38 +1,33 @@
+\input{../../Informe/Header.tex}
+\begin{document}
 
-Para la siguiente sección, se buscó diseñar un puente que permita medir capacitores desde $100 \ nF$ hasta $1 \ \mu F$, trabajando a una frecuencia de $20 \ kHz$. Los capacitores a medir con dicho instrumento se caracterizan por poseer un factor de disipación D en un rango acotado entre $0.02$ y $0.12$.
+\subsection{Introducción}
 
-Con lo dicho anteriormente, se tuvo que elegir entre tres posibles puentes: el serie, el paralelo y el de Schearing. Debido a que este último se emplea para capacitores con de muy bajas perdidas, es decir, con un $D \ < \ 10^{-3}$, mientras que el paralelo se utiliza para capacitores de altas perdidas, se optó por valerse de un puente serie, ya que este está destinado a ser empleado para capacitores con un rango de perdidas similar al que requiere.
-
-
-Luego, mediante el análisis de sensibilidades, considerando los valores máximos y mínimos de capacitores y estableciendo $C_1 = 1 \ nF$ y $R_1 = 100 \Omega$, se obtienen los siguientes valores para los demás componentes:
-
-\begin{equation*}
-\begin{split}
-	R_{1_{Min}} =& \ \frac{5 \cdot 10^{-7}}{\pi C_1} = 159 \ \Omega \\
-	R_{1_{Max}} =& \ \frac{3 \cdot 10^{-6}}{\pi C_1} = 1 \ k\Omega \\
-	R_{3_{Min}} =& \ \frac{R_4 \cdot 10^{-7}}{\pi C_1} = 10 \ k\Omega \\
-	R_{3_{Max}} =& \ \frac{R_4 \cdot 10^{-6}}{\pi C_1} = 100 \ k\Omega
-\end{split}
-\end{equation*}
-Para el análisis de sensibilidades se realizó para la variaciónd e Vd en función de R3 y R1:
-
-\begin{align*}
-\scalebox{1.5}{$
-S_{R_1}^{V_d} = \frac{\partial V_d}{\partial R_1} \cdot \frac{R_1}{V_d}=
-\frac{-R_1R_3}{\left( \frac{R_3}{R_3+\frac{1}{sC_1}+R1}-\frac{R_4}{R_4+\frac{1}{sC_x}+R_x} \right) \cdot  \left( R_3+\frac{1}{sC_1}+R1\right)^2}
-$}
-\end{align*}
-
-\begin{align*}
-\scalebox{1.5}{$
-S_{R_3}^{V_d} = \frac{\partial V_d}{\partial R_3} \cdot \frac{R_3}{V_d}=\frac{(C_1R_1s+1)R_3C_1(C_xR_xs+R_4C_xs+1)}{(C_1R_1s+C_1R_3s+1)\cdot (-C_1C_xR_3R_xs+R_4C_1C_xR_1s-C_1R_3+R_4C_x)}
-$}
-\end{align*}
-
-
+En esta sección se implementó un filtro High-Pass utilizando una aproximación \textbf{Cauer} e implementandola con celdas \textbf{Sedra}, el filtro a diseñar deberá cumplir con la siguiente plantilla.
+\begin{table}[H]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+$f_s$      & 11.65kHz          \\ \hline
+$f_p$      & 23.3kHz           \\ \hline
+$A_p$      & 2dB               \\ \hline
+$A_s$      & 40dB              \\ \hline
+$|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
+\end{tabular}
+\end{table}
+\subsection{Aproximación de Cauer.}
+\subsubsection{Cálculo Analítico}
+\subsubsection{Elecciones de diseño}
+\subsection{Celda Sedra-Ghorab-Martin.}
+\subsubsection{Cálculo Analítico}
+\subsubsection{Elecciones de diseño}
+\subsection{Respuesta en Frecuencia.}
+\subsubsection{Etapas.}
+\subsubsection{Filtro definitivo.}
 %
 %\begin{figure}[H]
 %	\centering
 %	\includegraphics[width=0.4\textwidth]{/ImagenesEjercicio3/Graph.png}
 %	\label{fig:graph}
 %\end{figure}
+\end{document}
