@@ -16,13 +16,54 @@ $|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
 \end{tabular}
 \end{table}
 \subsection{Aproximación de Cauer.}
+Para esta sección se utlizó la aproximación elíptica de \textbf{Cauer}.
 \subsubsection{Cálculo Analítico}
+
+Para la realización de este filtro lo primero es hacer una transformación de frecuencia High-Pass a Low-Pass y normalizar la plantilla, así obteniendo la siguiente plantilla normalizada.
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Imagen Plantilla normalizada}}}
+\end{center}
+A partir de esta plantilla se procedió a calcular el n del filtro bajo la siguiente fórmula:
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Formula N CAUER}}}
+\end{center}
+Luego se calcula la función transferencia normalizada, para luego desnormalizar:
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Transferencia Normalizada}}}
+\end{center}
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Transferencia Desnormalizada}}}
+\end{center}
+Obteniendo el siguiente diagrama de polos y ceros:
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Diagrama de polos y ceros}}}
+\end{center}
+teniendo los pares de polos con un Q de...
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Hablar del Q de los polos}}}
+\end{center}
 \subsubsection{Elecciones de diseño}
+Se decidió armar etapas con celdas segundo orden en cascada dado a que el orden es 4.
+Para la asociación de polos se tomo como criterio agrupar los polos por su cercanía, agrupandolos de las siguiente forma, así mismo la etapa de menor Q será la primera y la de mayor la última.
 \subsection{Celda Sedra-Ghorab-Martin.}
+La celda Sedra fue propuesta en el paper :....
+como una mejora de la ...
+Tiene la particularidad de que...
+Finalmente en el paper discutido se tomó la configuración de High-Pass-Notch dado a que es lo único que utlizaremos.
 \subsubsection{Cálculo Analítico}
+---
 \subsubsection{Elecciones de diseño}
+Realizando el análisis de sensibilidades para los componentes del circuito se puede llegar a la siguiente tabla: 
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Tabla sensibilidades}}}
+\end{center}
+
+Se tomaron como valor de los componentes...
+Se eligió utilizar presets para las resistencias... Para ajustar el Q y el $\omega_0$ del filtro.
 \subsection{Respuesta en Frecuencia.}
+Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al 1$\%$ y capacitores al 10$\%$ obteniendo la siguiente disperción,
 \subsubsection{Etapas.}
+Se realizaron 2 etapas, ambas siendo el mismo tipo de celda, pero con distintos parámetros.
 \subsubsection{Filtro definitivo.}
 %
 %\begin{figure}[H]
