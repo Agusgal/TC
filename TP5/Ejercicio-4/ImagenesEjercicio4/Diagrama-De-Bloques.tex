@@ -1,0 +1,49 @@
+\input{Header-Stda.tex}
+
+\begin{document}
+
+% Definition of blocks:
+\tikzset{%
+  block/.style    = {draw, thick, rectangle, minimum height = 3em,
+    minimum width = 3em},
+  sum/.style      = {draw, circle, node distance = 2cm}, % Adder
+  input/.style    = {coordinate}, % Input
+  output/.style   = {coordinate} % Output
+}
+
+% Defining string as labels of certain blocks.
+\newcommand{\suma}{\Large $\Sigma$}
+\newcommand{\inte}{$\displaystyle \int$}
+\newcommand{\derv}{\huge $\frac{d}{dt}$}
+
+\begin{tikzpicture}
+	\draw node at (0,0)[]{}
+	node [input, name=input1, label=above:$V_1$] {$V_i$}
+	node [sum, right of=input1] (suma1) {\suma}
+	node at (suma1) [block, right=30mm] (int1) {$-\int$}
+	node at (int1) [right = 15mm] (aux1) {}
+	node at (aux1) [block, right=15mm] (int2) {$-\int$}
+	node at (aux1) [block, above=15mm, left=15mm] (a0) {$a_0$}
+	node at (aux1) [below = 15mm] (aux2) {}
+	node at (aux2) [block, left = 15mm] (a1) {$a_1$}
+	node at (aux2) [block, right = 15mm] (K) {$K$}
+	node at (K) [right=15mm, input, name=input2, label=above:$V_o$] (vo) {\textopenbullet $V_o$}
+	node at (suma1) [right=3mm, above=3mm] () {\Large -}
+	node at (suma1) [left=3mm, below=3mm] () {\tiny +}
+	node at (suma1) [left=5mm, above=1mm] () {\tiny +};	
+	
+	\draw[o->] (input1) -- (suma1);
+	\draw[->] (suma1) -- (int1);
+	\draw[->] (int1) -- (aux1.center);
+	\draw[->] (aux1.center) -- (int2);
+	\draw[->] (int2) |- (a0);
+	\draw[->] (a0) -| (suma1);
+	\draw[->] (aux1.center) -- (aux2.center);
+	\draw[->] (aux2.center) -- (K);
+	\draw[-o] (K) -- (vo);
+	\draw[->] (K) -- (a1);
+	\draw[->] (a1) -| (suma1);
+	
+\end{tikzpicture}
+
+\end{document}
