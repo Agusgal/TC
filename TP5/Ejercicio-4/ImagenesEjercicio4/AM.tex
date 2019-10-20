@@ -1,0 +1,28 @@
+\input{Header-Stda.tex}
+
+\begin{document}
+
+\begin{circuitikz}
+	\node [ocirc, label=north:$V_i$](v1){};
+	\draw (v1.east) to[R, l=$R_4$] ++(3,0) node[op amp, anchor=-](A1){};
+	\draw (A1.+) node[ground](){};
+	\draw (A1.out) node[ocirc, label=below:$V_{BP}$](aux1){};
+	
+	\draw (aux1.east) to[R, l=$R_2$] ++(3,0) node[op amp, anchor=+, yscale=-1](A2){};
+	\draw (A2.-) node[ground](){};
+	\draw (A2.out) node[ocirc, label=south east:$V_{PB}$](aux2){};
+	
+	\draw (A2.+) -- ++(0,1) to[C, l=$C_2$] ++(2,0) node[op amp, anchor=out, xscale=-1](A3){};
+	\draw (A3.+) node[ground](){};
+	
+	\draw (A3.out) -- ++(0,1.5) to[R, l=$R$] ++(2.25,0) -| (A3.-) to[R, l=$R$] ++(2.5,0) node[](aux3){};
+	
+	\draw (A1.-) -- ++(0,1) to[R, l_=$R_1$] ++(2.25,0) -| (aux1.north);
+	\draw (A1.-) -- ++(0,2) to[C, l=$C_1$] ++(2.25,0) -| (aux1.north);	
+		
+	\draw (A1.-) ++ (0,2) -- ++ (0,1) to[R, l_=$R_3$] ++(12,0) -| (aux3.center);
+	\draw (aux2.east) -| (aux3.center);
+	
+\end{circuitikz}
+
+\end{document}

@@ -6,7 +6,8 @@
 Las celdas universales es un conjunto de filtros RC activos de segundo orden, compuestos por amplificadores operacionales configurados de forma sumadora, restadora, integradora, amplificadora o atenuadora, puestos en cascada. Estas son también conocidas como celdas de variables de estado, debido al uso de dicho método para la resolución de las ecuaciones diferenciales. Este tipo de celdas se caracteriza por poseer bajas sensibilidades con respecto a sus componentes, alta flexibilidad y buen rendimiento. Existen distintos tipos de configuraciones, donde cada una de estas posee sus respectivas ventajas y desventajas. A continuación, se procede a analizar cada una de ellas\footnote{L. Huelsman, Active and passive analog filter design, 2nd ed. New York: McGraw-Hill, 1993.}.
 
 \subsubsection{Kerwin-Huelsman-Newcomb (KHN)}
-La celda Kerwin-Huelsman-Newcomb, nombre otorgado a partir de sus creadores\footnote{W. J. Kerwin, L. P. Huelsman, and R. W. Newcomb, ``State-Variable Synthesis for Insensitive Integrated Circuit Transfer Functions,'' \textit{IEEE Journal of Solid-State Circuits}, vol. 2, no. 3, pp. 87–92, Sep. 1967.}, puede ser comprendida con mayor facilidad a partir de un ejemplo. Se considera una transferencia de un filtro pasa banda:
+La celda Kerwin-Huelsman-Newcomb%, nombre otorgado a partir de sus creadores\footnote{W. J. Kerwin, L. P. Huelsman, and R. W. Newcomb, ``State-Variable Synthesis for Insensitive Integrated Circuit Transfer Functions,'' \textit{IEEE Journal of Solid-State Circuits}, vol. 2, no. 3, pp. 87–92, Sep. 1967.},
+ puede ser comprendida con mayor facilidad a partir de un ejemplo. Se considera una transferencia de un filtro pasa banda:
 \begin{equation}
 	\frac{V_o(s)}{V_i(s)} = \frac{Ks}{s^2 + a_1 s + a_0}
 \end{equation}
@@ -37,7 +38,7 @@ Si se utiliza la transformada de Laplace inversa tanto en (\ref{equ:2}) como en 
 \end{split}
 \end{equation}
 
-Del sistema anterior, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt \right) dt = x(t)$ son las llamadas variables de estado. Es más fácil de interpretar estas observando la Figura (\ref{fig:blockKHN}).
+Del sistema anterior, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt \right) dt = x(t)$ son las llamadas variables de estado. Se pueden representar estas de la forma presentada en la Figura (\ref{fig:blockKHN}).
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Bloques-KHN.pdf}
@@ -76,11 +77,11 @@ Con todo lo establecido previamente se consigue determinar las siguientes transf
 \end{equation}
 
 Siendo
-\begin{equation*}
+\begin{equation}
 	D(s) = s^2 + \frac{s}{R_1 C_1} \frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} + \frac{R_6}{R_1 R_2 R_5 C_1 C_2}
-\end{equation*}
+\end{equation}
 
-Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota tomando cada una de dichas salidas, esta celda puede ser utilizada como un pasa bajos, pasa banda y pasa altos respectivamente. Es por ello que a partir de ahora se considera $V_{PA} = V_{o1}$, $V_{BP} = V_{o2}$ y $V_{PB} = V_{o3}$. Tanto la frecuencia de corte, como el factor Q de cada etapa, es el mismo, ya que comparten denominador, siendo estos
+Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota que, tomando cada una de dichas salidas, esta celda puede ser utilizada como un pasa bajos, de banda pasante y pasa altos respectivamente. Es por ello que a partir de ahora se considera $V_{PA} = V_{o1}$, $V_{BP} = V_{o2}$ y $V_{PB} = V_{o3}$. Tanto la frecuencia de corte, como el factor Q de cada etapa, es el mismo, ya que comparten denominador, siendo estos
 \begin{equation}
 \begin{split}
 	\omega_o = \sqrt{\frac{R_6}{R_1 R_2 R_5 C_1 C_2}} \\
@@ -88,22 +89,16 @@ Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota t
 \end{split}
 \end{equation}
 
-Es destacable la independencia que posee $\omega_o$ de $R_3$ y $R_4$, ya que es posible modificar el factor $Q$ son modificar la frecuencia de corte. Además, el termino $K$ previamente establecido, varía para cada salida. $K(PB)$ representa la ganancia en continua para el pasa bajos, $K(BP)$ la ganancia en la frecuencia de resonancia del pasa banda y para el pasa altos, $K(PA)$ es la ganancia en frecuencia infinita.
+Es destacable la independencia que posee $\omega_o$ de $R_3$ y $R_4$ y la dependencia del factor $Q$ de dichas variables. Por lo tanto, es posible modificar esta ultima sin modificar la frecuencia de corte. Además, el termino $K$ previamente establecido, varía para cada salida. $K_{PB}$ representa la ganancia en continua para el pasa bajos, $K_{BP}$ la ganancia en la frecuencia de resonancia del pasa banda y para el pasa altos, $K_{PA}$ es la ganancia en frecuencia infinita.
 \begin{equation}
 \begin{split}
-	K(PB) = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_6}	\	\	\ con \ \omega = 0 \\
-	K(BP) = -\frac{R_4}{R_3}	\	\	\ con \ \omega = \omega_o \\
-	K(PA) = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_5}	\	\	\ con \ \omega = \infty	
-\end{split}
-\end{equation}
-\begin{equation}
-\begin{split}
-	K(PB) = \frac{R3}{R_4}	\	\	\ con \ \omega = 0 \\
-	|K(BP)| = \frac{R_1}{R_4}	\	\	\ con \ \omega = \omega_o
+	K_{PB} = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_6}	\	\	\ con \ \omega = 0 \\
+	K_{BP} = -\frac{R_4}{R_3}	\	\	\ con \ \omega = \omega_o \\
+	K_{PA} = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_5}	\	\	\ con \ \omega = \infty	
 \end{split}
 \end{equation}
 
-Este tipo de celda, que cuenta con una entrada ($V_i$) y varias salidas ($V_{PB}$, $V_{BP}$ y $V_{PA}$), se la conoce como un sistema SIMO, debido a sus siglas del ingles ``single-in multi-out''\footnote{R. Raut and M. N. S. Swamy, Modern Analog Filter Analysis and Design, 1st. ed. Weinheim: John Wiley and Sons, 2010.}. Se destaca también que la etapa que cumple el rol de pasa banda es inversora, mientras que las etapas de pasa bajos y altos no. Por otro lado, en caso de ser deseado que esta celda funcione como un rechaza banda o pasa todo, se debe agregar un cuarto amplificador operacional que actúe como restador de las tres señales previamente mencionadas para el caso del pasa todo, o entre las etapas pasa bajos y altos, para obtener el rechaza bandas\footnote{A. Sedra and K. Smith, Microelectronic Circuits, 5th ed. New York: Oxford University Press, 1991.}.
+Este tipo de celda, que cuenta con una entrada ($V_i$) y varias salidas ($V_{PB}$, $V_{BP}$ y $V_{PA}$), se la conoce como un sistema SIMO, debido a sus siglas del ingles ``single-in multi-out''. Se destaca también que la etapa que cumple el rol de pasa banda es inversora, mientras que las etapas de pasa bajos y altos no. Por otro lado, en caso de ser deseado que esta celda funcione como un rechaza banda o pasa todo, se debe agregar un cuarto amplificador operacional que actúe como restador de las tres señales previamente mencionadas para el caso del pasa todo, o entre las etapas pasa bajos y altos, para obtener el rechaza bandas\footnote{A. Sedra and K. Smith, Microelectronic Circuits, 5th ed. New York: Oxford University Press, 1991.}.
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -122,9 +117,8 @@ Este tipo de celda, que cuenta con una entrada ($V_i$) y varias salidas ($V_{PB}
 \end{figure}
 
 \subsubsection{Tow-Thomas (TT)}
-%En ocasiones es deseable poseer una señal de entrada que alimente varios nodos, obteniendo una única salida. Así como se denotó la existencia de sistemas SIMO, el caso previamente mencionado cae dentro de la definición lo que se conoce como sistemas MISO, suyas siglas en ingles significan ``multi-in single-out''. A continuación se presenta la celda Tow-Thomas\footnote{J. Tow, ``Design formulas for active RC filters using operational-amplifier biquad,'' \textit{Electronics Letters}, vol. 5, no. 15, pp. 339–341, Jul. 1969.}\footnote{L. C. Thomas, ``The Biquad: Part I-Some practical design considerations,'' \textit{IEEE Transactions on Circuit Theory}, vol. 18, no. 3, pp. 350–357, 1971.}, la cual cumple con lo previamente especificado.
-
-La celda Tow-Thomas, nombre dado por sus creadores\footnote{J. Tow, ``Design formulas for active RC filters using operational-amplifier biquad,'' \textit{Electronics Letters}, vol. 5, no. 15, pp. 339–341, Jul. 1969.}\footnote{L. C. Thomas, ``The Biquad: Part I-Some practical design considerations,'' \textit{IEEE Transactions on Circuit Theory}, vol. 18, no. 3, pp. 350–357, 1971.} surge como una variación de la celda KHN. A esta última, se la modifica buscando aprovechar una realimentación negativa a base de una implementación RC. De esta forma, se logra alejar las frecuencias naturales del eje $j\omega$ por sobre el semiplano izquierdo. Esto lleva al desarrollo del siguiente diagrama de bloques.
+La celda Tow-Thomas%, nombre dado por sus creadores\footnote{J. Tow, ``Design formulas for active RC filters using operational-amplifier biquad,'' \textit{Electronics Letters}, vol. 5, no. 15, pp. 339–341, Jul. 1969.}\footnote{L. C. Thomas, ``The Biquad: Part I-Some practical design considerations,'' \textit{IEEE Transactions on Circuit Theory}, vol. 18, no. 3, pp. 350–357, 1971.},
+ surge como una variación de la celda KHN. A esta última, se la modifica buscando aprovechar una realimentación negativa a base de una implementación RC. De esta forma, se logra alejar las frecuencias naturales del eje $j\omega$ por sobre el semiplano izquierdo. De igual forma que se realizó con la celda KHN, se construye el siguiente diagrama de bloques.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Bloques-TT.pdf}
@@ -157,7 +151,7 @@ Siendo
 	\label{equ:dtt}
 \end{equation}
 
-De de la misma forma que con la celda KHN, de (\ref{equ:dtt}), se obtiene
+De de la misma forma que con la celda KHN, de (\ref{equ:dtt}) se obtiene
 \begin{equation}
 \begin{split}
 	\omega_o = \sqrt{\frac{1}{R_2 R_3 C_1 C_2}} \\
@@ -165,12 +159,58 @@ De de la misma forma que con la celda KHN, de (\ref{equ:dtt}), se obtiene
 \end{split}
 \end{equation}
 
-Análogamente al caso anterior, se destaca el hecho de que la frecuencia $\omega_o$ es independiente de $R_1$, lo que permite modificar el factor $Q$ sin afectar a la otra variable.
+De manera similar, se destaca el hecho de que la frecuencia $\omega_o$ es independiente de $R_1$, lo que permite modificar el factor $Q$ sin afectar a la otra variable. Se expresan ademas los valores de $K$ para cada caso.
+\begin{equation}
+\begin{split}
+	K_{PB} = \frac{R3}{R_4}	\	\	\ con \ \omega = 0 \\
+	|K_{BP}| = \frac{R_1}{R_4}	\	\	\ con \ \omega = \omega_o
+\end{split}
+\end{equation}
 
 Se denota además que $V_{BP} = V_{o1}$ y $V_{PB} = V_{o2}$. Es así que la celda TT permite obtener un filtro pasa bandas y dos pasa bajos, siendo uno de ellos inversor. Este circuito no posee una transferencia que cumpla la función de pasa altos, por lo tanto, tampoco posee directamente una función de rechaza banda o pasa todo, al igual que la celda KHN.
 
-\subsubsection{Ackerberg-Mossberg}
+\subsubsection{\r{A}ckerberg-Mossberg (AM)}
+La celda \r{A}ckerberg-Mossberg resulta de una variación de la TT. Del circuito mostrado en la Figura(\ref{fig:TT}), se invierte el amplificador operacional utilizado para retroalimentar el sistema.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/AM.pdf}
+	\caption{Celda AM.}
+	\label{fig:AM}
+\end{figure}
 
-\subsubsection{Fleischer-Tow}
+En consecuencia, este sistema posee las mismas características que el anterior, poseyendo también las mismas transferencias y sensibilidades. Cabe destacar que esta configuración posee mejor compensación de fase a altas frecuencias.
+
+\subsubsection{Fleischer-Tow (FT)}
+En ocasiones es deseable poseer una señal de entrada que alimente varios nodos, obteniendo una única salida. Así como se denotó la existencia de sistemas SIMO, el caso previamente mencionado cae dentro de la definición lo que se conoce como sistemas MISO, suyas siglas en ingles significan ``multi-in single-out''. A continuación se presenta la celda Fleischer-Tow, la cual se caracteriza por poder presentar una única transferencia que, dependiendo de los componentes seleccionados, puede ser un pasa bajaso, pasa altos, pasa todo, de banda pasante y rechaza banda\footnote{R. Raut and M. N. S. Swamy, Modern Analog Filter Analysis and Design, 1st. ed. Weinheim: John Wiley and Sons, 2010.}.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/FT.pdf}
+	\caption{Celda FT.}
+	\label{fig:FT}
+\end{figure}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\hline
+\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
+\hline
+Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
+Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
+Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
+Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
+Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
+\hline
+\end{tabular}
+\caption{Tipos de filtro y componentes para una celda FT.}
+\label{tabla:tiposdefiltroft}
+\end{table}
+
+\subsection{Filtro a desarrollar}
+Una vez presentado cada tipo de celda, solo resta determinar cual conviene emplear para realizar el filtro con las características deseadas.
+
+Como se busca confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. Para conseguir una transferencia como la mencionada anteriormente con una celda KHN, se requiere un amplificador operacional extra que permita restar la transferencia pasa bajos y pasa altos, mientras que para la celda FT basta con tomar los componentes adecuados. Es por ello que la celda considerada más optima para este caso es la FT.
+
+Se desea que el filtro posea una frecuencia de notch $f_{\infty} = 37 \ kHz$, y como también se requiere que $\Delta f_a = 600 \ Hz$ y $\Delta f_p = 880 \ Hz$, se obtienen $f_{p}^{-} = 36560 \ Hz$, $f_{p}^{+} = 37440 \ Hz$, $f_{a}^{-} = 36700 \ Hz$ y $f_{a}^{+} = 37300 \ Hz$. Por otro lado, para al atenuación en cada sección, se busca $A_a=40 \ dB$ y $A_p=3 \ dB$. En cuanto a la ganancia, se seleccionan $0 \ dB$, mientras se debe garantizar que la profundidad de notch sea mayor o igual a $50 \ dB$. Finalmente, se requiere que la impedancia de entrada del sistema sea $Z_{in}(f) \geq 50 \ k\omega$ y que se emplee una plantilla de Chebycheff Inverso.
 
 \end{document}
