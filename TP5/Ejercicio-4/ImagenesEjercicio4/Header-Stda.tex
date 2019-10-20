@@ -36,3 +36,18 @@
 \usepackage[american]{circuitikz}
 \usepackage{fancyhdr}
 \usepackage{units}
+
+% Definition of blocks:
+\tikzset{%
+  block/.style    = {draw, thick, rectangle, minimum height = 3em,
+    minimum width = 3em},
+  sum/.style      = {draw, circle, node distance = 2cm}, % Adder
+  input/.style    = {coordinate}, % Input
+  output/.style   = {coordinate}, % Output
+  >=Stealth
+}
+
+% Defining string as labels of certain blocks.
+\newcommand{\suma}{\Large $\Sigma$}
+\newcommand{\inte}{$\displaystyle \int$}
+\newcommand{\derv}{\huge $\frac{d}{dt}$}

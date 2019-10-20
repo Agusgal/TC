@@ -2,28 +2,14 @@
 
 \begin{document}
 
-% Definition of blocks:
-\tikzset{%
-  block/.style    = {draw, thick, rectangle, minimum height = 3em,
-    minimum width = 3em},
-  sum/.style      = {draw, circle, node distance = 2cm}, % Adder
-  input/.style    = {coordinate}, % Input
-  output/.style   = {coordinate} % Output
-}
-
-% Defining string as labels of certain blocks.
-\newcommand{\suma}{\Large $\Sigma$}
-\newcommand{\inte}{$\displaystyle \int$}
-\newcommand{\derv}{\huge $\frac{d}{dt}$}
-
 \begin{tikzpicture}
 	\draw node at (0,0)[]{}
-	node [input, name=input1, label=above:$V_1$] {$V_i$}
+	node [input, name=input1, label=above:$V_i$] {$V_i$}
 	node at (input1) [sum, right=15mm] (suma1) {\suma}
 	node at (suma1) [block, right=15mm] (int1) {$-\int$}
 	node at (int1) [right = 15mm] (aux1) {}
 	node at (aux1) [block, right=15mm] (wo1) {$\omega_o$}
-	node at (aux1) [above = 15mm] (aux2) {}
+	node at (aux1) [above = 15mm, left=15mm] (aux2) {}
 	node at (aux1) [block, right=15mm] (wo2) {$\omega_o$}
 	node at (wo2) [block, below=15mm] (int2) {$-\int$}
 	node at (int2) [block, left=15mm] (b-aux) {$-1$}
@@ -34,12 +20,12 @@
 	\draw[o->] (input1) -- (suma1);
 	\draw[->] (suma1) -- (int1);
 	\draw[->] (int1) -- (aux1.center);
-	\draw[->] (aux1.center) -- (aux2.center);
-	\draw[->] (aux2.center) -| (suma1);
+	\draw[->, rounded corners] (aux1.center) |- (aux2.center);
+	\draw[->, rounded corners] (aux2.center) -| (suma1);
 	\draw[->] (aux1.center) -- (wo2);
 	\draw[->] (wo2) -- (int2);
 	\draw[->] (int2) -- (b-aux);
-	\draw[->] (b-aux) -| (suma1);
+	\draw[->, rounded corners] (b-aux) -| (suma1);
 	
 \end{tikzpicture}
 

@@ -3,7 +3,7 @@
 \begin{document}
 
 \begin{circuitikz}
-	\node [ocirc, label=north:$V_1$](v1){};
+	\node [ocirc, label=north:$V_i$](v1){};
 	\draw (v1.east) to[R, l=$R_3$] ++(3,0) node[op amp, anchor=+](A1){};
 	\draw (A1.out) node[ocirc, label=below:$V_{o1}$](aux1){};
 	

@@ -4,13 +4,13 @@
 
 \begin{circuitikz}
 	\node [ocirc, label=north:$V_i$](v1){};
-	\draw (v1.east) to[R, l_=$R_4$] ++(3,0) node[op amp, anchor=-](A1){};
+	\draw (v1.east) to[R, l=$R_4$] ++(3,0) node[op amp, anchor=-](A1){};
 	\draw (A1.+) node[ground](){};
-	\draw (A1.out) node[ocirc, label=below:$V_{BP}$](aux1){};
+	\draw (A1.out) node[ocirc, label=below:$V_{o1}$](aux1){};
 	
-	\draw (aux1.east) to[R, l=$R$] ++(3,0) node[op amp, anchor=-](A2){};
+	\draw (aux1.east) to[R, l=$R_2$] ++(3,0) node[op amp, anchor=-](A2){};
 	\draw (A2.+) node[ground](){};
-	\draw (A2.out) node[ocirc, label=south east:$V_{PB}$](aux2){};
+	\draw (A2.out) node[ocirc, label=south east:$V_{o2}$](aux2){};
 	
 	\draw (aux2.east) to[R, l=$R$] ++(3,0) node[op amp, anchor=-](A3){};
 	\draw (A3.+) node[ground](){};
@@ -21,6 +21,7 @@
 	\draw (A1.-) ++ (0,2) -- ++ (0,1) to[R, l_=$R_3$] ++(12,0) -| (A3.out);	
 	\draw (A2.-) -- ++(0,1) to[C, l=$C_2$] ++(2.25,0) -| (aux2.north);
 	\draw (A3.-) -- ++(0,1) to[R, l=$R$] ++(2.25,0) -| (A3.out);
+	\draw (A3.out) node[ocirc, label=below:$V_{o3}$](){};
 	
 \end{circuitikz}
 

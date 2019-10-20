@@ -88,12 +88,18 @@ Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota t
 \end{split}
 \end{equation}
 
-Además, el termino $K$ previamente establecido, varía para cada salida. $K(PB)$ representa la ganancia en continua para el pasa bajos, $K(PBanda)$ la ganancia en la frecuencia de resonancia del pasa banda y para el pasa altos, $K(PA)$ es la ganancia en frecuencia infinita.
+Es destacable la independencia que posee $\omega_o$ de $R_3$ y $R_4$, ya que es posible modificar el factor $Q$ son modificar la frecuencia de corte. Además, el termino $K$ previamente establecido, varía para cada salida. $K(PB)$ representa la ganancia en continua para el pasa bajos, $K(BP)$ la ganancia en la frecuencia de resonancia del pasa banda y para el pasa altos, $K(PA)$ es la ganancia en frecuencia infinita.
 \begin{equation}
 \begin{split}
 	K(PB) = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_6}	\	\	\ con \ \omega = 0 \\
-	K(PBanda) = -\frac{R_4}{R_3}	\	\	\ con \ \omega = \omega_o \\
+	K(BP) = -\frac{R_4}{R_3}	\	\	\ con \ \omega = \omega_o \\
 	K(PA) = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_5}	\	\	\ con \ \omega = \infty	
+\end{split}
+\end{equation}
+\begin{equation}
+\begin{split}
+	K(PB) = \frac{R3}{R_4}	\	\	\ con \ \omega = 0 \\
+	|K(BP)| = \frac{R_1}{R_4}	\	\	\ con \ \omega = \omega_o
 \end{split}
 \end{equation}
 
@@ -134,7 +140,34 @@ Desarrollando lo mostrado previamente en un circuito, se obtiene lo presentado e
 	\label{fig:TT}
 \end{figure}
 
+Analizando la tensión a la salida de cada operacional, se obtiene
+\begin{equation}
+	\frac{V_{o1}}{V_i} = -\frac{s}{R_4C_1}\frac{1}{D(s)}
+\end{equation}
+\begin{equation}
+	\frac{V_{o2}}{V_i} = \frac{1}{R_2 R_4 C_1 C_2}\frac{1}{D(s)}
+\end{equation}
+\begin{equation}
+	\frac{V_{o3}}{V_i} = -\frac{V_{o2}}{V_i}
+\end{equation}
 
+Siendo
+\begin{equation}
+	D(s) = s^2 + \frac{s}{R_1 C_1} + \frac{1}{R_2 R_3 C_1 C_2}
+	\label{equ:dtt}
+\end{equation}
+
+De de la misma forma que con la celda KHN, de (\ref{equ:dtt}), se obtiene
+\begin{equation}
+\begin{split}
+	\omega_o = \sqrt{\frac{1}{R_2 R_3 C_1 C_2}} \\
+	Q = R_1 \sqrt{\frac{C_1}{R_2 R_3 C_2}} 
+\end{split}
+\end{equation}
+
+Análogamente al caso anterior, se destaca el hecho de que la frecuencia $\omega_o$ es independiente de $R_1$, lo que permite modificar el factor $Q$ sin afectar a la otra variable.
+
+Se denota además que $V_{BP} = V_{o1}$ y $V_{PB} = V_{o2}$. Es así que la celda TT permite obtener un filtro pasa bandas y dos pasa bajos, siendo uno de ellos inversor. Este circuito no posee una transferencia que cumpla la función de pasa altos, por lo tanto, tampoco posee directamente una función de rechaza banda o pasa todo, al igual que la celda KHN.
 
 \subsubsection{Ackerberg-Mossberg}
 
