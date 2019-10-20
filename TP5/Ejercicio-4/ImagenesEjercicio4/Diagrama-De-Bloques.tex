@@ -19,9 +19,9 @@
 \begin{tikzpicture}
 	\draw node at (0,0)[]{}
 	node [input, name=input1, label=above:$V_1$] {$V_i$}
-	node [sum, right of=input1] (suma1) {\suma}
-	node at (suma1) [block, right=30mm] (int1) {$-\int$}
-	node at (int1) [right = 15mm] (aux1) {}
+	node at (input1) [sum, right=15mm] (suma1) {\suma}
+	node at (suma1) [block, right=26mm] (int1) {$-\int$}
+	node at (int1) [right = 19mm] (aux1) {}
 	node at (aux1) [block, right=15mm] (int2) {$-\int$}
 	node at (aux1) [block, above=15mm, left=15mm] (a0) {$a_0$}
 	node at (aux1) [below = 15mm] (aux2) {}
