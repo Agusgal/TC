@@ -90,7 +90,7 @@ Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota t
 \end{split}
 \end{equation}
 
-Además, se destaca que la etapa que cumple el rol de pasa banda es inversora, detalle que no se cumple para el pasa bajos y altos. Por otro lado, en caso de ser deseado que esta celda funcione como un rechaza banda, se debe agregar un cuarto amplificador operacional que actúe como restador de las tres señales previamente mencionadas.
+Además, se destaca que la etapa que cumple el rol de pasa banda es inversora, detalle que no se cumple para el pasa bajos y altos. Por otro lado, en caso de ser deseado que esta celda funcione como un rechaza banda o pasa todo, se debe agregar un cuarto amplificador operacional que actúe como restador de las tres señales previamente mencionadas\footnote{A. Sedra and K. Smith, Microelectronic Circuits, 5th ed. New York: Oxford University Press, 1991.}.
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
@@ -101,7 +101,7 @@ Además, se destaca que la etapa que cumple el rol de pasa banda es inversora, d
 	\draw (central) -- ++(1,0) node[op amp, anchor=-](Amp){};
 	\draw (Amp.+) node[ground](){};
 	\draw (Amp.-) -- ++(0,1) to[R, l=$R_f$] ++(2.25,0) -| (Amp.out);
-	\draw (Amp.out) -- ++(0.5,0) node[ocirc, label=right:$V_{RB}$](){};
+	\draw (Amp.out) -- ++(0.5,0) node[ocirc, label=right:$V_{f}$](){};
 \end{circuitikz}
 	\caption{Configuración restadora para obtener un rechaza banda con filtro KHN.}
 	\label{fig:khninv}
