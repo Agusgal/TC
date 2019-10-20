@@ -3,10 +3,10 @@
 \begin{document}
 
 \subsection{Celda universal}
-Las celdas universales es un conjunto de filtros RC activos de segundo orden, compuestos por amplificadores operacionales configurados de forma sumadora, restadora, integradora, amplificadora o atenuadora, puestos en cascada. Estas son también conocidas como celdas de variables de estado, debido al uso de dicho método para la resolución de las ecuaciones diferenciales. Este tipo de celdas se caracteriza por poseer bajas sensibilidades con respecto a sus componentes, alta flexibilidad y buen rendimiento. Existen distintos tipos de configuraciones, donde cada una de estas posee sus respectivas ventajas y desventajas. A continuación, se procede a analizar cada una de ellas\footnote{L. Huelsman, Active and passive analog filter design, 2nd ed. New York: McGraw-Hill, 1993.}\footnote{R. Raut and M. N. S. Swamy, Modern Analog Filter Analysis and Design, 1st. ed. Weinheim: John Wiley and Sons, 2010.}.
+Las celdas universales es un conjunto de filtros RC activos de segundo orden, compuestos por amplificadores operacionales configurados de forma sumadora, restadora, integradora, amplificadora o atenuadora, puestos en cascada. Estas son también conocidas como celdas de variables de estado, debido al uso de dicho método para la resolución de las ecuaciones diferenciales. Este tipo de celdas se caracteriza por poseer bajas sensibilidades con respecto a sus componentes, alta flexibilidad y buen rendimiento. Existen distintos tipos de configuraciones, donde cada una de estas posee sus respectivas ventajas y desventajas. A continuación, se procede a analizar cada una de ellas\footnote{L. Huelsman, Active and passive analog filter design, 2nd ed. New York: McGraw-Hill, 1993.}.
 
 \subsubsection{Kerwin-Huelsman-Newcomb (KHN)}
-La celda Kerwin-Huelsman-Newcomb, nombre otorgado a partir de sus creadores\footnote{W. J. Kerwin, L. P. Huelsman and R. W. Newcomn, ``State-Variable Synthesis for Insensitive Integrated Circuit Transfer Functions  IEEE Journals \& Magazine'', Ieeexplore.ieee.org, 2019. [Online]. Available: \url{https://ieeexplore.ieee.org/document/1049798}. [Accessed: 20- Oct- 2019].}, puede ser comprendida con mayor facilidad a partir de un ejemplo. Se considera una transferencia de un filtro pasa banda:
+La celda Kerwin-Huelsman-Newcomb, nombre otorgado a partir de sus creadores\footnote{W. J. Kerwin, L. P. Huelsman, and R. W. Newcomb, ``State-Variable Synthesis for Insensitive Integrated Circuit Transfer Functions,'' \textit{IEEE Journal of Solid-State Circuits}, vol. 2, no. 3, pp. 87–92, Sep. 1967.}, puede ser comprendida con mayor facilidad a partir de un ejemplo. Se considera una transferencia de un filtro pasa banda:
 \begin{equation}
 	\frac{V_o(s)}{V_i(s)} = \frac{Ks}{s^2 + a_1 s + a_0}
 \end{equation}
@@ -17,13 +17,13 @@ Se divide, tanto el numerador como el denominador de la expresión de la izquier
 	\label{equ:1}
 \end{equation}
 
-Siendo
+Se define
 \begin{equation}
-	V_a(s) = frac{V_i(s)}{1 + \frac{a_1}{s} + \frac{a_0}{s^2}}
+	V_a(s) = \frac{V_i(s)}{1 + \frac{a_1}{s} + \frac{a_0}{s^2}}
 	\label{equ:2}
 \end{equation}
 
-Reescribinedo (\ref{equ:1}), se obtiene
+Reescribinedo (\ref{equ:1}) con (\ref{equ:2}), se obtiene
 \begin{equation}
 	V_o(s) = \frac{K}{s} \cdot V_a(s)
 	\label{equ:3}
@@ -37,13 +37,12 @@ Si se utiliza la transformada de Laplace inversa tanto en (\ref{equ:2}) como en 
 \end{split}
 \end{equation}
 
-Del sistema anterior, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt = x(t) \right) dt$ son las llamadas variables de estado. Es más fácil de interpretar estas observando la Figura (\ref{fig:block}).
-
+Del sistema anterior, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt \right) dt = x(t)$ son las llamadas variables de estado. Es más fácil de interpretar estas observando la Figura (\ref{fig:blockKHN}).
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Diagrama-De-Bloques.pdf}
+	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Bloques-KHN.pdf}
 	\caption{Diagrama de bloques de la celda KHN.}
-	\label{fig:block}
+	\label{fig:blockKHN}
 \end{figure}
 
 Es así que, para cada integrador se obtiene $V_{o3} = \frac{-V_{o2}}{sR_2C_2}$ y
@@ -62,42 +61,50 @@ Finalmente, con las definiciones previas se puede elaborar el circuito presentad
 
 Con todo lo establecido previamente se consigue determinar las siguientes transferencias:
 \begin{equation}
-	\frac{V_{o3}}{V_{o1}} = \frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} \frac{1}{D(s)}
+	\frac{V_{o3}}{V_{i}} = \frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} \frac{1}{D(s)}
 	\label{equ:pbajo}
 \end{equation}
 
 \begin{equation}
-	\frac{V_{o2}}{V_{o1}} = -\frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} \frac{s}{R_1 C_1 D(s)}
+	\frac{V_{o2}}{V_{i}} = -\frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} \frac{s}{R_1 C_1 D(s)}
 	\label{equ:pband}
 \end{equation}
 
 \begin{equation}
-	\frac{V_{o2}}{V_{o1}} = \frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} \frac{s^2}{D(s)}
+	\frac{V_{o1}}{V_{i}} = \frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} \frac{s^2}{D(s)}
 	\label{equ:palto}
 \end{equation}
 
 Siendo
 \begin{equation*}
-	D(s) = S^2 + \frac{s}{R_1 C_1} \frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} + \frac{R_6}{R_1 R_2 R_5 C_1 C_2}
+	D(s) = s^2 + \frac{s}{R_1 C_1} \frac{R_5 + R_6}{R_4 + R_3} \frac{R_3}{R_5} + \frac{R_6}{R_1 R_2 R_5 C_1 C_2}
 \end{equation*}
 
-Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota tomando cada una de dichas salidas, esta celda puede ser utilizada como un pasa bajos, pasa banda y pasa altos respectivamente. Tanto la frecuencia de corte, como el factor Q de cada etapa, es el mismo, ya que comparten denominador, siendo estos
-
+Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota tomando cada una de dichas salidas, esta celda puede ser utilizada como un pasa bajos, pasa banda y pasa altos respectivamente. Es por ello que a partir de ahora se considera $V_{PA} = V_{o1}$, $V_{BP} = V_{o2}$ y $V_{PB} = V_{o3}$. Tanto la frecuencia de corte, como el factor Q de cada etapa, es el mismo, ya que comparten denominador, siendo estos
 \begin{equation}
 \begin{split}
 	\omega_o = \sqrt{\frac{R_6}{R_1 R_2 R_5 C_1 C_2}} \\
-	Q = \frac{R_3 + R_4}{R_5 + R_6} \frac{R_5}{R_4} \sqrt{\frac{R_1 R_5 C_1}{R_2 R_5 C_2}} 
+	Q = \frac{R_3 + R_4}{R_5 + R_6} \frac{R_5}{R_3} \sqrt{\frac{R_1 R_6 C_1}{R_2 R_5 C_2}} 
 \end{split}
 \end{equation}
 
-Además, se destaca que la etapa que cumple el rol de pasa banda es inversora, detalle que no se cumple para el pasa bajos y altos. Por otro lado, en caso de ser deseado que esta celda funcione como un rechaza banda o pasa todo, se debe agregar un cuarto amplificador operacional que actúe como restador de las tres señales previamente mencionadas\footnote{A. Sedra and K. Smith, Microelectronic Circuits, 5th ed. New York: Oxford University Press, 1991.}.
+Además, el termino $K$ previamente establecido, varía para cada salida. $K(PB)$ representa la ganancia en continua para el pasa bajos, $K(PBanda)$ la ganancia en la frecuencia de resonancia del pasa banda y para el pasa altos, $K(PA)$ es la ganancia en frecuencia infinita.
+\begin{equation}
+\begin{split}
+	K(PB) = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_6}	\	\	\ con \ \omega = 0 \\
+	K(PBanda) = -\frac{R_4}{R_3}	\	\	\ con \ \omega = \omega_o \\
+	K(PA) = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_5}	\	\	\ con \ \omega = \infty	
+\end{split}
+\end{equation}
+
+Este tipo de celda, que cuenta con una entrada ($V_i$) y varias salidas ($V_{PB}$, $V_{BP}$ y $V_{PA}$), se la conoce como un sistema SIMO, debido a sus siglas del ingles ``single-in multi-out''\footnote{R. Raut and M. N. S. Swamy, Modern Analog Filter Analysis and Design, 1st. ed. Weinheim: John Wiley and Sons, 2010.}. Se destaca también que la etapa que cumple el rol de pasa banda es inversora, mientras que las etapas de pasa bajos y altos no. Por otro lado, en caso de ser deseado que esta celda funcione como un rechaza banda o pasa todo, se debe agregar un cuarto amplificador operacional que actúe como restador de las tres señales previamente mencionadas para el caso del pasa todo, o entre las etapas pasa bajos y altos, para obtener el rechaza bandas\footnote{A. Sedra and K. Smith, Microelectronic Circuits, 5th ed. New York: Oxford University Press, 1991.}.
 \begin{figure}[H]
 \begin{center}
 \begin{circuitikz}
 	\node [circ](central){};
-	\draw (central) -- ++(0,1) to[R, l=$R_{PB}$] ++(-2,0) node[ocirc, label=left:$V_{o3}$](){};
-	\draw (central) to[R, l=$R_{PBanda}$] ++(-2,0) node[ocirc, label=left:$V_{o2}$](){};
-	\draw (central) -- ++(0,-1) to[R, l=$R_{PA}$] ++(-2,0) node[ocirc, label=left:$V_{o1}$](){};
+	\draw (central) -- ++(0,1) to[R, l=$R_{PA}$] ++(-2,0) node[ocirc, label=left:$V_{o1}$](){};
+	\draw (central) to[R, l=$R_{BP}$] ++(-2,0) node[ocirc, label=left:$V_{o2}$](){};
+	\draw (central) -- ++(0,-1) to[R, l=$R_{PB}$] ++(-2,0) node[ocirc, label=left:$V_{o3}$](){};
 	\draw (central) -- ++(1,0) node[op amp, anchor=-](Amp){};
 	\draw (Amp.+) node[ground](){};
 	\draw (Amp.-) -- ++(0,1) to[R, l=$R_f$] ++(2.25,0) -| (Amp.out);
@@ -108,7 +115,26 @@ Además, se destaca que la etapa que cumple el rol de pasa banda es inversora, d
 \end{center}
 \end{figure}
 
-\subsubsection{Tow-Thomas}
+\subsubsection{Tow-Thomas (TT)}
+%En ocasiones es deseable poseer una señal de entrada que alimente varios nodos, obteniendo una única salida. Así como se denotó la existencia de sistemas SIMO, el caso previamente mencionado cae dentro de la definición lo que se conoce como sistemas MISO, suyas siglas en ingles significan ``multi-in single-out''. A continuación se presenta la celda Tow-Thomas\footnote{J. Tow, ``Design formulas for active RC filters using operational-amplifier biquad,'' \textit{Electronics Letters}, vol. 5, no. 15, pp. 339–341, Jul. 1969.}\footnote{L. C. Thomas, ``The Biquad: Part I-Some practical design considerations,'' \textit{IEEE Transactions on Circuit Theory}, vol. 18, no. 3, pp. 350–357, 1971.}, la cual cumple con lo previamente especificado.
+
+La celda Tow-Thomas, nombre dado por sus creadores\footnote{J. Tow, ``Design formulas for active RC filters using operational-amplifier biquad,'' \textit{Electronics Letters}, vol. 5, no. 15, pp. 339–341, Jul. 1969.}\footnote{L. C. Thomas, ``The Biquad: Part I-Some practical design considerations,'' \textit{IEEE Transactions on Circuit Theory}, vol. 18, no. 3, pp. 350–357, 1971.} surge como una variación de la celda KHN. A esta última, se la modifica buscando aprovechar una realimentación negativa a base de una implementación RC. De esta forma, se logra alejar las frecuencias naturales del eje $j\omega$ por sobre el semiplano izquierdo. Esto lleva al desarrollo del siguiente diagrama de bloques.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Bloques-TT.pdf}
+	\caption{Diagrama de bloques de la celda TT.}
+	\label{fig:blockTT}
+\end{figure}
+
+Desarrollando lo mostrado previamente en un circuito, se obtiene lo presentado en la Figura (\ref{fig:TT}).
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/TT.pdf}
+	\caption{Celda TT.}
+	\label{fig:TT}
+\end{figure}
+
+
 
 \subsubsection{Ackerberg-Mossberg}
 
