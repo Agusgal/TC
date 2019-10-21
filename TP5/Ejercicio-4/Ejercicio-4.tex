@@ -3,11 +3,11 @@
 \begin{document}
 
 \subsection{Celda universal}
-Las celdas universales es un conjunto de filtros RC activos de segundo orden, compuestos por amplificadores operacionales configurados de forma sumadora, restadora, integradora, amplificadora o atenuadora, puestos en cascada. Estas son también conocidas como celdas de variables de estado, debido al uso de dicho método para la resolución de las ecuaciones diferenciales. Este tipo de celdas se caracteriza por poseer bajas sensibilidades con respecto a sus componentes, alta flexibilidad y buen rendimiento. Existen distintos tipos de configuraciones, donde cada una de estas posee sus respectivas ventajas y desventajas. A continuación, se procede a analizar cada una de ellas\footnote{L. Huelsman, Active and passive analog filter design, 2nd ed. New York: McGraw-Hill, 1993.}.
+Una celda universal es un conjunto de filtros RC activos de segundo orden, compuestos por amplificadores en cascada. Estos pueden estar dispuestos en diversas configuraciones, como lo son la sumadora, restadora, integradora, amplificadora o atenuadora. Estos filtros son también conocidos como celdas de variables de estado, debido al uso de dicho método para la resolución de las ecuaciones diferenciales. Las universales se caracteriza por poseer bajas sensibilidades con respecto a sus componentes, alta flexibilidad y buen rendimiento. Existen distintos tipos de configuraciones, donde cada una de estas posee sus respectivas ventajas y desventajas. A continuación, se procede a analizar cada una de ellas\footnote{L. Huelsman, Active and passive analog filter design, 2nd ed. New York: McGraw-Hill, 1993.}.
 
 \subsubsection{Kerwin-Huelsman-Newcomb (KHN)}
-La celda Kerwin-Huelsman-Newcomb%, nombre otorgado a partir de sus creadores\footnote{W. J. Kerwin, L. P. Huelsman, and R. W. Newcomb, ``State-Variable Synthesis for Insensitive Integrated Circuit Transfer Functions,'' \textit{IEEE Journal of Solid-State Circuits}, vol. 2, no. 3, pp. 87–92, Sep. 1967.},
- puede ser comprendida con mayor facilidad a partir de un ejemplo. Se considera una transferencia de un filtro pasa banda:
+La celda Kerwin-Huelsman-Newcomb %, nombre otorgado a partir de sus creadores\footnote{W. J. Kerwin, L. P. Huelsman, and R. W. Newcomb, ``State-Variable Synthesis for Insensitive Integrated Circuit Transfer Functions,'' \textit{IEEE Journal of Solid-State Circuits}, vol. 2, no. 3, pp. 87–92, Sep. 1967.},
+puede ser comprendida con mayor facilidad a partir de un ejemplo. Se considera una transferencia de un filtro pasa banda:
 \begin{equation}
 	\frac{V_o(s)}{V_i(s)} = \frac{Ks}{s^2 + a_1 s + a_0}
 \end{equation}
@@ -38,7 +38,7 @@ Si se utiliza la transformada de Laplace inversa tanto en (\ref{equ:2}) como en 
 \end{split}
 \end{equation}
 
-Del sistema anterior, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt \right) dt = x(t)$ son las llamadas variables de estado. Se pueden representar estas de la forma presentada en la Figura (\ref{fig:blockKHN}).
+Del sistema anterior, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt \right) dt = x(t)$ son las llamadas variables de estado. Dichas ecuaciones se pueden representar estas de la forma mostrada en la Figura (\ref{fig:blockKHN}).
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Bloques-KHN.pdf}
@@ -52,7 +52,7 @@ $V_{o2} = \frac{-V_{o1}}{sR_1C_1}$, mientras que para el sumador
 	V_{o1} = -\frac{R_6}{R_5} V_{o3} + \frac{R_4}{R_3 + R_4} \frac{R_5 + R_6}{R_5} V_1 + \frac{R_3}{R_3 + R_4} \frac{R_5 + R_6}{R_5} V_{o2}
 \end{equation*}
 
-Finalmente, con las definiciones previas se puede elaborar el circuito presentado a continuación:
+Finalmente, con las definiciones previas se puede elaborar el circuito presentado a continuación.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/KHN.pdf}
@@ -89,7 +89,7 @@ Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota q
 \end{split}
 \end{equation}
 
-Es destacable la independencia que posee $\omega_o$ de $R_3$ y $R_4$ y la dependencia del factor $Q$ de dichas variables. Por lo tanto, es posible modificar esta ultima sin modificar la frecuencia de corte. Además, el termino $K$ previamente establecido, varía para cada salida. $K_{PB}$ representa la ganancia en continua para el pasa bajos, $K_{BP}$ la ganancia en la frecuencia de resonancia del pasa banda y para el pasa altos, $K_{PA}$ es la ganancia en frecuencia infinita.
+Es destacable la independencia que posee $\omega_o$ de $R_3$ y $R_4$ y la dependencia del factor $Q$ de dichas variables. Por lo tanto, es posible modificar esta ultima sin modificar la frecuencia de corte. Además, el termino $K$ previamente establecido, varía para cada salida. $K_{PB}$ representa la ganancia en continua para el pasa bajos, $K_{BP}$ la ganancia en la frecuencia de resonancia del pasa banda, y para el pasa altos, $K_{PA}$ es la ganancia en frecuencia infinita.
 \begin{equation}
 \begin{split}
 	K_{PB} = \frac{R_5 + R_6}{R_3 + R_4} \frac{R_4}{R_6}	\	\	\ con \ \omega = 0 \\
@@ -126,7 +126,7 @@ La celda Tow-Thomas%, nombre dado por sus creadores\footnote{J. Tow, ``Design fo
 	\label{fig:blockTT}
 \end{figure}
 
-Desarrollando lo mostrado previamente en un circuito, se obtiene lo presentado en la Figura (\ref{fig:TT}).
+Desarrollando en un circuito, se obtiene lo presentado en la Figura (\ref{fig:TT}).
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/TT.pdf}
@@ -189,28 +189,36 @@ En ocasiones es deseable poseer una señal de entrada que alimente varios nodos,
 	\label{fig:FT}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\begin{tabular}{ccc}
-\hline
-\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
-\hline
-Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
-Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
-Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
-Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
-Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
-\hline
-\end{tabular}
-\caption{Tipos de filtro y componentes para una celda FT.}
-\label{tabla:tiposdefiltroft}
-\end{table}
+%\begin{table}[H]
+%\centering
+%\begin{tabular}{ccc}
+%\hline
+%\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
+%\hline
+%Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
+%Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
+%Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
+%Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
+%Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
+%\hline
+%\end{tabular}
+%\caption{Tipos de filtro y componentes para una celda FT.}
+%\label{tabla:tiposdefiltroft}
+%\end{table}
 
 \subsection{Filtro a desarrollar}
 Una vez presentado cada tipo de celda, solo resta determinar cual conviene emplear para realizar el filtro con las características deseadas.
 
 Como se busca confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. Para conseguir una transferencia como la mencionada anteriormente con una celda KHN, se requiere un amplificador operacional extra que permita restar la transferencia pasa bajos y pasa altos, mientras que para la celda FT basta con tomar los componentes adecuados. Es por ello que la celda considerada más optima para este caso es la FT.
 
-Se desea que el filtro posea una frecuencia de notch $f_{\infty} = 37 \ kHz$, y como también se requiere que $\Delta f_a = 600 \ Hz$ y $\Delta f_p = 880 \ Hz$, se obtienen $f_{p}^{-} = 36560 \ Hz$, $f_{p}^{+} = 37440 \ Hz$, $f_{a}^{-} = 36700 \ Hz$ y $f_{a}^{+} = 37300 \ Hz$. Por otro lado, para al atenuación en cada sección, se busca $A_a=40 \ dB$ y $A_p=6 \ dB$. En cuanto a la ganancia, se seleccionan $0 \ dB$, mientras se debe garantizar que la profundidad de notch sea mayor o igual a $50 \ dB$. Finalmente, se requiere que la impedancia de entrada del sistema sea $Z_{in}(f) \geq 50 \ k\omega$ y que se emplee una plantilla de Chebycheff Inverso.
+Se desea que el filtro posea una frecuencia de notch $f_{\infty} = 37 \ kHz$, y como también se requiere que $\Delta f_a = 600 \ Hz$ y $\Delta f_p = 880 \ Hz$. Sabiendo que
+\begin{equation*}
+\begin{split}
+	f_{\infty}^{2} = f_{p}^{-} f_{p}^{+} = f_{a}^{-} & f_{a}^{+} \\
+	\Delta f_p = f_{p}^{+} - f_{p}^{-} \\
+	\Delta f_a = f_{a}^{+} - f_{a}^{-} 
+\end{split}
+\end{equation*}
+se obtienen $f_{p}^{-} = 36562.62 \ Hz$, $f_{p}^{+} = 37442.62 \ Hz$, $f_{a}^{-} = 36701.22 \ Hz$ y $f_{a}^{+} = 37301.22 \ Hz$. Por otro lado, para la atenuación, tanto en la banda atenuada como en la pasante, se busca $A_a=40 \ dB$ y $A_p=6 \ dB$ respectivamente. En cuanto a la ganancia, se seleccionan $0 \ dB$, mientras se debe garantizar que la profundidad de notch sea mayor o igual a $50 \ dB$. Finalmente, se requiere que la impedancia de entrada del sistema sea $Z_{in}(f) \geq 50 \ k\omega$ y que se emplee una plantilla de Chebycheff Inverso.
 
 \end{document}
