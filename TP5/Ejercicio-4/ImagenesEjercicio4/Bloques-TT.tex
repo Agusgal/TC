@@ -1,0 +1,32 @@
+\input{Header-Stda.tex}
+
+\begin{document}
+
+\begin{tikzpicture}
+	\draw node at (0,0)[]{}
+	node [input, name=input1, label=above:$V_i$] {$V_i$}
+	node at (input1) [sum, right=15mm] (suma1) {\suma}
+	node at (suma1) [block, right=15mm] (int1) {$-\int$}
+	node at (int1) [right = 15mm] (aux1) {}
+	node at (aux1) [block, right=15mm] (wo1) {$\omega_o$}
+	node at (aux1) [above = 15mm, left=15mm] (aux2) {}
+	node at (aux1) [block, right=15mm] (wo2) {$\omega_o$}
+	node at (wo2) [block, below=15mm] (int2) {$-\int$}
+	node at (int2) [block, left=15mm] (b-aux) {$-1$}
+	node at (suma1) [right=3mm, above=3mm] () {\tiny +}
+	node at (suma1) [left=3mm, below=3mm] () {\tiny +}
+	node at (suma1) [left=5mm, above=1mm] () {\tiny +};	
+	
+	\draw[o->] (input1) -- (suma1);
+	\draw[->] (suma1) -- (int1);
+	\draw[->] (int1) -- (aux1.center);
+	\draw[->, rounded corners] (aux1.center) |- (aux2.center);
+	\draw[->, rounded corners] (aux2.center) -| (suma1);
+	\draw[->] (aux1.center) -- (wo2);
+	\draw[->] (wo2) -- (int2);
+	\draw[->] (int2) -- (b-aux);
+	\draw[->, rounded corners] (b-aux) -| (suma1);
+	
+\end{tikzpicture}
+
+\end{document}
