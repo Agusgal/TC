@@ -26,7 +26,9 @@ def maprange(a, b, s):
     Examples
     --------  
     >>> s = 5
-    >>> maprange([0,10],[0,100],5)
+    >>> a = [0, 10]
+    >>> b = [0, 100]
+    >>> maprange(a ,b, s)
     50
     """
   (a1, a2), (b1, b2) = a, b
