@@ -25,13 +25,25 @@ class NegativeInputError(Exception):
         self.message = message
         
 
-class InvalidFilter(Exception):
+class InvalidFilterError(Exception):
     """Exception raised when desired filter is not available or misspelled
     
     Attributes:
         value -- entered value
         message -- explanation of why input is not valid
     """    
+    def __init__(self, value, message):
+        self.value = value
+        self.message = message
+
+
+class InvalidAproxError(Exception):
+    """Exception raised when desired filter is not available or misspelled
+    
+    Attributes:
+        value -- entered value
+        message -- explanation of why input is not valid
+    """
     def __init__(self, value, message):
         self.value = value
         self.message = message
