@@ -2,8 +2,7 @@ import numpy as np
 from scipy import signal
 import matplotlib.pyplot as plt
 import tools as ts
-from cust_excep import *
-
+from cust_excep import InvalidAproxError,InvalidAproxError,InvalidFilterError,NegativeInputError,NonPositiveInputError
 
 class Butterworth:
     """
@@ -19,10 +18,10 @@ class Butterworth:
     wp, ws : float
       wp: pass frequency(ies) in (rads/seg)
       ws: stop frequency(ies) in (rads/seg)
-      Lowpass: wp = 0.2, ws = 0.3
-      Highpass: wp = 0.3, ws = 0.2
-      Bandpass: wp = [0.2, 0.5], ws = [0.1, 0.6]
-      Bandstop: wp = [0.1, 0.6], ws = [0.2, 0.5]
+      - Lowpass: wp = 0.2, ws = 0.3
+      - Highpass: wp = 0.3, ws = 0.2
+      - Bandpass: wp = [0.2, 0.5], ws = [0.1, 0.6]
+      - Bandstop: wp = [0.1, 0.6], ws = [0.2, 0.5]
       For analog filters, wp and ws are angular frequencies (e.g. rad/s).
     aprox: str
     apass : float
@@ -57,10 +56,10 @@ class Butterworth:
             if np.size(wp) != 1 or np.size(ws) != 1:
                 raise ValueError(
                     'Must specify a only two critical frequencies ws and wp for lowpass or highpass filter')
-            # if wp > ws and ftype == 'lowpass':
-            #     raise ValueError("ws must be greater than wp")
-            # elif wp < ws and ftype == 'highpass':
-            #     raise ValueError("ws must be greaer than wp")
+            if wp > ws and ftype == 'lowpass':
+                raise ValueError("Stop frequency (ws) must be greater than Passband frequency (wp)")
+            elif wp < ws and ftype == 'highpass':
+                raise ValueError("Passband frequency (wp) must be greater than Stopfrequency (ws)")
 
         elif ftype in ('bandpass', 'bandstop'):
             if np.size(wp) != 2 and np.size(ws) != 2:
@@ -118,7 +117,7 @@ class Butterworth:
             wcpass = self.wp * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
             # Compute maximum frequency that still meets requirements
             wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
-
+#TODO COMENTAR
             # print(f'self.wp:{self.wp} wcpass: {wcpass}')
             # print(f'self.ws: {self.ws} wcstop: {wcstop}')
 
@@ -193,11 +192,11 @@ class Butterworth:
 
 butters = []
 for k in np.linspace(0, 1, 2):
-    b = Butterworth("highpass", "butterworth", 10E3, 2.5E3, 3, 40, k)
+    b = Butterworth("highpass", "butterworth", 5E3, 10E3, 3, 40, k)
     # b = Butterworth("lowpass","butterworth",1E3,3E3,3,40,k)
     butters.append(b)
     b.plot()
-    
+
 plt.grid(which="both", axis="both")
 plt.show()
 # b2 = Butterworth("bandpass","butterworth",[2E3,3E3],[1E3,4E3],3,40)
