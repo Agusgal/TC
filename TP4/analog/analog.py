@@ -1,8 +1,50 @@
 import numpy as np
 from scipy import signal
 import matplotlib.pyplot as plt
-import tools as ts
-from cust_excep import InvalidAproxError,InvalidAproxError,InvalidFilterError,NegativeInputError,NonPositiveInputError
+from abc import ABC, abstractclassmethod, abstractmethod
+from cusfunc import maprange
+from custexcp import *
+__aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
+
+    
+class AnalogFilter(ABC):
+    """
+    Analog Filter
+    """
+    # self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
+    # self.aprox_types = {'butterworth', 'bessel','chevy1', 'chevy2', 'cauer', 'legendre'}
+    
+    def __init__(self, parameter_list):
+        raise NotImplementedError
+
+    def get_ba(self):
+        """
+        Returns
+        -------
+        b,a:
+        """
+        return self.b, self.a
+    def make_stencil(self, parameter_list):
+        raise NotImplementedError
+    
+    def plot_mag(self, parameter_list):
+        raise NotImplementedError
+
+    def plot_pha(self, parameter_list):
+        raise NotImplementedError
+
+    def plot_zp(self, parameter_list):
+        raise NotImplementedError
+
+    def plot_step_response(self, parameter_list):
+        raise NotImplementedError
+
+    def plot_impulse_response(self, parameter_list):
+        raise NotImplementedError
+
+    def plot_group_delay(self, parameter_list):
+        raise NotImplementedError
+
 
 class Butterworth:
     """
@@ -11,10 +53,7 @@ class Butterworth:
     ----------
     ftype: {‘lowpass’, ‘highpass’, ‘bandpass’, ‘bandstop’}
       Choosen filter type
-    #TODO  quitar o modificar
-    aprox = {'butterworth', 'bessel','chevy1', 'chevy2', 'cauer', 'legendre'}
-      Choosen aproximation
-
+    
     wp, ws : float
       wp: pass frequency(ies) in (rads/seg)
       ws: stop frequency(ies) in (rads/seg)
@@ -43,6 +82,10 @@ class Butterworth:
         self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
         self.aprox_types = {'butterworth', 'bessel',
                             'chevy1', 'chevy2', 'cauer', 'legendre'}
+
+        print(f"stop w:{ws}")
+        print(f"pass w:{wp}")
+
         # Filter typer error checking
         if ftype not in self.filter_types:
             raise InvalidFilterError(
@@ -57,9 +100,11 @@ class Butterworth:
                 raise ValueError(
                     'Must specify a only two critical frequencies ws and wp for lowpass or highpass filter')
             if wp > ws and ftype == 'lowpass':
-                raise ValueError("Stop frequency (ws) must be greater than Passband frequency (wp)")
+                raise ValueError(
+                    "Stop frequency (ws) must be greater than Passband frequency (wp)")
             elif wp < ws and ftype == 'highpass':
-                raise ValueError("Passband frequency (wp) must be greater than Stopfrequency (ws)")
+                raise ValueError(
+                    "Passband frequency (wp) must be greater than Stopfrequency (ws)")
 
         elif ftype in ('bandpass', 'bandstop'):
             if np.size(wp) != 2 and np.size(ws) != 2:
@@ -106,30 +151,29 @@ class Butterworth:
           Lowpass or highpass new crytical frequency (not cutoff) to generate the new filter
 
         """
+
+        
         if self.ftype == 'lowpass':
-            # Compute maximum frequency that still meets requirements
-            wlimit = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
-            # Compute maximum frequency that still meets requirements
-            wcpass = self.wp * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
-            return ts.maprange([0, 1], [wcpass, wlimit], k)
-        elif self.ftype == 'highpass':
-            # Compute maximum frequency that still meets requirements
-            wcpass = self.wp * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
-            # Compute maximum frequency that still meets requirements
+            # Compute maximum frequency allowed that still might meet requirements
             wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
-#TODO COMENTAR
-            # print(f'self.wp:{self.wp} wcpass: {wcpass}')
-            # print(f'self.ws: {self.ws} wcstop: {wcstop}')
-
-            return ts.maprange([0, 1], [wcstop, wcpass], k)
-
+            # Compute minimum allowed frequency that still might meet requirements
+            wcpass = self.wp * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
+            return maprange([0, 1], [wcpass, wcstop], k)
+        elif self.ftype == 'highpass':
+            # Compute maximum frequency allowed that still might meet requirements
+            wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
+            # Compute minimum allowed frequency that still might meet requirements
+            wcpass = self.Wn * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
+            print(f"wcstop calculada:{wcstop}")
+            print(f"wcpass calculada: {wcpass}")
+            return maprange([0, 1], [wcpass-wcstop, wcpass], k)
     def compute_order(self):
         """
         Compute the minimum order that satisfies the requierements
         """
         if self.N is None:
-            self.N = signal.buttord(
-                self.wp, self.ws, self.Ap, self.As, analog=True)[0]
+            self.N, self.Wn = signal.buttord(
+                self.wp, self.ws, self.Ap, self.As, analog=True)
 
     def compute_ba(self):
         # Compute numerator and denominator polynomials
@@ -144,10 +188,33 @@ class Butterworth:
 
     def get_stencil(self, x, y):
         """
-        Returns an array of arrays containig the poligons needed to show the stencil
+        Get the poligons to plot your requirements on screen.
+        The function is aware of the filter.
+         
+        Parameters
+        ----------
+        x: array_like
+            Array containing the x values where the functions was evaluated
+        y: array_like
+            Array containing y(x) values
+        Returns
+        --------
+        stencils: array_like
+            An array of arrays containig the poligons needed to show the stencil
+            -lowpass --> 2 stencils
+            -highpass --> 2 stencils
+            -bandass --> 3 stencils
+            -highpass --> 3 stencils
+
+        Examples
+        --------
+        >>>stencils = filter.get_stencils(x,y)
+        >>>for s in stencils:
+        >>> plt.fill(s[0],)
         """
         if self.ftype == 'lowpass':
-            p1x = [[x[0],  np.divide(self.wp, 2*np.pi), np.divide(self.wp, 2*np.pi),   x[0]]]
+            p1x = [[x[0],  np.divide(self.wp, 2*np.pi),
+                    np.divide(self.wp, 2*np.pi),   x[0]]]
             p1y = [[self.Ap, self.Ap, np.max(y), np.max(y)]]
             p = p1x + p1y
 
@@ -167,10 +234,10 @@ class Butterworth:
                     x[-1],  np.divide(self.wp, 2*np.pi)]]
             p2y = [[self.Ap, self.Ap, np.max(y), np.max(y)]]
             p = p2x + p2y
-            stencils = [p] +[s]
+            stencils = [p] + [s]
             return stencils
 
-    def plot(self, show=False,debug=False):
+    def plot(self, show=False, debug=False):
         sys = signal.TransferFunction(self.b, self.a)
         w, mag, pha = signal.bode(sys)
         plt.xlabel("Frequency Hz")
@@ -190,12 +257,12 @@ class Butterworth:
             plt.show()
 
 
-butters = []
-for k in np.linspace(0, 1, 2):
-    b = Butterworth("highpass", "butterworth", 5E3, 10E3, 3, 40, k)
+for k in np.linspace(0, 1, 10):
+    b = Butterworth("highpass", "butterworth", 3E3, 1E3, 3, 40, k)
     # b = Butterworth("lowpass","butterworth",1E3,3E3,3,40,k)
-    butters.append(b)
-    b.plot()
+
+    # butters.append(b)
+    b.plot(debug=True)
 
 plt.grid(which="both", axis="both")
 plt.show()
