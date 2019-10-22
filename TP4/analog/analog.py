@@ -6,8 +6,6 @@ from cusfunc import maprange
 from custexcp import *
 __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
-def prueba():
-    print("Hola")
     
 class AnalogFilter(ABC):
     """
@@ -84,6 +82,10 @@ class Butterworth:
         self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
         self.aprox_types = {'butterworth', 'bessel',
                             'chevy1', 'chevy2', 'cauer', 'legendre'}
+
+        print(f"stop w:{ws}")
+        print(f"pass w:{wp}")
+
         # Filter typer error checking
         if ftype not in self.filter_types:
             raise InvalidFilterError(
@@ -150,21 +152,28 @@ class Butterworth:
 
         """
 
-        # Compute maximum frequency allowed that still might meet requirements
-        wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
-        # Compute minimum allowed frequency that still might meet requirements
-        wcpass = self.wp * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
+        
         if self.ftype == 'lowpass':
+            # Compute maximum frequency allowed that still might meet requirements
+            wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
+            # Compute minimum allowed frequency that still might meet requirements
+            wcpass = self.wp * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
             return maprange([0, 1], [wcpass, wcstop], k)
         elif self.ftype == 'highpass':
-            return maprange([0, 1], [wcstop, wcpass], k)
+            # Compute maximum frequency allowed that still might meet requirements
+            wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
+            # Compute minimum allowed frequency that still might meet requirements
+            wcpass = self.Wn * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
+            print(f"wcstop calculada:{wcstop}")
+            print(f"wcpass calculada: {wcpass}")
+            return maprange([0, 1], [wcpass-wcstop, wcpass], k)
     def compute_order(self):
         """
         Compute the minimum order that satisfies the requierements
         """
         if self.N is None:
-            self.N = signal.buttord(
-                self.wp, self.ws, self.Ap, self.As, analog=True)[0]
+            self.N, self.Wn = signal.buttord(
+                self.wp, self.ws, self.Ap, self.As, analog=True)
 
     def compute_ba(self):
         # Compute numerator and denominator polynomials
@@ -249,11 +258,11 @@ class Butterworth:
 
 
 for k in np.linspace(0, 1, 10):
-    # b = Butterworth("highpass", "butterworth", 10E3, 5E3, 3, 40, k)
-    b = Butterworth("lowpass","butterworth",1E3,3E3,3,40,k)
+    b = Butterworth("highpass", "butterworth", 3E3, 1E3, 3, 40, k)
+    # b = Butterworth("lowpass","butterworth",1E3,3E3,3,40,k)
 
     # butters.append(b)
-    b.plot()
+    b.plot(debug=True)
 
 plt.grid(which="both", axis="both")
 plt.show()
