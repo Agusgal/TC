@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : C:\Users\Usuario\source\repos\TC\TP5\Ejercicio-4\Altium\Filtro-FT\PCB1.PcbDoc
+Date         : 22/10/2019
+Time         : 11:03:23
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100,00%
+    Connections, 48
+    Connections routed, 48
+    Connections remaining, 0
+count : 4
