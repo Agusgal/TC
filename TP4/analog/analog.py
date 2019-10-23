@@ -161,12 +161,13 @@ class Butterworth:
             return maprange([0, 1], [wcpass, wcstop], k)
         elif self.ftype == 'highpass':
             # Compute maximum frequency allowed that still might meet requirements
-            wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
+            wcstop = self.ws * (10**(self.As/10) - 1)**(1/(2*self.N))
             # Compute minimum allowed frequency that still might meet requirements
-            wcpass = self.Wn * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
+            wcpass = self.wp * (10**(self.Ap/10) - 1)**(1/(2*self.N))
             print(f"wcstop calculada:{wcstop}")
             print(f"wcpass calculada: {wcpass}")
-            return maprange([0, 1], [wcpass-wcstop, wcpass], k)
+            # return maprange([0, 1], [self.Wn-wcstop, self.Wn], k)
+            return maprange([0, 1],[wcpass, wcstop], k)
     def compute_order(self):
         """
         Compute the minimum order that satisfies the requierements
@@ -258,8 +259,9 @@ class Butterworth:
 
 
 for k in np.linspace(0, 1, 10):
-    b = Butterworth("highpass", "butterworth", 3E3, 1E3, 3, 40, k)
-    # b = Butterworth("lowpass","butterworth",1E3,3E3,3,40,k)
+    # b = Butterworth("highpass", "butterworth", 3E3, 2E3, 3, 40, k)
+    b = Butterworth("lowpass","butterworth",1E3,2E3,10,80,k) #Funciona
+    # b = Butterworth("lowpass","butterworth",20E3,30E3,3,40,k)
 
     # butters.append(b)
     b.plot(debug=True)
