@@ -6,14 +6,14 @@ from cusfunc import maprange
 from custexcp import *
 __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
-    
+
 class AnalogFilter(ABC):
     """
     Analog Filter
     """
     # self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
     # self.aprox_types = {'butterworth', 'bessel','chevy1', 'chevy2', 'cauer', 'legendre'}
-    
+
     def __init__(self, parameter_list):
         raise NotImplementedError
 
@@ -24,9 +24,10 @@ class AnalogFilter(ABC):
         b,a:
         """
         return self.b, self.a
+
     def make_stencil(self, parameter_list):
         raise NotImplementedError
-    
+
     def plot_mag(self, parameter_list):
         raise NotImplementedError
 
@@ -101,10 +102,10 @@ class Butterworth:
                     'Must specify a only two critical frequencies ws and wp for lowpass or highpass filter')
             if wp > ws and ftype == 'lowpass':
                 raise ValueError(
-                    "Stop frequency (ws) must be greater than Passband frequency (wp)")
+                    f"Stop frequency (ws={ws} was given) must be greater than Passband frequency (wp={wp} was given)")
             elif wp < ws and ftype == 'highpass':
                 raise ValueError(
-                    "Passband frequency (wp) must be greater than Stopfrequency (ws)")
+                    f"Passband frequency (wp={wp} was given) must be greater than Stopfrequency (ws={ws} was given)")
 
         elif ftype in ('bandpass', 'bandstop'):
             if np.size(wp) != 2 and np.size(ws) != 2:
@@ -152,7 +153,6 @@ class Butterworth:
 
         """
 
-        
         if self.ftype == 'lowpass':
             # Compute maximum frequency allowed that still might meet requirements
             wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
@@ -167,7 +167,8 @@ class Butterworth:
             print(f"wcstop calculada:{wcstop}")
             print(f"wcpass calculada: {wcpass}")
             # return maprange([0, 1], [self.Wn-wcstop, self.Wn], k)
-            return maprange([0, 1],[wcpass, wcstop], k)
+            return maprange([0, 1], [wcpass, wcstop], k)
+
     def compute_order(self):
         """
         Compute the minimum order that satisfies the requierements
@@ -259,9 +260,9 @@ class Butterworth:
 
 
 for k in np.linspace(0, 1, 10):
-    # b = Butterworth("highpass", "butterworth", 3E3, 2E3, 3, 40, k)
-    b = Butterworth("lowpass","butterworth",1E3,2E3,10,80,k) #Funciona
-    # b = Butterworth("lowpass","butterworth",20E3,30E3,3,40,k)
+    b = Butterworth("highpass", "butterworth", 300E3, 200E3, 3, 40, k)
+    # b = Butterworth("lowpass","butterworth",1E3,2E3,10,80,k) #Funciona
+    # b = Butterworth("lowpass","butterworth",200,500,30,120,k)
 
     # butters.append(b)
     b.plot(debug=True)
