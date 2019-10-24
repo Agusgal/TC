@@ -197,7 +197,7 @@ class Butterworth:
             return maprange([0, 1], [wcpass, wcstop], k)
 
         elif self.ftype == 'bandpass':
-            
+
             return self.Wn
         elif self.ftype == 'bandstop':
             return self.Wn
@@ -329,7 +329,7 @@ class Butterworth:
             
 
         # plt.text(self.ws[0],self.As,'This text ends at point (8,3)',horizontalalignment='right')
-        
+        # http://queirozf.com/entries/add-labels-and-text-to-matplotlib-plots-annotation-examples
         plt.axis('tight')
         if debug:
             plt.axvline(np.divide(self.ws, 2*np.pi), color="green")
