@@ -6,47 +6,6 @@ from cusfunc import maprange
 from custexcp import *
 __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
-
-class AnalogFilter(ABC):
-    """
-    Analog Filter
-    """
-    # self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
-    # self.aprox_types = {'butterworth', 'bessel','chevy1', 'chevy2', 'cauer', 'legendre'}
-
-    def __init__(self, parameter_list):
-        raise NotImplementedError
-
-    def get_ba(self):
-        """
-        Returns
-        -------
-        b,a:
-        """
-        return self.b, self.a
-
-    def make_stencil(self, parameter_list):
-        raise NotImplementedError
-
-    def plot_mag(self, parameter_list):
-        raise NotImplementedError
-
-    def plot_pha(self, parameter_list):
-        raise NotImplementedError
-
-    def plot_zp(self, parameter_list):
-        raise NotImplementedError
-
-    def plot_step_response(self, parameter_list):
-        raise NotImplementedError
-
-    def plot_impulse_response(self, parameter_list):
-        raise NotImplementedError
-
-    def plot_group_delay(self, parameter_list):
-        raise NotImplementedError
-
-
 class Butterworth:
     """
     General analog filter designer tool
@@ -100,30 +59,38 @@ class Butterworth:
         if aprox not in self.aprox_types:
             raise InvalidAproxError(
                 aprox, f"'{aprox}' is not an available aproximation. Check docs for supported aproximation")
+        if Ap > As:
+            raise ValueError(
+                "Pass band attenuation must be lower than stop band")
 
         if ftype in ('lowpass', 'highpass'):
             if np.size(wp) != 1 or np.size(ws) != 1:
                 raise ValueError(
                     'Must specify a only two critical frequencies ws and wp for lowpass or highpass filter')
             if wp > ws and ftype == 'lowpass':
-                raise ValueError(
-                    f"Stop frequency (ws={ws} was given) must be greater than Passband frequency (wp={wp} was given)")
-            elif wp < ws and ftype == 'highpass':
-                raise ValueError(
-                    f"Passband frequency (wp={wp} was given) must be greater than Stopfrequency (ws={ws} was given)")
+                    raise ValueError(
+                        f"Stop frequency (ws={ws} was given) must be greater than Passband frequency (wp={wp} was given)")
+            if wp < ws and ftype == 'highpass':
+                    raise ValueError(
+                        f"Passband frequency (wp={wp} was given) must be greater than Stopfrequency (ws={ws} was given)")
 
         elif ftype in ('bandpass', 'bandstop'):
             if np.size(wp) != 2 and np.size(ws) != 2:
                 raise ValueError(
                     'Wn must specify start and stop frequencies for bandpass or bandstop filter')
-            # b = Butterworth('bandpass', 'butterworth', [10E3, 20E3], [5E3, 25E3], 20, 50)
-           
-            #TODO añadir checks faltantes
+
             if ftype == 'bandpass':
-                if ws[0] < ws[1]:
-                    raise ValueError("Max limit stop band frequency must be greater than min limit") 
                 if ws[0] > ws[1]:
-                    raise ValueError("Min limit stop band frequency must be smaller than max limit")
+                    raise ValueError(
+                        "Max limit stop band frequency must be greater than min limit")
+                if wp[0] > wp[1]:
+                    raise ValueError(
+                        "Max limit pass band frequency must be greater than min limit")
+                if not ws[0] < wp[0] < ws[1]:
+                    raise ValueError("Lower pass frequency out of bounds")
+                if not ws[0] < wp[1] < ws[1]:
+                    raise ValueError("Upper pass frequency out of bounds")
+            #TODO comentar bandstop
 
         if type(k) is not np.float64 and type(k) is not np.int:
             raise TypeError(f"k must be numerical. {type(k)} was given")
@@ -161,10 +128,9 @@ class Butterworth:
 
     def compute_ba(self):
         # Compute numerator and denominator polynomials
-        wcryt = self.get_critical_w(self.k)
+        self.wcryt = self.get_critical_w(self.k)
         self.b, self.a = signal.butter(
-            self.N, wcryt, self.ftype, analog=True, output='ba')
-        return wcryt
+            self.N, self.wcryt, self.ftype, analog=True, output='ba')
 
     def get_critical_w(self, k):
         """
@@ -232,7 +198,7 @@ class Butterworth:
         --------
         >>> stencils = filter.get_stencils(x,y)
         >>> for s in stencils:
-        >>>     plt.fill(s[0],s[s1],lw=0,'0.8') #Set line-width=0
+        >>>     plt.fill(s[0],s[1],'0.8',lw=0) #Set line-width=0
         >>> plt.show()
         """
         if self.ftype == 'lowpass':
@@ -268,7 +234,7 @@ class Butterworth:
             aLx = [[x[0], fsL, fsL, x[0]]]
             aLy = [[0, 0, self.As, self.As]]
             aL = aLx + aLy
-            
+
             #Pass band
             fpL = np.divide(self.wp[0], 2*np.pi)
             fpR = np.divide(self.wp[1], 2*np.pi)
@@ -282,36 +248,32 @@ class Butterworth:
             aRy = [[self.As, self.As, 0, 0]]
             aR = aRx + aRy
 
-            
             stencils = [aL] + [aR] + [pband]
             return stencils
-
         elif self.ftype == 'bandstop':
             #Left pass band
             fpL = np.divide(self.wp[0], 2*np.pi)
-            print(self.wp[0],self.wp[1])
+            print(self.wp[0], self.wp[1])
             pLx = [[x[0], fpL, fpL, x[0]]]
             pLy = [[np.max(y), np.max(y), self.Ap, self.Ap]]
             pL = pLx + pLy
-            
+
             #Stop band
             fsL = np.divide(self.ws[0], 2*np.pi)
             fsR = np.divide(self.ws[1], 2*np.pi)
             print(self.ws)
             sx = [[fsL, fsR, fsR, fsL]]
-            sy = [[0,0 ,self.As, self.As]]
+            sy = [[0, 0, self.As, self.As]]
             sband = sx + sy
 
             #Right pass band
             fpR = np.divide(self.wp[1], 2*np.pi)
             pRx = [[fpR, x[-1], x[-1], fpR]]
-            pRy = [[np.max(y), np.max(y),self.Ap, self.Ap]]
+            pRy = [[np.max(y), np.max(y), self.Ap, self.Ap]]
             pR = pRx + pRy
 
-            
-            stencils = [sband]+[pL] + [pR]# + [sband]
+            stencils = [sband]+[pL] + [pR]  # + [sband]
             return stencils
-
 
     def plot(self, show=False, debug=False):
         sys = signal.TransferFunction(self.b, self.a)
@@ -323,10 +285,9 @@ class Butterworth:
         plt.semilogx(np.divide(w, 2*np.pi), -mag,
                      label=f"$\omega$: {self.wcryt}")
         stencils = self.get_stencil(np.divide(w, 2*np.pi), -mag)
-
+        #Plotting stencils
         for s in stencils:
             plt.fill(s[0], s[1], '0.9', lw=0, color="orange")
-            
 
         # plt.text(self.ws[0],self.As,'This text ends at point (8,3)',horizontalalignment='right')
         # http://queirozf.com/entries/add-labels-and-text-to-matplotlib-plots-annotation-examples
@@ -342,10 +303,10 @@ class Butterworth:
 
 for k in np.linspace(0, 1, 10):
     # b = Butterworth("highpass", "butterworth", 300E3, 100E3, 30, 100, k)
-    # b = Butterworth("lowpass","butterworth",1E3,4E3,3,40,k) #Funciona
+    b = Butterworth("lowpass", "butterworth", 1E3, 4E3, 3, 40, k)  # Funciona
     # b = Butterworth("lowpass","butterworth",200,500,30,120,k)
-    # b = Butterworth('bandpass', 'butterworth', [10E3, 20E3], [5E3, 25E3], 20, 50)
-    b = Butterworth('bandstop', 'butterworth', [5E3, 30E3], [10E3, 20E3], 10, 100)
+    # b = Butterworth('bandpass', 'butterworth', [7E3, 20E3], [5E3, 25E3], 20, 50)
+    # b = Butterworth('bandstop', 'butterworth', [5E3, 30E3], [10E3, 20E3], 10, 100)
 
     b.plot(debug=False)
 
