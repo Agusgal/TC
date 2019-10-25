@@ -209,17 +209,54 @@ En ocasiones es deseable poseer una señal de entrada que alimente varios nodos,
 \subsection{Filtro a desarrollar}
 Una vez presentado cada tipo de celda, solo resta determinar cual conviene emplear para realizar el filtro con las características deseadas.
 
-Como se busca confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. Para conseguir una transferencia como la mencionada anteriormente con una celda KHN, se requiere un amplificador operacional extra que permita restar la transferencia pasa bajos y pasa altos, mientras que para la celda FT basta con tomar los componentes adecuados. Es por ello que la celda considerada más optima para este caso es la FT.
+Se busca confeccionar un filtro con las siguientes características:
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+\hline
+\textbf{Variable} & \textbf{Valor} \\
+\hline
+$f_\infty$ & $30 \ kHz$ \\
+$\Delta f_a$ & $600 \ Hz$ \\
+$\Delta f_p$ & $13.2 \ kHz$ \\
+$A_a$ & $40 \ dB$ \\
+$A_p$ & $6 \ dB$ \\
+$Z_{in}(f)$ & $50 \ k\Omega$ \\
+Filtro & Rechaza Banda \\
+Plantilla & Chebycheff Inverso \\
+\hline
+\end{tabular}
+\caption{Características del filtro a realizar.}
+\label{tabla:caracteristicas}
+\end{table}
 
-Se desea que el filtro posea una frecuencia de notch $f_{\infty} = 37 \ kHz$, y como también se requiere que $\Delta f_a = 600 \ Hz$ y $\Delta f_p = 880 \ Hz$. Sabiendo que
-\begin{equation*}
+Como se busca confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. De forma similar, si bien la celda KHN posee transferencia pasa altos, se requiere un amplificador operacional extra que permita restar la pasa bajos y pasa altos, por lo cual también queda descartada. Por último para la celda FT basta con tomar los componentes adecuados, consiguiendo así la transferencia deseada. Es por ello que la celda considerada más optima para este caso es la FT.
+
+Con lo establecido en la Tabla (\ref{tabla:caracteristicas}), y sabiendo que se debe cumplir
+\begin{equation}
 \begin{split}
 	f_{\infty}^{2} = f_{p}^{-} f_{p}^{+} = f_{a}^{-} & f_{a}^{+} \\
 	\Delta f_p = f_{p}^{+} - f_{p}^{-} \\
 	\Delta f_a = f_{a}^{+} - f_{a}^{-} 
 \end{split}
-\end{equation*}
-se obtienen $f_{p}^{-} = 36562.62 \ Hz$, $f_{p}^{+} = 37442.62 \ Hz$, $f_{a}^{-} = 36701.22 \ Hz$ y $f_{a}^{+} = 37301.22 \ Hz$. Por otro lado, para la atenuación, tanto en la banda atenuada como en la pasante, se busca $A_a=40 \ dB$ y $A_p=6 \ dB$ respectivamente. En cuanto a la ganancia, se seleccionan $0 \ dB$, mientras se debe garantizar que la profundidad de notch sea mayor o igual a $50 \ dB$. Finalmente, se requiere que la impedancia de entrada del sistema sea $Z_{in}(f) \geq 50 \ k\omega$ y que se emplee una plantilla de Chebycheff Inverso.
+\end{equation}
+se calculan las frecuencias de cada banda:
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+\hline
+\textbf{Variable} & \textbf{Valor} \\
+\hline
+$f_{p}^{-}$ & $30984 \ Hz$ \\
+$f_{a}^{-}$ & $36701 \ Hz$ \\
+$f_{a}^{+}$ & $37301 \ Hz$ \\
+$f_{p}^{+}$ & $44184\ Hz$ \\
+\hline
+\end{tabular}
+\caption{Características del filtro a realizar.}
+\label{tabla:caracteristicas}
+\end{table}
+
 
 \begin{table}[H]
 \begin{center}
