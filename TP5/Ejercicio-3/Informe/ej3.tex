@@ -64,15 +64,64 @@ Se tomaron como valor de los componentes...
 Se eligió utilizar presets para las resistencias... Para ajustar el Q y el $\omega_0$ del filtro.
 \subsubsection{Acoplamiento de Impedancias.}
 Para que ambas etapas no se carguen entre si la impedancia de entrada de la segunda etapa debe ser mucho mayor a la de salida de la primera
+Asi se simuló la impedancia de entrada de ambas etapas obteniendo las siguientes gráficas:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej3/ZinE1.png}
+	\label{fig:stepresponse}
+	\caption{Impedancia de entrada 1ra etapa}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej3/ZoutE1.png}
+	\label{fig:stepresponse}
+	\caption{Impedancia de salida 1ra etapa}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej3/ZinE2.png}
+	\label{fig:stepresponse}
+	\caption{Impedancia de entrada 2da etapa}
+\end{figure}
+Se puede concluir luego de estas gráficas que el acoplamiento de impedancias se dará.
 \subsection{Respuesta en Frecuencia.}
-Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al 1$\%$ y capacitores al 10$\%$ obteniendo la siguiente disperción,
-\subsubsection{Etapas.}
-Se realizaron 2 etapas, ambas siendo el mismo tipo de celda, pero con distintos parámetros.
+Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al 1$\%$ y capacitores al 10$\%$ obteniendo la siguiente disperción
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej3/mcsedra.png}
+	\label{fig:mcsedra}
+\end{figure}
+
 \subsubsection{Filtro definitivo.}
+Se realizó el filtro obteniendo la siguiente respuesta en frecuencia 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej3/BodeSedra.png}
+	\label{fig:BodeSedra}
+	\caption{Filtro High-Pass Módulo}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej3/FaseBodeSedra.png}
+	\label{fig:FaseBodeSedra}
+	\caption{Filtro High-Pass Fase}
+\end{figure}
+Es de valor apreciar el hecho de que se cumple la plantilla
+\subsection{Estabilidad.}
+Se intentó en esta sección lograr que la celda oscile, introduciéndole una cuadrada la cual es sabido esta compuesta por un gran numero de frecuencias, asi tambien variando no solo la amplitud de la misma sino tambien su frecuencia y duty-cycle, sin poder hacer osclilar a la celda. La siguietne imagen es la respuesta de la celda al escalón.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej3/Step.png}
+	\label{fig:stepresponse}
+	\caption{Respuesta al escalón}
+\end{figure}
 %
 %\begin{figure}[H]
 %	\centering
 %	\includegraphics[width=0.4\textwidth]{/ImagenesEjercicio3/Graph.png}
 %	\label{fig:graph}
 %\end{figure}
+
 \end{document}

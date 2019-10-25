@@ -189,22 +189,22 @@ En ocasiones es deseable poseer una señal de entrada que alimente varios nodos,
 	\label{fig:FT}
 \end{figure}
 
-%\begin{table}[H]
-%\centering
-%\begin{tabular}{ccc}
-%\hline
-%\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
-%\hline
-%Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
-%Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
-%Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
-%Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
-%Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
-%\hline
-%\end{tabular}
-%\caption{Tipos de filtro y componentes para una celda FT.}
-%\label{tabla:tiposdefiltroft}
-%\end{table}
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\hline
+\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
+\hline
+Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
+Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
+Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
+Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
+Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
+\hline
+\end{tabular}
+\caption{Tipos de filtro y componentes para una celda FT.}
+\label{tabla:tiposdefiltroft}
+\end{table}
 
 \subsection{Filtro a desarrollar}
 Una vez presentado cada tipo de celda, solo resta determinar cual conviene emplear para realizar el filtro con las características deseadas.
@@ -257,5 +257,25 @@ $f_{p}^{+}$ & $44184\ Hz$ \\
 \label{tabla:caracteristicas}
 \end{table}
 
+
+\begin{table}[H]
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+$f_{\infty}$& $30KHz$\\
+\hline \hline
+$\Delta f_a$ &600Hz  \\ \hline
+$\Delta f_p$ &13.2KHz  \\ \hline
+$A_a$ &40dB\\ \hline
+$A_p$ &6dB\\ \hline
+$ |Z_{in}(f)|$ & >50$K\Omega $\\ \hline
+Filtro & BR\\ \hline
+
+
+
+\end{tabular}
+\caption{Plantilla} 
+\end{center}
+\end{table}
 
 \end{document}
