@@ -1,2 +1,2 @@
-name = 'analog'
-from .analog import *
+name = 'filters'
+from .filters import *
