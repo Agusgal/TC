@@ -1,29 +1,32 @@
+from abc import ABC, abstractclassmethod, abstractmethod
+
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
-import matplotlib.pyplot as plt
-from abc import ABC, abstractclassmethod, abstractmethod
+
 from cusfunc import maprange
 from custexcp import *
+
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
+#TODO tener cuidado con las unidades de las frecuencias.
 
 class AnalogFilter(ABC):
     """
-    Analog Filter
+    Analog Filter base class
     """
 
-    def __init__(self, ftype, wp, ws, Ap, As, rp=0, k=0, N=None):
+    def __init__(self, ftype, wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
         self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
         # self.aprox_types = {'butterworth', 'bessel',
         #                     'chevy1', 'chevy2', 'cauer', 'legendre'}
 
         """
-        General analog filter designer tool
         Parameters
         ----------
         ftype: {‘lowpass’, ‘highpass’, ‘bandpass’, ‘bandstop’}
         Choosen filter type
-        
+
         wp, ws : float
         wp: pass frequency(ies) in (rads/seg)
         ws: stop frequency(ies) in (rads/seg)
@@ -32,7 +35,7 @@ class AnalogFilter(ABC):
         - Bandpass: wp = [0.2, 0.5], ws = [0.1, 0.6]
         - Bandstop: wp = [0.1, 0.6], ws = [0.2, 0.5]
         For analog filters, wp and ws are angular frequencies (e.g. rad/s).
-        
+
         aprox: str
 
         Ap : float
@@ -41,7 +44,7 @@ class AnalogFilter(ABC):
         As : float
         The minimum attenuation in the stopband (dB).
 
-        k: float 
+        k: float
         By default give minimum.
         Selectivity factor. Ranges from 0 to 1.
 
@@ -104,16 +107,14 @@ class AnalogFilter(ABC):
         self.N = N  # Filter order
         self.rp = rp
 
-    def get_ba(self):
-        """
-        Returns
-        -------
-            b,a: Numerator and denominator coefficients of the filter transfer function
-        """
-        return self.b, self.a
-
-    def get_zpk(self, parameter_list):
-        raise NotImplementedError
+        # Step 1: Compute filter order
+        self.compute_order()
+        # Step 2: Compute the filter coefficients
+        self.b, self.a = self.compute_ba()
+        # Step 3: Construct Transfer function
+        self.sys = signal.TransferFunction(self.b, self.a)
+        self.w, self.mag, self.pha = signal.bode(self.sys)
+        self.zeros, self.poles, self.k = self.compute_zpk()
 
     # @abstractmethod
     # def get_filter_stages(self, parameter_list):
@@ -127,11 +128,19 @@ class AnalogFilter(ABC):
     def compute_order(self):
         raise NotImplementedError
 
+    @abstractmethod
+    def compute_ba(self):
+        raise NotImplementedError
+
+    @abstractmethod
+    def compute_zpk(self, parameter_list):
+        raise NotImplementedError
+
     def get_stencils(self, x, y):
         """
         Get the poligons to plot your requirements on screen.
         The function filter type aware.
-         
+
         Parameters
         ----------
         x: array_like
@@ -142,7 +151,7 @@ class AnalogFilter(ABC):
         --------
         stencils: array_like
         An array of arrays containig the poligons needed to show the stencil
-            
+
         - lowpass  --> 2 stencils
         - highpass --> 2 stencils
         - bandpass --> 3 stencils
@@ -228,178 +237,138 @@ class AnalogFilter(ABC):
 
             stencils = [sband]+[pL] + [pR]  # + [sband]
             return stencils
-    # @abstractmethod
-    # def compute_gdelay(self, parameter_list):
-    #     raise NotImplementedError
 
-    # @abstractmethod
-    # def compute_step_response(self, parameter_list):
-    #     pass
-
-    # @abstractmethod
-    # def compute_impulse_response(self, parameter_list):
-    #     pass
-
-    def plot_mag(self, dstencils=True, show=False, sc='orange', lc=None):
+    def plot_mag(self, name=None, dstencils=True, show=False, sc='orange', lc=None):
         """
         Plot the magnitude bode plot of the specified filter
 
         Parameters
         ----------
+        name: str
+            Name to display on plot.
         dstencils: boolean
             True by default to display filter stencils
         show: boolean
-            False by default. Helpful to stack plots. 
-            Wether or not to perform plt.show(). 
+            False by default. Helpful to stack plots.
+            Wether or not to perform plt.show().
         sc: str
             Choosen color to display stencil
         lc: str
             Choosen line color. If left blank matplotlib will automatically pick a color
         """
-        sys = signal.TransferFunction(self.b, self.a)
-        w, mag, pha = signal.bode(sys)
-        stencils = self.get_stencils(np.divide(w, 2*np.pi), -mag)
+        stencils = self.get_stencils(np.divide(self.w, 2*np.pi), -self.mag)
 
         if lc:
-            plt.semilogx(np.divide(w, 2*np.pi), -mag, color=lc)
+            plt.semilogx(np.divide(self.w, 2*np.pi), -
+                         self.mag, color=lc, label=name)
         else:
-            plt.semilogx(np.divide(w, 2*np.pi), -mag)
+            plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, label=name)
 
         if dstencils:
             for s in stencils:
-                plt.fill(s[0], s[1], '0.8', lw=0, color=sc)  # Set line-
+                plt.fill(s[0], s[1], '1', lw=0, color=sc)  # Set line-
 
         if show:
-            print("Hello")
+            if name:
+                plt.legend()
             plt.show()
 
-    def plot_pha(self, show=False, sc='orange', lc=None):
+    def plot_pha(self, name=None, show=False, sc='orange', lc=None):
         """
         Plot the magnitude bode plot of the specified filter
 
         Parameters
         ----------
+        name: str
+            Name to display on plot.
         stencils: boolean
             True by default to show filter specifications
         show: boolean
-            False by default. Helpful to stack plots. 
-            Wether or not to perform plt.show(). 
+            False by default. Helpful to stack plots.
+            Wether or not to perform plt.show().
         sc: str
             Choosen color to display stencil
         lc: str
             Choosen line color. If left blank matplotlib will automatically pick a color
         """
-        self.sys = signal.TransferFunction(self.b, self.a)
-        self.w, self.mag, self.pha = signal.bode(self.sys)
         if lc:
-            plt.semilogx(np.divide(self.w, 2*np.pi), self.pha, color=lc)
+            plt.semilogx(np.divide(self.w, 2*np.pi),
+                         self.pha, color=lc, label=name)
         else:
-            plt.semilogx(np.divide(self.w, 2*np.pi), self.pha)
+            plt.semilogx(np.divide(self.w, 2*np.pi), self.pha, label=name)
 
         if show:
-            print("Hello")
+            if name:
+                plt.legend()
             plt.show()
 
-    def plot_zp(self, zc='ro', pc='xb'):
-        pass
+    def plot_zp(self, colorz='red', colorp='blue', zc='o', pc='x', show=False):
+        
+        for z in self.zeros:
+            plt.scatter(z.real, z.imag, c=colorz, marker=zc)
+        for p in self.poles:
+            plt.scatter(p.real, p.imag, c=colorp, marker=pc)
 
-    # @abstractmethod
-    # def plot_step_response(self, parameter_list):
-    #     raise NotImplementedError
+        if show:
+            plt.show()
 
-    # @abstractmethod
-    # def plot_impulse_response(self, parameter_list):
-    #     raise NotImplementedError
-
-    # @abstractmethod
-    # def plot_group_delay(self, parameter_list):
-    #     raise NotImplementedError
-
-
-class Butterworth(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, rp=0, k=0, N=None):
-        print(f"received k: {type(k)}")
-        super().__init__(ftype,  wp, ws, Ap, As, k=k, N=N)
-
-        self.compute_order()
-        self.wcryt = self.compute_ba()
-        self.sys = signal.TransferFunction(self.b, self.a)
-        # REMEMBER! 'mag' is given as GAIN. '-mag' means attenuation
-        self.w, self.mag, self.pha = signal.bode(self.sys)
-        # self.compute_zpk()
-
-    def compute_order(self):
+    def plot_step_response(self, name=None, show=False, lc=None):
         """
-        Compute the minimum order that satisfies the requierements
-        """
-        if self.N is None:
-            self.N, self.Wn = signal.buttord(
-                self.wp, self.ws, self.Ap, self.As, analog=True)
+        Plot the step response of the specified filter
 
-    def compute_ba(self):
-        # Compute numerator and denominator polynomials
-        self.wcryt = self.get_critical_w(self.k)  # Compute cut-off frequencies
-        print(f'frecuencia critica {self.wcryt}')
-        self.b, self.a = signal.butter(
-            self.N, self.wcryt, self.ftype, analog=True, output='ba')
-
-    def get_critical_w(self, k):
-        """
-        Calculates new crytical frequency given a certain denormalization degree 
         Parameters
         ----------
-        k: float
-          Mandatory frequency (rads/seg) where we want our filter to pass trough.
-
-        Returns
-        -------
-        wlimit: float
-          Lowpass or highpass new crytical frequency (not cutoff) to generate the new filter
-
+        name: str
+            Name to display on plot.
+        show: boolean
+            False by default. Helpful to stack plots.
+            Wether or not to perform plt.show().
+        lc: str
+            Choosen line color. If left blank matplotlib will automatically pick a color
         """
+        T, yout = signal.step(self.sys)
 
-        if self.ftype == 'lowpass':
-            # Compute maximum frequency allowed that still might meet requirements
-            wcstop = self.ws * (10**(self.As/10) - 1)**(-1/(2*self.N))
-            # Compute minimum allowed frequency that still might meet requirements
-            wcpass = self.wp * (10**(self.Ap/10) - 1)**(-1/(2*self.N))
-            return maprange([0, 1], [wcpass, wcstop], k)
-        elif self.ftype == 'highpass':
-            # Compute maximum frequency allowed that still might meet requirements
-            wcstop = self.ws * (10**(self.As/10) - 1)**(1/(2*self.N))
-            # Compute minimum allowed frequency that still might meet requirements
-            wcpass = self.wp * (10**(self.Ap/10) - 1)**(1/(2*self.N))
-            # print(f"wcstop calculada:{wcstop}")
-            # print(f"wcpass calculada: {wcpass}")
-            return maprange([0, 1], [wcpass, wcstop], k)
+        print(yout)
+        if lc:
+            plt.plot(T, yout, color=lc, label=name)
+        else:
+            plt.plot(T, yout, label=name)
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
 
-        elif self.ftype == 'bandpass':
-            return self.Wn
-        elif self.ftype == 'bandstop':
-            return self.Wn
-            pass
+    def plot_impulse_response(self, name=None, show=False, lc=None):
+        T, yout = signal.impulse(self.sys)
+        if lc:
+            plt.plot(T, yout, color=lc, label=name)
+        else:
+            plt.plot(T, yout, label=name)
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
+
+    def plot_group_delay(self, name=None, show=False, lc=None):
+        print("Hola")
+        if lc:
+            plt.semilogx(np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
+        else:
+            plt.semilogx(
+                np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name)
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
+
+    #Getters
+    def get_order(self):
+        return self.N
 
 
-print(type(0.4))
-# a = Butterworth("lowpass", 1E3, 4E3, 3, 40, k=0)
-# b = Butterworth("lowpass", 1E3, 4E3, 3, 40, k=0.4)
-# c = Butterworth("lowpass", 1E3, 4E3, 3, 40, k=0.9)
-plt.grid(axis='both',which='both')
-b = Butterworth('bandpass',[7E3, 20E3], [5E3, 25E3], 20, 50)
-b.plot_mag(dstencils=True, sc='yellow', lc='green')
-
-# a.plot_mag(dstencils=True, sc='yellow', lc='green')
-# b.plot_mag(dstencils=True, sc='yellow', lc='green')
-# c.plot_mag(dstencils=True, sc='yellow', lc='green')
-plt.show()
-# a.plot_pha(show=True)
-
-
-# sys = signal.TransferFunction(a.b, a.a)
-# w, mag, pha = signal.bode(sys)
-# stencils = a.get_stencils(np.divide(w, 2*np.pi), -mag)
-# plt.semilogx(np.divide(w, 2*np.pi), -mag)
-
-# for s in stencils:
-#    plt.fill(s[0], s[1], '0.8', lw=0, color='orange')  # Set line-
-# plt.show()
+class SecondOrdCell:
+    def __init__(self,num,den):
+        self.num = num
+        self.den = den
+        self.Q = self.computeQ()
+        
