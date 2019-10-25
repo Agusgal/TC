@@ -1,0 +1,35 @@
+Board Information Report
+Filename     : C:\Users\Guido\Documents\GitHub\TC\TP5\Ejercicio-2\Altium\Rauch\rauch.PcbDoc
+Date         : 24-Oct-19
+Time         : 3:25:33 PM
+Time Elapsed : 00:00:00
+
+General
+    Board Size, 152.4mmx101.6mm
+    Components on board, 25
+count : 2
+
+Routing Information
+    Routing completion, 97.50%
+    Connections, 40
+    Connections routed, 39
+    Connections remaining, 1
+count : 4
+
+Layer, Arcs, Pads, Vias, Tracks, Texts, Fills, Regions, ComponentBodies
+    Top Layer, 0, 42, 0, 101, 0, 0, 0, 0
+    Bottom Layer, 0, 0, 0, 37, 0, 0, 0, 0
+    Mechanical 1, 0, 0, 0, 0, 0, 0, 0, 24
+    Mechanical 13, 1, 0, 0, 4, 0, 0, 0, 25
+    Mechanical 15, 0, 0, 0, 48, 0, 0, 0, 0
+    Multi-Layer, 0, 15, 10, 0, 0, 0, 1, 0
+    Top Paste, 0, 0, 0, 0, 0, 0, 0, 0
+    Top Overlay, 3, 0, 0, 101, 50, 3, 0, 0
+    Top Solder, 0, 0, 0, 0, 0, 0, 0, 0
+    Bottom Solder, 0, 0, 0, 0, 0, 0, 0, 0
+    Bottom Overlay, 0, 0, 0, 0, 0, 0, 0, 0
+    Bottom Paste, 0, 0, 0, 0, 0, 0, 0, 0
+    Drill Guide, 0, 0, 0, 0, 0, 0, 0, 0
+    Keep-Out Layer, 0, 0, 0, 5, 0, 0, 0, 0
+    Drill Drawing, 0, 0, 0, 0, 0, 0, 0, 0
+count : 15
