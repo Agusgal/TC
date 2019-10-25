@@ -7,7 +7,7 @@ from cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As,gain=1, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
         print(f"received k: {type(k)}")
         super().__init__(ftype,  wp, ws, Ap, As, k=k, N=N)
 
@@ -78,22 +78,16 @@ class Butterworth(AnalogFilter):
             pass
 
 
-
-
-
 # b = Butterworth("lowpass", 1E3, 4E3, 3, 40, k=0)
 # b = Butterworth("lowpass", 10E3, 40E3, 3, 40, k=0)
 
 # b = Butterworth("highpass", 4E3, 1E3, 3, 40, k=0.4)
 # b = Butterworth("lowpass", 1E3, 4E3, 3, 40, k=0.9)
 # b = Butterworth("lowpass", 10E3*2*np.pi, 40E3*2*np.pi, 3, 40, k=0.9)
-
 # b = Butterworth('bandpass', [7E3, 20E3], [5E3, 25E3], 20, 50) #Can't compute step response
 # b = Butterworth('bandstop',[1E3, 30E3], [4E3, 15E3], 20, 50)
 # b = Butterworth('bandpass', [10E3, 15E3],[5E3, 25E3], 20, 50)
-
 # print(b.get_order())
-
 # b.plot_mag(show=True, dstencils=True, sc='orange', lc='green')
 # b.plot_zp(show=True)
 # plt.title(f"step order: {b.get_order()}")
@@ -106,10 +100,10 @@ class Butterworth(AnalogFilter):
 # # a.plot_mag(dstencils=True, sc='yellow', lc='green')
 # plt.title(f"Butterworth mag {b.get_order()}")
 plt.title(f"Butterworth mag")
-for i in np.linspace(0,1,10):
+for i in np.linspace(0, 1, 10):
     b = Butterworth("highpass", 40E3*2*np.pi, 10E3*2*np.pi, 3, 40, k=i)
-    # c = Butterworth("highpass", 40E3*2*np.pi,10E3*2*np.pi, 3, 40, N=i)    
-    b.plot_mag(dstencils=True, sc='blue',name=f'k: {i}')
+    # c = Butterworth("highpass", 40E3*2*np.pi,10E3*2*np.pi, 3, 40, N=i)
+    b.plot_mag(dstencils=True, sc='blue', name=f'k: {i}')
     # c.plot_mag(dstencils=True, sc='black',name=f'N: {i}')
 plt.grid(axis='both', which='both')
 plt.legend()

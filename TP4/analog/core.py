@@ -273,7 +273,7 @@ class AnalogFilter(ABC):
                 plt.legend()
             plt.show()
 
-    def plot_pha(self, name=None, show=False, sc='orange', lc=None):
+    def plot_pha(self, name=None, show=False, lc=None):
         """
         Plot the magnitude bode plot of the specified filter
 
@@ -281,13 +281,135 @@ class AnalogFilter(ABC):
         ----------
         name: str
             Name to display on plot.
-        stencils: boolean
-            True by default to show filter specifications
         show: boolean
             False by default. Helpful to stack plots.
             Wether or not to perform plt.show().
-        sc: str
-            Choosen color to display stencil
+        lc: str
+            Choosen line color. If left blank matplotlib will automatically pick a color
+        """
+        if lc:
+            plt.semilogx(np.divide(self.w, 2*np.pi),
+                         self.pha, color=lc, label=name)
+        else:
+            plt.semilogx(np.divide(self.w, 2*np.pi), self.pha, label=name)
+
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
+
+
+    #TODO comentar
+    def plot_zp(self, colorz='red', colorp='blue', zc='o', pc='x', show=False):
+        for z in self.zeros:
+            plt.scatter(z.real, z.imag, c=colorz, marker=zc)
+        for p in self.poles:
+            plt.scatter(p.real, p.imag, c=colorp, marker=pc)
+
+        if show:
+            plt.show()
+
+    def plot_step_response(self, name=None, show=False, lc=None):
+        """
+        Plot the step response of the specified filter
+
+        Parameters
+        ----------
+        name: str
+            Name to display on plot.
+        show: boolean
+            False by default. Helpful to stack plots.
+            Wether or not to perform plt.show().
+        lc: str
+            Choosen line color. If left blank matplotlib will automatically pick a color
+        """
+        T, yout = signal.step(self.sys)
+
+        print(yout)
+        if lc:
+            plt.plot(T, yout, color=lc, label=name)
+        else:
+            plt.plot(T, yout, label=name)
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
+
+    #TODO comentar
+    def plot_impulse_response(self, name=None, show=False, lc=None):
+        T, yout = signal.impulse(self.sys)
+        if lc:
+            plt.plot(T, yout, color=lc, label=name)
+        else:
+            plt.plot(T, yout, label=name)
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
+
+    #TODO comentar
+    def plot_group_delay(self, name=None, show=False, lc=None):
+        if lc:
+            plt.semilogx(np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
+        else:
+            plt.semilogx(
+                np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name)
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
+
+    #Getters
+    def get_order(self):
+        return self.N
+
+
+class Cell:
+    """
+    Circuit mimimun unit.  
+    """
+    def __init__(self,num,den):
+        self.num = num
+        self.den = den
+        self.Q = self.computeQ()
+    
+    def plot_mag(self, name=None, show=False, lc=None):
+        """
+        Plot the magnitude bode plot of the specified filter
+
+        Parameters
+        ----------
+        name: str
+            Name to display on plot.
+        show: boolean
+            False by default. Helpful to stack plots.
+            Wether or not to perform plt.show().
+        lc: str
+            Choosen line color. If left blank matplotlib will automatically pick a color
+        """
+
+        if lc:
+            plt.semilogx(np.divide(self.w, 2*np.pi), -
+                         self.mag, color=lc, label=name)
+        else:
+            plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, label=name)
+
+        if show:
+            if name:
+                plt.legend()
+            plt.show()
+
+    def plot_pha(self, name=None, show=False, lc=None):
+        """
+        Plot the magnitude bode plot of the specified filter
+
+        Parameters
+        ----------
+        name: str
+            Name to display on plot.
+        show: boolean
+            False by default. Helpful to stack plots.
+            Wether or not to perform plt.show().
         lc: str
             Choosen line color. If left blank matplotlib will automatically pick a color
         """
@@ -338,6 +460,8 @@ class AnalogFilter(ABC):
                 plt.legend()
             plt.show()
 
+
+    #TODO comentar
     def plot_impulse_response(self, name=None, show=False, lc=None):
         T, yout = signal.impulse(self.sys)
         if lc:
@@ -349,8 +473,9 @@ class AnalogFilter(ABC):
                 plt.legend()
             plt.show()
 
+
+    #TODO comentar
     def plot_group_delay(self, name=None, show=False, lc=None):
-        print("Hola")
         if lc:
             plt.semilogx(np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
         else:
@@ -361,14 +486,3 @@ class AnalogFilter(ABC):
                 plt.legend()
             plt.show()
 
-    #Getters
-    def get_order(self):
-        return self.N
-
-
-class SecondOrdCell:
-    def __init__(self,num,den):
-        self.num = num
-        self.den = den
-        self.Q = self.computeQ()
-        
