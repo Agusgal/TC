@@ -28,7 +28,7 @@ $A_s$      & 45dB              \\ \hline
 $|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
 \end{tabular}
 \end{table}
-Obteniendo la siguiente función transferencia, expresandola como producto de transferencias de segundo orden:
+Obteniendo la siguiente función transferencia, expresándola como producto de transferencias de segundo orden:
 \begin{align}
 	H(s)=\frac{ {s}^{2}+ 124088460.2 
  }{s^2+s\cdot 5466 + 519.84\cdot 10^6 } \cdot \frac{  {s}^{2}+
@@ -188,7 +188,7 @@ Así se simuló la impedancia de entrada de ambas etapas obteniendo las siguient
 	\label{fig:zine2}
 	\caption{Impedancia de entrada 2da etapa}
 \end{figure}
-Se puede concluir luego de estas gráficas que el acoplamiento de impedancias se dará.
+Se puede concluir luego de estas gráficas que el acoplamiento de impedancias se dará, por lo tanto se decidió no utilizar un  buffer para conectar etapas.
 \subsection{Respuesta en Frecuencia.}
 Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al 1$\%$ y capacitores al 10$\%$ obteniendo la siguiente dispersión
 \begin{figure}[H]
@@ -269,9 +269,15 @@ También puede tomarse en cuenta que los resultados obtenidos se corresponden co
 	\caption{Filtro High-Pass Fase comparación.}
 \end{figure}
 \subsection{Rango Dinámico.}
-\begin{Huge}
-???????????????????????????????????????????????
-\end{Huge}
+El rango dinámico se define como la razón de máximo y mínimo valor que puede tomar el observable de interés. Para el caso en cuestión queda definido de la siguiente manera:
+\begin{align}
+R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
+\end{align}
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual fue de $V_{in_{min}} \approx xxmV$. Luego para definir $V_{in_{max}}$ se tuvo en cuenta la máxima tensión previo a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional, dos de estos problemas son arreglados por la elección del amplificador operacional , siendo el cross-over y el slewrate, dado a que se utilizó un TL081 el cual tiene un slew-rate elevado, y no tiene el problema del cross-over debido a su etapa de salida. Queda el problema de la saturación,es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc-1.5 =13.5$, para encontrar el valor de tensión máximo de entrada se tomó, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas finalmente queda definido por la siguiente expresión:
+\begin{align}
+V_{in_{max}}=\frac{V_{sat}}{  \max(G_{E1} \cdot G_{E2} )} = xxV
+\end{align}
+Finalmente $R_d = xxdB$.
 \subsection{Estabilidad.}
 Se intentó en esta sección lograr que la celda oscile, introduciéndole una cuadrada la cual es sabido esta compuesta por un gran numero de frecuencias, así también variando no solo la amplitud de la misma sino también su frecuencia y duty-cycle, sin poder hacer oscilar a la celda. La siguiente imagen es la respuesta de la celda al escalón.
 \begin{figure}[H]
