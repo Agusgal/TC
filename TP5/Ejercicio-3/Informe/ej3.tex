@@ -40,10 +40,8 @@ Y el siguiente diagrama de polos y ceros:
 	\caption{Diagrama Polos y Ceros}
 \end{figure}
 
-teniendo los pares de polos con un Q de...
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Hablar del Q de los polos}}}
-\end{center}
+Teniendo los pares de polos con un Q de 0.84 la primer etapa y 4.17.
+
 \subsubsection{Elecciones de diseño}
 Se decidió armar etapas con celdas segundo orden en cascada dado a que el orden es 4.
 Para la asociación de polos se tomo como criterio agrupar los polos por su cercanía, agrupandolos de las siguiente forma, así mismo la etapa de menor Q será la primera y la de mayor la última.
@@ -64,8 +62,43 @@ El análisis de sensibilidades que se obtiene del circuito, el cual coincide con
 	\huge{\textcolor{red}{\textbf{Tabla sensibilidades}}}
 \end{center}
 En base a esta tabla se tomo especial cuidado en la elección de componentes y en el matcheo de impedancias.
-Se tomaron como valor de los componentes...
-Se eligió utilizar presets para las resistencias... Para ajustar el Q y el $\omega_0$ del filtro.
+Se tomaron como valor de los componentes los presentados en la siguiente tabla:
+\begin{table}[H]
+\centering
+\begin{tabular}{lllll}
+\multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{1er Etapa} & \multicolumn{1}{c}{Composición} & 2da Etapa        & Composición            \\ \hline
+$R_1$                          & 12.36k $\Omega$               & 330+12k $\Omega$                & 6.2k $\Omega$    & 1.5k + 4.7k $\Omega$   \\
+$R_2$                          & 100k $\Omega$                 & 100k $\Omega$                   & 89.67 k $\Omega$ & 22k + 68k $\Omega$     \\
+$R_3$                          & 50.72 k $\Omega$              & 3.9k + 47k $\Omega$             & 1k$\Omega$       & 1k$\Omega$             \\
+$R_4$                          & 23.88k $\Omega$               & 1.8k+22k $\Omega$               & 203.36k $\Omega$ & 270k // 820 k $\Omega$ \\
+$R_5$                          & 207k $\Omega$                 & 27k + 180k $\Omega$             & 4.19 M$\Omega$   & 1.8M + 2.2M $\Omega$   \\
+$R_6$                          & 74.05k $\Omega$               & 18k + 56k $\Omega$              & 25.07k $\Omega$  & 10k+15k $\Omega$       \\
+$C_1$                          & 100 pF                        & 100 pF                          & 100 pF           & 100 pF                 \\
+$C_2$                          & 74.14 pF                      & 18p // 56p F                    & 18.52p F         & 22pF + 120pF           \\
+$C_2$                          & 25.86pF                       & 33p + 120p F                    & 81.48pF          & 82pF+12nF             
+\end{tabular}
+\end{table}
+
+
+Se calculó el error porcentual asociado a la aproximación de la resistencias viendose en la siguiente tabla.
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\multicolumn{1}{c}{Error Porcentual} & \multicolumn{1}{c}{1er Etapa} & \multicolumn{1}{c}{2da Etapa} \\ \hline
+$R_1$                                & 0.2 $\%$                      & $\approx 0 \%$                \\
+$R_2$                                & $\approx 0 \%$                & 0.4 $\%$                      \\
+$R_3$                                & 0.4 $\%$                      & $\approx 0 \%$                \\
+$R_4$                                & 0.3 $\%$                      & 0.1 $\%$                      \\
+$R_5$                                & $\approx 0 \%$                & 0.3 $\%$                      \\
+$R_6$                                & 0.1 $\%$                      & 0.3 $\%$                      \\
+$C_1$                                & $\approx 0 \%$                & $\approx 0 \%$                \\
+$C_2$                                & 0.2 $\%$                      & 0.4 $\%$                      \\
+$C_2$                                & 0.1 $\%$                      & 0.1 $\%$                     
+\end{tabular}
+\end{table}
+
+Un criterio utilizado fue tomar capacitores pequeños dado a que ellos son mas certeros y no varían tanto frente a la temperatura.  
+
 \subsubsection{Acoplamiento de Impedancias.}
 Para que ambas etapas no se carguen entre si la impedancia de entrada de la segunda etapa debe ser mucho mayor a la de salida de la primera
 Asi se simuló la impedancia de entrada de ambas etapas obteniendo las siguientes gráficas:

@@ -17,7 +17,18 @@ $|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
 \end{tabular}
 \end{table}
 \subsection{Aproximación de Chebycheff.}
-Para esta sección se utlizó la aproximación de \textbf{Chebyfeff}, además se propuso una plantilla mas restrictiva, con el fin de asegurar el cumplimiento de la original, siendo esta la plantilla final.
+Para esta sección se utlizó la aproximación de \textbf{Chebyfeff}, además se propuso una plantilla mas restrictiva, con el fin de asegurar el cumplimiento de la original. 
+
+Se despejó el valor de $f_p^+$ y $f_p^-$ 
+\begin{align}
+f_0^2 = f_p^+ \cdot f_p^- \\
+B = \frac{\Delta f_p}{f_0}\\
+f_p^+ =29.435 kHz  \ \ \ f_p^- = 26.635 kHz
+\end{align}
+Luego teniendo en cuenta que la pendiente originalmente es de 40dB por decada se tomo la frecuencia de atenuación acorde  talque mantenga las condiciones de simetría, siendo estas: $f_a^+= 294.35kHz y f_a^- = 2.635kHz$.
+
+
+Siendo esta la plantilla final.
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|}
@@ -30,13 +41,6 @@ $A_s$      & 40dB           \\ \hline
 $A_p$      & 1dB               \\ \hline
 \end{tabular}
 \end{table}
-De aquí se puede despejar valores para la plantilla de Band Pass:
-\begin{align}
-f_0^2 = f_p^+ \cdot f_p^- \\
-B = \frac{\Delta f_p}{f_0}\\
-f_p^+ =29.435 kHz  \ \ \ f_p^- = 26.635 kHz
-\end{align}
-Luego teniendo en cuenta que la pendiente originalmente es de 40dB por decada se tomo la frecuencia de atenuación acorde  talque mantenga las condiciones de simetría, siendo estas: $f_a^+= 294.35kHz y f_a^- = 2.635kHz$
 Obteniendo la siguiente función transferencia:
 \begin{align}
 	H(s)=\frac{as^2-bs+c}{(as^2-bs+c)\cdot (as^2-bs+c)}
@@ -49,13 +53,12 @@ Y el siguiente diagrama de polos y ceros:
 	\caption{Diagrama Polos y Ceros}
 \end{figure}
 
-teniendo los pares de polos con un Q de...
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Hablar del Q de los polos}}}
-\end{center}
+Teniendo los pares de polos conjugados un Q de 3.23	
+
+
 \subsubsection{Elecciones de diseño}
 Se decidió armar etapas con celdas segundo orden en cascada dado a que el orden es 4.
-Para la asociación de polos se tomo como criterio agrupar los polos por su cercanía, agrupandolos de las siguiente forma, así mismo la etapa de menor Q será la primera y la de mayor la última.
+Para la asociación de polos se optó por cada par de polos conjugados asignarle un cero.
 
 
 Los componentes utilizados fueron los siguientes:
@@ -88,11 +91,16 @@ $C_1$                                & $\approx 0 \%$                & $\approx 
 \end{tabular}
 \end{table}
 
-Cabe destacar que todas las imepdancias que fueron colocadas en el circuito fueron elegidas entre varias de su mismo tipo, con la finalidad de poner impedanicas que sean realmente de los valores deseados.
+Cabe destacar que todas las imepdancias que fueron colocadas en el circuito fueron elegidas entre varias de su mismo tipo, con la finalidad de poner impedancias que sean realmente de los valores deseados.
 
 \subsection{Celda Rauch.}
 La celda Rauch es una modificación de la celda Deliyannis-Friend incluyendo uan realimentación positiva.
-
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej2/Circuit.PNG}
+	\label{fig:graph}
+	\caption{Circuito celda Rauch Band-Pass.}
+\end{figure}
 \subsubsection{Cálculo Analítico}
 ---
 \subsubsection{Elecciones de diseño}
