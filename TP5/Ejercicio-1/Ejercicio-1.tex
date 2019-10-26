@@ -1,9 +1,79 @@
 \input{../Informe/Header.tex}
 \begin{document}
 
+\subsection{Introducción Teórica}
+
+\subsubsection{Realimentación Positiva}
+
+Con realimentación positiva se puede lograr virtualmente cualquier Q deseado en los filtros. Sin embargo, esta realimentación debe ser contralada. Una forma de realizar esto es la de localizarla alrededor de la frecuencia de corte del filtro deseado. Un perfecto ejemplo de esto puede verse en una celda Sallen-Key. En la Figura (\ref{fig:sallenkey}) se puede notar como existen tres etapas en el funcionamiento:
+
+\begin{itemize}
+\item En bajas frecuencias $C_1$ y $C_2$ actúan como circuito abierto. Por ende la celda actúa como no inversor con ganancia proporcional a $R_3$ y $R_4$. 
+\item En altas frecuencias $C_1$ y $C_2$ actúan como corto-circuito. La señal de entrada al operacional está puesta a tierra por lo que el amplificador operacional amplificará esta resultando en una ganancia nula. 
+\item Alrededor de la frecuencia de corte, las impedancias de $C_1$, $C_2$, $R_1$ y $R_2$ son del mismo orden por lo que efectivamente hay una realimentación positiva, incrementando el factor de calidad del circuito.
+\end{itemize}
+
+Todas celdas a estudiar en este informe se apoyan sobre este concepto para lograr los factores de calidad necesarios para cumplir distintas plantillas.
+
+\subsubsection{Consideraciones del Diseño en Cascada}
+El diseño en cascada de filtros analógicos activos permite una solución fácil y con una cantidad de componentes reducida. Dado que cada celda posee al menos un amplificador operacional, estas poseerán una muy baja impedancia de salida, lo que remueve el gasto de utilizar técnicas de \textit{buffering} para acoplar etapas. Existen consideraciones a ser tomadas al momento de diseñar un filtro en cascada que permiten modificar propiedades sutiles del filtro. 
+
+Una de ellas es el ordenamiento de las celdas a utilizar. Matemáticamente hablando es insustancial el orden en el que se colocan las etapas, mientras que haya un buen acoplamiento de impedancias. En la práctica sin embargo se descubre que si se ordenan las celdas con un factor de calidad ascendente, se logra reducir la pérdida de rango dinámico del filtro. Por otro lado, si se ordenan las etapas acorde a la misma propiedad pero de manera descendente, se logra reducir el ruido a la salida del filtro.
+
+Otra propiedad por la que se puede diseñar un filtro en cascada es acorde al tipo de señal esperado a la entrada. Si la señal es pequeña, es favorable en ciertos casos utilizar como primer etapa aquella que amplifique más que el resto, mientras que si la señal esperada es grande, resulta beneficioso ordenar las celdas de tal manera que la señal de entrada sea atenuada en la primera etapa para reducir el riesgo de saturación dado un sobrepico en etapas siguientes.
+
 \subsection{Introducción}
 
-En esta sección se implementó un filtro Low-Pass utilizando tanto una aproximación de \textbf{Legendre} como de \textbf{Bessel}. La implementación se realizó con celdas \textbf{Sallen-Key}. El filtro debía cumplir las siguientes especificaciones:
+En esta sección se implementó un filtro Low-Pass utilizando tanto una aproximación de \textbf{Legendre} como de \textbf{Bessel}. La implementación se realizó con etapas constituidas por celdas \textbf{Sallen-Key}.
+
+\begin{figure}[H]
+
+	\begin{subfigure}[t]{0.49\textwidth}
+
+		\centering
+		\begin{circuitikz}
+			\draw
+			
+				node[op amp, yscale=-1](opamp){}
+				
+				(opamp.out) to[short, -*] ++ (0.5, 0) node[](OUT_FEEDBACK){}
+				(opamp.+) to[short] ++ (-0.5, 0) node[](IN+){}
+				(opamp.-) to[short] ++ (-0.5, 0) node[](IN-){}			
+			
+				(IN-) to[short, -*] ++ (0, -1)
+				to[R, l=$R_3$] ++ (0, -2) node[ground]{}
+				to[open] ++ (0, 2)
+				to[R, l=$R_4$] ++ (3, 0)
+				-| (OUT_FEEDBACK.center)
+				
+				(IN+) to[short] ++ (-1, 0)
+				to[C, l=$C_1$] ++ (0, -2) node[ground]{}
+				to[open] ++ (0, 2)
+				to[R, l=$R_2$, -*] ++ (-2, 0)
+				to[R, l=$R_1$, -o] ++ (-2, 0)
+				node[label=west:$V_i$]{}
+				to[open] ++ (2, 0)
+				to[short] ++ (0, 1)
+				to[C, l=$C_2$] ++ (6, 0)
+				-| (OUT_FEEDBACK.center)
+				(OUT_FEEDBACK) to[short, -o] ++ (0.5, 0)
+				node[label=east:$V_o$] {}
+			;
+		\end{circuitikz}	
+	\caption{Filtro pasa-bajos implementado con una topología Sallen-Key.}
+	\label{fig:sallenkey}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\vspace{-6cm}
+		\begin{equation}
+			hola
+		\end{equation}				
+	\caption{Ecuaciones del filtro pasa-bajos.}
+	\end{subfigure}
+
+\end{figure}
+
+El filtro debía cumplir las siguientes especificaciones:
 
 \begin{figure}[H]
 	\begin{subfigure}[t]{0.49\textwidth}
@@ -36,103 +106,27 @@ En esta sección se implementó un filtro Low-Pass utilizando tanto una aproxima
 	\end{subfigure}
 \end{figure}
 \subsection{Aproximación de Legendre.}
-Para esta sección se utlizó la aproximación de \textbf{Legendre}, además se propuso una plantilla mas restrictiva, con el fin de asegurar el cumplimiento de la original, siendo esta la plantilla final.
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|}
-\hline
-$Pendiente$      & -40$\frac{dB}{dec}$           \\ \hline
-$f_p$      & 28kHz          \\ \hline
-$B$      & $\frac{1}{10}$           \\ \hline
-$A_p$      & 3dB               \\ \hline
-$Filtro$      & BP              \\ \hline
-$|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
-\end{tabular}
-\end{table}
-De aquí se puede despejar valores para la plantilla de Band Pass:
-\begin{align}
-f_0^2 = f_p^+ \cdot f_p^- \\
-B = \frac{\Delta f_p}{f_0}\\
-f_p^+ =29.435 kHz  \ \ \ f_p^- = 26.635 kHz
-\end{align}
-Luego teniendo en cuenta que la pendiente originalmente es de 40dB por decada se tomo la frecuencia de atenuación acorde  talque mantenga las condiciones de simetría, siendo estas: $f_a^+= 294.35kHz y f_a^- = 2.635kHz$
-Obteniendo la siguiente función transferencia:
-\begin{align}
-	H(s)=\frac{as^2-bs+c}{(as^2-bs+c)\cdot (as^2-bs+c)}
-\end{align}
-Y el siguiente diagrama de polos y ceros:
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Diagrama de polos y ceros}}}
-\end{center}
-teniendo los pares de polos con un Q de...
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Hablar del Q de los polos}}}
-\end{center}
+
 \subsubsection{Elecciones de diseño}
-Se decidió armar etapas con celdas segundo orden en cascada dado a que el orden es 4.
-Para la asociación de polos se tomo como criterio agrupar los polos por su cercanía, agrupandolos de las siguiente forma, así mismo la etapa de menor Q será la primera y la de mayor la última.
+
 \subsection{Aproximación de Bessel.}
-Para esta sección se utlizó la aproximación de \textbf{Legendre}, además se propuso una plantilla mas restrictiva, con el fin de asegurar el cumplimiento de la original, siendo esta la plantilla final.
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|}
-\hline
-$Pendiente$      & -40$\frac{dB}{dec}$           \\ \hline
-$f_p$      & 28kHz          \\ \hline
-$B$      & $\frac{1}{10}$           \\ \hline
-$A_p$      & 3dB               \\ \hline
-$Filtro$      & BP              \\ \hline
-$|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
-\end{tabular}
-\end{table}
-De aquí se puede despejar valores para la plantilla de Band Pass:
-\begin{align}
-f_0^2 = f_p^+ \cdot f_p^- \\
-B = \frac{\Delta f_p}{f_0}\\
-f_p^+ =29.435 kHz  \ \ \ f_p^- = 26.635 kHz
-\end{align}
-Luego teniendo en cuenta que la pendiente originalmente es de 40dB por decada se tomo la frecuencia de atenuación acorde  talque mantenga las condiciones de simetría, siendo estas: $f_a^+= 294.35kHz y f_a^- = 2.635kHz$
-Obteniendo la siguiente función transferencia:
-\begin{align}
-	H(s)=\frac{as^2-bs+c}{(as^2-bs+c)\cdot (as^2-bs+c)}
-\end{align}
-Y el siguiente diagrama de polos y ceros:
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Diagrama de polos y ceros}}}
-\end{center}
-teniendo los pares de polos con un Q de...
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Hablar del Q de los polos}}}
-\end{center}
+
 \subsubsection{Elecciones de diseño}
-Se decidió armar etapas con celdas segundo orden en cascada dado a que el orden es 4.
-Para la asociación de polos se tomo como criterio agrupar los polos por su cercanía, agrupandolos de las siguiente forma, así mismo la etapa de menor Q será la primera y la de mayor la última.
+
 \subsection{Celda Rauch.}
-La celda Sedra-Ghorab-Martin fue propuesta en el paper ``Optimum Configurations for Single Amplifiers Biquadratic Filters'' como un diseño que permite con un único amplificador operacional (Por eso son llamados Single-Amplifier-Biquad), sintetizar celdas de segundo orden con Q relativamente altos, originalmente esta celda fue propuesta como una mejora de la celda Deliyannis.
-Finalmente en el paper discutido se tomó la configuración de HPB dado a que es lo único que utlizaremos, siendo este el circuito propuesto por el paper.
 
 \subsubsection{Cálculo Analítico}
----
+
 \subsubsection{Elecciones de diseño}
-El análisis de sensibilidades que se obtiene del circuito, el cual coincide con lo publicado en el paper es la siguiente: 
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Tabla sensibilidades}}}
-\end{center}
-En base a esta tabla se tomo especial cuidado en la elección de componentes y en el matcheo de impedancias.
-Se tomaron como valor de los componentes...
-Se eligió utilizar presets para las resistencias... Para ajustar el Q y el $\omega_0$ del filtro.
+
 \subsubsection{Acoplamiento de Impedancias.}
-Para que ambas etapas no se carguen entre si la impedancia de entrada de la segunda etapa debe ser mucho mayor a la de salida de la primera
+
 \subsection{Respuesta en Frecuencia.}
-Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al 1$\%$ y capacitores al 10$\%$ obteniendo la siguiente disperción,
-\subsubsection{Etapas.}
-Se realizaron 2 etapas, ambas siendo el mismo tipo de celda, pero con distintos parámetros.
+
+\subsubsection{Etapas Utilizadas}
+
 \subsubsection{Filtro definitivo.}
-%
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.4\textwidth]{/ImagenesEjercicio3/Graph.png}
-%	\label{fig:graph}
-%\end{figure}
+
+
 
 \end{document}
