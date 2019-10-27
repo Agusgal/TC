@@ -8,17 +8,44 @@ from cusfunc import maprange
 
 class Butterworth(AnalogFilter):
     def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
-        print(f"received k: {type(k)}")
+        """
+        Parameters
+        ----------
+        ftype: {‘lowpass’, ‘highpass’, ‘bandpass’, ‘bandstop’}
+        Choosen filter type
+
+        wp, ws : float
+        wp: pass frequency(ies) in (rads/seg)
+        ws: stop frequency(ies) in (rads/seg)
+        - Lowpass: wp = 0.2, ws = 0.3
+        - Highpass: wp = 0.3, ws = 0.2
+        - Bandpass: wp = [0.2, 0.5], ws = [0.1, 0.6]
+        - Bandstop: wp = [0.1, 0.6], ws = [0.2, 0.5]
+        For analog filters, wp and ws are angular frequencies (e.g. rad/s).
+
+        aprox: str
+
+        Ap : float
+        The maximum loss in the passband (db).
+
+        As : float
+        The minimum attenuation in the stopband (dB).
+
+        k: float
+        By default give minimum.
+        Selectivity factor. Ranges from 0 to 1.
+
+        N: int
+        Order filter. If this N is None the order will be calculated (recommended)
+    """
         super().__init__(ftype,  wp, ws, Ap, As, k=k, N=N)
 
     def compute_order(self):
         """
-        Compute the minimum order that satisfies the requierements
+        Must return optimal filter order
         """
-        if self.N is None:
-            self.N, self.Wn = signal.buttord(
+        self.N, self.Wn = signal.buttord(
                 self.wp, self.ws, self.Ap, self.As, analog=True)
-
     def compute_ba(self):
         """
         Calculates transfer function coefficients
@@ -42,6 +69,23 @@ class Butterworth(AnalogFilter):
         self.wcryt = self.get_critical_w(self.k)  # Compute cut-off frequencies
         return signal.butter(
             self.N, self.wcryt, self.ftype, analog=True, output='zpk')
+
+    def compute_filter_stages(self):
+        """
+        Split the obtained filter into second and first order units
+        
+        Returns
+        -------
+            den: array-like
+                Array of shape (n-sections,3) containing the denominator coefficients of the units
+            num: array-like
+                Array of shape (n-sections,3) containing the numerator coefficients of the units
+        """ 
+        sos = signal.butter(self.N, self.wcryt, self.ftype, analog=True, output='sos')
+        num = sos[:, :3]
+        den = sos[:, 3:]
+        return den, num
+
 
     def get_critical_w(self, k):
         """
@@ -76,11 +120,11 @@ class Butterworth(AnalogFilter):
         elif self.ftype == 'bandstop':
             return self.Wn
             pass
-
+        
+    
 
 # b = Butterworth("lowpass", 1E3, 4E3, 3, 40, k=0)
 # b = Butterworth("lowpass", 10E3, 40E3, 3, 40, k=0)
-
 # b = Butterworth("highpass", 4E3, 1E3, 3, 40, k=0.4)
 # b = Butterworth("lowpass", 1E3, 4E3, 3, 40, k=0.9)
 # b = Butterworth("lowpass", 10E3*2*np.pi, 40E3*2*np.pi, 3, 40, k=0.9)
@@ -99,15 +143,20 @@ class Butterworth(AnalogFilter):
 # b.plot_group_delay(show=True)
 # # a.plot_mag(dstencils=True, sc='yellow', lc='green')
 # plt.title(f"Butterworth mag {b.get_order()}")
-plt.title(f"Butterworth mag")
-for i in np.linspace(0, 1, 10):
-    b = Butterworth("highpass", 40E3*2*np.pi, 10E3*2*np.pi, 3, 40, k=i)
-    # c = Butterworth("highpass", 40E3*2*np.pi,10E3*2*np.pi, 3, 40, N=i)
-    b.plot_mag(dstencils=True, sc='blue', name=f'k: {i}')
-    # c.plot_mag(dstencils=True, sc='black',name=f'N: {i}')
+# for i in np.linspace(0, 1, 1):
+# b = Butterworth("highpass", 40E3*2*np.pi, 10E3*2*np.pi, 3, 40, k=i)
+b = Butterworth("lowpass", 10E3*2*np.pi, 40E3*2*np.pi, 3, 40, k=0)
 plt.grid(axis='both', which='both')
 plt.legend()
 plt.show()
+plt.title("Polos y ceros")
+b.plot_zp(show=True)
+# c = Butterworth("highpass", 40E3*2*np.pi,10E3*2*np.pi, 3, 40, N=i)
+plt.grid(axis='both', which='both')
+plt.legend()
+b.plot_mag(dstencils=True,show=True, sc='blue', name=f'original')
+# c.plot_mag(dstencils=True, sc='black',name=f'N: {i}')
 # c.plot_mag(dstencils=True, sc='yellow', lc='green')
 # plt.show()
 # a.plot_pha(show=True)
+# https://dsp.stackexchange.com/questions/1966/how-can-i-break-a-filter-down-into-second-order-sections
