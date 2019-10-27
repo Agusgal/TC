@@ -8,6 +8,36 @@ from cusfunc import maprange
 
 class Butterworth(AnalogFilter):
     def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
+        """
+        Parameters
+        ----------
+        ftype: {‘lowpass’, ‘highpass’, ‘bandpass’, ‘bandstop’}
+        Choosen filter type
+
+        wp, ws : float
+        wp: pass frequency(ies) in (rads/seg)
+        ws: stop frequency(ies) in (rads/seg)
+        - Lowpass: wp = 0.2, ws = 0.3
+        - Highpass: wp = 0.3, ws = 0.2
+        - Bandpass: wp = [0.2, 0.5], ws = [0.1, 0.6]
+        - Bandstop: wp = [0.1, 0.6], ws = [0.2, 0.5]
+        For analog filters, wp and ws are angular frequencies (e.g. rad/s).
+
+        aprox: str
+
+        Ap : float
+        The maximum loss in the passband (db).
+
+        As : float
+        The minimum attenuation in the stopband (dB).
+
+        k: float
+        By default give minimum.
+        Selectivity factor. Ranges from 0 to 1.
+
+        N: int
+        Order filter. If this N is None the order will be calculated (recommended)
+    """
         super().__init__(ftype,  wp, ws, Ap, As, k=k, N=N)
 
     def compute_order(self):
