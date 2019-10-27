@@ -30,7 +30,7 @@ Reescribinedo (\ref{equ:1}) con (\ref{equ:2}), se obtiene
 	\label{equ:3}
 \end{equation}
 
-Si se utiliza la transformada de Laplace inversa tanto en (\ref{equ:2}) como en (\ref{equ:3}), se observa que se posee
+Si se utiliza la transformada de Laplace inversa tanto en (\ref{equ:2}) como en (\ref{equ:3}), se observa que se posee el siguiente sistema de ecuacuiones:
 \begin{equation}
 \begin{split}
 	v_a(t) =\ v_i(t) - a_1 & \int v_a(t)dt - a_0 \int \left( \int v_a(t)dt \right) dt \\
@@ -38,7 +38,7 @@ Si se utiliza la transformada de Laplace inversa tanto en (\ref{equ:2}) como en 
 \end{split}
 \end{equation}
 
-Del sistema anterior, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt \right) dt = x(t)$ son las llamadas variables de estado. Dichas ecuaciones se pueden representar estas de la forma mostrada en la Figura (\ref{fig:blockKHN}).
+De las ecuaciones anteriores, $v_a(t) = \ddot{x}(t) $, $\int v_a(t)dt = \dot{x}(t)$ y $\int \left( \int v_a(t)dt \right) dt = x(t)$ son las llamadas variables de estado. Dichas expresiones se pueden representar estas de la forma mostrada en la Figura (\ref{fig:blockKHN}).
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Bloques-KHN.pdf}
@@ -117,8 +117,8 @@ Este tipo de celda, que cuenta con una entrada ($V_i$) y varias salidas ($V_{PB}
 \end{figure}
 
 \subsubsection{Tow-Thomas (TT)}
-La celda Tow-Thomas%, nombre dado por sus creadores\footnote{J. Tow, ``Design formulas for active RC filters using operational-amplifier biquad,'' \textit{Electronics Letters}, vol. 5, no. 15, pp. 339–341, Jul. 1969.}\footnote{L. C. Thomas, ``The Biquad: Part I-Some practical design considerations,'' \textit{IEEE Transactions on Circuit Theory}, vol. 18, no. 3, pp. 350–357, 1971.},
- surge como una variación de la celda KHN. A esta última, se la modifica buscando aprovechar una realimentación negativa a base de una implementación RC. De esta forma, se logra alejar las frecuencias naturales del eje $j\omega$ por sobre el semiplano izquierdo. De igual forma que se realizó con la celda KHN, se construye el siguiente diagrama de bloques.
+La celda Tow-Thomas %, nombre dado por sus creadores\footnote{J. Tow, ``Design formulas for active RC filters using operational-amplifier biquad,'' \textit{Electronics Letters}, vol. 5, no. 15, pp. 339–341, Jul. 1969.}\footnote{L. C. Thomas, ``The Biquad: Part I-Some practical design considerations,'' \textit{IEEE Transactions on Circuit Theory}, vol. 18, no. 3, pp. 350–357, 1971.},
+surge como una variación de la celda KHN. A esta última, se la modifica buscando aprovechar una realimentación negativa a base de una implementación RC. De esta forma, se logra alejar las frecuencias naturales del eje $j\omega$ por sobre el semiplano izquierdo. De igual forma que se realizó con la celda KHN, se construye el siguiente diagrama de bloques.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.7\textwidth]{ImagenesEjercicio4/Bloques-TT.pdf}
@@ -170,7 +170,7 @@ De manera similar, se destaca el hecho de que la frecuencia $\omega_o$ es indepe
 Se denota además que $V_{BP} = V_{o1}$ y $V_{PB} = V_{o2}$. Es así que la celda TT permite obtener un filtro pasa bandas y dos pasa bajos, siendo uno de ellos inversor. Este circuito no posee una transferencia que cumpla la función de pasa altos, por lo tanto, tampoco posee directamente una función de rechaza banda o pasa todo, al igual que la celda KHN.
 
 \subsubsection{\r{A}ckerberg-Mossberg (AM)}
-La celda \r{A}ckerberg-Mossberg resulta de una variación de la TT. Del circuito mostrado en la Figura(\ref{fig:TT}), se invierte el amplificador operacional utilizado para retroalimentar el sistema.
+La celda \r{A}ckerberg-Mossberg resulta de una variación de la TT. Del circuito mostrado en la Figura (\ref{fig:TT}), se invierte el amplificador operacional utilizado para retroalimentar el sistema.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/AM.pdf}
@@ -189,22 +189,87 @@ En ocasiones es deseable poseer una señal de entrada que alimente varios nodos,
 	\label{fig:FT}
 \end{figure}
 
-\begin{table}[H]
+%\begin{table}[H]
+%\centering
+%\begin{tabular}{ccc}
+%\hline
+%\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
+%\hline
+%Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
+%Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
+%Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
+%Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
+%Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
+%\hline
+%\end{tabular}
+%\caption{Tipos de filtro y componentes para una celda FT.}
+%\label{tabla:tiposdefiltroft}
+%\end{table}
+
+Se decide obtener la función transferencia de esta celda, en un principio, considerando los operacionales ideales, por cuestiones que explicadas más adelante. Para calcular la función mencionada de esta celda, se observa primero la siguiente configuración:
+\begin{figure}[H]
 \centering
-\begin{tabular}{ccc}
-\hline
-\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
-\hline
-Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
-Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
-Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
-Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
-Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
-\hline
-\end{tabular}
-\caption{Tipos de filtro y componentes para una celda FT.}
-\label{tabla:tiposdefiltroft}
-\end{table}
+\begin{circuitikz}
+	\node [ocirc, label=left:$V_a$](va){};
+	\draw (va.east) to[generic, l=$Z_1$] ++(3,0) node[op amp, anchor=-](A1){};
+	\draw (va) ++(0.5,0) node[](v1aux1){};
+	\draw (A1.+) node[ground](){};
+	\draw (A1.out) node[](aux1){};	
+	\draw (A1.-) -- ++(0,1) to[generic, l=$Z_3$] ++(2.25,0) -| (aux1.center);
+	\draw (A1.out) -- ++(0.5,0) node[ocirc, label=below:$V_c$](){};
+	\draw (A1.-) -- ($ (A1.-) !.7! (A1.+) $) to[generic, l=$Z_2$] ++(-3,0) node[ocirc, label=left:$V_b$](vb){};
+\end{circuitikz}
+\caption{Circuito genérico inversor.}
+\label{fig:generic}
+\end{figure}
+
+Observando la Figura (\ref{fig:generic}), aplicando el teorema de superposición, se obtiene que
+\begin{equation}
+	V_c = -\frac{V_a}{\frac{Z_1}{Z_3} + \frac{Z_1}{Z_3 A_o} + \frac{1}{A_o}} - \frac{V_b}{\frac{Z_2}{Z_3} + \frac{Z_2}{Z_3 A_o} + \frac{1}{A_o}}
+	\label{equ:generic}
+\end{equation}
+
+Aplicando (\ref{equ:generic}) y considerando los tres operacionales de la Figura (\ref{fig:FT}) iguales, se obtiene el siguiente sistema de ecuaciones:
+\begin{equation}
+\begin{split}
+	V' = - V_i A - V'' B \\
+	V_o = - V' C - V_i D \\
+	V'' = - V_o E - V_i F
+\end{split}
+\end{equation}
+siendo las constantes empleadas las siguientes:
+\begin{equation}
+\begin{split}
+	A^{-1} =& \ \frac{R_4}{R_1 // \frac{1}{sC_1}} + \frac{R_4}{\left( R_1 // \frac{1}{sC_1} \right) A_o} + \frac{1}{A_o} \\
+	B^{-1} =& \ \frac{R_3}{R_1 // \frac{1}{sC_1}} + \frac{R_3}{\left( R_1 // \frac{1}{sC_1} \right) A_o} + \frac{1}{A_o} \\
+	C^{-1} =& \ \frac{R_7}{R_8} + \frac{R_7}{R_8 A_o} + \frac{1}{A_o} \\
+	D^{-1} =& \ \frac{R_6}{R_8} + \frac{R_6}{R_8 A_o} + \frac{1}{A_o} \\
+	E^{-1} =& \ sC_2R_2 + \frac{sC_2R_2}{A_o} + \frac{1}{A_o} \\
+	F^{-1} =& \ sC_2R_5 + \frac{sC_2R_5}{A_o} + \frac{1}{A_o}
+\end{split}
+\end{equation}
+
+Operando algebraicamente, se obtiene que la transferencia de esta configuración es
+\begin{equation}
+	\frac{V_o}{V_i} = \frac{AC - BCF - D}{1 + BCE}
+	\label{equ:transf-ft-r}
+\end{equation}
+
+Si se consideran ideales los operacionales, es decir, se toma $A_o \rightarrow \infty$, se obtiene que la forma de la transferencia final es
+\begin{equation}
+	\frac{V_o}{V_i} = - \frac{R_2}{R_5} \frac{s^{2} \frac{C_1 C_2 R_3 R_5 R_7}{R_6} + s \frac{C_2 R_3 R_5 R_7}{R_1} \left( \frac{1}{R_6} - \frac{R_1}{R_4 R_7} \right) + 1}{s^{2} \frac{C_1 C_2 R_2 R_3 R_7}{R_8} + s \frac{C_2 R_2 R_3 R_7}{R_1 R_8} + 1}
+\label{equ:transf-ft-i}
+\end{equation}
+
+De esta última ecuación se puede obtener los siguientes valores de interés.
+\begin{equation}
+\begin{split}
+	\omega_o = \sqrt{\frac{R_8}{R_2 R_3 R_7 C_1 C_2}} \\
+	Q = R_1 \sqrt{\frac{C_1 R_8}{C_2 R_2 R_3 R_7}} 
+\end{split}
+\end{equation}
+
+Es así que se destaca la dependencia de $\omega_o$ y $Q$ de los capacitores, mientras que resultan ser independientes de $R_5$. Finalmente, y el detalle más importante, es que, a diferencia de, por ejemplo, las celdas KHN y TT, no hay componente que modifique una variable y no la otra. Por lo tanto, una modificación de uno de estos factores, genera un cambio en el otro.
 
 \subsection{Filtro a desarrollar}
 Una vez presentado cada tipo de celda, solo resta determinar cual conviene emplear para realizar el filtro con las características deseadas.
@@ -227,12 +292,12 @@ Plantilla & Chebycheff Inverso \\
 \hline
 \end{tabular}
 \caption{Características del filtro a realizar.}
-\label{tabla:caracteristicas}
+\label{tabla:caracteristicas1}
 \end{table}
 
-Como se busca confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. De forma similar, si bien la celda KHN posee transferencia pasa altos, se requiere un amplificador operacional extra que permita restar la pasa bajos y pasa altos, por lo cual también queda descartada. Por último para la celda FT basta con tomar los componentes adecuados, consiguiendo así la transferencia deseada. Es por ello que la celda considerada más optima para este caso es la FT.
+Como se busca confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. De forma similar, si bien la celda KHN posee transferencia pasa altos, se requiere un amplificador operacional extra que permita restar la pasa bajos y pasa altos, por lo cual también queda descartada. Por último para la celda FT basta con tomar los componentes adecuados, consiguiendo así la transferencia deseada. Es por ello que la celda considerada más optima para este caso es la FT. Esta es la razón por la cuál en (\ref{equ:generic}) se optó por considerar los operacionales reales.
 
-Con lo establecido en la Tabla (\ref{tabla:caracteristicas}), y sabiendo que se debe cumplir
+Con lo establecido en la Tabla (\ref{tabla:caracteristicas1}), y sabiendo que se debe cumplir
 \begin{equation}
 \begin{split}
 	f_{\infty}^{2} = f_{p}^{-} f_{p}^{+} = f_{a}^{-} & f_{a}^{+} \\
@@ -254,28 +319,22 @@ $f_{p}^{+}$ & $44184\ Hz$ \\
 \hline
 \end{tabular}
 \caption{Características del filtro a realizar.}
-\label{tabla:caracteristicas}
+\label{tabla:caracteristicas2}
 \end{table}
 
-
-\begin{table}[H]
 \begin{center}
-\begin{tabular}{|l|l|}
-\hline
-$f_{\infty}$& $30KHz$\\
-\hline \hline
-$\Delta f_a$ &600Hz  \\ \hline
-$\Delta f_p$ &13.2KHz  \\ \hline
-$A_a$ &40dB\\ \hline
-$A_p$ &6dB\\ \hline
-$ |Z_{in}(f)|$ & >50$K\Omega $\\ \hline
-Filtro & BR\\ \hline
-
-
-
-\end{tabular}
-\caption{Plantilla} 
+	\Large{\textbf{\textcolor{red}{CUENTAS DE PLANTILLA. \\ JUSTIFICACIÓN DE n, Q y COMPONENTES.}}}
 \end{center}
-\end{table}
+
+\subsubsection{Análisis de sensibilidades}
+\begin{center}
+	\Large{\textbf{\textcolor{red}{CUENTAS: LEER CONSIGNA PARA VER QUE SENSIBILIDADES PIDE.}}}
+\end{center}
+
+\subsubsection{Confección del filtro y mediciones}
+
+\begin{center}
+	\Large{\textbf{\textcolor{red}{$\mathbf{Z_{IN}}$ Y $\mathbf{Z_{OUT}}$.}}}
+\end{center}
 
 \end{document}
