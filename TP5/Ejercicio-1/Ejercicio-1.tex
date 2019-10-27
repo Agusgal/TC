@@ -18,62 +18,13 @@ Todas celdas a estudiar en este informe se apoyan sobre este concepto para logra
 \subsubsection{Consideraciones del Diseño en Cascada}
 El diseño en cascada de filtros analógicos activos permite una solución fácil y con una cantidad de componentes reducida. Dado que cada celda posee al menos un amplificador operacional, estas poseerán una muy baja impedancia de salida, lo que remueve el gasto de utilizar técnicas de \textit{buffering} para acoplar etapas. Existen consideraciones a ser tomadas al momento de diseñar un filtro en cascada que permiten modificar propiedades sutiles del filtro. 
 
-Una de ellas es el ordenamiento de las celdas a utilizar. Matemáticamente hablando es insustancial el orden en el que se colocan las etapas, mientras que haya un buen acoplamiento de impedancias. En la práctica sin embargo se descubre que si se ordenan las celdas con un factor de calidad ascendente, se logra reducir la pérdida de rango dinámico del filtro. Por otro lado, si se ordenan las etapas acorde a la misma propiedad pero de manera descendente, se logra reducir el ruido a la salida del filtro.
+Una de ellas es el ordenamiento de las celdas a utilizar. Matemáticamente hablando es irrelevante el orden en el que se colocan las etapas, mientras que haya un buen acoplamiento de impedancias. En la práctica sin embargo se descubre que si se ordenan las celdas con un factor de calidad ascendente, se logra reducir la pérdida de rango dinámico del filtro debido a sobrepicos en las etapas de alto Q que pueden ocasionar que la señal de entrada sature. Por otro lado, si se ordenan las etapas acorde a la misma propiedad pero de manera descendente, se logra reducir el ruido a la salida del filtro, teniendo en cuenta que el ruido de frecuencia igual a la de resonancia de las etapas de alto Q puede ser amplificado considerablemente.
 
 Otra propiedad por la que se puede diseñar un filtro en cascada es acorde al tipo de señal esperado a la entrada. Si la señal es pequeña, es favorable en ciertos casos utilizar como primer etapa aquella que amplifique más que el resto, mientras que si la señal esperada es grande, resulta beneficioso ordenar las celdas de tal manera que la señal de entrada sea atenuada en la primera etapa para reducir el riesgo de saturación dado un sobrepico en etapas siguientes.
 
 \subsection{Introducción}
 
-En esta sección se implementó un filtro Low-Pass utilizando tanto una aproximación de \textbf{Legendre} como de \textbf{Bessel}. La implementación se realizó con etapas constituidas por celdas \textbf{Sallen-Key}.
-
-\begin{figure}[H]
-
-	\begin{subfigure}[t]{0.49\textwidth}
-
-		\centering
-		\begin{circuitikz}
-			\draw
-			
-				node[op amp, yscale=-1](opamp){}
-				
-				(opamp.out) to[short, -*] ++ (0.5, 0) node[](OUT_FEEDBACK){}
-				(opamp.+) to[short] ++ (-0.5, 0) node[](IN+){}
-				(opamp.-) to[short] ++ (-0.5, 0) node[](IN-){}			
-			
-				(IN-) to[short, -*] ++ (0, -1)
-				to[R, l=$R_3$] ++ (0, -2) node[ground]{}
-				to[open] ++ (0, 2)
-				to[R, l=$R_4$] ++ (3, 0)
-				-| (OUT_FEEDBACK.center)
-				
-				(IN+) to[short] ++ (-1, 0)
-				to[C, l=$C_1$] ++ (0, -2) node[ground]{}
-				to[open] ++ (0, 2)
-				to[R, l=$R_2$, -*] ++ (-2, 0)
-				to[R, l=$R_1$, -o] ++ (-2, 0)
-				node[label=west:$V_i$]{}
-				to[open] ++ (2, 0)
-				to[short] ++ (0, 1)
-				to[C, l=$C_2$] ++ (6, 0)
-				-| (OUT_FEEDBACK.center)
-				(OUT_FEEDBACK) to[short, -o] ++ (0.5, 0)
-				node[label=east:$V_o$] {}
-			;
-		\end{circuitikz}	
-	\caption{Filtro pasa-bajos implementado con una topología Sallen-Key.}
-	\label{fig:sallenkey}
-	\end{subfigure}
-	\begin{subfigure}{0.49\textwidth}
-		\vspace{-6cm}
-		\begin{equation}
-			hola
-		\end{equation}				
-	\caption{Ecuaciones del filtro pasa-bajos.}
-	\end{subfigure}
-
-\end{figure}
-
-El filtro debía cumplir las siguientes especificaciones:
+En esta sección se implementaron dos filtros Low-Pass utilizando tanto una aproximación de \textbf{Legendre} como una de \textbf{Bessel}. El filtro debía cumplir las siguientes especificaciones:
 
 \begin{figure}[H]
 	\begin{subfigure}[t]{0.49\textwidth}
@@ -107,13 +58,130 @@ El filtro debía cumplir las siguientes especificaciones:
 \end{figure}
 \subsection{Aproximación de Legendre.}
 
+Para cumplir con la plantilla propuesta con seguridad, se diseñó el filtro con una plantilla más restrictiva que la original, presentada a continuación.
+
+\begin{figure}[H]
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{@{}cc@{}}
+			\toprule
+			\multicolumn{2}{c}{Large Signal LP Sallen-Key Legendre} \\ \midrule
+			Orden & $5$ \\
+			$f_p$ & $31KHz \pm 5\%$ \\
+			$A_p$ & $2dB$ \\
+			$\left| Z_{in}\right|$ & $\geq 50K\Omega$ \\ \bottomrule
+			\end{tabular}
+		\end{table}
+		\caption{Aproximación de Legendre más estricta utilizada.}
+		\label{aprox_leg_est}
+\end{figure}
+
+
+
 \subsubsection{Elecciones de diseño}
 
 \subsection{Aproximación de Bessel.}
 
+preset en r1 segunda etapa
+\begin{figure}[H]
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{@{}cc@{}}
+			\toprule
+			\multicolumn{2}{c}{Large Signal LP Sallen-Key Bessel} \\ \midrule
+			$f_p$ & $1650Hz$ \\
+			$f_a$ & $7800Hz$ \\
+			$A_p$ & $2dB$ \\
+			$A_a$ & $43dB$ \\
+			$\Upsilon$ & $\leq 5\%$ \\
+			$\left| Z_{in}\right|$ & $\geq 50K\Omega$ \\ \bottomrule
+			\end{tabular}
+		\end{table}
+		\caption{Aproximación de Bessel más estricta utilizada.}
+		\label{aprox_leg_est}
+\end{figure}
+
 \subsubsection{Elecciones de diseño}
 
-\subsection{Celda Rauch.}
+\subsection{Celda Sallen-Key.}
+
+El circuito de la Figura (\ref{fig:rcnet}) posee como máximo, cuando la impedancia provista por $R_2$ y $C_2$ es mucho mayor que la impedancia provista por $R_1$ y $C_1$, un Q igual a $\frac{1}{2}$.
+
+\begin{figure}[H]
+
+	\centering
+		\begin{circuitikz}
+			\draw
+			node[label=west:$V_i$]{} to[short, o-] ++ (0.5, 0) to[R, l=$R_1$, -*] ++ (2, 0)
+			to[C, l=$C_1$] ++ (0, -1.25) node[ground]{} to[open] ++ (0, 1.25)
+			to[R, l=$R_2$, -*] ++ (2, 0)
+			to[C, l=$C_2$] ++ (0, -1.25) node[ground]{} to[open] ++ (0, 1.25)
+			to[short, -o] ++ (1.5, 0) node[label=east:$V_o$]{}
+			;
+		\end{circuitikz}
+	\caption{Filtro pasa-bajos de segundo implementado con una red R-C.}
+	\label{fig:rcnet}
+
+\end{figure}
+
+Utilizando realimentación positiva se pueden lograr Q mucho mayores. Al colocar un amplificador operacional a la salida del filtro anterior y conectando $C_2$ a la salida de este, se consigue una topología nombrada \textbf{Sallen-Key}, por los profesores R.P. Sallen y E.L. Key los quienes describieron por primera vez su comportamiento.
+
+\begin{figure}[H]
+
+	\begin{subfigure}[t]{0.49\textwidth}
+
+		\centering
+		\scalebox{0.7}{
+		\begin{circuitikz}
+			\draw
+			
+				node[op amp, yscale=-1](opamp){}
+				
+				(opamp.out) to[short, -*] ++ (0.5, 0) node[](OUT_FEEDBACK){}
+				(opamp.+) to[short] ++ (-0.5, 0) node[](IN+){}
+				(opamp.-) to[short] ++ (-0.5, 0) node[](IN-){}			
+			
+				(IN-) to[short, -*] ++ (0, -1)
+				to[R, l=$R_3$] ++ (0, -2) node[ground]{}
+				to[open] ++ (0, 2)
+				to[R, l=$R_4$] ++ (3, 0)
+				-| (OUT_FEEDBACK.center)
+				
+				(IN+) to[short] ++ (-1, 0)
+				to[C, l=$C_1$, *-] ++ (0, -2) node[ground]{}
+				to[open] ++ (0, 2)
+				to[R, l=$R_2$, -*] ++ (-2, 0)
+				to[R, l=$R_1$, -o] ++ (-2, 0)
+				node[label=west:$V_i$]{}
+				to[open] ++ (2, 0)
+				to[short] ++ (0, 1)
+				to[C, l=$C_2$] ++ (6, 0)
+				-| (OUT_FEEDBACK.center)
+				(OUT_FEEDBACK) to[short, -o] ++ (0.5, 0)
+				node[label=east:$V_o$] {}
+			;
+		\end{circuitikz}
+		}	
+	\caption{Filtro pasa-bajos de segundo orden.}
+	\label{fig:sallenkey}
+	\end{subfigure}
+	\begin{subfigure}{0.49\textwidth}
+		\vspace{-4cm}
+		\begin{equation*}
+			H(S) = \frac{1+ \frac{R_4}{R_3}}{S^2 (R_2 R_1 C_2 C_1) + S(C_1 (R_2 + R_1) - \frac{C_2 R_1 R_4}{R_3}) + 1} 
+		\end{equation*}				
+		\begin{equation*}
+			Z_{in}(S) = \frac{S^2 (R_2 R_1 C_2 C_1) + S(C_1 (R_2 + R_1) - \frac{C_2 R_1 R_4}{R_3}) + 1}{S^2 (R_2 R_1 C_2 C_1)}
+		\end{equation*}
+		\begin{equation*}
+		Z_{out}\approx Z_{out_{opamp}}
+		\end{equation*}
+	\caption{Ecuaciones del filtro pasa-bajos.}
+	\end{subfigure}
+	\caption{Topología Sallen-Key para un filtro pasa-bajos de segundo orden.}
+\end{figure}
+
+La topología Sallen-Key posee varias ventajas. La primera es que esta topología presenta la menor dependencia frente a el GBP del operacional utilizado, ya que estas celdas utilizan al operacional como amplificador y no como integrador. La segunda ventaja de este tipo de celdas es el pequeño desvío entre los valores de capacitores y entre los valores de resistencias en la misma celda, lo que es beneficioso para la manufactura de estos filtros. La desventaja de esta topología, sin embargo, es la alta sensibilidad del factor de calidad respecto a los componentes de la celda, más aún cuanto más alto sea este. 
 
 \subsubsection{Cálculo Analítico}
 
