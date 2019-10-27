@@ -12,7 +12,7 @@
 	node at (aux1) [block, above=15mm, left=15mm] (a0) {$a_0$}
 	node at (aux1) [below = 15mm] (aux2) {}
 	node at (aux2) [block, left = 15mm] (a1) {$a_1$}
-	node at (aux2) [block, right = 15mm] (K) {$K$}
+	node at (int2) [block, right = 20mm] (K) {$K$}
 	node at (K) [right=15mm, input, name=input2, label=above:$V_o$] (vo) {\textopenbullet $V_o$}
 	node at (suma1) [right=3mm, above=3mm] () {\Large -}
 	node at (suma1) [left=3mm, below=3mm] () {\tiny +}
@@ -24,10 +24,10 @@
 	\draw[->] (aux1.center) -- (int2);
 	\draw[->, rounded corners] (int2) |- (a0);
 	\draw[->, rounded corners] (a0) -| (suma1);
-	\draw[->] (aux1.center) -- (aux2.center);
-	\draw[->] (aux2.center) -- (K);
+	\draw[->, rounded corners] (aux1.center) |- (a1);
+	\draw[->] (int2) -- (K);
 	\draw[-o] (K) -- (vo);
-	\draw[->] (K) -- (a1);
+	%\draw[->] (K) -- (a1);
 	\draw[->, rounded corners] (a1) -| (suma1);
 	
 \end{tikzpicture}
