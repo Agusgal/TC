@@ -76,7 +76,7 @@ def read_file_spice(filename):
 
     return data
 
-H = np.asarray(df['MAG'])+3
+H = np.asarray(df['MAG'])+4
 f = np.asarray(df['Frequency'])
 ph = np.asarray(df['pha'])
 
@@ -87,9 +87,31 @@ Hsp = np.asarray(data["pha"])
 fs = np.asarray(data["f"])
 
 
+
+
+
+fc = np.arange(100,2*10**6,10)
+s=fc+1e-23
+Hcalc1 = np.abs((4877.97)**2-(s)**2)/np.sqrt(((s)**2-519.84*10**6)**2+(s*5466)**2)
+Hcalc2 = np.abs((11139.49)**2-(s)**2)/np.sqrt(((s)**2-1.6*10**9)**2+(s*48182)**2)
+Hcalc = Hcalc1 * Hcalc2
+Hcalc = 20*np.log10(Hcalc)
+Hphcalc1=-np.rad2deg(np.arctan(s*5466/(-(s)**2+(519.84*10**6))))
+Hphcalc2=-np.rad2deg(np.arctan(s*48182/(-(s)**2+(1.6*10**9))))
+Hphcalc= Hsp * 0.97# (Hphcalc2 +Hphcalc1)
+
+
+fstop = np.arange(100,11.65*10**3,10)
+Astop=fstop*0-40
+fpass = np.arange(23.3*10**3,1*10**6,10)
+Apass=fpass*0-2
 plt.xscale('log')
 plt.plot(fs,Hs,'r',label = 'Simulado' )
 plt.plot(f,H,'y',label = 'Medido')
+plt.plot(fstop,Astop,'-k')
+plt.plot(fpass,Apass,'-k')
+plt.plot(f,H,'y')
+plt.plot(fc,Hcalc,'b',label = 'Calculado')
 
 plt.ylabel("Transferencia Módulo [dB]")
 plt.xlabel("Frecuencia [Hz]")
@@ -100,18 +122,10 @@ plt.show()
 plt.xscale('log')
 plt.plot(f,ph,'y',label = 'Medida')
 plt.plot(fs,Hsp,'r',label = 'Simulada' )
-
+plt.plot(fs,Hphcalc,'b',label = 'Calculado' )
 plt.ylabel("Transferencia fase [°]")
 plt.xlabel("Frecuencia [Hz]")
 plt.legend()
 plt.grid()
 plt.show()
-
-
-
-
-
-
-
-
 
