@@ -267,6 +267,7 @@ De esta última ecuación se puede obtener los siguientes valores de interés.
 	\omega_o = \sqrt{\frac{R_8}{R_2 R_3 R_7 C_1 C_2}} \\
 	Q = R_1 \sqrt{\frac{C_1 R_8}{C_2 R_2 R_3 R_7}} 
 \end{split}
+\label{equ:woq-ft}
 \end{equation}
 
 Es así que se destaca la dependencia de $\omega_o$ y $Q$ de los capacitores, mientras que resultan ser independientes de $R_5$. Finalmente, y el detalle más importante, es que, a diferencia de, por ejemplo, las celdas KHN y TT, no hay componente que modifique una variable y no la otra. Por lo tanto, una modificación de uno de estos factores, genera un cambio en el otro.
@@ -333,8 +334,31 @@ $f_{p}^{+}$ & $44184\ Hz$ \\
 
 \subsubsection{Confección del filtro y mediciones}
 
-\begin{center}
-	\Large{\textbf{\textcolor{red}{$\mathbf{Z_{IN}}$ Y $\mathbf{Z_{OUT}}$.}}}
-\end{center}
+Respetando lo presentado en la Figura (\ref{fig:FT}), considerando lo observado en (\ref{equ:transf-ft-i}) y en (\ref{equ:woq-ft}) y considerando que el filtro es de orden 2, se seleccionaron los componentes presentados en la Tabla (\ref{tab:componentes}). Se destaca que, para ambos casos, se seleccionó $R_4 = R_5 = R_6 = 47 \ k\Omega$ y $C_1 = C_2 = 10 \ nF$.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccccccc}
+\hline 
+ & $R_1$ & $R_2$ & $R_3$ & $R_7$ & $R_8$ & $Q_Z$ & $Q_P$ & $f_o$ \\
+ \hline
+$1^{er}$ Etapa & 1547 $\Omega$ & 46.38 k$\Omega$ & 121.22 $\Omega$ & 1547 $\Omega$ & 34.2 k$\Omega$ & $\infty$ & 3.07 & 31.56 kHz \\
+$2^{da}$ Etapa & 1.2 k$\Omega$ & 55.2 k$\Omega$ & 150 $\Omega$ & 1.2 k$\Omega$ & 64.35 k$\Omega$ & $\infty$ & 3.05 & 40.50 kHz \\
+\hline
+\end{tabular}
+\caption{Componentes seleccionados.}
+\label{tab:componentes}
+\end{table} 
+
+Se decidió colocar en lugar de los capacitores pines hembra, los cuales permiten reemplazar con facilidad dichos componentes. Esto se debe a que los que se disponen son de una tolerancia del $10 \%$. De esta forma, se vale del analizador de impedancias para determinar la capacitancia de estos y así garantizar el uso del capacitor adecuado. Por otro lado, como la impedancia de entrada resulta del paralelo entre las resistencias $R_4$, $R_5$ y $R_6$, lo cual implica $Z_{in} = 15.67 \ k\Omega$, se coloca un buffer a la entrada de cada instancia, ya que de esta forma, la impedancia de entrada del circuito es la del buffer, garantizando que ambas instancias se acoplen adecuadamente. 
+Al momento de realizar las placas, se optó por colocar jumpers, de forma tal que se pueda hacer las mediciones deseadas con y sin dichos buffers, para poder realizar comparaciones.   
+
+Es así que se presentan a continuación las mediciones realizadas.
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/KHN.pdf}
+%	\caption{Celda KHN.}
+%	\label{fig:KHN}
+%\end{figure}
 
 \end{document}

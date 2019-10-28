@@ -56,52 +56,6 @@ En esta sección se implementaron dos filtros Low-Pass utilizando tanto una apro
 		\end{table}
 	\end{subfigure}
 \end{figure}
-\subsection{Aproximación de Legendre.}
-
-Para cumplir con la plantilla propuesta con seguridad, se diseñó el filtro con una plantilla más restrictiva que la original, presentada a continuación.
-
-\begin{figure}[H]
-		\begin{table}[H]
-			\centering
-			\begin{tabular}{@{}cc@{}}
-			\toprule
-			\multicolumn{2}{c}{Large Signal LP Sallen-Key Legendre} \\ \midrule
-			Orden & $5$ \\
-			$f_p$ & $31KHz \pm 5\%$ \\
-			$A_p$ & $2dB$ \\
-			$\left| Z_{in}\right|$ & $\geq 50K\Omega$ \\ \bottomrule
-			\end{tabular}
-		\end{table}
-		\caption{Aproximación de Legendre más estricta utilizada.}
-		\label{aprox_leg_est}
-\end{figure}
-
-
-
-\subsubsection{Elecciones de diseño}
-
-\subsection{Aproximación de Bessel.}
-
-preset en r1 segunda etapa
-\begin{figure}[H]
-		\begin{table}[H]
-			\centering
-			\begin{tabular}{@{}cc@{}}
-			\toprule
-			\multicolumn{2}{c}{Large Signal LP Sallen-Key Bessel} \\ \midrule
-			$f_p$ & $1650Hz$ \\
-			$f_a$ & $7800Hz$ \\
-			$A_p$ & $2dB$ \\
-			$A_a$ & $43dB$ \\
-			$\Upsilon$ & $\leq 5\%$ \\
-			$\left| Z_{in}\right|$ & $\geq 50K\Omega$ \\ \bottomrule
-			\end{tabular}
-		\end{table}
-		\caption{Aproximación de Bessel más estricta utilizada.}
-		\label{aprox_leg_est}
-\end{figure}
-
-\subsubsection{Elecciones de diseño}
 
 \subsection{Celda Sallen-Key.}
 
@@ -148,14 +102,14 @@ Utilizando realimentación positiva se pueden lograr Q mucho mayores. Al colocar
 				-| (OUT_FEEDBACK.center)
 				
 				(IN+) to[short] ++ (-1, 0)
-				to[C, l=$C_1$, *-] ++ (0, -2) node[ground]{}
+				to[C, l=$C_2$, *-] ++ (0, -2) node[ground]{}
 				to[open] ++ (0, 2)
 				to[R, l=$R_2$, -*] ++ (-2, 0)
 				to[R, l=$R_1$, -o] ++ (-2, 0)
 				node[label=west:$V_i$]{}
 				to[open] ++ (2, 0)
 				to[short] ++ (0, 1)
-				to[C, l=$C_2$] ++ (6, 0)
+				to[C, l=$C_1$] ++ (6, 0)
 				-| (OUT_FEEDBACK.center)
 				(OUT_FEEDBACK) to[short, -o] ++ (0.5, 0)
 				node[label=east:$V_o$] {}
@@ -168,10 +122,10 @@ Utilizando realimentación positiva se pueden lograr Q mucho mayores. Al colocar
 	\begin{subfigure}{0.49\textwidth}
 		\vspace{-4cm}
 		\begin{equation*}
-			H(S) = \frac{1+ \frac{R_4}{R_3}}{S^2 (R_2 R_1 C_2 C_1) + S(C_1 (R_2 + R_1) - \frac{C_2 R_1 R_4}{R_3}) + 1} 
+			H(S) = \frac{1+ \frac{R_4}{R_3}}{S^2 (R_2 R_1 C_2 C_1) + S(C_2 (R_2 + R_1) - \frac{C_1 R_1 R_4}{R_3}) + 1} 
 		\end{equation*}				
 		\begin{equation*}
-			Z_{in}(S) = \frac{S^2 (R_2 R_1 C_2 C_1) + S(C_1 (R_2 + R_1) - \frac{C_2 R_1 R_4}{R_3}) + 1}{S^2 (R_2 R_1 C_2 C_1)}
+			Z_{in}(S) = \frac{S^2 (R_2 R_1 C_2 C_1) + S(C_2 (R_2 + R_1) - \frac{C_1 R_1 R_4}{R_3}) + 1}{S^2 (R_2 R_1 C_2 C_1)}
 		\end{equation*}
 		\begin{equation*}
 		Z_{out}\approx Z_{out_{opamp}}
@@ -185,16 +139,310 @@ La topología Sallen-Key posee varias ventajas. La primera es que esta topologí
 
 \subsubsection{Cálculo Analítico}
 
+
+\subsection{Aproximación de Legendre.}
+
+Para cumplir con la plantilla propuesta con seguridad, se diseñó el filtro con una plantilla más restrictiva que la original, presentada a continuación.
+
+\begin{figure}[H]
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{@{}cc@{}}
+			\toprule
+			\multicolumn{2}{c}{Large Signal LP Sallen-Key Legendre} \\ \midrule
+			Orden & $5$ \\
+			$f_p$ & $31KHz \pm 5\%$ \\
+			$A_p$ & $2dB$ \\
+			$\left| Z_{in}\right|$ & $\geq 50K\Omega$ \\ \bottomrule
+			\end{tabular}
+		\end{table}
+		\caption{Aproximación de Legendre más estricta utilizada.}
+		\label{aprox_leg_est}
+\end{figure}
+
+Por lo que la transferencia total del filtro de esta plantilla es:
+
+\begin{equation}
+H(s) = -\frac{1}{s^5\cdot 1.2158\cdot10^{-26}+s^4\cdot 4.0793\cdot10^{-21}+s^3\cdot 1.1452\cdot10^{-15}+s^2\cdot 1.8235\cdot10^{-10}+s \cdot 1.9501\cdot10^{-5}+1}	
+\label{hslegteo}
+\end{equation}
+
+Luego, se graficó el diagrama de Bode con el software \textit{Maple}, resultando:
+\begin{figure}[H]
+\centering
+	\begin{subfigure}{\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_hs.png}
+	\end{subfigure}
+	
+	\begin{subfigure}{\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_hspha.png}
+	\end{subfigure}
+	\label{fig:bodebes}
+	\caption{Diagrama de Bode del filtro aproximación Legendre.}
+\end{figure}
+y por último también con el software \textit{Maple}, el gráfico de polos y ceros:
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_poles.png}
+	\caption{Diagrama de polos y ceros del filtro aproximación Legendre}
+	\label{leg_poles}
+\end{figure}
+
 \subsubsection{Elecciones de diseño}
 
+Se utilizaron tres etapas, dos de segundo orden y una de primer orden. Para la etapa de primer orden, la de menor factor de calidad, se utilizó la configuración integradora compensada inversora. Para esta etapa se utilizaron valores de resistencias tales que la impedancia de entrada del filtro total sea mayor a los $50K\Omega$.
+
+El ordenamiento de las etapas fue según factor de calidad creciente para reducir la pérdida de rango dinámico del filtro dado que las señales de entrada de este filtro serán de gran amplitud. Además, dado que la segunda etapa del filtro posee un gran sobrepico, se decidió atenuar en esta etapa y amplificar en la siguiente para reducir las chances de saturación.
+
+Los componentes utilizados para la realización del filtro junto a su implementación y error cometido son los siguientes:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccc@{}}
+\multicolumn{8}{c}{1ra Etapa - Integrador Compensado Inversor - Orden 1 - $f_0 = 16.23224KHz$ - $G=0dB$} \\ \midrule
+- & Valor Teórico & Implementación & Valor Final & Error & Sens G  & Sens Wp \\ \midrule
+$R_1 [\Omega]$ & $50K$ & $100K//100K$ & $50K$ & $0\%$ & -1 & 0 \\
+$R_2 [\Omega]$ & $50K$ & $100K//100K$ & $50K$ & $0\%$ & 1 & -1 \\
+$C_1 [F]$ & $196.1p$ & $220p+1.8n$ & $196.04p$ & $0.1\%$ & 0 & -1 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccc@{}}
+\multicolumn{8}{c}{2da Etapa - Sallen-Key - Orden 2 - $f_0 = 31.2KHz$ - $G=-7dB$} \\ \midrule
+- & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
+$R_1 [\Omega]$ & $21.43K$ & $Preset$ & $10K$ & $0.1\%$ & -0.6 & 0 & -0.2 \\
+$R_2 [\Omega]$ & $8.53K$ & $330+8.2K$ & $8.53K$ & $0.1\%$ & 0 & 0 & -0.5 \\
+$R_3 [\Omega]$ & $14.17K$ & $2.2K+12K$ & $14.2K$ & $0.2\%$ & 0.6 & 0 & -0.3 \\
+$C_1 [F]$ & $3.58n$ & $4.7n+15n$ & $3.58n$ & $0.1\%$ & 0 & 0.5 & -0.5 \\
+$C_2 [F]$ & $100p$ &  & $100p$ & $0\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
+\end{tabular}
+\end{table}
+ 
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccc@{}}
+\multicolumn{8}{c}{3ra Etapa - Sallen-Key - Orden 2 - $f_0 = 23KHz$ - $G=7dB$} \\ \midrule
+- & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
+$R_1 [\Omega]$ & $57.31K$ & $1.2K+56K$ & $57.2K$ & $0.2\%$ & 0 & 0.54 & -0.2 \\
+$R_2 [\Omega]$ & $57.31K$ & 1.2K+56K & $57.2K$ & $0.2\%$ & 0 & -0.54 & -0.5 \\
+$R_3 [\Omega]$ & $1K$ &  & $1K$ & $0\%$ & -0.6 & -1.08 & 0 \\
+$R_4 [\Omega]$ & $1.51K$ & $12+1.5K$ & $1.51K$ & $0.1\%$ & 0.6 & 1.08 & 0 \\
+$C_1 [F]$ & $100p$ &  & $100p$ & $0\%$ & 0 & 1.58 & -0.5 \\
+$C_2 [F]$ & $145.32p$ & $150p+4.7n$ & $145.36p$ & $0.1\%$ & 0 & -1.58 & -0.5 \\ \bottomrule
+\end{tabular}
+\end{table}
+
 \subsubsection{Acoplamiento de Impedancias.}
+Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$.
 
-\subsection{Respuesta en Frecuencia.}
+\subsubsection{Simulaciones}
 
-\subsubsection{Etapas Utilizadas}
+Se simuló utilizando el operacional $TL-081$ y el software \textit{LTSpiceXVII} la respuesta en frecuencia, impedancia de entrada, impedancia de salida y finalmente el montecarlo para el filtro diseñado.
 
-\subsubsection{Filtro definitivo.}
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_hs_sim.png}
+	\caption{Simulación de la respuesta en frecuencia en amplitud del filtro aproximación Legendre.}
+	\label{leg_gain_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_hspha_sim.png}
+	\caption{Simulación de la respuesta en frecuencia en fase del filtro aproximación Legendre.}
+	\label{leg_phase_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_zin_sim.png}
+	\caption{Simulación de la impedancia de entrada del filtro aproximación Legendre.}
+	\label{leg_zin_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_zout_sim.png}
+	\caption{Simulación de la impedancia de salida del filtro aproximación Legendre.}
+	\label{leg_zout_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/pend.jpg}
+	\caption{Simulación de Montecarlo del filtro aproximación Legendre.}
+	\label{leg_mont_sim}
+\end{figure}
+
+\subsubsection{Mediciones}
 
 
+\subsection{Aproximación de Bessel.}
 
+Para cumplir con la plantilla propuesta con seguridad, se diseñó el filtro con una plantilla más restrictiva que la original, presentada a continuación.
+\begin{figure}[H]
+		\begin{table}[H]
+			\centering
+			\begin{tabular}{@{}cc@{}}
+			\toprule
+			\multicolumn{2}{c}{Large Signal LP Sallen-Key Bessel} \\ \midrule
+			$f_p$ & $1650Hz$ \\
+			$f_a$ & $7800Hz$ \\
+			$A_p$ & $2dB$ \\
+			$A_a$ & $43dB$ \\
+			$\Upsilon$ & $\leq 5\%$ \\
+			$\left| Z_{in}\right|$ & $\geq 50K\Omega$ \\ \bottomrule
+			\end{tabular}
+		\end{table}
+		\caption{Aproximación de Bessel más estricta utilizada.}
+		\label{aprox_leg_est}
+\end{figure}
+
+Por lo que la transferencia total del filtro de esta plantilla es:
+
+\begin{equation}
+\hspace{-1cm}
+H(s) = \frac{1}{s^6 \cdot 9.0334\cdot10^{-27}+s^5\cdot 8.8909\cdot10^{-22}+s^4\cdot 4.1690\cdot10^{-17}+s^3\cdot 1.1731\cdot10^{-12}+s^2\cdot 2.0632\cdot10^{-8}+s\cdot 2.1292\cdot10^{-4}+1}
+\label{hsbesteo}
+\end{equation}
+
+Luego, se graficó el diagrama de Bode con el software \textit{Maple}, resultando:
+\begin{figure}[H]
+	\begin{subfigure}{\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_hs.png}
+	\end{subfigure}
+	
+	\begin{subfigure}{\textwidth}
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_hspha.png}
+	\end{subfigure}
+	\label{fig:bodebes}
+	\caption{Diagrama de Bode del filtro aproximación Bessel.}
+\end{figure}
+y por último, el gráfico de polos y ceros con el software \textit{Maple}:
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=0.8\textwidth]{Imagenes-Ej1/bessel_poles.png}
+	\caption{Diagrama de polos y ceros del filtro aproximación Bessel}
+	\label{leg_poles}
+\end{figure}
+
+\subsubsection{Elecciones de diseño}
+
+Para la implementación de esta aproximación se utilizaron nuevamente tres etapas, las tres de segundo orden. Dado que las señales de entrada esperadas en este filtro serán pequeñas, se decidió utilizar un ordenamiento de las etapas con un factor de calidad decreciente para favorecer la reducción de ruido. Además, se decidió amplificar en la primera etapa y atenuar en la última.
+
+Los componentes utilizados para la realización del filtro junto a su implementación y error cometido son los siguientes:
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccc@{}}
+\multicolumn{8}{c}{1ra Etapa - Sallen-Key - Orden 2 - $f_0 = 3.2KHz$ - $G=7dB$} \\ \midrule
+- & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
+$R_1 [\Omega]$ & $50K$ & $100K//100K$ & $50K$ & $0\%$ & 0 & 0.15 & -0.5 \\
+$R_2 [\Omega]$ & $50K$ & $100K//100K$ & $50K$ & $0\%$ & 0 & -0.15 & -0.5 \\
+$R_3 [\Omega]$ & $603.9$ & $680//5K6$ & $606.37$ & $0.4\%$ & -0.44 & -0.31 & 0 \\
+$R_4 [\Omega]$ & $470$ &  & $470$ &  & 0.44 & 0.31 & 0 \\
+$C_1 [F]$ & $766.98p$ & $1000p+3.3n$ & $767.44p$ & $0.1\%$ & 0 & 0.81 & -0.5 \\
+$C_2 [F]$ & $1.26n$ & $68p//1.2n$ & $1.27n$ & $0.4\%$ & 0 & -0.81 & -0.5 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccc@{}}
+\multicolumn{8}{c}{2da Etapa - Sallen-Key - Orden 2 - $f_0 = 3.4KHz$ - $G=0dB$} \\ \midrule
+- & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
+$R_1 [\Omega]$ & $4.7K$ & $Preset$ & $10K$ & $0\%$ & 0 & 0 & -0.5 \\
+$R_2 [\Omega]$ & $4.7K$ &  & $4.7K$ & $0\%$ & 0 & 0 & -0.5 \\
+$C_1 [F]$ & $12.15n$ & $150p//12n$ & $12.15n$ & $0\%$ & 0 & 0.5 & -0.5 \\
+$C_2 [F]$ & $8.13n$ & $8.2n+1u$ & $8.13n$ & $0\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
+\end{tabular}
+\end{table}
+ 
+\begin{table}[H]
+\centering
+\begin{tabular}{@{}cccccccc@{}}
+\multicolumn{8}{c}{3ra Etapa - Sallen-Key - Orden 2 - $f_0 = 3.8KHz$ - $G=-7dB$} \\ \midrule
+- & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
+$R_1 [\Omega]$ & $2.13K$ & $3.9K//4.7K$ & $2.13K$ & $0\%$ & -0.44 & 0 & -0.28 \\
+$R_2 [\Omega]$ & $1.2K$ &  & $1.2K$ & $0\%$ & 0 & 0 & -0.5 \\
+$R_3 [\Omega]$ & $2.74K$ & $39+2.7K$ & $2.74K$ & $0\%$ & 0.44 & 0 & -0.22 \\
+$C_1 [F]$ & $70.67n$ & $2.7n//68n$ & $70.7n$ & $0.1\%$ & 0 & 0.5 & -0.5 \\
+$C_2 [F]$ & $16.87n$ & $18n+270n$ & $16.88n$ & $0.1\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
+\end{tabular}
+\end{table}
+
+\subsubsection{Acoplamiento de Impedancias.}
+Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$.
+
+\subsubsection{Simulaciones}
+
+Se simuló utilizando el operacional $TL-081$ y el software \textit{LTSpiceXVII} la respuesta en frecuencia, impedancia de entrada, impedancia de salida y finalmente el montecarlo para el filtro diseñado.
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_hs_sim.png}
+	\caption{Simulación de la respuesta en frecuencia en amplitud del filtro aproximación Bessel.}
+	\label{bes_gain_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_hspha_sim.png}
+	\caption{Simulación de la respuesta en frecuencia en fase del filtro aproximación Bessel.}
+	\label{bes_phase_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_zin_sim.png}
+	\caption{Simulación de la impedancia de entrada del filtro aproximación Bessel.}
+	\label{bes_zin_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_zout_sim.png}
+	\caption{Simulación de la impedancia de salida del filtro aproximación Bessel.}
+	\label{bes_zout_sim}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/pend.jpg}
+	\caption{Simulación de montecarlo del filtro aproximación Bessel.}
+	\label{bes_mont_sim}
+\end{figure}
+
+\subsubsection{Mediciones}
+
+
+\subsection{Conclusiones}
+
+\subsection{Anexo de Sensibilidades}
+\begin{equation}
+S^{G}_{C_2}={{\it C2}\,{\pi }^{2}\\
+\mbox{}{f}^{2} \left( {\it R2}+{\it R1} \right)  \left( {\it C2}\, \left( {\it R2}+{\it R1} \right) -{\frac {{\it C1}\,{\it R1}\,{\it R4}}{{\it R3}}}\\
+\mbox{} \right)  \left(  \left( -4\,{\pi }^{2}{f}^{2}{\it R2R1C2C1}+1 \right) ^{2}+4\,{\pi }^{2}{f}^{2} \left( {\it C2}\, \left( {\it R2}+{\it R1} \right) -{\frac {{\it C1}\,{\it R1}\,{\it R4}}{{\it R3}}} \right) ^{2} \right) ^{-1}}
+\end{equation}
 \end{document}
