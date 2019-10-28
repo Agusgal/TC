@@ -72,7 +72,7 @@ class Cell:
                          self.pha, color=lc, label=name)
         else:
             plt.semilogx(np.divide(self.w, 2*np.pi), self.pha, label=name)
-        
+        plt.xlabel(f"$Frecuencia Hz$")
         if name:
             plt.legend()
         if show:
@@ -242,7 +242,6 @@ class AnalogFilter(ABC):
         self.b, self.a = self.compute_ba()
         # Step 3: Construct Transfer function
         self.sys = signal.TransferFunction(self.b, self.a)
-        print(f"recien salido del horno: {self.sys}")
         self.w, self.mag, self.pha = signal.bode(self.sys)
         self.zeros, self.poles, self.kZP = self.compute_zpk() #kZP will denote de gain returned by the compute_zpk method
         #Step 4: Split high order filter into first and second order cells
@@ -355,7 +354,7 @@ class AnalogFilter(ABC):
         elif self.ftype == 'bandstop':
             #Left pass band
             fpL = np.divide(self.wp[0], 2*np.pi)
-            print(self.wp[0], self.wp[1])
+            (self.wp[0], self.wp[1])
             pLx = [[x[0], fpL, fpL, x[0]]]
             pLy = [[np.max(y), np.max(y), self.Ap, self.Ap]]
             pL = pLx + pLy
@@ -363,7 +362,6 @@ class AnalogFilter(ABC):
             #Stop band
             fsL = np.divide(self.ws[0], 2*np.pi)
             fsR = np.divide(self.ws[1], 2*np.pi)
-            print(self.ws)
             sx = [[fsL, fsR, fsR, fsL]]
             sy = [[0, 0, self.As, self.As]]
             sband = sx + sy
@@ -396,7 +394,6 @@ class AnalogFilter(ABC):
             Choosen line color. If left blank matplotlib will automatically pick a color
         """
         stencils = self.get_stencils(np.divide(self.w, 2*np.pi), -self.mag)
-
         if lc:
             plt.semilogx(np.divide(self.w, 2*np.pi), -
                          self.mag, color=lc, label=name)
@@ -407,9 +404,10 @@ class AnalogFilter(ABC):
             for s in stencils:
                 plt.fill(s[0], s[1], '1', lw=0, color=sc)  # Set line-
 
+        if name:
+            plt.legend()
+        
         if show:
-            if name:
-                plt.legend()
             plt.show()
 
     def plot_pha(self, name=None, show=False, lc=None):
@@ -431,10 +429,12 @@ class AnalogFilter(ABC):
                          self.pha, color=lc, label=name)
         else:
             plt.semilogx(np.divide(self.w, 2*np.pi), self.pha, label=name)
-
+        
+        if name:
+            plt.legend()
+        
         if show:
-            if name:
-                plt.legend()
+
             plt.show()
 
 
@@ -464,14 +464,16 @@ class AnalogFilter(ABC):
         """
         T, yout = signal.step(self.sys)
 
-        print(yout)
+        #If a color is specifed for the given plot
         if lc:
             plt.plot(T, yout, color=lc, label=name)
         else:
             plt.plot(T, yout, label=name)
+        
+        if name:
+            plt.legend()
+        #Would you like to show your plot.
         if show:
-            if name:
-                plt.legend()
             plt.show()
 
     #TODO comentar
@@ -481,9 +483,11 @@ class AnalogFilter(ABC):
             plt.plot(T, yout, color=lc, label=name)
         else:
             plt.plot(T, yout, label=name)
+        
+        if name:
+            plt.legend()
+        
         if show:
-            if name:
-                plt.legend()
             plt.show()
 
     #TODO comentar
@@ -493,9 +497,11 @@ class AnalogFilter(ABC):
         else:
             plt.semilogx(
                 np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name)
+
+        if name:
+            plt.legend()
+
         if show:
-            if name:
-                plt.legend()
             plt.show()
 
     #Getters
