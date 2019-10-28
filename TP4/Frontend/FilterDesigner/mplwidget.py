@@ -7,6 +7,7 @@ from matplotlib.backends.backend_qt5agg import FigureCanvas
 
 from matplotlib.figure import Figure
 
+from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 
 class MplWidget(QWidget):
 
@@ -15,8 +16,16 @@ class MplWidget(QWidget):
 
         self.canvas = FigureCanvas(Figure())
 
-        vertical_layout = QVBoxLayout()
-        vertical_layout.addWidget(self.canvas)
+        self.toolbar = NavigationToolbar(self.canvas, self)
+
+        layout = QVBoxLayout()
+        layout.addWidget(self.toolbar)
+        layout.addWidget(self.canvas)
 
         self.canvas.axes = self.canvas.figure.add_subplot(111)
-        self.setLayout(vertical_layout)
+        self.setLayout(layout)
+
+    def plot(self, t):
+        self.canvas.axes.clear()
+
+        self.canvas.axes.
