@@ -3,7 +3,7 @@ from abc import ABC, abstractclassmethod, abstractmethod
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
-
+  
 from cusfunc import maprange
 from custexcp import *
 
@@ -245,7 +245,6 @@ class AnalogFilter(ABC):
         #Step 4: Split high order filter into first and second order cells
         # self.stages = self.compute_filter_stages()
         # print(self.stages)
-    
     # @abstractmethod
     # def compute_filter_stages(self):
     #     """
@@ -297,7 +296,7 @@ class AnalogFilter(ABC):
         --------
         >>> stencils = filter.get_stencils(x,y)
         >>> for s in stencils:
-        >>>     plt.fill(s[0],s[s1],lw=0,'0.8',color='orange) #Set line-width=0
+        >>>     plt.fill(s[0],s[1],'0.8',lw=0,color='orange) #Set line-width=0
         >>> plt.show()
         """
         if self.ftype == 'lowpass':
