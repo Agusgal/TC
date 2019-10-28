@@ -43,8 +43,10 @@ $A_p$      & 1dB               \\ \hline
 \end{table}
 Obteniendo la siguiente función transferencia:
 \begin{align}
-	H(s)=\frac{as^2-bs+c}{(as^2-bs+c)\cdot (as^2-bs+c)}
+	H(s)=\frac{s}{\left( \frac{s}{23728.54}\right) ^2+s\cdot \frac{23728.54}{3.23}+1}\cdot \frac{s}{\left( \frac{s}{33052.25} \right)^2+s\cdot \frac{33052.25}{3.23}+1}
 \end{align}
+al cual le corresponde la siguiente respues en frecuencia:
+
 Y el siguiente diagrama de polos y ceros:
 \begin{figure}[H]
 	\centering
@@ -58,9 +60,68 @@ Teniendo los pares de polos conjugados un Q de 3.23
 
 \subsubsection{Elecciones de diseño}
 Se decidió armar etapas con celdas segundo orden en cascada dado a que el orden es 4.
-Para la asociación de polos se optó por cada par de polos conjugados asignarle un cero.
+Para la asociación de polos se tomo criterio agrupar cada par de polos con 1 cero , agrupandolos de las siguiente forma.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/UnionCeros.png}
+	\label{fig:CeroPoleUnion}
+	\caption{Diagrama Polos y Ceros para cada etapa}
+\end{figure}
 
+\subsection{Celda Rauch.}
+\subsubsection{Cálculo Analítico.}
+El circuito clásico para una celda 	Rauch pasa-banda (Deliyannis-Friend) es el siguiente:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej2/rauchoriginal.PNG}
+	\label{fig:graph}
+	\caption{Circuito clásico celda Rauch Band-Pass(Deliyannis-Friend) .}
+\end{figure}
+De aquí, planteando los nodos y considerando el amplificador operacional ideal se pueden hallar las siguientes ecuaciones:
+\begin{align}
+\frac{V_{out}}{R_2}=-V_a\cdot sC_1\\ 
+\frac{V_{in}-V_a}{R_1}+(V_{out}-V_a)\cdot sC_2 -V_a \cdot sC_1 = \frac{V_a}{R_3}
+\end{align}
+De aqui se puede despejar la función transferencia como:
+\begin{align}
+H(s)=\frac{s \cdot C_1R_2R_3}{s^2\cdot R_1R_2C_2C_1+s\cdot (C_3R_1R_3+R_1C_2R_3)+R_3+R_1}=\frac{H_0 \cdot \frac{s}{\omega_0 Q}}{\frac{s^2}{\omega_0^2}+\frac{s}{\omega_0Q}+1}
+\end{align}
 
+De aquí se pueden extraer los parámetros típicos del diseño de filtros siendo los siguientes:
+\begin{align}
+H_0 =\frac{R_2C_2}{R_1C_2+C_1R_1}\\
+\omega_0^2= \frac{R_1+R_3}{R_1^2R_2C_2C_1}\\
+Q= \frac{\sqrt[]{1+\frac{R_3}{R_1}}}{{\sqrt[]{\frac{R_3C_1}{R_2C_2}}+\sqrt[]{\frac{R_3C_2}{R_2C_1}}}}
+\end{align}
+Luego para hacer facil la elección de componentes se suele tomar $C_1 \ = \ C_2$, por culpa de esto para obtener un Q relativamente alto se necesitan valore s de resistencia altos, lo cual es un problema.
+Para solucionar dicho problema se hizo una modificación a la celda, incluyendo una realimentación positiva, permitiendo obtener un Q de mayor valor.
+La celda Rauch con Q mejorado le corresponde el siguiente circuito.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej2/Circuit.PNG}
+	\label{fig:graph}
+	\caption{Circuito celda Rauch Band-Pass con Q enhancmente.}
+\end{figure}
+para resolver el circuito basta con plantear los siguientes nodos:
+\begin{align}
+\frac{V_{out}-K \cdot V_{out}}{R_2}=(K \cdot V_{out}-V_a)\cdot sC_1\\ 
+\frac{V_{in}-V_a}{R_1}+(V_{out}-V_a)\cdot sC_2 +(K \cdot V_{out}-V_a) \cdot sC_1 = \frac{V_a}{R_3}
+\end{align}
+Resolviendo la transferencia se llega a la siguiente expresión:
+\begin{align}
+H(s)=\frac{1}{1-K} \cdot \frac{H_0 \cdot \frac{s}{\omega_0 Q_0}}{\frac{s^2}{\omega_0^2}+\frac{s}{\omega_0Q}+1}
+\end{align}
+Donde $Q_0$ es una constante de valor 1.5\footnote{[1]R. Schaumann, H. Xiao, M. Van Valkenburg, M. Van Valkenburg and M. Van Valkenburg, Analog filter design. New York: Oxford University Press, 2011, pp. 140-144.}, y el K es utilizado para ajustar el valor de Q del circuito, dado que quedarán así definidos los parámetros del filtro:
+\begin{align}
+\omega_0^2= \frac{R_1+R_3}{R_1R_3R_2C_2C_1}\\
+Q=\frac{Q_0}{1-2Q_0^2\cdot \frac{K}{1-K}}\\
+H_0=\frac{R_3R_2}{2(K-1)R_1R_3+K(R_1+R_3)R_2}
+\end{align}
+\subsubsection{Elecciones de diseño}
+\begin{center}
+	\huge{\textcolor{red}{\textbf{Tabla sensibilidades}}}
+\end{center}
+En base a esta tabla se tomo especial cuidado en la elección de componentes y en el matcheo de impedancias.
 Los componentes utilizados fueron los siguientes:
 \begin{table}[H]
 \centering
@@ -92,24 +153,6 @@ $C_1$                                & $\approx 0 \%$                & $\approx 
 \end{table}
 
 Cabe destacar que todas las imepdancias que fueron colocadas en el circuito fueron elegidas entre varias de su mismo tipo, con la finalidad de poner impedancias que sean realmente de los valores deseados.
-
-\subsection{Celda Rauch.}
-La celda Rauch es una modificación de la celda Deliyannis-Friend incluyendo uan realimentación positiva.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\textwidth]{Imagenes-Ej2/Circuit.PNG}
-	\label{fig:graph}
-	\caption{Circuito celda Rauch Band-Pass.}
-\end{figure}
-\subsubsection{Cálculo Analítico}
----
-\subsubsection{Elecciones de diseño}
-
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Tabla sensibilidades}}}
-\end{center}
-En base a esta tabla se tomo especial cuidado en la elección de componentes y en el matcheo de impedancias.
-Se tomaron como valor de los componentes...
 
 \subsubsection{Acoplamiento de Impedancias.}
 
