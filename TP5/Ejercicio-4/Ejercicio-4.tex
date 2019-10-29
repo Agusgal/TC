@@ -323,14 +323,7 @@ $f_{p}^{+}$ & $44184\ Hz$ \\
 \label{tabla:caracteristicas2}
 \end{table}
 
-\begin{center}
-	\Large{\textbf{\textcolor{red}{CUENTAS DE PLANTILLA. \\ JUSTIFICACIÓN DE n, Q y COMPONENTES.}}}
-\end{center}
-
-\subsubsection{Análisis de sensibilidades}
-\begin{center}
-	\Large{\textbf{\textcolor{red}{CUENTAS: LEER CONSIGNA PARA VER QUE SENSIBILIDADES PIDE.}}}
-\end{center}
+Realizando la aproximación mediante Chebycheff Inverso, se determinó que el circuito final posee un orden de $n = 2$. Posteriormente se procedió a elaborar el filtro que cumpla con las especificaciones deseadas. 
 
 \subsubsection{Confección del filtro y mediciones}
 
@@ -356,9 +349,51 @@ Al momento de realizar las placas, se optó por colocar jumpers, de forma tal qu
 Es así que se presentan a continuación las mediciones realizadas.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Plantilla-Medida-1.pdf}
-	\caption{Medición con plantilla.}
-	\label{fig:med-plant}
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-1.png}
+	\caption{Comparación de diagramas de Bode en módulo.}
+	\label{fig:bode-mod}
 \end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Pha-1.png}
+	\caption{Comparación de diagramas de Bode en fase.}
+	\label{fig:bode-pha}
+\end{figure}
+
+Como se mencionó anteriormente, los capacitores sos componentes importantes que afectan tanto el $Q$ como el $\omega_o$ del circuito. Pequeñas variaciones en ellos puede modificar la frecuencia de notch de cada etapa, haciendo que estos se acerquen o se alejen. De esta forma, en ciertos casos y dependiendo de dichos componentes, el factor $f_\infty$ de cada etapa puede superponerse generando que no se observe el ripple característico de la plantilla de Chebycheff. Un ejemplo de esto se presenta a continuación.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-3.png}
+	\caption{Picos de atenuación máximos medidos variando $C_1$ y $C_2$.}
+	\label{fig:picos}
+\end{figure}
+
+Finalmente, se procede a presentar una de las mediciones realizadas, en la cuál se consiguió que, dado los capacitores empleados, se cumpla con la plantilla deseada.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Plantilla-Medida-1.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Plantilla-Medida-2.png}
+\end{subfigure}
+\caption{Medición con plantilla.}
+\label{fig:med-plant}
+\end{figure}
+
+En esta figura se observa como el pico de la primer etapa sobrepasa la banda prohibida, mientras que el segundo se encuentra en frecuencias posteriores a esta, pero dentro de los margenes establecidos.
+
+Tanto en la Figura (\ref{fig:picos}) como en la (\ref{fig:med-plant}), no se presentan los diagramas de Bode en fase, ya que estos no presentan variaciones significantes comparados con lo presentado en la Figura (\ref{fig:bode-pha}).
+
+\begin{center}
+	\Large{\textbf{\textcolor{red}{CUENTAS DE PLANTILLA. \\ JUSTIFICACIÓN DE n, Q y COMPONENTES.}}}
+\end{center}
+
+\subsubsection{Análisis de sensibilidades}
+\begin{center}
+	\Large{\textbf{\textcolor{red}{CUENTAS: LEER CONSIGNA PARA VER QUE SENSIBILIDADES PIDE.}}}
+\end{center}
 
 \end{document}
