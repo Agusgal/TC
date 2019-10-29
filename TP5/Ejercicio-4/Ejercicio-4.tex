@@ -323,18 +323,43 @@ $f_{p}^{+}$ & $44184\ Hz$ \\
 \label{tabla:caracteristicas2}
 \end{table}
 
-\begin{center}
-	\Large{\textbf{\textcolor{red}{CUENTAS DE PLANTILLA. \\ JUSTIFICACIÓN DE n, Q y COMPONENTES.}}}
-\end{center}
+Realizando la aproximación mediante Chebycheff Inverso, se determinó que el circuito final posee un orden de $n = 2$. Posteriormente se procedió a elaborar el filtro que cumpla con las especificaciones deseadas.
+
+\subsubsection{Rango Dinámico}
+El rango dinámico se define como la razón entre el máximo y el mínimo valor que puede tomar el observable de interés. Para el caso en cuestión queda definido de la siguiente manera:
+\begin{equation}
+	R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
+\end{equation}
+
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se puede distinguir respecto al piso de ruido, la cual es determinada como $V_{in_{min}} \approx 10 \ mV$. Luego para el caso de $V_{in_{max}}$ se consideró la máxima tensión previa a la aparición de distorsiones o alinealidades del amplificador operacional, siendo el cross-over, slew-rate y saturación del mismo algunos de estos efectos. Tanto el cross-over como el slew-rate son aspectos de poco interés, dado que, como para este filtro se seleccionó el amplificador \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, ya que posee un elevado slew-rate y, dada su etapa de salida, el efecto de cross-over no genera problemas. Por otro lado, para el caso de la saturación, se vale de que la máxima tensión de salida del operacional es $V_{sat} = V_{CC} - 1.5 \ V$. Ya que $V_{CC} = 15 \ V$, $V_{sat} = 13.5 \ V$. Luego, para encontrar el valor de la tensión máxima de entrada, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas, esta queda definida por la expresión:
+\begin{equation}
+	V_{in_{max}}=\frac{V_{sat}}{  \max(H_{1} \cdot H_{2} )} = \frac{13.5 \ V}{9} = 1.5 \ V
+\end{equation}
+
+De esta forma, con todo lo establecido, se llega a que el rango dinámico es $R_d = 43.52 \ dB$.
 
 \subsubsection{Análisis de sensibilidades}
 \begin{center}
-	\Large{\textbf{\textcolor{red}{CUENTAS: LEER CONSIGNA PARA VER QUE SENSIBILIDADES PIDE.}}}
+	\Large{\textbf{\textcolor{red}{SENSIBILIDADES E HISTOGRAMA.}}}
 \end{center}
+
+Como se mencionó anteriormente, los capacitores sos componentes importantes que afectan tanto el $Q$ como el $\omega_o$ del circuito. Pequeñas variaciones en ellos puede modificar la frecuencia de notch de cada etapa, haciendo que estos se acerquen o se alejen. Esto puede observarse en diagramas de Montecarlo de transferencia del sistema. Como se mencionó previamente, dado a cuestiones de disposición de componentes, se decidió presentar dicho diagrama en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), donde en se consideró las resistencias con una tolerancia del $1\%$ y los capacitores con una tolerancia del $5\%$, debido a que por consigna no se aceptan tolerancias mayores y dado a que los capacitores empleados fueron medidos, garantizando así el uso de componentes que cumplan con lo dicho
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth,trim={0 3.5cm 1.5cm 0},clip]{ImagenesEjercicio4/MC-Mod-4.png}
+	\caption{Diagrama de Montecarlo en módulo.}
+	\label{fig:mc-mod}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth,trim={1.25cm 3.5cm 0 0},clip]{ImagenesEjercicio4/MC-Pha-4.png}
+	\caption{Diagrama de Montecarlo en fase.}
+	\label{fig:mc-pha}
+\end{figure}
 
 \subsubsection{Confección del filtro y mediciones}
 
-Respetando lo presentado en la Figura (\ref{fig:FT}), considerando lo observado en (\ref{equ:transf-ft-i}) y en (\ref{equ:woq-ft}) y considerando que el filtro es de orden 2, se seleccionaron los componentes presentados en la Tabla (\ref{tab:componentes}). Se destaca que, para ambos casos, se seleccionó $R_4 = R_5 = R_6 = 47 \ k\Omega$ y $C_1 = C_2 = 10 \ nF$.
+Respetando lo presentado en la Figura (\ref{fig:FT}), considerando lo observado en (\ref{equ:transf-ft-i}) y en (\ref{equ:woq-ft}), se dispuso de dos etapas, para las cuales se seleccionó los componentes presentados en la Tabla (\ref{tab:componentes}). Se destaca que, para ambos casos, se optó por $R_4 = R_5 = R_6 = 47 \ k\Omega$ y $C_1 = C_2 = 10 \ nF$.
 
 \begin{table}[H]
 \centering
@@ -353,12 +378,49 @@ $2^{da}$ Etapa & 1.2 k$\Omega$ & 55.2 k$\Omega$ & 150 $\Omega$ & 1.2 k$\Omega$ &
 Se decidió colocar en lugar de los capacitores pines hembra, los cuales permiten reemplazar con facilidad dichos componentes. Esto se debe a que los que se disponen son de una tolerancia del $10 \%$. De esta forma, se vale del analizador de impedancias para determinar la capacitancia de estos y así garantizar el uso del capacitor adecuado. Por otro lado, como la impedancia de entrada resulta del paralelo entre las resistencias $R_4$, $R_5$ y $R_6$, lo cual implica $Z_{in} = 15.67 \ k\Omega$, se coloca un buffer a la entrada de cada instancia, ya que de esta forma, la impedancia de entrada del circuito es la del buffer, garantizando que ambas instancias se acoplen adecuadamente. 
 Al momento de realizar las placas, se optó por colocar jumpers, de forma tal que se pueda hacer las mediciones deseadas con y sin dichos buffers, para poder realizar comparaciones.   
 
-Es así que se presentan a continuación las mediciones realizadas.
+Se observa a continuación una comparación entre los diagramas de Bode teóricos, simulados y medidos.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Plantilla-Medida-1.pdf}
-	\caption{Medición con plantilla.}
-	\label{fig:med-plant}
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-1.png}
+	\caption{Comparación de diagramas de Bode en módulo.}
+	\label{fig:bode-mod}
 \end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Pha-1.png}
+	\caption{Comparación de diagramas de Bode en fase.}
+	\label{fig:bode-pha}
+\end{figure}
+
+De manera similar a lo presentado en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), se analiza como los capacitores del circuito afectan el factor $f_\infty$ de cada etapa. Es así que los picos de atenuación máxima puede superponerse, generando que no se observe el ripple característico de la plantilla de Chebycheff. Un ejemplo de esto se presenta a continuación.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-3.png}
+	\caption{Picos de atenuación máximos medidos variando $C_1$ y $C_2$.}
+	\label{fig:picos}
+\end{figure}
+
+Finalmente, se procede a presentar una de las mediciones realizadas, en la cuál se consiguió que, dado los capacitores empleados, se cumpla con la plantilla deseada.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{\textwidth}
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Plantilla-Medida-1.png}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Plantilla-Medida-2.png}
+\end{subfigure}
+\caption{Medición con plantilla.}
+\label{fig:med-plant}
+\end{figure}
+
+En esta figura se observa como el pico de la primer etapa sobrepasa la banda prohibida, mientras que el segundo se encuentra en frecuencias posteriores a esta, pero dentro de los margenes establecidos.
+
+Tanto en la Figura (\ref{fig:picos}) como en la (\ref{fig:med-plant}), no se presentan los diagramas de Bode en fase, ya que estos no presentan variaciones significantes comparados con lo presentado en la Figura (\ref{fig:bode-pha}).
+
+\begin{center}
+	\Large{\textbf{\textcolor{red}{JUSTIFICAR ALTAS FRECUENCIAS.}}}
+\end{center}
 
 \end{document}

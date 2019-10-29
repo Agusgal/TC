@@ -16,4 +16,5 @@ class Filtros:
         self.indice -= 1
 
 
-listaf = Filtros(1)
+listaf = Filtros(0)
+

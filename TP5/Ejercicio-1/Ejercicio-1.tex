@@ -137,9 +137,6 @@ Utilizando realimentación positiva se pueden lograr Q mucho mayores. Al colocar
 
 La topología Sallen-Key posee varias ventajas. La primera es que esta topología presenta la menor dependencia frente a el GBP del operacional utilizado, ya que estas celdas utilizan al operacional como amplificador y no como integrador. La segunda ventaja de este tipo de celdas es el pequeño desvío entre los valores de capacitores y entre los valores de resistencias en la misma celda, lo que es beneficioso para la manufactura de estos filtros. La desventaja de esta topología, sin embargo, es la alta sensibilidad del factor de calidad respecto a los componentes de la celda, más aún cuanto más alto sea este. 
 
-\subsubsection{Cálculo Analítico}
-
-
 \subsection{Aproximación de Legendre.}
 
 Para cumplir con la plantilla propuesta con seguridad, se diseñó el filtro con una plantilla más restrictiva que la original, presentada a continuación.
@@ -187,7 +184,7 @@ y por último también con el software \textit{Maple}, el gráfico de polos y ce
 \begin{figure}[H]
 \centering
 	\centering
-	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_poles.png}
+	\includegraphics[width=0.8\textwidth]{Imagenes-Ej1/legendre_poles.png}
 	\caption{Diagrama de polos y ceros del filtro aproximación Legendre}
 	\label{leg_poles}
 \end{figure}
@@ -217,7 +214,7 @@ $C_1 [F]$ & $196.1p$ & $220p+1.8n$ & $196.04p$ & $0.1\%$ & 0 & -1 \\
 \begin{tabular}{@{}cccccccc@{}}
 \multicolumn{8}{c}{2da Etapa - Sallen-Key - Orden 2 - $f_0 = 31.2KHz$ - $G=-7dB$} \\ \midrule
 - & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
-$R_1 [\Omega]$ & $21.43K$ & $Preset$ & $10K$ & $0.1\%$ & -0.6 & 0 & -0.2 \\
+$R_1 [\Omega]$ & $21.43K$ & $22K//820K$ & $10K$ & $0.1\%$ & -0.6 & 0 & -0.2 \\
 $R_2 [\Omega]$ & $8.53K$ & $330+8.2K$ & $8.53K$ & $0.1\%$ & 0 & 0 & -0.5 \\
 $R_3 [\Omega]$ & $14.17K$ & $2.2K+12K$ & $14.2K$ & $0.2\%$ & 0.6 & 0 & -0.3 \\
 $C_1 [F]$ & $3.58n$ & $4.7n+15n$ & $3.58n$ & $0.1\%$ & 0 & 0.5 & -0.5 \\
@@ -233,14 +230,14 @@ $C_2 [F]$ & $100p$ &  & $100p$ & $0\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
 $R_1 [\Omega]$ & $57.31K$ & $1.2K+56K$ & $57.2K$ & $0.2\%$ & 0 & 0.54 & -0.2 \\
 $R_2 [\Omega]$ & $57.31K$ & 1.2K+56K & $57.2K$ & $0.2\%$ & 0 & -0.54 & -0.5 \\
 $R_3 [\Omega]$ & $1K$ &  & $1K$ & $0\%$ & -0.6 & -1.08 & 0 \\
-$R_4 [\Omega]$ & $1.51K$ & $12+1.5K$ & $1.51K$ & $0.1\%$ & 0.6 & 1.08 & 0 \\
+$R_4 [\Omega]$ & $1.72K$ & $12+1.5K$ & $1.51K$ & $0.1\%$ & 0.6 & 1.08 & 0 \\
 $C_1 [F]$ & $100p$ &  & $100p$ & $0\%$ & 0 & 1.58 & -0.5 \\
 $C_2 [F]$ & $145.32p$ & $150p+4.7n$ & $145.36p$ & $0.1\%$ & 0 & -1.58 & -0.5 \\ \bottomrule
 \end{tabular}
 \end{table}
 
 \subsubsection{Acoplamiento de Impedancias.}
-Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$.
+Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$. Luego, como la celda con la que se trabaja posee una impedancia de salida extremadamente baja, habrá un buen acoplamiento de impedancias.
 
 \subsubsection{Simulaciones}
 
@@ -281,12 +278,31 @@ Se simuló utilizando el operacional $TL-081$ y el software \textit{LTSpiceXVII}
 \begin{figure}[H]
 \centering
 	\centering
-	\includegraphics[width=\textwidth]{Imagenes-Ej1/pend.jpg}
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_mont.png}
 	\caption{Simulación de Montecarlo del filtro aproximación Legendre.}
 	\label{leg_mont_sim}
 \end{figure}
 
+Se puede observar en el montecarlo del filtro realizado con la aproximación Legendre con tolerancias del \%1  para resistencias y \%10 para los capacitores que solamente cuatro en cien curvas no cumplen con la plantilla utilizada por lo que se optó a no utilizar presets en la celda midiendo por separado los valores de las resistencias y capacitores más sensibles.
+
+\subsubsection{Rango Dinámico}
+
+Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $-2.238721$. Luego, la tensión de entrada máxima será
+\begin{equation}
+V_{i_{max}}= \frac{V_{o_{max}}}{2.238721}
+\end{equation}
+y la tensión mínima de entrada será
+\begin{equation}
+V_{i_{min}}= \frac{V_{o_{min}}}{0.446684}
+\end{equation}
+y considerando que nuestra tensión máxima es de $13.5V$ fijada por la saturación del opamp y nuestro piso de ruido se encuentra en los $10mV$, el rango dinámico será
+\begin{equation}
+DR=20log(\frac{V_{i_{max}}}{V_{i_{min}}}) = 48.6dB
+\end{equation}
+
+
 \subsubsection{Mediciones}
+
 
 
 \subsection{Aproximación de Bessel.}
@@ -337,7 +353,7 @@ y por último, el gráfico de polos y ceros con el software \textit{Maple}:
 \begin{figure}[H]
 \centering
 	\centering
-	\includegraphics[width=0.8\textwidth]{Imagenes-Ej1/bessel_poles.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes-Ej1/bessel_poles.png}
 	\caption{Diagrama de polos y ceros del filtro aproximación Bessel}
 	\label{leg_poles}
 \end{figure}
@@ -383,12 +399,12 @@ $R_1 [\Omega]$ & $2.13K$ & $3.9K//4.7K$ & $2.13K$ & $0\%$ & -0.44 & 0 & -0.28 \\
 $R_2 [\Omega]$ & $1.2K$ &  & $1.2K$ & $0\%$ & 0 & 0 & -0.5 \\
 $R_3 [\Omega]$ & $2.74K$ & $39+2.7K$ & $2.74K$ & $0\%$ & 0.44 & 0 & -0.22 \\
 $C_1 [F]$ & $70.67n$ & $2.7n//68n$ & $70.7n$ & $0.1\%$ & 0 & 0.5 & -0.5 \\
-$C_2 [F]$ & $16.87n$ & $18n+270n$ & $16.88n$ & $0.1\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
+$C_2 [F]$ & $16.87n$ & $1n//6.8n$ & $16.80n$ & $0.2\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
 \end{tabular}
 \end{table}
 
 \subsubsection{Acoplamiento de Impedancias.}
-Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$.
+Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$. Luego, como la celda con la que se trabaja posee una impedancia de salida extremadamente baja, habrá un buen acoplamiento de impedancias.
 
 \subsubsection{Simulaciones}
 
@@ -429,15 +445,35 @@ Se simuló utilizando el operacional $TL-081$ y el software \textit{LTSpiceXVII}
 \begin{figure}[H]
 \centering
 	\centering
-	\includegraphics[width=\textwidth]{Imagenes-Ej1/pend.jpg}
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_mont.png}
 	\caption{Simulación de montecarlo del filtro aproximación Bessel.}
 	\label{bes_mont_sim}
 \end{figure}
+
+Se puede observar en el montecarlo del filtro realizado con la aproximación Bessel con tolerancias del \%1  para resistencias y \%10 para los capacitores que todas las curvas cumplen con la plantilla utilizada por lo que se optó a no utilizar presets en la celda midiendo por separado los valores de las resistencias y capacitores más sensibles.
+
+\subsubsection{Rango Dinámico}
+
+Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $-2.238721$. Luego, la tensión de entrada máxima será
+\begin{equation}
+V_{i_{max}}= \frac{V_{o_{max}}}{2.238721}
+\end{equation}
+y la tensión mínima de entrada será
+\begin{equation}
+V_{i_{min}}= \frac{V_{o_{min}}}{0.446684}
+\end{equation}
+y considerando que nuestra tensión máxima es de $13.5V$ fijada por la saturación del opamp y nuestro piso de ruido se encuentra en los $10mV$, el rango dinámico será
+\begin{equation}
+DR=20log(\frac{V_{i_{max}}}{V_{i_{min}}}) = 48.6dB
+\end{equation}
+
 
 \subsubsection{Mediciones}
 
 
 \subsection{Conclusiones}
+
+
 
 \subsection{Anexo de Sensibilidades}
 \begin{equation}

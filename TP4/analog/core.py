@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
   
-from cusfunc import maprange
-from custexcp import *
+from analog.cusfunc.cusfunc import maprange
+from analog.custexcp.custexcp import *
 
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
@@ -24,6 +24,8 @@ class Cell:
         self.den = den
         self.sys = signal.TransferFunction(self.den,self.num)
         self.w, self.mag, self.pha = signal.bode(self.sys)
+        whd = np.linspace(self.w[0],self.w[-1],len(self.w)*20)
+        self.w, self.mag, self.pha = signal.bode(self.sys,w=whd)
         self.zeros, self.poles, self.kZP = signal.tf2zpk(self.den,self.num)
         # self.Q = self.computeQ()
 
@@ -136,6 +138,10 @@ class Cell:
             if name:
                 plt.legend()
             plt.show()
+    
+    def compute_q(self):
+        pass
+
 
 class AnalogFilter(ABC):
     """
@@ -233,14 +239,20 @@ class AnalogFilter(ABC):
         self.N = N  # Filter order
         self.rp = rp
 
-        
+        # dict that stores if a certain graph is already on the screen nad where it is [is graphed, where]
+        self.is_graphed = {'Template': [0, 0], 'Magnitude': [0, 0], 'Phase': [0, 0], 'Group Delay': [0, 0], 'Maximun Q': [0, 0], 'Impulse Response': [0, 0], 'Step Response': [0, 0], 'Poles and Zeroes': [0, 0]}
+
         # Step 1: Compute filter order
         self.compute_order()
         # Step 2: Compute the filter coefficients
         self.b, self.a = self.compute_ba()
         # Step 3: Construct Transfer function
         self.sys = signal.TransferFunction(self.b, self.a)
+
         self.w, self.mag, self.pha = signal.bode(self.sys)
+        whd = np.linspace(self.w[0],self.w[-1],len(self.w)*20)
+        self.w, self.mag, self.pha = signal.bode(self.sys,w=whd)
+
         self.zeros, self.poles, self.kZP = self.compute_zpk() #kZP will denote de gain returned by the compute_zpk method
         #Step 4: Split high order filter into first and second order cells
         # self.stages = self.compute_filter_stages()
@@ -552,3 +564,21 @@ class AnalogFilter(ABC):
         >>> w, gdelay = my_filter.get_gdelay()
         """
         return np.divide(self.w[1:], 2*np.pi) , -np.diff(self.mag)/np.diff(self.w)
+
+    # Return True if name is already graphed and False if not
+    def isgraphed(self, name):
+        if self.is_graphed[name][0]:
+            return True
+        else:
+            return False
+
+    def mark_graphed(self, name, window):
+        self.is_graphed[name][0] = 1
+        self.is_graphed[name][1] = window
+
+    def mark_not_graphed(self, name):
+        self.is_graphed[name][0] = 0
+        self.is_graphed[name][1] = 0
+
+    def set_window(self, window, key):
+        self.is_graphed[key][1] = window
