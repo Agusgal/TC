@@ -134,6 +134,7 @@ class Butterworth(AnalogFilter):
 
 class Chebyshev1(AnalogFilter):
     def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
+        print(N)
         """
         Parameters
         ----------
@@ -230,7 +231,7 @@ class Chebyshev1(AnalogFilter):
 
         if self.ftype == 'lowpass':
             # Compute maximum frequency allowed that still might meet requirements
-            wcstop = self.ws * np.cosh(np.cosh(1 / (np.sqrt(np.power(10, -self.As/10) - 1))) / self.N)
+            wcstop = self.ws* np.cosh(np.arccosh(1 / np.sqrt(np.power(10, self.Ap/10) - 1)) / self.N)
             # Compute minimum allowed frequency that still might meet requirements
             wcpass = self.wp * np.cosh(np.arccosh(1 / np.sqrt(np.power(10, self.Ap/10) - 1)) / self.N)
             print(f"wcstop:{wcstop}")
@@ -372,14 +373,17 @@ class Chebyshev2(AnalogFilter):
             pass
 
 # plt.grid(axis='both', which='both')
-# for i in np.linspace(0, 1, 10):
-#     # b = Chebyshev1("highpass", 40E3, 10E3, 3, 40,rp=3, k=i)
-      # b = Chebyshev1("lowpass", 20E3, 40E3, 3, 40, rp=3, k=i)
-        # b.plot_mag(name=f'{i}')
+for i in np.linspace(0, 1, 3):
+    # b = Chebyshev1("highpass", 40E3, 10E3, 3, 40,rp=3, k=i)
+    b = Chebyshev1("lowpass", 20E3, 40E3, 3, 40, rp=3, k=i)
+    b.plot_mag(name=f'{i}')
 
 # b = Chebyshev1("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
-b = Chebyshev1("highpass", 40E3, 35E3, 5, 40,rp=3, k=0)
-b.plot_mag(show=True)
+# b1= Chebyshev1("highpass", 40E3, 20E3, 10, 40,rp=3, k=0)
+# b2 = Chebyshev1("highpass", 40E3, 20E3, 10, 40,N=5,rp=3, k=0)
+# b1.plot_mag()
+# b2.plot_mag()
+plt.show()
 # try:
 #     b = Butterworth("highpass", 10E3,20E3, 3, 40)
 # except ValueError as e:
@@ -396,3 +400,6 @@ b.plot_mag(show=True)
 # a.plot_pha(show=True)
 # https://dsp.stackexchange.com/questions/1966/how-can-i-break-a-filter-down-into-second-order-sections
 # https://gist.github.com/endolith/c80f9e6bf3b407c2f567
+# https://d1.amobbs.com/bbs_upload782111/files_32/ourdev_573166.pdf
+# http://www.matheonics.com/Tutorials/Specification.html
+# http://www.matheonics.com/Tutorials/Butterworth.html#Paragraph_3.1
