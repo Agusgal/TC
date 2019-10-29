@@ -29,8 +29,25 @@ class MplWidget(QWidget):
     def plot(self, filtro):
         #self.canvas.axes.clear()
 
-        self.canvas.axes.semilogx(filtro.get_w(), filtro.get_mag())
-        self.canvas.draw()
+        for key in filtro.is_graphed:
+            if filtro.is_graphed[key]:
+                if key == 'template':
+                    pass
+                elif key == 'mag':
+                    self.canvas.axes.semilogx(filtro.get_w(), filtro.get_mag())
+                    self.canvas.draw()
+                elif key =='phase':
+                    pass
+                elif key == 'g delay':
+                    pass
+                elif key == 'max Q':
+                    pass
+                elif key == 'impulse resp':
+                    pass
+                elif key == 'step resp':
+                    pass
+                elif key == 'poles and zeroes':
+                    pass
 
     def clear_axes(self):
         self.canvas.axes.clear()

@@ -23,7 +23,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.boton_graficar.clicked.connect(self.update_grafico)
 
-        self.ui.boton_seleccionar_filtro.connect()
+        self.ui.boton_seleccionar_filtro.connect(self.seleccionar_filtro)
 
         self.ui.boton_limpiar.connect()
 
@@ -72,6 +72,9 @@ class MainWindow(QtWidgets.QMainWindow):
     def agregar_filtro_lista(self, filtro): ##Agrega filtro a lista que se usa para llevar cuenta de filtros a graficar
         listaf.agregar_filtro(filtro)
         listaf.indice_up()
+
+    def seleccionar_filtro(self):
+        pass
 
     def update_grafico(self):
 

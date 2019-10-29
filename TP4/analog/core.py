@@ -239,9 +239,11 @@ class AnalogFilter(ABC):
         self.N = N  # Filter order
         self.rp = rp
 
-        # dict that stores if a certain graph is already on the screen
+        # dict that stores if a certain graph is already on the screen and is selecetd
+        # controls if filter is going to be graphed
         self.is_graphed = {'template': 0, 'mag': 0, 'phase': 0, 'g delay': 0, 'max Q': 0, 'impulse resp': 0, 'step resp': 0, 'poles and zeroes': 0}
-        
+        self.is_selected = False
+
         # Step 1: Compute filter order
         self.compute_order()
         # Step 2: Compute the filter coefficients
@@ -577,3 +579,9 @@ class AnalogFilter(ABC):
 
     def mark_not_graphed(self, name):
         self.is_graphed[name] = 0
+
+    def select_filter(self):
+        self.is_selected = True
+
+    def deselect_filter(self):
+        self.is_selected = False
