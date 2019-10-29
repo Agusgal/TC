@@ -239,10 +239,8 @@ class AnalogFilter(ABC):
         self.N = N  # Filter order
         self.rp = rp
 
-        # dict that stores if a certain graph is already on the screen and is selecetd
-        # controls if filter is going to be graphed
-        self.is_graphed = {'template': 0, 'mag': 0, 'phase': 0, 'g delay': 0, 'max Q': 0, 'impulse resp': 0, 'step resp': 0, 'poles and zeroes': 0}
-        self.is_selected = False
+        # dict that stores if a certain graph is already on the screen nad where it is [is graphed, where]
+        self.is_graphed = {'Template': [0, 0], 'Magnitude': [0, 0], 'Phase': [0, 0], 'Group Delay': [0, 0], 'Maximun Q': [0, 0], 'Impulse Response': [0, 0], 'Step Response': [0, 0], 'Poles and Zeroes': [0, 0]}
 
         # Step 1: Compute filter order
         self.compute_order()
@@ -569,19 +567,18 @@ class AnalogFilter(ABC):
 
     # Return True if name is already graphed and False if not
     def isgraphed(self, name):
-        if self.is_graphed[name]:
+        if self.is_graphed[name][0]:
             return True
         else:
             return False
 
-    def mark_graphed(self, name):
-        self.is_graphed[name] = 1
+    def mark_graphed(self, name, window):
+        self.is_graphed[name][0] = 1
+        self.is_graphed[name][1] = window
 
     def mark_not_graphed(self, name):
-        self.is_graphed[name] = 0
+        self.is_graphed[name][0] = 0
+        self.is_graphed[name][1] = 0
 
-    def select_filter(self):
-        self.is_selected = True
-
-    def deselect_filter(self):
-        self.is_selected = False
+    def set_window(self, window, key):
+        self.is_graphed[key][1] = window

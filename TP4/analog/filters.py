@@ -373,9 +373,9 @@ class Chebyshev2(AnalogFilter):
             pass
 
 # plt.grid(axis='both', which='both')
-for i in np.linspace(0, 1, 3):
+for i in np.linspace(0, 1, 10):
     # b = Chebyshev1("highpass", 40E3, 10E3, 3, 40,rp=3, k=i)
-    b = Chebyshev1("lowpass", 20E3, 40E3, 3, 40, rp=3, k=i)
+    b = Butterworth("lowpass", 20E3, 40E3, 3, 40, k=i)
     b.plot_mag(name=f'{i}')
 
 # b = Chebyshev1("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)

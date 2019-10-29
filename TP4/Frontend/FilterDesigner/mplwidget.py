@@ -26,28 +26,28 @@ class MplWidget(QWidget):
         self.canvas.axes = self.canvas.figure.add_subplot(111)
         self.setLayout(layout)
 
-    def plot(self, filtro):
-        #self.canvas.axes.clear()
-
-        for key in filtro.is_graphed:
-            if filtro.is_graphed[key]:
-                if key == 'template':
-                    pass
-                elif key == 'mag':
-                    self.canvas.axes.semilogx(filtro.get_w(), filtro.get_mag())
-                    self.canvas.draw()
-                elif key =='phase':
-                    pass
-                elif key == 'g delay':
-                    pass
-                elif key == 'max Q':
-                    pass
-                elif key == 'impulse resp':
-                    pass
-                elif key == 'step resp':
-                    pass
-                elif key == 'poles and zeroes':
-                    pass
+    def plot(self, lista_filtros):
+        
+        for filtro in lista_filtros:
+            for key in filtro.is_graphed:
+                if filtro.is_graphed[key][0]:
+                    if key == 'template':
+                        pass
+                    elif key == 'Magnitude':
+                        self.canvas.axes.semilogx(filtro.get_w(), filtro.get_mag())
+                        self.canvas.draw()
+                    elif key == 'Phase':
+                        pass
+                    elif key == 'Group Delay':
+                        pass
+                    elif key == 'Maximun Q':
+                        pass
+                    elif key == 'Impulse Response':
+                        pass
+                    elif key == 'Step Response':
+                        pass
+                    elif key == 'Poles and Zeroes':
+                        pass
 
     def clear_axes(self):
         self.canvas.axes.clear()
