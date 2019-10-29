@@ -27,7 +27,6 @@ class MplWidget(QWidget):
         self.setLayout(layout)
 
     def plot(self, filtro):
-        #self.canvas.axes.clear()
 
         for key in filtro.is_graphed:
             if filtro.is_graphed[key]:

@@ -241,8 +241,9 @@ class AnalogFilter(ABC):
 
         # dict that stores if a certain graph is already on the screen and is selecetd
         # controls if filter is going to be graphed
-        self.is_graphed = {'template': 0, 'mag': 0, 'phase': 0, 'g delay': 0, 'max Q': 0, 'impulse resp': 0, 'step resp': 0, 'poles and zeroes': 0}
+        self.is_graphed = {'Template': 0, 'Magnitude': 0, 'Phase': 0, 'Group Delay': 0, 'Maximun Q': 0, 'Impulse Response': 0, 'Step Response': 0, 'Poles and Zeroes': 0}
         self.is_selected = False
+
 
         # Step 1: Compute filter order
         self.compute_order()
