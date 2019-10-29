@@ -1,0 +1,23 @@
+Net Status Report
+Filename     : C:\Users\Acer\Desktop\GitHub\TC\TP5\Ejercicio-1\Altium\Sallen.PcbDoc
+Date         : 28-Oct-19
+Time         : 12:29:59 PM
+Time Elapsed : 00:00:01
+
+Nets, Layer, Length
+    -VCC, Signal Layers Only, 28.1758mm
+    GND, Signal Layers Only, 128.6147mm
+    NetC1_p_1, Signal Layers Only, 72.053mm
+    NetC1_p_2, Signal Layers Only, 79.7012mm
+    NetC1_s1_2, Signal Layers Only, 4.2269mm
+    NetC2_p_1, Signal Layers Only, 72.1649mm
+    NetC2_s1_2, Signal Layers Only, 4.2015mm
+    NetJ3_2, Signal Layers Only, 27.8737mm
+    NetR1_s1_1, Signal Layers Only, 2.1372mm
+    NetR2_s1_1, Signal Layers Only, 2.2116mm
+    NetR3_s1_1, Signal Layers Only, 4.2998mm
+    NetRa_p_2, Signal Layers Only, 66.5413mm
+    NetRa_s1_1, Signal Layers Only, 3.9925mm
+    NetRb_s1_1, Signal Layers Only, 3.7972mm
+    VCC, Signal Layers Only, 19.3808mm
+count : 15

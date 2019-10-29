@@ -1,0 +1,17 @@
+"Bill of Material for "
+"On 28-Oct-19 at 12:30:10 PM"
+
+"Comment","Pattern","Quantity","Components"
+
+"1-2","TPTH","1","1-2",""
+"270","0805","15","R1_p, R1_s1, R1_s2, R2_p, R2_s1, R2_s2, R3_p, R3_s1, R3_s2, Ra_p, Ra_s1, Ra_s2, Rb_p, Rb_s1, Rb_s2",""
+"CAP","0805","8","C1_p, C1_s1, C1_s2, C2_p, C2_s1, C2_s2, CD1, CD2",""
+"IN","MOLEX2","1","IN",""
+"IN","TPTH","1","IN",""
+"IN-","TPTH","1","IN-",""
+"IN+","TPTH","1","IN+",""
+"OUT","MOLEX2","1","OUT",""
+"OUT","TPTH","1","OUT",""
+"SUPPLY","MOLEX3","1","POWER",""
+"TL081","P008","1","TL081","JFET-Input Operational Amplifier"
+"TP","TPTH","2","GND, GND",""
