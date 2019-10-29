@@ -75,7 +75,7 @@ def read_file_spice(filename):
         data["pha"].append(c3)
 
     return data
-
+df = pd.read_csv('BodeRauch.csv')
 H = np.asarray(df['MAG'])+3
 f = np.asarray(df['Frequency'])+400
 ph = np.asarray(df['pha'])
