@@ -25,7 +25,8 @@ class MplWidget(QWidget):
         self.canvas.axes = self.canvas.figure.add_subplot(111)
         self.setLayout(layout)
 
-    def plot(self, t):
+    def plot(self, filtro):
         self.canvas.axes.clear()
 
-        self.canvas.axes.
+        self.canvas.axes.semilogx(filtro.get_w(), filtro.get_mag())
+        self.canvas.draw()

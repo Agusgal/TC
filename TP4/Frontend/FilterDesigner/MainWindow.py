@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -16,115 +18,6 @@ class Ui_MainWindow(object):
         self.centralwidget.setObjectName("centralwidget")
         self.gridLayout_2 = QtWidgets.QGridLayout(self.centralwidget)
         self.gridLayout_2.setObjectName("gridLayout_2")
-        self.marco_tipo_filtro = QtWidgets.QGroupBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.marco_tipo_filtro.sizePolicy().hasHeightForWidth())
-        self.marco_tipo_filtro.setSizePolicy(sizePolicy)
-        self.marco_tipo_filtro.setMaximumSize(QtCore.QSize(280, 16777215))
-        self.marco_tipo_filtro.setStyleSheet("QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: 0 3px 0 3px;\n"
-"}")
-        self.marco_tipo_filtro.setFlat(True)
-        self.marco_tipo_filtro.setCheckable(False)
-        self.marco_tipo_filtro.setObjectName("marco_tipo_filtro")
-        self.gridLayout_6 = QtWidgets.QGridLayout(self.marco_tipo_filtro)
-        self.gridLayout_6.setObjectName("gridLayout_6")
-        self.selector_filtro = QtWidgets.QComboBox(self.marco_tipo_filtro)
-        self.selector_filtro.setObjectName("selector_filtro")
-        self.selector_filtro.addItem("")
-        self.selector_filtro.addItem("")
-        self.selector_filtro.addItem("")
-        self.selector_filtro.addItem("")
-        self.gridLayout_6.addWidget(self.selector_filtro, 1, 0, 1, 1)
-        self.widget = QtWidgets.QWidget(self.marco_tipo_filtro)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
-        self.widget.setSizePolicy(sizePolicy)
-        self.widget.setObjectName("widget")
-        self.gridLayout_6.addWidget(self.widget, 2, 0, 1, 1)
-        self.gridLayout_2.addWidget(self.marco_tipo_filtro, 0, 2, 1, 1)
-        self.marco_graficos = QtWidgets.QGroupBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(1)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.marco_graficos.sizePolicy().hasHeightForWidth())
-        self.marco_graficos.setSizePolicy(sizePolicy)
-        self.marco_graficos.setMaximumSize(QtCore.QSize(280, 16777215))
-        self.marco_graficos.setStyleSheet("QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: 0 3px 0 3px;\n"
-"}")
-        self.marco_graficos.setObjectName("marco_graficos")
-        self.gridLayout = QtWidgets.QGridLayout(self.marco_graficos)
-        self.gridLayout.setObjectName("gridLayout")
-        self.selector_ventana = QtWidgets.QComboBox(self.marco_graficos)
-        self.selector_ventana.setObjectName("selector_ventana")
-        self.selector_ventana.addItem("")
-        self.selector_ventana.addItem("")
-        self.gridLayout.addWidget(self.selector_ventana, 1, 1, 1, 1)
-        self.selector_grafico = QtWidgets.QComboBox(self.marco_graficos)
-        self.selector_grafico.setObjectName("selector_grafico")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.selector_grafico.addItem("")
-        self.gridLayout.addWidget(self.selector_grafico, 1, 0, 1, 1)
-        self.boton_graficar = QtWidgets.QPushButton(self.marco_graficos)
-        self.boton_graficar.setObjectName("boton_graficar")
-        self.gridLayout.addWidget(self.boton_graficar, 2, 0, 1, 2)
-        self.gridLayout_2.addWidget(self.marco_graficos, 0, 0, 2, 1)
-        self.marco_filtros = QtWidgets.QGroupBox(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.marco_filtros.sizePolicy().hasHeightForWidth())
-        self.marco_filtros.setSizePolicy(sizePolicy)
-        self.marco_filtros.setMaximumSize(QtCore.QSize(280, 16777215))
-        self.marco_filtros.setStyleSheet("QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: 0 3px 0 3px;\n"
-"}")
-        self.marco_filtros.setObjectName("marco_filtros")
-        self.gridLayout_5 = QtWidgets.QGridLayout(self.marco_filtros)
-        self.gridLayout_5.setObjectName("gridLayout_5")
-        self.boton_mostrar_filtro = QtWidgets.QPushButton(self.marco_filtros)
-        self.boton_mostrar_filtro.setObjectName("boton_mostrar_filtro")
-        self.gridLayout_5.addWidget(self.boton_mostrar_filtro, 2, 0, 1, 1)
-        self.boton_borrar_filtro = QtWidgets.QPushButton(self.marco_filtros)
-        self.boton_borrar_filtro.setObjectName("boton_borrar_filtro")
-        self.gridLayout_5.addWidget(self.boton_borrar_filtro, 2, 2, 1, 1)
-        self.lista_filtros = QtWidgets.QListWidget(self.marco_filtros)
-        self.lista_filtros.setObjectName("lista_filtros")
-        self.gridLayout_5.addWidget(self.lista_filtros, 1, 0, 1, 3)
-        self.gridLayout_2.addWidget(self.marco_filtros, 3, 2, 1, 1)
         self.marco_parametros = QtWidgets.QGroupBox(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -212,6 +105,15 @@ class Ui_MainWindow(object):
         self.label_Hz_bp.setObjectName("label_Hz_bp")
         self.gridLayout_3.addWidget(self.label_Hz_bp, 1, 2, 1, 1)
         self.gridLayout_2.addWidget(self.marco_parametros, 1, 2, 1, 1)
+        self.ventana_grafica2 = MplWidget(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ventana_grafica2.sizePolicy().hasHeightForWidth())
+        self.ventana_grafica2.setSizePolicy(sizePolicy)
+        self.ventana_grafica2.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.ventana_grafica2.setObjectName("ventana_grafica2")
+        self.gridLayout_2.addWidget(self.ventana_grafica2, 2, 1, 2, 1)
         self.marco_aproximacion = QtWidgets.QGroupBox(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -246,6 +148,15 @@ class Ui_MainWindow(object):
         self.boton_agregar_filtro.setObjectName("boton_agregar_filtro")
         self.gridLayout_4.addWidget(self.boton_agregar_filtro, 1, 0, 1, 1)
         self.gridLayout_2.addWidget(self.marco_aproximacion, 2, 2, 1, 1)
+        self.ventana_grafica1 = MplWidget(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.ventana_grafica1.sizePolicy().hasHeightForWidth())
+        self.ventana_grafica1.setSizePolicy(sizePolicy)
+        self.ventana_grafica1.setMaximumSize(QtCore.QSize(16777215, 500))
+        self.ventana_grafica1.setObjectName("ventana_grafica1")
+        self.gridLayout_2.addWidget(self.ventana_grafica1, 0, 1, 2, 1)
         self.marco_edicion_graficos = QtWidgets.QGroupBox(self.centralwidget)
         self.marco_edicion_graficos.setStyleSheet("QGroupBox {\n"
 "    border: 1px solid gray;\n"
@@ -259,27 +170,121 @@ class Ui_MainWindow(object):
 "}")
         self.marco_edicion_graficos.setObjectName("marco_edicion_graficos")
         self.gridLayout_2.addWidget(self.marco_edicion_graficos, 2, 0, 2, 1)
-        self.ventana_grafica1 = MplWidget(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        self.marco_filtros = QtWidgets.QGroupBox(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ventana_grafica1.sizePolicy().hasHeightForWidth())
-        self.ventana_grafica1.setSizePolicy(sizePolicy)
-        self.ventana_grafica1.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.ventana_grafica1.setObjectName("ventana_grafica1")
-        self.gridLayout_2.addWidget(self.ventana_grafica1, 0, 1, 2, 1)
-        self.ventana_grafica2 = MplWidget(self.centralwidget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
+        sizePolicy.setHeightForWidth(self.marco_filtros.sizePolicy().hasHeightForWidth())
+        self.marco_filtros.setSizePolicy(sizePolicy)
+        self.marco_filtros.setMaximumSize(QtCore.QSize(280, 16777215))
+        self.marco_filtros.setStyleSheet("QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: 0 3px 0 3px;\n"
+"}")
+        self.marco_filtros.setObjectName("marco_filtros")
+        self.gridLayout_5 = QtWidgets.QGridLayout(self.marco_filtros)
+        self.gridLayout_5.setObjectName("gridLayout_5")
+        self.boton_mostrar_filtro = QtWidgets.QPushButton(self.marco_filtros)
+        self.boton_mostrar_filtro.setObjectName("boton_mostrar_filtro")
+        self.gridLayout_5.addWidget(self.boton_mostrar_filtro, 2, 0, 1, 1)
+        self.boton_borrar_filtro = QtWidgets.QPushButton(self.marco_filtros)
+        self.boton_borrar_filtro.setObjectName("boton_borrar_filtro")
+        self.gridLayout_5.addWidget(self.boton_borrar_filtro, 2, 2, 1, 1)
+        self.lista_filtros = QtWidgets.QListWidget(self.marco_filtros)
+        self.lista_filtros.setObjectName("lista_filtros")
+        self.gridLayout_5.addWidget(self.lista_filtros, 1, 0, 1, 3)
+        self.gridLayout_2.addWidget(self.marco_filtros, 3, 2, 1, 1)
+        self.marco_tipo_filtro = QtWidgets.QGroupBox(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.ventana_grafica2.sizePolicy().hasHeightForWidth())
-        self.ventana_grafica2.setSizePolicy(sizePolicy)
-        self.ventana_grafica2.setMaximumSize(QtCore.QSize(16777215, 500))
-        self.ventana_grafica2.setObjectName("ventana_grafica2")
-        self.gridLayout_2.addWidget(self.ventana_grafica2, 2, 1, 2, 1)
+        sizePolicy.setHeightForWidth(self.marco_tipo_filtro.sizePolicy().hasHeightForWidth())
+        self.marco_tipo_filtro.setSizePolicy(sizePolicy)
+        self.marco_tipo_filtro.setMaximumSize(QtCore.QSize(280, 16777215))
+        self.marco_tipo_filtro.setStyleSheet("QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: 0 3px 0 3px;\n"
+"}")
+        self.marco_tipo_filtro.setFlat(True)
+        self.marco_tipo_filtro.setCheckable(False)
+        self.marco_tipo_filtro.setObjectName("marco_tipo_filtro")
+        self.gridLayout_6 = QtWidgets.QGridLayout(self.marco_tipo_filtro)
+        self.gridLayout_6.setObjectName("gridLayout_6")
+        self.selector_filtro = QtWidgets.QComboBox(self.marco_tipo_filtro)
+        self.selector_filtro.setObjectName("selector_filtro")
+        self.selector_filtro.addItem("")
+        self.selector_filtro.addItem("")
+        self.selector_filtro.addItem("")
+        self.selector_filtro.addItem("")
+        self.gridLayout_6.addWidget(self.selector_filtro, 1, 0, 1, 1)
+        self.widget = QtWidgets.QWidget(self.marco_tipo_filtro)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.widget.sizePolicy().hasHeightForWidth())
+        self.widget.setSizePolicy(sizePolicy)
+        self.widget.setObjectName("widget")
+        self.gridLayout_6.addWidget(self.widget, 2, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.marco_tipo_filtro, 0, 2, 1, 1)
+        self.marco_graficos = QtWidgets.QGroupBox(self.centralwidget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(1)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.marco_graficos.sizePolicy().hasHeightForWidth())
+        self.marco_graficos.setSizePolicy(sizePolicy)
+        self.marco_graficos.setMaximumSize(QtCore.QSize(280, 16777215))
+        self.marco_graficos.setStyleSheet("QGroupBox {\n"
+"    border: 1px solid gray;\n"
+"    margin-top: 0.5em;\n"
+"}\n"
+"\n"
+"QGroupBox::title {\n"
+"    subcontrol-origin: margin;\n"
+"    left: 10px;\n"
+"    padding: 0 3px 0 3px;\n"
+"}")
+        self.marco_graficos.setObjectName("marco_graficos")
+        self.gridLayout = QtWidgets.QGridLayout(self.marco_graficos)
+        self.gridLayout.setObjectName("gridLayout")
+        self.selector_ventana = QtWidgets.QComboBox(self.marco_graficos)
+        self.selector_ventana.setObjectName("selector_ventana")
+        self.selector_ventana.addItem("")
+        self.selector_ventana.addItem("")
+        self.gridLayout.addWidget(self.selector_ventana, 1, 1, 1, 1)
+        self.selector_grafico = QtWidgets.QComboBox(self.marco_graficos)
+        self.selector_grafico.setObjectName("selector_grafico")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.selector_grafico.addItem("")
+        self.gridLayout.addWidget(self.selector_grafico, 1, 0, 1, 1)
+        self.boton_graficar = QtWidgets.QPushButton(self.marco_graficos)
+        self.boton_graficar.setObjectName("boton_graficar")
+        self.gridLayout.addWidget(self.boton_graficar, 2, 0, 1, 1)
+        self.boton_clear = QtWidgets.QPushButton(self.marco_graficos)
+        self.boton_clear.setObjectName("boton_clear")
+        self.gridLayout.addWidget(self.boton_clear, 2, 1, 1, 1)
+        self.gridLayout_2.addWidget(self.marco_graficos, 0, 0, 2, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 17))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -292,27 +297,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.marco_tipo_filtro.setTitle(_translate("MainWindow", "Type of Filter:"))
-        self.selector_filtro.setItemText(0, _translate("MainWindow", "Low-pass"))
-        self.selector_filtro.setItemText(1, _translate("MainWindow", "High-pass"))
-        self.selector_filtro.setItemText(2, _translate("MainWindow", "Band_pass"))
-        self.selector_filtro.setItemText(3, _translate("MainWindow", "Band_stop"))
-        self.marco_graficos.setTitle(_translate("MainWindow", "GroupBox"))
-        self.selector_ventana.setItemText(0, _translate("MainWindow", "Window 1"))
-        self.selector_ventana.setItemText(1, _translate("MainWindow", "Window 2"))
-        self.selector_grafico.setItemText(0, _translate("MainWindow", "Template"))
-        self.selector_grafico.setItemText(1, _translate("MainWindow", "Attenuation"))
-        self.selector_grafico.setItemText(2, _translate("MainWindow", "Magnitude"))
-        self.selector_grafico.setItemText(3, _translate("MainWindow", "Phase"))
-        self.selector_grafico.setItemText(4, _translate("MainWindow", "Group Delay"))
-        self.selector_grafico.setItemText(5, _translate("MainWindow", "Maximun Q"))
-        self.selector_grafico.setItemText(6, _translate("MainWindow", "Impulse Response"))
-        self.selector_grafico.setItemText(7, _translate("MainWindow", "Step Response"))
-        self.selector_grafico.setItemText(8, _translate("MainWindow", "Poles and Zeroes"))
-        self.boton_graficar.setText(_translate("MainWindow", "Graph"))
-        self.marco_filtros.setTitle(_translate("MainWindow", "Filters"))
-        self.boton_mostrar_filtro.setText(_translate("MainWindow", "Show"))
-        self.boton_borrar_filtro.setText(_translate("MainWindow", "Remove"))
         self.marco_parametros.setTitle(_translate("MainWindow", "Filter Configuration:"))
         self.label_2.setText(_translate("MainWindow", "%"))
         self.label_frecuencia_bp.setText(_translate("MainWindow", "Passband Frequency (Fp):"))
@@ -338,5 +322,26 @@ class Ui_MainWindow(object):
         self.selector_aproximacion.setItemText(6, _translate("MainWindow", "Cauer"))
         self.boton_agregar_filtro.setText(_translate("MainWindow", "Add Filter"))
         self.marco_edicion_graficos.setTitle(_translate("MainWindow", "Aca va edicion de graficos"))
-
+        self.marco_filtros.setTitle(_translate("MainWindow", "Filters"))
+        self.boton_mostrar_filtro.setText(_translate("MainWindow", "Select"))
+        self.boton_borrar_filtro.setText(_translate("MainWindow", "Remove"))
+        self.marco_tipo_filtro.setTitle(_translate("MainWindow", "Type of Filter:"))
+        self.selector_filtro.setItemText(0, _translate("MainWindow", "Low-pass"))
+        self.selector_filtro.setItemText(1, _translate("MainWindow", "High-pass"))
+        self.selector_filtro.setItemText(2, _translate("MainWindow", "Band_pass"))
+        self.selector_filtro.setItemText(3, _translate("MainWindow", "Band_stop"))
+        self.marco_graficos.setTitle(_translate("MainWindow", "GroupBox"))
+        self.selector_ventana.setItemText(0, _translate("MainWindow", "Window 1"))
+        self.selector_ventana.setItemText(1, _translate("MainWindow", "Window 2"))
+        self.selector_grafico.setItemText(0, _translate("MainWindow", "Template"))
+        self.selector_grafico.setItemText(1, _translate("MainWindow", "Attenuation"))
+        self.selector_grafico.setItemText(2, _translate("MainWindow", "Magnitude"))
+        self.selector_grafico.setItemText(3, _translate("MainWindow", "Phase"))
+        self.selector_grafico.setItemText(4, _translate("MainWindow", "Group Delay"))
+        self.selector_grafico.setItemText(5, _translate("MainWindow", "Maximun Q"))
+        self.selector_grafico.setItemText(6, _translate("MainWindow", "Impulse Response"))
+        self.selector_grafico.setItemText(7, _translate("MainWindow", "Step Response"))
+        self.selector_grafico.setItemText(8, _translate("MainWindow", "Poles and Zeroes"))
+        self.boton_graficar.setText(_translate("MainWindow", "Graph"))
+        self.boton_clear.setText(_translate("MainWindow", "Clear"))
 from mplwidget import MplWidget
