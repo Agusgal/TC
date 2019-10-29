@@ -3,7 +3,7 @@ from abc import ABC, abstractclassmethod, abstractmethod
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
-
+  
 from cusfunc import maprange
 from custexcp import *
 
@@ -114,7 +114,6 @@ class Cell:
             plt.show()
 
 
-    #TODO comentar
     def plot_impulse_response(self, name=None, show=False, lc=None):
         T, yout = signal.impulse(self.sys)
         if lc:
@@ -127,7 +126,6 @@ class Cell:
             plt.show()
 
 
-    #TODO comentar
     def plot_group_delay(self, name=None, show=False, lc=None):
         if lc:
             plt.semilogx(np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
@@ -247,7 +245,6 @@ class AnalogFilter(ABC):
         #Step 4: Split high order filter into first and second order cells
         # self.stages = self.compute_filter_stages()
         # print(self.stages)
-    
     # @abstractmethod
     # def compute_filter_stages(self):
     #     """
@@ -299,7 +296,7 @@ class AnalogFilter(ABC):
         --------
         >>> stencils = filter.get_stencils(x,y)
         >>> for s in stencils:
-        >>>     plt.fill(s[0],s[s1],lw=0,'0.8',color='orange) #Set line-width=0
+        >>>     plt.fill(s[0],s[1],'0.8',lw=0,color='orange) #Set line-width=0
         >>> plt.show()
         """
         if self.ftype == 'lowpass':
@@ -508,4 +505,50 @@ class AnalogFilter(ABC):
     def get_order(self):
         return self.N
 
+    def get_w(self):
+        return self.w
 
+    def get_mag(self):
+        return self.mag
+    
+    def get_pha(self):
+        return self.pha
+
+    def get_impulse_response(self):
+        """
+        Returns
+        -------
+        T: time axis
+        yout: amplitude of the impulse response
+        
+        Examples
+        --------
+        >>> T, yout = my_filter.get_impulse(self.sys)
+        """
+        return signal.impulse(self.sys)
+
+    def get_step(self):
+        """
+        Returns
+        -------
+        T: time axis
+        yout: amplitude of the impulse response
+        
+        Examples
+        --------
+        >>> T, yout = my_filter.get_step(self.sys)
+        """
+        return signal.step(self.sys)
+
+    def get_gdelay(self):
+        """
+        Returns
+        -------
+        w-1: frequency axis in hertz
+        magnitude
+        
+        Examples
+        --------
+        >>> w, gdelay = my_filter.get_gdelay()
+        """
+        return np.divide(self.w[1:], 2*np.pi) , -np.diff(self.mag)/np.diff(self.w)
