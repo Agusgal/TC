@@ -33,17 +33,17 @@ Siendo esta la plantilla final.
 \centering
 \begin{tabular}{|c|c|}
 \hline
-$f_s^-$      & 2.6635 kHz          \\ \hline
+$f_s^-$      & 2.2635 kHz          \\ \hline
 $f_p^-$      & 26.635 kHz         \\ \hline
 $f_p^+$      & 29.435 kHz           \\ \hline
-$f_s^+$      & 294.35 kHz          \\ \hline
+$f_s^+$      & 304.35 kHz          \\ \hline
 $A_s$      & 40dB           \\ \hline
 $A_p$      & 1dB               \\ \hline
 \end{tabular}
 \end{table}
 Obteniendo la siguiente función transferencia:
 \begin{align}
-	H(s)=\frac{s}{\left( \frac{s}{23728.54}\right) ^2+s\cdot \frac{23728.54}{3.23}+1}\cdot \frac{s}{\left( \frac{s}{33052.25} \right)^2+s\cdot \frac{33052.25}{3.23}+1}
+	H(s)=\frac{s\cdot -1.0448\cdot 10^{5}}{s^2+s\cdot 71653+5.2722\cdot 10^{10}}\cdot \frac{s \cdot -74995}{s^2+s\cdot 51101+2.7236 \cdot 10^{10}}
 \end{align}
 al cual le corresponde la siguiente respues en frecuencia:
 
@@ -123,6 +123,10 @@ Q=\frac{Q_0}{1-2Q_0^2\cdot \frac{K}{1-K}}=\frac{\sqrt[]{R_1R_3R_2C_1C_2(R_1+R_3)
 \begin{align}
 H_0=\frac{R_3R_2}{(C_1+C_2)\cdot (K-1)R_1R_3+K(R_1+R_3)R_2 C_2}
 \label{eq:H0}
+\end{align}
+También es posible despejar la impedancia de entrada de la celda.
+\begin{align}
+Z_{in}(s)=\frac{V_{in}(s)}{I_{in}(s)}= \frac{s^2 R_1R_2R_3C_1C_2+s\cdot R_1R_3(C_1+C_2)+R_1+R_3}{s^2R_3R_2C_1C_2+sR_3(C_1+C_2)+1}
 \end{align}
 \subsubsection{Elecciones de diseño}
 Realizando el cálculo de sensibilidades a partir de las expresiones (\ref{eq:omeg}) (\ref{eq:H0}) y (\ref{eq:Q}) bajo la siguiente definición:
@@ -300,11 +304,11 @@ El rango dinámico se define como la razón de máximo y mínimo valor que puede
 \begin{align}
 R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
 \end{align}
-Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual fue de $V_{in_{min}} \approx xxmV$. Luego para definir $V_{in_{max}}$ se tuvo en cuenta la máxima tensión previo a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional, dos de estos problemas son arreglados por la elección del amplificador operacional , siendo el cross-over y el slewrate, dado a que se utilizó un TL081 el cual tiene un slew-rate elevado, y no tiene el problema del cross-over debido a su etapa de salida. Queda el problema de la saturación,es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc-1.5 =13.5$, para encontrar el valor de tensión máximo de entrada se tomó, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas finalmente queda definido por la siguiente expresión:
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual fue de $V_{in_{min}} \approx 10mV$. Luego para definir $V_{in_{max}}$ se tuvo en cuenta la máxima tensión previo a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional, dos de estos problemas son arreglados por la elección del amplificador operacional , siendo el cross-over y el slewrate, dado a que se utilizó un TL081 el cual tiene un slew-rate elevado, y no tiene el problema del cross-over debido a su etapa de salida. Queda el problema de la saturación,es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc-1.5 =13.5$, para encontrar el valor de tensión máximo de entrada se tomó, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas finalmente queda definido por la siguiente expresión:
 \begin{align}
-V_{in_{max}}=\frac{V_{sat}}{  \max(G_{E1} \cdot G_{E2} )} = xxV
+V_{in_{max}}=\frac{V_{sat}}{  \max(G_{E1} \cdot G_{E2} )} = 12.24V
 \end{align}
-Finalmente $R_d = xxdB$.
+Finalmente $R_d = 61.75dB$.
 \subsubsection{Etapas.}
 Se realizaron 2 etapas, ambas siendo el mismo tipo de celda, pero con distintos parámetros. Para cada etapa fue realizado un análisis de Montecarlo debido a la dispersión de los componentes.
 
@@ -321,10 +325,39 @@ Se realizaron 2 etapas, ambas siendo el mismo tipo de celda, pero con distintos 
 	\caption{Análisis de Montecarlo segunda etapa.}
 	\label{fig:mcrauch}
 \end{figure}
-Es notable que no existe una gran dispersión debido a los componentes en el diagrama de bode, siendo en la primer etapa la única donde se consideraría utilizar un preset.  
+Es notable que no existe una gran dispersión debido a los componentes en el diagrama de bode, mas allá de eso, mirando las sensibilidades se nota una gran dependencia tanto el Q y la frecuencia de corte del sistema con la resistencia R3, a continuación se verán simulaciones de montecarlo de tanto la variación de un supuesto preset sobre R3 en cada etapa y como afectan al filtro final como un todo.
+
+Variando la resistencia R3 de la primer etapa entre 100$\Omega$ y 2k$\Omega$.  
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/presetE1.png}
+	\label{fig:graph}
+	\caption{Variación salida de 1er etapa al cambiar R3 de la misma.}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/presetEFE1.png}
+	\label{fig:graph}
+	\caption{Variación salida del filtro al cambiar R3 de la 1er etapa.}
+\end{figure}
+Se puede notar como se puede manipular el Q del circuito al igual que el valor de la frecuencia de corte
+Luego se prosiguió por hacer el mismo análisis pero de la siguiente etapa, variando la resistencia en el mismo rango de valores.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/presetE2.png}
+	\label{fig:graph}
+	\caption{Variación salida de 2da etapa al cambiar R3 de la misma.}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/presetEFE2.png}
+	\label{fig:graph}
+	\caption{Variación salida del filtro al cambiar R3 de la 2da etapa.}
+\end{figure}
+En contraparte al preset en la primer etapa, el segundo cambia de una manera mas significativa el Q mientras que es al revez con el $\omega_0$ del circuito.
 \subsubsection{Filtro definitivo.}
 
-También se midió la respuesta en frecuencia del filtro obteniendo los siguientes resultados:
+También se midió la respuesta en frecuencia del filtro, se notó que la celda estaba amplificando de mas y no llegaba a cumplir la plantilla, por lo que se hizo una etapa de compensación de ganancia, la cual permitió que se cumplan las especificaciones. Finalmente se midió la respuesta en frecuencia obteniendo los siguientes resultados:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauch.png}
@@ -336,6 +369,24 @@ También se midió la respuesta en frecuencia del filtro obteniendo los siguient
 	\label{fig:graph}
 \end{figure}
 Luego se cotejó con tanto con la simulación como con el cálculo teórico.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchCalcsim.png}
+	\label{fig:Bodecalcsim}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchCalcsimF.png}
+	\label{fig:Bodecalcsimf}
+\end{figure}
+Se puede observar como el calculado y el simulado diferen ligeramente del medido, lo cual es esperado, se podría ajustar el medido mediante la utilización de presets como fue discutido previamente pero dado a que cumplía plantilla se decidió no hacerlo.
+\subsection{Estabilidad}
+Holi
+\subsection{Conclusiones}
+Se pudo realizar correctamente la implementación de un filtro pasa banda con la aproximación de chebycheff mediante celdas rauch.
+Una ventaja de la celda Rauch es que permite la implementación de un filtro de segundo orden con tan solo 1 operacional, mientras que por ejemplo la celda universal utiliza 3 de ellos, también tiene el beneficio de poder sintetizar valores de Q relativamente altos gracias a su doble realimentación tanto negativa como positiva (mediante la utilización del Q enhancement), dando esta ultima una de sus desventajas que es la posibilidad de que haya una oscilación en el circuito.
+También, se compensó la ganancia de manera satisfactoria al agregársele un etapa de compensación a la salida del
+filtro.
 
 %
 %\begin{figure}[H]

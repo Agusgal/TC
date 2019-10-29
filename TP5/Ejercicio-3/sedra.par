@@ -1,0 +1,9 @@
+[SAPEC]
+Out=vout;
+NumOut=1
+Comp=C1;C2;C3;R1;R2;R3;R4;R5;R6;Vin;$;
+Val=1;1;1;1;1;1;1;1;1;1;-1;
+GrNum=2;
+NtNum=16;
+GrDen=2
+NtDen=12
