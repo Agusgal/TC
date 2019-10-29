@@ -2,11 +2,13 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.10.1
+# Created by: PyQt5 UI code generator 5.13.1
 #
 # WARNING! All changes made in this file will be lost!
 
+
 from PyQt5 import QtCore, QtGui, QtWidgets
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -178,7 +180,7 @@ class Ui_MainWindow(object):
         self.widget.setObjectName("widget")
         self.gridLayout_6.addWidget(self.widget, 2, 0, 1, 1)
         self.gridLayout_2.addWidget(self.marco_tipo_filtro, 0, 2, 1, 1)
-        self.ventana_grafica1 = MplWidget(self.centralwidget)
+        self.ventana_grafica1 = MplWidget(1, self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -217,7 +219,7 @@ class Ui_MainWindow(object):
         self.lista_filtros.setObjectName("lista_filtros")
         self.gridLayout_5.addWidget(self.lista_filtros, 1, 0, 1, 3)
         self.gridLayout_2.addWidget(self.marco_filtros, 3, 2, 1, 1)
-        self.ventana_grafica2 = MplWidget(self.centralwidget)
+        self.ventana_grafica2 = MplWidget(2, self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Maximum)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -270,16 +272,16 @@ class Ui_MainWindow(object):
         self.boton_graficar = QtWidgets.QPushButton(self.marco_graficos)
         self.boton_graficar.setObjectName("boton_graficar")
         self.gridLayout.addWidget(self.boton_graficar, 3, 0, 1, 1)
+        self.boton_limpiar2 = QtWidgets.QPushButton(self.marco_graficos)
+        self.boton_limpiar2.setObjectName("boton_limpiar2")
+        self.gridLayout.addWidget(self.boton_limpiar2, 4, 1, 1, 1)
         self.boton_limpiar1 = QtWidgets.QPushButton(self.marco_graficos)
         self.boton_limpiar1.setObjectName("boton_limpiar1")
-        self.gridLayout.addWidget(self.boton_limpiar1, 4, 1, 1, 1)
-        self.pushButton = QtWidgets.QPushButton(self.marco_graficos)
-        self.pushButton.setObjectName("pushButton")
-        self.gridLayout.addWidget(self.pushButton, 3, 1, 1, 1)
+        self.gridLayout.addWidget(self.boton_limpiar1, 3, 1, 1, 1)
         self.gridLayout_2.addWidget(self.marco_graficos, 0, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 17))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -339,7 +341,6 @@ class Ui_MainWindow(object):
         self.selector_grafico.setItemText(8, _translate("MainWindow", "Poles and Zeroes"))
         self.label_filtro_graficar.setText(_translate("MainWindow", "Filter"))
         self.boton_graficar.setText(_translate("MainWindow", "Graph"))
-        self.boton_limpiar1.setText(_translate("MainWindow", "Clear 2"))
-        self.pushButton.setText(_translate("MainWindow", "Clear 1"))
-
+        self.boton_limpiar2.setText(_translate("MainWindow", "Clear 2"))
+        self.boton_limpiar1.setText(_translate("MainWindow", "Clear 1"))
 from mplwidget import MplWidget

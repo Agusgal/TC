@@ -25,7 +25,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.boton_graficar.clicked.connect(self.update_grafico)
 
-        #self.ui.boton_limpiar.clicked.connect()
+        self.ui.boton_limpiar1.clicked.connect(lambda:self.clear_grafico(1))
+
+        self.ui.boton_limpiar2.clicked.connect(lambda:self.clear_grafico(2))
 
     def crear_filtro(self):  ##Conisderar que el usuario puede meter cosas mal, agregar chequeo errores
 
@@ -91,18 +93,24 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             where = 2
 
+
         listaf.lista_filtros[ind].mark_graphed(name, where)
 
-        self.ui.ventana_grafica1.plot(listaf.lista_filtros[ind])
-        self.ui.ventana_grafica2.plot(listaf.lista_filtros[ind])
+        self.ui.ventana_grafica1.plot(listaf.lista_filtros)
 
-    def clear_grafico(self):
+        self.ui.ventana_grafica2.plot(listaf.lista_filtros)
+
+    def clear_grafico(self, window):
+
         for f in listaf.lista_filtros:
             for key in f.is_graphed:
-                f.mark_not_graphed(key)
+                if window == f.is_graphed[key][1]:
+                    f.mark_not_graphed(key)
 
-        self.ui.ventana_grafica1.clear_axes()
-        self.ui.ventana_grafica2.clear_axes()
+        if window == 1:
+            self.ui.ventana_grafica1.clear_axes()
+        else:
+            self.ui.ventana_grafica2.clear_axes()
 
     def errores(self):
         pass
