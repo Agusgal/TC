@@ -21,11 +21,11 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.boton_borrar_filtro.clicked.connect(self.remover_filtro_lista)
 
+        self.ui.boton_seleccionar_filtro.clicked.connect(self.seleccionar_filtro)
+
         self.ui.boton_graficar.clicked.connect(self.update_grafico)
 
-        self.ui.boton_seleccionar_filtro.connect(self.seleccionar_filtro)
-
-        self.ui.boton_limpiar.connect()
+        #self.ui.boton_limpiar.clicked.connect()
 
     def crear_filtro(self):  ##Conisderar que el usuario puede meter cosas mal, agregar chequeo errores
 
@@ -57,7 +57,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except ValueError as error:
             print(error)
 
-        self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + str(round(wp)) + ' ' + str(ws) + ' ' + str(Ap) + ' ' + str(As) + ' ' + str(ganancia) + ' ' + str(k) + ' ' + str(n))
+        self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + str(round(wp)) + ' ' + str(round(ws)) + ' ' + str(Ap) + ' ' + str(As) + ' ' + str(ganancia) + ' ' + str(k) + ' ' + str(n))
 
     def remover_filtro_lista(self):
         ##Agregar q pasa cuando no hay  nada seleccionado
@@ -74,12 +74,28 @@ class MainWindow(QtWidgets.QMainWindow):
         listaf.indice_up()
 
     def seleccionar_filtro(self):
-        pass
+        item = self.ui.lista_filtros.currentItem()
+        value = item.text()
+        self.ui.label_filtro_graficar.setText(value)
 
     def update_grafico(self):
 
-        self.ui.ventana_grafica1.plot(listaf.lista_filtros[0])
+        txt = self.ui.label_filtro_graficar.text()
+        ind = int(txt[0])
+        name = self.ui.selector_grafico.currentText()
 
+        listaf.lista_filtros[ind].mark_graphed(name)
+
+        self.ui.ventana_grafica1.plot(listaf.lista_filtros[ind])
+        self.ui.ventana_grafica2.plot()
+
+    def clear_grafico(self):
+        for f in listaf.lista_filtros:
+            for key in f.is_graphed:
+                f.mark_not_graphed(key)
+
+        self.ui.ventana_grafica1.clear_axes()
+        self.ui.ventana_grafica2.clear_axes()
 
     def errores(self):
         pass
