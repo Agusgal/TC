@@ -24,6 +24,8 @@ class Cell:
         self.den = den
         self.sys = signal.TransferFunction(self.den,self.num)
         self.w, self.mag, self.pha = signal.bode(self.sys)
+        whd = np.linspace(self.w[0],self.w[-1],len(self.w)*20)
+        self.w, self.mag, self.pha = signal.bode(self.sys,w=whd)
         self.zeros, self.poles, self.kZP = signal.tf2zpk(self.den,self.num)
         # self.Q = self.computeQ()
 
@@ -136,6 +138,10 @@ class Cell:
             if name:
                 plt.legend()
             plt.show()
+    
+    def compute_q(self):
+        pass
+
 
 class AnalogFilter(ABC):
     """
@@ -240,7 +246,11 @@ class AnalogFilter(ABC):
         self.b, self.a = self.compute_ba()
         # Step 3: Construct Transfer function
         self.sys = signal.TransferFunction(self.b, self.a)
+
         self.w, self.mag, self.pha = signal.bode(self.sys)
+        whd = np.linspace(self.w[0],self.w[-1],len(self.w)*20)
+        self.w, self.mag, self.pha = signal.bode(self.sys,w=whd)
+
         self.zeros, self.poles, self.kZP = self.compute_zpk() #kZP will denote de gain returned by the compute_zpk method
         #Step 4: Split high order filter into first and second order cells
         # self.stages = self.compute_filter_stages()
