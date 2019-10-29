@@ -83,8 +83,15 @@ class MainWindow(QtWidgets.QMainWindow):
         txt = self.ui.label_filtro_graficar.text()
         ind = int(txt[0])
         name = self.ui.selector_grafico.currentText()
+        window = self.ui.selector_ventana.currentText()
+        where = 0
 
-        listaf.lista_filtros[ind].mark_graphed(name)
+        if window == 'Window 1':
+            where = 1
+        else:
+            where = 2
+
+        listaf.lista_filtros[ind].mark_graphed(name, where)
 
         self.ui.ventana_grafica1.plot(listaf.lista_filtros[ind])
         self.ui.ventana_grafica2.plot()
