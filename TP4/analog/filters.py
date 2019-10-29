@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
 
-from core import AnalogFilter
-from core import Cell
-from cusfunc import maprange
+from analog.core import AnalogFilter
+from analog.core import Cell
+from analog.cusfunc.cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):

@@ -81,7 +81,7 @@ class MainWindow(QtWidgets.QMainWindow):
     def update_grafico(self):
 
         txt = self.ui.label_filtro_graficar.text()
-        ind = int(txt[0])
+        ind = int(txt[0]) - 1
         name = self.ui.selector_grafico.currentText()
         window = self.ui.selector_ventana.currentText()
         where = 0
@@ -94,7 +94,7 @@ class MainWindow(QtWidgets.QMainWindow):
         listaf.lista_filtros[ind].mark_graphed(name, where)
 
         self.ui.ventana_grafica1.plot(listaf.lista_filtros[ind])
-        self.ui.ventana_grafica2.plot()
+        self.ui.ventana_grafica2.plot(listaf.lista_filtros[ind])
 
     def clear_grafico(self):
         for f in listaf.lista_filtros:
