@@ -27,7 +27,10 @@ class MplWidget(QWidget):
         self.setLayout(layout)
 
     def plot(self, filtro):
-        self.canvas.axes.clear()
+        #self.canvas.axes.clear()
 
         self.canvas.axes.semilogx(filtro.get_w(), filtro.get_mag())
         self.canvas.draw()
+
+    def clear_axes(self):
+        self.canvas.axes.clear()

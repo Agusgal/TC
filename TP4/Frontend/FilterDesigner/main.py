@@ -23,6 +23,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.boton_graficar.clicked.connect(self.update_grafico)
 
+        self.ui.boton_seleccionar_filtro.connect()
+
+        self.ui.boton_limpiar.connect()
+
     def crear_filtro(self):  ##Conisderar que el usuario puede meter cosas mal, agregar chequeo errores
 
         aprox = self.ui.selector_aproximacion.currentText()
@@ -70,7 +74,9 @@ class MainWindow(QtWidgets.QMainWindow):
         listaf.indice_up()
 
     def update_grafico(self):
+
         self.ui.ventana_grafica1.plot(listaf.lista_filtros[0])
+
 
     def errores(self):
         pass

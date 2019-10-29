@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1280</width>
-    <height>794</height>
+    <height>863</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -249,13 +249,6 @@ QGroupBox::title {
       </layout>
      </widget>
     </item>
-    <item row="2" column="0">
-     <widget class="QPushButton" name="boton_etapa2">
-      <property name="text">
-       <string>Next</string>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="2">
      <widget class="QGroupBox" name="marco_tipo_filtro">
       <property name="sizePolicy">
@@ -411,7 +404,7 @@ QGroupBox::title {
       </property>
      </widget>
     </item>
-    <item row="0" column="0" rowspan="2">
+    <item row="0" column="0">
      <widget class="QGroupBox" name="marco_graficos">
       <property name="sizePolicy">
        <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
@@ -441,7 +434,7 @@ QGroupBox::title {
        <string>Graphics</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
-       <item row="1" column="1">
+       <item row="2" column="1">
         <widget class="QComboBox" name="selector_ventana">
          <item>
           <property name="text">
@@ -455,7 +448,7 @@ QGroupBox::title {
          </item>
         </widget>
        </item>
-       <item row="1" column="0">
+       <item row="2" column="0">
         <widget class="QComboBox" name="selector_grafico">
          <item>
           <property name="text">
@@ -504,21 +497,38 @@ QGroupBox::title {
          </item>
         </widget>
        </item>
-       <item row="2" column="0">
-        <widget class="QPushButton" name="boton_graficar">
-         <property name="text">
-          <string>Graph</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="1">
+       <item row="3" column="1">
         <widget class="QPushButton" name="boton_limpiar">
          <property name="text">
           <string>Clear</string>
          </property>
         </widget>
        </item>
+       <item row="3" column="0">
+        <widget class="QPushButton" name="boton_graficar">
+         <property name="text">
+          <string>Graph</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="2">
+        <widget class="QLabel" name="label_filtro_graficar">
+         <property name="text">
+          <string>Filter</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+        </widget>
+       </item>
       </layout>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QPushButton" name="boton_etapa2">
+      <property name="text">
+       <string>Next</string>
+      </property>
      </widget>
     </item>
    </layout>

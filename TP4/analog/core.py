@@ -239,6 +239,8 @@ class AnalogFilter(ABC):
         self.N = N  # Filter order
         self.rp = rp
 
+        # dict that stores if a certain graph is already on the screen
+        self.is_graphed = {'template': 0, 'mag': 0, 'phase': 0, 'g delay': 0, 'max Q': 0, 'impulse resp': 0, 'step resp': 0, 'poles and zeroes': 0}
         
         # Step 1: Compute filter order
         self.compute_order()
@@ -562,3 +564,16 @@ class AnalogFilter(ABC):
         >>> w, gdelay = my_filter.get_gdelay()
         """
         return np.divide(self.w[1:], 2*np.pi) , -np.diff(self.mag)/np.diff(self.w)
+
+    # Return True if name is already graphed and False if not
+    def isgraphed(self, name):
+        if self.is_graphed[name]:
+            return True
+        else:
+            return False
+
+    def mark_graphed(self, name):
+        self.is_graphed[name] = 1
+
+    def mark_not_graphed(self, name):
+        self.is_graphed[name] = 0
