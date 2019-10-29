@@ -111,16 +111,123 @@ Resolviendo la transferencia se llega a la siguiente expresión:
 \begin{align}
 H(s)=\frac{1}{1-K} \cdot \frac{H_0 \cdot \frac{s}{\omega_0 Q_0}}{\frac{s^2}{\omega_0^2}+\frac{s}{\omega_0Q}+1}
 \end{align}
-Donde $Q_0$ es una constante de valor 1.5\footnote{[1]R. Schaumann, H. Xiao, M. Van Valkenburg, M. Van Valkenburg and M. Van Valkenburg, Analog filter design. New York: Oxford University Press, 2011, pp. 140-144.}, y el K es utilizado para ajustar el valor de Q del circuito, dado que quedarán así definidos los parámetros del filtro:
+Donde $Q_0$ es una constante de valor 1.5\footnote{[1]R. Schaumann, H. Xiao, M. Van Valkenburg, M. Van Valkenburg and M. Van Valkenburg, Analog filter design. New York: Oxford University Press, 2011, pp. 170-176.}, y el K es utilizado para ajustar el valor de Q del circuito, dado que quedarán así definidos los parámetros del filtro:
 \begin{align}
-\omega_0^2= \frac{R_1+R_3}{R_1R_3R_2C_2C_1}\\
-Q=\frac{Q_0}{1-2Q_0^2\cdot \frac{K}{1-K}}\\
-H_0=\frac{R_3R_2}{2(K-1)R_1R_3+K(R_1+R_3)R_2}
+\omega_0^2= \frac{R_1+R_3}{R_1R_3R_2C_2C_1}
+\label{eq:omeg}
+\end{align}
+\begin{align}
+Q=\frac{Q_0}{1-2Q_0^2\cdot \frac{K}{1-K}}=\frac{\sqrt[]{R_1R_3R_2C_1C_2(R_1+R_3)}}{R_1R_3(C_1+C_2)-\frac{K}{1-K}(R_1+R_3)R_2C_1}
+\label{eq:Q}
+\end{align}
+\begin{align}
+H_0=\frac{R_3R_2}{(C_1+C_2)\cdot (K-1)R_1R_3+K(R_1+R_3)R_2 C_2}
+\label{eq:H0}
 \end{align}
 \subsubsection{Elecciones de diseño}
-\begin{center}
-	\huge{\textcolor{red}{\textbf{Tabla sensibilidades}}}
-\end{center}
+Realizando el cálculo de sensibilidades a partir de las expresiones (\ref{eq:omeg}) (\ref{eq:H0}) y (\ref{eq:Q}) bajo la siguiente definición:
+\begin{align}
+S_x^{f(x)}= \frac{\partial f(x)}{\partial x}\cdot \frac{x}{f(x)}
+\end{align}
+Obteniendo las siguientes tablas.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+Componente & $S^{\omega_0}$ & $S^{H_0}$ \\ \cline{1-3}\\
+$S_{R_1}$  & $-{\frac {{\it R3}}{ 2.0\,{\it R1}+ 2.0\,{\it R3}}}$    &$ -{\frac { \left( {\it C1}\,K{\it R3}+K{\it R2}\,{\it C2}+{\it C2}\,K{
+\it R3}-{\it C1}\,{\it R3}-{\it C2}\,{\it R3} \right) {\it R1}}{{\it 
+C1}\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C2}\,{\it R1}+{\it C2}\,K{
+\it R1}\,{\it R3}+K{\it R2}\,{\it C2}\,{\it R3}-{\it C1}\,{\it R1}\,{
+\it R3}-{\it C2}\,{\it R1}\,{\it R3}}} $  \\
+$S_{R_2}$  & -0.5    & ${\frac {{\it R1}\,{\it R3}\, \left( {\it C1}\,K+{\it C2}\,K-{\it C1}-{
+\it C2} \right) }{{\it C1}\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C2}\,{
+\it R1}+{\it C2}\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C2}\,{\it R3}-{
+\it C1}\,{\it R1}\,{\it R3}-{\it C2}\,{\it R1}\,{\it R3}}}$   \\
+$S_{R_3}$  & $-{\frac {{\it R1}}{ 2.0\,{\it R1}+ 2.0\,{\it R3}}}$     & ${\frac {K{\it R2}\,{\it C2}\,{\it R1}}{{\it C1}\,K{\it R1}\,{\it R3}+K
+{\it R2}\,{\it C2}\,{\it R1}+{\it C2}\,K{\it R1}\,{\it R3}+K{\it R2}\,
+{\it C2}\,{\it R3}-{\it C1}\,{\it R1}\,{\it R3}-{\it C2}\,{\it R1}\,{
+\it R3}}}$   \\
+$S_{C_1}$  & -0.5    & $-{\frac {{\it R3}\,{\it R1}\, \left( -1+K \right) {\it C1}}{{\it C1}\,
+K{\it R1}\,{\it R3}+K{\it R2}\,{\it C2}\,{\it R1}+{\it C2}\,K{\it R1}
+\,{\it R3}+K{\it R2}\,{\it C2}\,{\it R3}-{\it C1}\,{\it R1}\,{\it R3}-
+{\it C2}\,{\it R1}\,{\it R3}}}$  \\
+$S_{C_2}$  & -0.5    & $-{\frac { \left( K{\it R2}\,{\it R1}+{\it R1}\,{\it R3}\,K+K{\it R2}\,
+{\it R3}-{\it R1}\,{\it R3} \right) {\it C2}}{{\it C1}\,K{\it R1}\,{
+\it R3}+K{\it R2}\,{\it C2}\,{\it R1}+{\it C2}\,K{\it R1}\,{\it R3}+K{
+\it R2}\,{\it C2}\,{\it R3}-{\it C1}\,{\it R1}\,{\it R3}-{\it C2}\,{
+\it R1}\,{\it R3}}}$ 
+\end{tabular}
+\caption{Tabla de sensibilidades $\omega_0$ y Ganancia.}
+\end{table}
+\begin{table}[H]
+\centering
+\begin{tabular}{cc}
+Componente & $S^{Q}$ \\ \hline\\
+$S_{R_1}$  & $1/2\,{\frac {{\it R3}\, \left( K{\it R2}\,{\it C1}\,{\it R1}-{\it C1}
+\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C1}\,{\it R3}-{\it C2}\,K{\it R1
+}\,{\it R3}+{\it C1}\,{\it R1}\,{\it R3}+{\it C2}\,{\it R1}\,{\it R3}
+ \right) }{ \left( K{\it R2}\,{\it C1}\,{\it R1}+{\it C1}\,K{\it R1}\,
+{\it R3}+K{\it R2}\,{\it C1}\,{\it R3}+{\it C2}\,K{\it R1}\,{\it R3}-{
+\it C1}\,{\it R1}\,{\it R3}-{\it C2}\,{\it R1}\,{\it R3} \right) 
+ \left( {\it R1}+{\it R3} \right) }}$ \\
+$S_{R_2}$  & $-1/2\,{\frac {K{\it R2}\,{\it C1}\,{\it R1}-{\it C1}\,K{\it R1}\,{\it 
+R3}+K{\it R2}\,{\it C1}\,{\it R3}-{\it C2}\,K{\it R1}\,{\it R3}+{\it 
+C1}\,{\it R1}\,{\it R3}+{\it C2}\,{\it R1}\,{\it R3}}{K{\it R2}\,{\it 
+C1}\,{\it R1}+{\it C1}\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C1}\,{\it 
+R3}+{\it C2}\,K{\it R1}\,{\it R3}-{\it C1}\,{\it R1}\,{\it R3}-{\it C2
+}\,{\it R1}\,{\it R3}}}$ \\
+$S_{R_3}$  & $1/2\,{\frac {{\it R1}\, \left( K{\it R2}\,{\it C1}\,{\it R1}-{\it C1}
+\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C1}\,{\it R3}-{\it C2}\,K{\it R1
+}\,{\it R3}+{\it C1}\,{\it R1}\,{\it R3}+{\it C2}\,{\it R1}\,{\it R3}
+ \right) }{ \left( K{\it R2}\,{\it C1}\,{\it R1}+{\it C1}\,K{\it R1}\,
+{\it R3}+K{\it R2}\,{\it C1}\,{\it R3}+{\it C2}\,K{\it R1}\,{\it R3}-{
+\it C1}\,{\it R1}\,{\it R3}-{\it C2}\,{\it R1}\,{\it R3} \right) 
+ \left( {\it R1}+{\it R3} \right) }}$ \\
+$S_{C_1}$  & $-1/2\,{\frac {K{\it R2}\,{\it C1}\,{\it R1}+{\it C1}\,K{\it R1}\,{\it 
+R3}+K{\it R2}\,{\it C1}\,{\it R3}-{\it C2}\,K{\it R1}\,{\it R3}-{\it 
+C1}\,{\it R1}\,{\it R3}+{\it C2}\,{\it R1}\,{\it R3}}{K{\it R2}\,{\it 
+C1}\,{\it R1}+{\it C1}\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C1}\,{\it 
+R3}+{\it C2}\,K{\it R1}\,{\it R3}-{\it C1}\,{\it R1}\,{\it R3}-{\it C2
+}\,{\it R1}\,{\it R3}}}$ \\
+$S_{C_2}$  & $1/2\,{\frac {K{\it R2}\,{\it C1}\,{\it R1}+{\it C1}\,K{\it R1}\,{\it 
+R3}+K{\it R2}\,{\it C1}\,{\it R3}-{\it C2}\,K{\it R1}\,{\it R3}-{\it 
+C1}\,{\it R1}\,{\it R3}+{\it C2}\,{\it R1}\,{\it R3}}{K{\it R2}\,{\it 
+C1}\,{\it R1}+{\it C1}\,K{\it R1}\,{\it R3}+K{\it R2}\,{\it C1}\,{\it 
+R3}+{\it C2}\,K{\it R1}\,{\it R3}-{\it C1}\,{\it R1}\,{\it R3}-{\it C2
+}\,{\it R1}\,{\it R3}}}$
+\end{tabular}
+\caption{Tabla de sensibilidades Q.}
+\end{table}
+Reemplazando por valores numéricos las expresiones de las tablas anteriores se llega a lo siguiente:
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\hline
+\multicolumn{4}{c}{Etapa 1}                                                                      \\ \hline
+Componente                    & $S^{H_0}$               & $S^{Q}$               & $S^{\omega_0}$ \\ \hline
+$S_{R_1}$                     & -1.33                   & -0.41                 & -0.08          \\
+$S_{R_2}$                     & 3                       & 2.5                   & -0.5           \\
+$S_{R_3}$                     & -1.67                   & -2.09                 & -0.45          \\
+$S_{C_1}$                     & -1.5                    & -1                    & -0.5           \\
+\multicolumn{1}{l}{$S_{C_2}$} & \multicolumn{1}{l}{1.5} & \multicolumn{1}{l}{1} & -0.5          
+\end{tabular}
+\caption{Tabla de sensibilidades Etapa 1 evaluada.}
+\end{table}
+\begin{table}[H]
+\centering
+\begin{tabular}{cccc}
+\hline
+\multicolumn{4}{c}{Etapa 1}                                                                      \\ \hline
+Componente                    & $S^{H_0}$               & $S^{Q}$               & $S^{\omega_0}$ \\ \hline
+$S_{R_1}$                     & -1.33                   & -0.41                 & -0.08          \\
+$S_{R_2}$                     & 3                       & 2.5                   & -0.5           \\
+$S_{R_3}$                     & -1.67                   & -2.09                 & -0.42          \\
+$S_{C_1}$                     & -1.5                    & -1                    & -0.5           \\
+\multicolumn{1}{l}{$S_{C_2}$} & \multicolumn{1}{l}{1.5} & \multicolumn{1}{l}{1} & -0.5          
+\end{tabular}
+\caption{Tabla de sensibilidades Etapa 2 evaluada.}
+\end{table}
 En base a esta tabla se tomo especial cuidado en la elección de componentes y en el matcheo de impedancias.
 Los componentes utilizados fueron los siguientes:
 \begin{table}[H]
@@ -132,8 +239,8 @@ $R_2$                          & $5.56 k\Omega$                & $5.6k // 680k  
 $R_3$                          & $1.43 k\Omega$                & $1.5 k // 33k  \Omega$          & $1.03k\Omega$  & $27 + 1k  \Omega$     \\
 $R_4$                          & $3.49 k\Omega$                & $3.9k // 33k  \Omega$           & $3.49 k\Omega$ & $3.9k // 33k  \Omega$ \\
 $R_5$                          & $1 k\Omega$                   & $1 k  \Omega$                   & $1 k\Omega$    & $1 k\Omega$           \\
-$C_1$                          & 2.2 nF                        & 2.2 nF                          & 2.2 nF         & 2.2 nF                \\
-$C_2$                          & 2.2 nF                        & 2.2 nF                          & 2.2 nF         & 2.2 nF               
+$C_1$                          & 2.35 nF         & (4.7+4.7) nF                          & 2.35 nF         & (4.7+4.7) nF                \\
+$C_2$                          & 2.35 nF         & (4.7+4.7) nF                          & 2.35 nF         & (4.7+4.7) nF               
 \end{tabular}
 \end{table}
 
@@ -181,12 +288,43 @@ Para que ambas etapas no se carguen entre si la impedancia de entrada de la segu
 
 \subsection{Respuesta en Frecuencia.}
 Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al 1$\%$ y capacitores al 10$\%$ obteniendo la siguiente disperción.
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.4\textwidth]{/ImagenesEjercicio3/Graph.png}
-%	\label{fig:graph}
-%\end{figure}
-También se midió la respuesta en frecuencia del filtro y se cotejó con la simulación.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/mcF.png}
+	\caption{Análisis de Montecarlo del filtro.}
+	\label{fig:mcrauch}
+\end{figure}
+Se puede apreciar que la impedancia de salida de la primer etapa es bastante baja en comparación a la de entrad d e la segunda etapa, por lo tanto se dará un buen acoplamiento de impedancias y no será necesario el uso de buffers.
+\subsection{Rango Dinámico.}
+El rango dinámico se define como la razón de máximo y mínimo valor que puede tomar el observable de interés. Para el caso en cuestión queda definido de la siguiente manera:
+\begin{align}
+R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
+\end{align}
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual fue de $V_{in_{min}} \approx xxmV$. Luego para definir $V_{in_{max}}$ se tuvo en cuenta la máxima tensión previo a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional, dos de estos problemas son arreglados por la elección del amplificador operacional , siendo el cross-over y el slewrate, dado a que se utilizó un TL081 el cual tiene un slew-rate elevado, y no tiene el problema del cross-over debido a su etapa de salida. Queda el problema de la saturación,es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc-1.5 =13.5$, para encontrar el valor de tensión máximo de entrada se tomó, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas finalmente queda definido por la siguiente expresión:
+\begin{align}
+V_{in_{max}}=\frac{V_{sat}}{  \max(G_{E1} \cdot G_{E2} )} = xxV
+\end{align}
+Finalmente $R_d = xxdB$.
+\subsubsection{Etapas.}
+Se realizaron 2 etapas, ambas siendo el mismo tipo de celda, pero con distintos parámetros. Para cada etapa fue realizado un análisis de Montecarlo debido a la dispersión de los componentes.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/mcE1.png}
+	\caption{Análisis de Montecarlo primera etapa.}
+	\label{fig:mcrauch}
+\end{figure}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/mcE2.png}
+	\caption{Análisis de Montecarlo segunda etapa.}
+	\label{fig:mcrauch}
+\end{figure}
+Es notable que no existe una gran dispersión debido a los componentes en el diagrama de bode, siendo en la primer etapa la única donde se consideraría utilizar un preset.  
+\subsubsection{Filtro definitivo.}
+
+También se midió la respuesta en frecuencia del filtro obteniendo los siguientes resultados:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauch.png}
@@ -194,13 +332,11 @@ También se midió la respuesta en frecuencia del filtro y se cotejó con la sim
 \end{figure}
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchFase.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes-Ej2/BodeRauchFase.png}
 	\label{fig:graph}
 \end{figure}
+Luego se cotejó con tanto con la simulación como con el cálculo teórico.
 
-\subsubsection{Etapas.}
-Se realizaron 2 etapas, ambas siendo el mismo tipo de celda, pero con distintos parámetros.
-\subsubsection{Filtro definitivo.}
 %
 %\begin{figure}[H]
 %	\centering
