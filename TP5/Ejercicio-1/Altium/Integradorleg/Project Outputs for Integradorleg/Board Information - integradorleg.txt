@@ -1,0 +1,12 @@
+Board Information Report
+Filename     : C:\Users\Acer\Desktop\GitHub\TC\TP5\Ejercicio-1\Altium\Integradorleg\integradorleg.PcbDoc
+Date         : 28-Oct-19
+Time         : 4:08:15 PM
+Time Elapsed : 00:00:00
+
+Routing Information
+    Routing completion, 100.00%
+    Connections, 25
+    Connections routed, 25
+    Connections remaining, 0
+count : 4
