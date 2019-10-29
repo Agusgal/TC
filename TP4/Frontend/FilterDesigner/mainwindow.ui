@@ -15,6 +15,85 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout_2">
+    <item row="2" column="2">
+     <widget class="QGroupBox" name="marco_aproximacion">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>280</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+      </property>
+      <property name="title">
+       <string>Aproximation:</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_4">
+       <item row="0" column="0">
+        <widget class="QComboBox" name="selector_aproximacion">
+         <item>
+          <property name="text">
+           <string>Butterworth</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Bessel</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Chebycheff</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Chebycheff Inverso</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Legendre</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Gauss</string>
+          </property>
+         </item>
+         <item>
+          <property name="text">
+           <string>Cauer</string>
+          </property>
+         </item>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QPushButton" name="boton_agregar_filtro">
+         <property name="text">
+          <string>Add Filter</string>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
     <item row="1" column="2">
      <widget class="QGroupBox" name="marco_parametros">
       <property name="sizePolicy">
@@ -170,184 +249,11 @@ QGroupBox::title {
       </layout>
      </widget>
     </item>
-    <item row="2" column="1" rowspan="2">
-     <widget class="MplWidget" name="ventana_grafica2" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
+    <item row="2" column="0">
+     <widget class="QPushButton" name="boton_etapa2">
+      <property name="text">
+       <string>Next</string>
       </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>500</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="2">
-     <widget class="QGroupBox" name="marco_aproximacion">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>280</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}</string>
-      </property>
-      <property name="title">
-       <string>Aproximation:</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_4">
-       <item row="0" column="0">
-        <widget class="QComboBox" name="selector_aproximacion">
-         <item>
-          <property name="text">
-           <string>Butterworth</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Bessel</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Chebycheff</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Chebycheff Inverso</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Legendre</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Gauss</string>
-          </property>
-         </item>
-         <item>
-          <property name="text">
-           <string>Cauer</string>
-          </property>
-         </item>
-        </widget>
-       </item>
-       <item row="1" column="0">
-        <widget class="QPushButton" name="boton_agregar_filtro">
-         <property name="text">
-          <string>Add Filter</string>
-         </property>
-        </widget>
-       </item>
-      </layout>
-     </widget>
-    </item>
-    <item row="0" column="1" rowspan="2">
-     <widget class="MplWidget" name="ventana_grafica1" native="true">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>16777215</width>
-        <height>500</height>
-       </size>
-      </property>
-     </widget>
-    </item>
-    <item row="2" column="0" rowspan="2">
-     <widget class="QGroupBox" name="marco_edicion_graficos">
-      <property name="styleSheet">
-       <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}</string>
-      </property>
-      <property name="title">
-       <string>Aca va edicion de graficos</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2">
-     <widget class="QGroupBox" name="marco_filtros">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="maximumSize">
-       <size>
-        <width>280</width>
-        <height>16777215</height>
-       </size>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}</string>
-      </property>
-      <property name="title">
-       <string>Filters</string>
-      </property>
-      <layout class="QGridLayout" name="gridLayout_5">
-       <item row="2" column="0">
-        <widget class="QPushButton" name="boton_mostrar_filtro">
-         <property name="text">
-          <string>Select</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="2">
-        <widget class="QPushButton" name="boton_borrar_filtro">
-         <property name="text">
-          <string>Remove</string>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="0" colspan="3">
-        <widget class="QListWidget" name="lista_filtros"/>
-       </item>
-      </layout>
      </widget>
     </item>
     <item row="0" column="2">
@@ -423,6 +329,88 @@ QGroupBox::title {
       </layout>
      </widget>
     </item>
+    <item row="0" column="1" rowspan="2">
+     <widget class="MplWidget" name="ventana_grafica1" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>500</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="2">
+     <widget class="QGroupBox" name="marco_filtros">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Maximum" vsizetype="Expanding">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>280</width>
+        <height>16777215</height>
+       </size>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+      </property>
+      <property name="title">
+       <string>Filters</string>
+      </property>
+      <layout class="QGridLayout" name="gridLayout_5">
+       <item row="2" column="0">
+        <widget class="QPushButton" name="boton_seleccionar_filtro">
+         <property name="text">
+          <string>Select</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="2">
+        <widget class="QPushButton" name="boton_borrar_filtro">
+         <property name="text">
+          <string>Remove</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0" colspan="3">
+        <widget class="QListWidget" name="lista_filtros"/>
+       </item>
+      </layout>
+     </widget>
+    </item>
+    <item row="2" column="1" rowspan="2">
+     <widget class="MplWidget" name="ventana_grafica2" native="true">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>500</height>
+       </size>
+      </property>
+     </widget>
+    </item>
     <item row="0" column="0" rowspan="2">
      <widget class="QGroupBox" name="marco_graficos">
       <property name="sizePolicy">
@@ -450,7 +438,7 @@ QGroupBox::title {
 }</string>
       </property>
       <property name="title">
-       <string>GroupBox</string>
+       <string>Graphics</string>
       </property>
       <layout class="QGridLayout" name="gridLayout">
        <item row="1" column="1">
@@ -524,7 +512,7 @@ QGroupBox::title {
         </widget>
        </item>
        <item row="2" column="1">
-        <widget class="QPushButton" name="boton_clear">
+        <widget class="QPushButton" name="boton_limpiar">
          <property name="text">
           <string>Clear</string>
          </property>
@@ -541,7 +529,7 @@ QGroupBox::title {
      <x>0</x>
      <y>0</y>
      <width>1280</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

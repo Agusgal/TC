@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'mainwindow.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -157,19 +155,6 @@ class Ui_MainWindow(object):
         self.ventana_grafica1.setMaximumSize(QtCore.QSize(16777215, 500))
         self.ventana_grafica1.setObjectName("ventana_grafica1")
         self.gridLayout_2.addWidget(self.ventana_grafica1, 0, 1, 2, 1)
-        self.marco_edicion_graficos = QtWidgets.QGroupBox(self.centralwidget)
-        self.marco_edicion_graficos.setStyleSheet("QGroupBox {\n"
-"    border: 1px solid gray;\n"
-"    margin-top: 0.5em;\n"
-"}\n"
-"\n"
-"QGroupBox::title {\n"
-"    subcontrol-origin: margin;\n"
-"    left: 10px;\n"
-"    padding: 0 3px 0 3px;\n"
-"}")
-        self.marco_edicion_graficos.setObjectName("marco_edicion_graficos")
-        self.gridLayout_2.addWidget(self.marco_edicion_graficos, 2, 0, 2, 1)
         self.marco_filtros = QtWidgets.QGroupBox(self.centralwidget)
         sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Maximum, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
@@ -190,9 +175,9 @@ class Ui_MainWindow(object):
         self.marco_filtros.setObjectName("marco_filtros")
         self.gridLayout_5 = QtWidgets.QGridLayout(self.marco_filtros)
         self.gridLayout_5.setObjectName("gridLayout_5")
-        self.boton_mostrar_filtro = QtWidgets.QPushButton(self.marco_filtros)
-        self.boton_mostrar_filtro.setObjectName("boton_mostrar_filtro")
-        self.gridLayout_5.addWidget(self.boton_mostrar_filtro, 2, 0, 1, 1)
+        self.boton_seleccionar_filtro = QtWidgets.QPushButton(self.marco_filtros)
+        self.boton_seleccionar_filtro.setObjectName("boton_seleccionar_filtro")
+        self.gridLayout_5.addWidget(self.boton_seleccionar_filtro, 2, 0, 1, 1)
         self.boton_borrar_filtro = QtWidgets.QPushButton(self.marco_filtros)
         self.boton_borrar_filtro.setObjectName("boton_borrar_filtro")
         self.gridLayout_5.addWidget(self.boton_borrar_filtro, 2, 2, 1, 1)
@@ -278,13 +263,16 @@ class Ui_MainWindow(object):
         self.boton_graficar = QtWidgets.QPushButton(self.marco_graficos)
         self.boton_graficar.setObjectName("boton_graficar")
         self.gridLayout.addWidget(self.boton_graficar, 2, 0, 1, 1)
-        self.boton_clear = QtWidgets.QPushButton(self.marco_graficos)
-        self.boton_clear.setObjectName("boton_clear")
-        self.gridLayout.addWidget(self.boton_clear, 2, 1, 1, 1)
+        self.boton_limpiar = QtWidgets.QPushButton(self.marco_graficos)
+        self.boton_limpiar.setObjectName("boton_limpiar")
+        self.gridLayout.addWidget(self.boton_limpiar, 2, 1, 1, 1)
         self.gridLayout_2.addWidget(self.marco_graficos, 0, 0, 2, 1)
+        self.boton_etapa2 = QtWidgets.QPushButton(self.centralwidget)
+        self.boton_etapa2.setObjectName("boton_etapa2")
+        self.gridLayout_2.addWidget(self.boton_etapa2, 2, 0, 1, 1)
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QtWidgets.QMenuBar(MainWindow)
-        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 17))
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 1280, 22))
         self.menubar.setObjectName("menubar")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QtWidgets.QStatusBar(MainWindow)
@@ -321,9 +309,8 @@ class Ui_MainWindow(object):
         self.selector_aproximacion.setItemText(5, _translate("MainWindow", "Gauss"))
         self.selector_aproximacion.setItemText(6, _translate("MainWindow", "Cauer"))
         self.boton_agregar_filtro.setText(_translate("MainWindow", "Add Filter"))
-        self.marco_edicion_graficos.setTitle(_translate("MainWindow", "Aca va edicion de graficos"))
         self.marco_filtros.setTitle(_translate("MainWindow", "Filters"))
-        self.boton_mostrar_filtro.setText(_translate("MainWindow", "Select"))
+        self.boton_seleccionar_filtro.setText(_translate("MainWindow", "Select"))
         self.boton_borrar_filtro.setText(_translate("MainWindow", "Remove"))
         self.marco_tipo_filtro.setTitle(_translate("MainWindow", "Type of Filter:"))
         self.selector_filtro.setItemText(0, _translate("MainWindow", "Low-pass"))
@@ -343,5 +330,7 @@ class Ui_MainWindow(object):
         self.selector_grafico.setItemText(7, _translate("MainWindow", "Step Response"))
         self.selector_grafico.setItemText(8, _translate("MainWindow", "Poles and Zeroes"))
         self.boton_graficar.setText(_translate("MainWindow", "Graph"))
-        self.boton_clear.setText(_translate("MainWindow", "Clear"))
+        self.boton_limpiar.setText(_translate("MainWindow", "Clear"))
+        self.boton_etapa2.setText(_translate("MainWindow", "Next"))
+
 from mplwidget import MplWidget

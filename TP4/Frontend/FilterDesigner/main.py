@@ -45,6 +45,7 @@ class MainWindow(QtWidgets.QMainWindow):
         k = int(self.ui.input_desnormalizacion.text()) / 100
 
         n = int(self.ui.input_orden_filtro.text())
+
         try:
             if aprox == 'Butterworth':
                 filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
@@ -53,7 +54,6 @@ class MainWindow(QtWidgets.QMainWindow):
             print(error)
 
         self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + str(round(wp)) + ' ' + str(ws) + ' ' + str(Ap) + ' ' + str(As) + ' ' + str(ganancia) + ' ' + str(k) + ' ' + str(n))
-
 
     def remover_filtro_lista(self):
         ##Agregar q pasa cuando no hay  nada seleccionado
@@ -65,9 +65,7 @@ class MainWindow(QtWidgets.QMainWindow):
         listaf.indice_down()
         item = None
 
-
-    ##Agrega filtro a lista que se usa para llevar cuenta de filtros a graficar
-    def agregar_filtro_lista(self, filtro):
+    def agregar_filtro_lista(self, filtro): ##Agrega filtro a lista que se usa para llevar cuenta de filtros a graficar
         listaf.agregar_filtro(filtro)
         listaf.indice_up()
 
@@ -87,3 +85,4 @@ if __name__ == '__main__':
     application.show()
 
     sys.exit(app.exec())
+

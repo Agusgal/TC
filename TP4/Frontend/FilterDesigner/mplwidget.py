@@ -9,6 +9,7 @@ from matplotlib.figure import Figure
 
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 
+
 class MplWidget(QWidget):
 
     def __init__(self, parent=None):
