@@ -33,7 +33,7 @@ class Cell:
         self.Q = self.compute_q()
         plt.title(f"etapa con Q={self.Q}")
         self.plot_mag(show=True)
-        self.plot_zp(show=True)
+        # self.plot_zp(show=True)
 
     def plot_mag(self, name=None, show=False, lc=None):
         """
@@ -148,7 +148,7 @@ class Cell:
     def compute_q(self):
         w = self.poles[0].imag
         sigma = self.poles[0].real
-        q = w/2*sigma
+        q = np.abs(w/(2*sigma))
         return q
 
 class AnalogFilter(ABC):
@@ -346,6 +346,9 @@ class AnalogFilter(ABC):
             den = sos[:, 3:]
             for d, n in zip(den, num):
                 stages.append(Cell(d, n))
+        
+        #TODO fix!!
+        stages = sorted(stages,key=lambda x:x.Q,reverse=True)
         return stages
 
     @abstractmethod
