@@ -240,7 +240,7 @@ class AnalogFilter(ABC):
         self.rp = rp
 
         # dict that stores if a certain graph is already on the screen nad where it is [is graphed, where]
-        self.is_graphed = {'Template': [0, 0], 'Magnitude': [0, 0], 'Phase': [0, 0], 'Group Delay': [0, 0], 'Maximun Q': [0, 0], 'Impulse Response': [0, 0], 'Step Response': [0, 0], 'Poles and Zeroes': [0, 0]}
+        self.is_graphed = {'Template': [0, 0], 'Attenuation': [0, 0], 'Magnitude': [0, 0], 'Phase': [0, 0], 'Group Delay': [0, 0], 'Maximun Q': [0, 0], 'Impulse Response': [0, 0], 'Step Response': [0, 0], 'Poles and Zeroes': [0, 0]}
 
         # Step 1: Compute filter order
         self.compute_order()
