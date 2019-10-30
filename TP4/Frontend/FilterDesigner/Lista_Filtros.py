@@ -2,6 +2,7 @@ class Filtros:
     def __init__(self, indice):
         self.lista_filtros = []
         self.indice = indice
+        self.seleccionado = 0
 
     def agregar_filtro(self, filtro):
         self.lista_filtros.append(filtro)
@@ -15,6 +16,7 @@ class Filtros:
     def indice_down(self):
         self.indice -= 1
 
-
+    def seleccionar(self, num):
+        self.seleccionado = num
 listaf = Filtros(0)
 

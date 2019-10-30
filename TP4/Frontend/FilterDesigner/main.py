@@ -124,6 +124,7 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.label_filtro_graficar.setText(value)
             ind = int(value[0]) - 1
             where = 3
+            listaf.seleccionar(ind)
 
             listaf.lista_filtros[ind].mark_graphed('Poles and Zeroes', where)
             self.ui.ventana_polos_zeros.plot(listaf.lista_filtros)
