@@ -350,59 +350,82 @@ En la siguiente sección, se procede a calcular las sensibilidades de $H(s)$, $Q
 
 Primero, se presentan las sensibilidades de $H\left(s \right)$:
 \begin{equation}
-S_{R_1}^{H} = 
+S_{R_1}^{H} = -{\frac {s \left[ s{C_2}\,{R_2}\,{R_3}\,{R_5}\,{R_6}+{
+R_4}\, \left( -{R_2}\,{R_6}+{R_5}\,{R_8} \right) 
+ \right] {C_2}\,{R_1}\,{R_3}\,{R_7}}{ \left[ {R_1}\,{
+R_8}+{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{
+C_2}\,{R_2} \right]  \left[ s{R_3}\,{R_5}\, \left( {C_1
+}\,{R_1}\,{R_4}\,{R_7}\,s-{R_1}\,{R_6}+{R_4}\,{R_7} \right) {C_2}+{R_1}\,{R_4}\,{R_6} \right] }}
 \end{equation}
-
 \begin{equation}
-S_{R_2}^{H}	{\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1
- \right) {R_7}\,s{C_2}\,{R_2}} \left( {\frac {{R_1}\,{\it 
-R8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{
-C_2}\,{R_2}}}+1 \right) ^{-1}}
+S_{R_2}^{H} =	{\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1
+ \right) {R_7}\,s{C_2}\,{R_2}} \left[ {\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{
+C_2}\,{R_2}}}+1 \right] ^{-1}}
 \end{equation}
-
 \begin{equation}
-S_{R_3}^{H} = 
+S_{R_3}^{H} = {\frac { \left\lbrace  \left[ s{C_1}\,{R_4}\, \left( -{R_2}\,{R_6}+{R_5}\,{R_8} \right) {R_7}-{R_8}\,{R_5}\,{R_6}
+ \right] {R_1}+{R_7}\,{R_4}\, \left( -{R_2}\,{R_6}+{
+R_5}\,{R_8} \right)  \right\rbrace s{C_2}\,{R_1}\,{R_3}}{
+ \left[  \left( {C_1}\,{C_2}\,{R_2}\,{R_3}\,{R_7}\,{s}^
+{2}+{R_8} \right) {R_1}+{R_3}\,{R_7}\,s{C_2}\,{R_2}
+ \right]  \left\lbrace  \left[ {s}^{2}{R_7}\,{C_1}\,{C_2}\,{R_3}
+\,{R_4}\,{R_5}-{R_6}\, \left( {C_2}\,{R_3}\,{R_5}\,s
+-{R_4} \right)  \right] {R_1}+{R_3}\,{R_7}\,s{C_2}\,{
+R_5}\,{R_4} \right\rbrace }}
 \end{equation}
-
 \begin{equation}
 S_{R_4}^{H} = -{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {C_1}\,{R_1}\,s+1
- \right) {R_7}} \left( -{\frac {{R_1}\,{R_8}}{{R_3}\,
+ \right) {R_7}} \left[ -{\frac {{R_1}\,{R_8}}{{R_3}\,
  \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{C_2}\,{R_5}}
 }+{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {C_1}\,{R_1}\,s+
-1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}} \right) ^{-1}}
+1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}} \right] ^{-1}}
 \end{equation}
-
 \begin{equation}
 s_{R_5}^{H} ={\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1
- \right) {R_7}\,s{C_2}\,{R_5}} \left( -{\frac {{R_1}\,{
+ \right) {R_7}\,s{C_2}\,{R_5}} \left[ -{\frac {{R_1}\,{
 R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s
 {C_2}\,{R_5}}}+{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {
 C_1}\,{R_1}\,s+1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}}
- \right) ^{-1}}
+ \right] ^{-1}}
 \end{equation}
-
 \begin{equation}
-S_{R_6}^{H} ={\frac {{R_8}}{{R_6}} \left( -{\frac {{R_1}\,{R_8}}{{\it 
-R3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{C_2}\,{
+S_{R_6}^{H} ={\frac {{R_8}}{{R_6}} \left[ -{\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{C_2}\,{
 R_5}}}+{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {C_1}\,{
-R_1}\,s+1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}} \right) ^
-{-1}}
+R_1}\,s+1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}} \right]^{-1}}
 \end{equation}
-
 \begin{equation}
-S_{R_7}^{H} = 
+S_{R_7}^{H} = {\frac { s \left( {C_1}\,{R_1}\,s+1 \right) \left[ s{C_2}\,{
+R_2}\,{R_3}\,{R_5}\,{R_6}+{R_4}\, \left( -{R_2}\,{
+R_6}+{R_5}\,{R_8} \right)  \right] {C_2}\,{R_1}\,{R_3}\,{R_7}}{ \left( {C_1}\,{C_2}\,{R_1}\,{R_2}\,{R_3
+}\,{R_7}\,{s}^{2}+{R_3}\,{R_7}\,s{C_2}\,{R_2}+{R_1}
+\,{R_8} \right)  \left[ {s}^{2}{R_7}\,{C_1}\,{C_2}\,{R_1}\,{R_3}\,{R_4}\,{R_5}+{C_2}\,{R_3}\,{R_5}\,
+ \left( -{R_1}\,{R_6}+{R_4}\,{R_7} \right) s+{R_1}\,{
+R_4}\,{R_6} \right] }}
 \end{equation}
-
 \begin{equation}
-S_{R_8}^{H} = 
+S_{R_8}^{H} = {\frac {{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{
+C_2}\,{R_2}}{{R_1}\,{R_8}+{R_3}\, \left( {C_1}\,{
+R_1}\,s+1 \right) {R_7}\,s{C_2}\,{R_2}}}
 \end{equation}
-
 \begin{equation}
-S_{C_1}^{H} = 
+S_{C_1}^{H} = {\frac {{C_1}\,{s}^{2} \left[ s{C_2}\,{R_2}\,{R_3}\,{R_5}\,{R_6}+{R_4}\, \left( -{R_2}\,{R_6}+{R_5}\,{R_8}
+ \right)  \right] {C_2}\,{{R_1}}^{2}{R_3}\,{R_7}}{ \left[ 
+{R_1}\,{R_8}+{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {
+R_7}\,s{C_2}\,{R_2} \right]  \left[ s{R_3}\,{R_5}\,
+ \left( {C_1}\,{R_1}\,{R_4}\,{R_7}\,s-{R_1}\,{R_6}+{
+R_4}\,{R_7} \right) {C_2}+{R_1}\,{R_4}\,{R_6}
+ \right] }}
 \end{equation}
-
 \begin{equation}
-S_{C_2}^{H} = 
+S_{C_2}^{H} = {\frac { \left\lbrace  \left[ s{C_1}\,{R_4}\, \left( -{R_2}\,{R_6}+{R_5}\,{R_8} \right) {R_7}-{R_8}\,{R_5}\,{R_6}
+ \right] {R_1}+{R_7}\,{R_4}\, \left( -{R_2}\,{R_6}+{
+R_5}\,{R_8} \right)  \right\rbrace s{C_2}\,{R_1}\,{R_3}}{
+ \left[  \left( {C_1}\,{C_2}\,{R_2}\,{R_3}\,{R_7}\,{s}^
+{2}+{R_8} \right) {R_1}+{R_3}\,{R_7}\,s{C_2}\,{R_2}
+ \right]  \left\lbrace  \left[ {s}^{2}{R_7}\,{C_1}\,{C_2}\,{R_3}
+\,{R_4}\,{R_5}-{R_6}\, \left( {C_2}\,{R_3}\,{R_5}\,s
+-{R_4} \right)  \right] {R_1}+{R_3}\,{R_7}\,s{C_2}\,{
+R_5}\,{R_4} \right\rbrace }}
 \end{equation}
 
 Luego, dado que la sensibilidades de $\omega_o$ y $Q$ resultan constantes, independientemente del componente del cual se las calcula, se presenta dichos valores de interés en la siguiente tabla.
@@ -418,90 +441,6 @@ $Q$ & 1 & -0.5 & -0.5 & 0 & 0 & 0 & -0.5 & 0.5 & 0.5 & -0.5	\\
 \end{tabular}
 \caption{Sensibilidades de $\omega_o$ y $Q$ con respecto de cada componente}
 \end{table}
-
-%Sensibilidades de $Q$, con respecto a cada componente:
-%
-%\begin{equation}
-%S_{R_1}^{Q} = 1
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_2}^{Q} = -0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_3}^{Q} = -0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_4}^{Q} = 0
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_5}^{Q} = 0
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_6}^{Q} = 0
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_7}^{Q} = -0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_8}^{Q} = 0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{C_1}^{Q} = 0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{C_2}^{Q} = -0.5
-%\end{equation}
-%
-%Sensibilidades de $\omega_o$, con respecto a cada componente:
-%
-%\begin{equation}
-%S_{R_1}^{\omega_o} = 0
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_2}^{\omega_o} = -0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_3}^{\omega_o} = -0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_4}^{\omega_o} = 0
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_5}^{\omega_o} = 0
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_6}^{\omega_o} = 0
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_7}^{\omega_o} = -0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{R_8}^{\omega_o} = 0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{C_1}^{\omega_o} = -0.5
-%\end{equation}
-%
-%\begin{equation}
-%S_{C_2}^{\omega_o} = -0.5
-%\end{equation}
 
 \subsubsection{Análisis de Montecarlo}
 A continuación, se presenta el diagrama de Montecarlo en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), donde en se consideró las resistencias con una tolerancia del $1\%$ y los capacitores con una tolerancia del $5\%$, debido a que por consigna no se aceptan tolerancias mayores y dado a que los capacitores empleados fueron medidos, garantizando así el uso de componentes que cumplan con lo dicho.
