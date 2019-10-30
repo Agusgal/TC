@@ -300,9 +300,9 @@ class Chebyshev2(AnalogFilter):
 
         if self.ftype == 'lowpass':
             # Compute maximum frequency allowed that still might meet requirements
-            wcstop = self.ws * np.cosh(np.cosh(1 / (np.sqrt(np.power(10, -self.As/10) - 1))) / self.N)
+            wcstop = self.ws * np.cosh(np.cosh(1 / (np.sqrt(np.power(10, self.As/10) - 1))) / self.N)
             # Compute minimum allowed frequency that still might meet requirements
-            wcpass = self.wp * np.cosh(np.arccosh(1 / np.sqrt(np.power(10, self.Ap/10) - 1)) / self.N)
+            wcpass = self.wp#self.wp * np.cosh(np.arccosh(1 / np.sqrt(np.power(10, self.Ap/10) - 1)) / self.N)
             print(f"wcstop:{wcstop}")
             print(f"wcpass:{wcpass}")
 
@@ -330,17 +330,20 @@ class Chebyshev2(AnalogFilter):
 # b2 = Chebyshev1("highpass", 40E3, 20E3, 10, 40,N=5,rp=3, k=0)
 # b1.plot_mag()
 # b2.plot_mag()
+# b = Butterworth("lowpass", 20E3, 50E3, 3, 40, k=0)
 
-b = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
-plt.title(f"Magnintud Chebyshev1 orden {b.N}")
+# b = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
+# b = Chebyshev1("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
+
+# plt.title(f"Magnintud Chebyshev1 orden {b.N}")
 # mag = 0
 # for s in b.stages:
 #     mag += s.mag
 # plt.semilogx(b.w,-mag+b.kZP,label="sumada")
-b.plot_mag(show=True)
+# b.plot_mag(show=True)
 
-plt.title("Polos y ceros")
-b.plot_zp(show=True)
+# plt.title("Polos y ceros")
+# b.plot_zp(show=True)
 
 # try:
 #     b = Butterworth("highpass", 10E3,20E3, 3, 40)
@@ -361,3 +364,46 @@ b.plot_zp(show=True)
 # https://d1.amobbs.com/bbs_upload782111/files_32/ourdev_573166.pdf
 # http://www.matheonics.com/Tutorials/Specification.html
 # http://www.matheonics.com/Tutorials/Butterworth.html#Paragraph_3.1
+
+
+#Prueba de etapas!
+
+
+filter1 = Butterworth("lowpass", 10E3*2*np.pi,40E3*2*np.pi, 3, 40)
+# filter1 = Butterworth("lowpass", 10E3,40E3, 3, 40)
+
+# filter1 = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
+# filter1 = Butterworth("highpass",20E3, 10E3, 3, 40)
+
+# filter1 = Chebyshev1("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
+# filter1 = Butterworth("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
+
+# fig, axs = plt.subplots(1, len(filter1.stages)+2, figsize=(9, 3), sharey=True)
+fig, axs = plt.subplots(1+len(filter1.stages))
+
+summag  = 0
+for counter, stage in enumerate(filter1.stages):
+    plt.grid(which="both", axis="both")
+    # axs.sub(f"etapa {counter} con q{stage.Q}")
+    if counter == len(filter1.stages)-1:
+        ganancia = np.arange(len(stage.w))
+        ganancia.fill(20*np.log10(filter1.kZP))
+        axs[counter].semilogx(stage.w,-stage.mag+ganancia)
+    else:
+        axs[counter].semilogx(stage.w,-stage.mag)
+    axs[counter].set_title(f"""
+                            Etapa {counter}
+                            Q:{np.round(stage.Q,2)}
+                            """)
+    summag += stage.mag
+
+# axs[counter+1].semilogx(filter1.w,-summag) #+20*np.log10(filter1.kZP)
+axs[counter+1].semilogx(filter1.w,-filter1.mag-ganancia)
+axs[counter+1].semilogx(filter1.w,-summag)
+
+axs[counter+1].set_title("original")
+
+plt.show()
+
+filter2 =Butterworth("lowpass", 20E3, 50E3, 3, 40, gain = 5, k=0)
+filter2.plot_mag(show=True)

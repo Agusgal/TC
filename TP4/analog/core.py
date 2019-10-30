@@ -17,24 +17,22 @@ class Cell:
     Circuit mimimun unit.  
     
     Parameters:
-    den: array_like
     num: array_like
+    den: array_like
+
     """
 
-    def __init__(self, den, num):
+    def __init__(self, num,den):
         print("Hola")
-        self.num = num
         self.den = den
-        self.sys = signal.TransferFunction(self.den, self.num)
+        self.num = num
+
+        self.sys = signal.TransferFunction(self.num, self.den)
         self.w, self.mag, self.pha = signal.bode(self.sys)
-        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*20)
+        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*40)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
-        self.zeros, self.poles, self.kZP = signal.tf2zpk(self.den, self.num)
+        self.zeros, self.poles, self.kZP = signal.tf2zpk(self.num,self.den)
         self.Q = self.compute_q()
-        print("todo computado")
-        plt.title(f"etapa con Q={self.Q}")
-        self.plot_mag(show=True)
-        # self.plot_zp(show=True)
 
     def plot_mag(self, name=None, show=False, lc=None):
         """
@@ -52,14 +50,12 @@ class Cell:
         """
 
         if lc:
-            plt.semilogx(np.divide(self.w, 2*np.pi), -
-                         self.mag, color=lc, label=name)
+            plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, color=lc, label=name)
         else:
             plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, label=name)
 
         if name:
             plt.legend()
-
         if show:
             plt.show()
 
@@ -147,6 +143,9 @@ class Cell:
             plt.show()
 
     def compute_q(self):
+        print(f"Los polos son: {self.poles}")
+        print(f"Los ceros son: {self.zeros}")
+
         w = self.poles[0].imag
         sigma = self.poles[0].real
         q = np.abs(w/(2*sigma))
@@ -247,8 +246,8 @@ class AnalogFilter(ABC):
         self.ftype = ftype
         self.wp = wp
         self.ws = ws
-        self.Ap = Ap
-        self.As = As
+        self.Ap = Ap + gain
+        self.As = As + gain
         self.k = k
         self.N = N  # Filter order
         self.rp = rp
@@ -262,17 +261,15 @@ class AnalogFilter(ABC):
         self.b, self.a = self.compute_ba()
         # Step 3: Construct Transfer function
         self.sys = signal.TransferFunction(self.b, self.a)
-
         self.w, self.mag, self.pha = signal.bode(self.sys)
-        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*20)
+        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*40)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
-
+        self.mag = self.mag + gain
+        print(np.min(-self.mag))
         # kZP will denote de gain returned by the compute_zpk method
         self.zeros, self.poles, self.kZP = self.compute_zpk()
         #Step 4: Split high order filter into first and second order cells
         self.stages = self.compute_filter_stages()
-        print(f"Hay {len(self.stages)} etapas")
-        print(self.stages)
 
     def pair_singularities(self, zp):
         """
@@ -337,19 +334,26 @@ class AnalogFilter(ABC):
             print(f"Los polos ordenados son {ordered_poles}")
             for poles in ordered_poles:
                 print(poles)
-                d, n = signal.zpk2tf([], poles, self.kZP)
-                stages.append(Cell(d, n))
+                n,d = signal.zpk2tf([], poles, self.kZP)
+                stages.append(Cell(n,d))
         else:
             print("hola")
-            sos = signal.sos(self.zeros, self.poles, self.kZP)
+            sos = signal.zpk2sos(self.zeros, self.poles, self.kZP, pairing="keep_odd")
             num = sos[:, :3]
             den = sos[:, 3:]
-            for d, n in zip(den, num):
-                print(d,n)
-                stages.append(Cell(d, n))
+            for n, d in zip(num, den):
+                print(n, d)
+                stages.append(Cell(n,d))
         #TODO fix!!
         stages = sorted(stages,key=lambda x:x.Q,reverse=False)
         return stages
+
+    
+    # def compute_stagehm(self,zeros,poles):
+
+
+
+
 
     @abstractmethod
     def compute_order(self):
@@ -484,8 +488,7 @@ class AnalogFilter(ABC):
         """
         stencils = self.get_stencils(np.divide(self.w, 2*np.pi), -self.mag)
         if lc:
-            plt.semilogx(np.divide(self.w, 2*np.pi), -
-                         self.mag, color=lc, label=name)
+            plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, color=lc, label=name)
         else:
             plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, label=name)
 
