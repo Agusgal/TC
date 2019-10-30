@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
   
-from analog.cusfunc.cusfunc import maprange
-from analog.custexcp.custexcp import *
+from cusfunc import maprange
+from custexcp import *
 
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
@@ -31,6 +31,7 @@ class Cell:
         self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
         self.zeros, self.poles, self.kZP = signal.tf2zpk(self.den, self.num)
         self.Q = self.compute_q()
+        print("todo computado")
         plt.title(f"etapa con Q={self.Q}")
         self.plot_mag(show=True)
         # self.plot_zp(show=True)
@@ -271,6 +272,7 @@ class AnalogFilter(ABC):
         #Step 4: Split high order filter into first and second order cells
         self.stages = self.compute_filter_stages()
         print(f"Hay {len(self.stages)} etapas")
+        print(self.stages)
 
     def pair_singularities(self, zp):
         """
@@ -338,14 +340,15 @@ class AnalogFilter(ABC):
                 d, n = signal.zpk2tf([], poles, self.kZP)
                 stages.append(Cell(d, n))
         else:
+            print("hola")
             sos = signal.sos(self.zeros, self.poles, self.kZP)
             num = sos[:, :3]
             den = sos[:, 3:]
             for d, n in zip(den, num):
+                print(d,n)
                 stages.append(Cell(d, n))
-        
         #TODO fix!!
-        stages = sorted(stages,key=lambda x:x.Q,reverse=True)
+        stages = sorted(stages,key=lambda x:x.Q,reverse=False)
         return stages
 
     @abstractmethod

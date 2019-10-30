@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
 
-from analog.core import AnalogFilter
-from analog.core import Cell
-from analog.cusfunc.cusfunc import maprange
+from core import AnalogFilter
+from core import Cell
+from cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):
@@ -179,23 +179,6 @@ class Chebyshev1(AnalogFilter):
         self.wcryt = self.get_critical_w(self.k)  # Compute cut-off frequencies
         return signal.butter(self.N, self.wcryt, self.ftype, analog=True, output='zpk')
 
-    def compute_filter_stages(self):
-        """
-        Split the obtained filter into second and first order units
-        
-        Returns
-        -------
-            den: array-like
-                Array of shape (n-sections,3) containing the denominator coefficients of the units
-            num: array-like
-                Array of shape (n-sections,3) containing the numerator coefficients of the units
-        """
-        sos = signal.butter(self.N, self.wcryt, self.ftype,
-                            analog=True, output='sos')
-        num = sos[:, :3]
-        den = sos[:, 3:]
-        return den, num
-
     def get_critical_w(self, k):
         """
         Calculates new crytical frequency given a certain denormalization degree 
@@ -300,23 +283,6 @@ class Chebyshev2(AnalogFilter):
         self.wcryt = self.get_critical_w(self.k)  # Compute cut-off frequencies
         return signal.butter(self.N, self.wcryt, self.ftype, analog=True, output='zpk')
 
-    def compute_filter_stages(self):
-        """
-        Split the obtained filter into second and first order units
-        
-        Returns
-        -------
-            den: array-like
-                Array of shape (n-sections,3) containing the denominator coefficients of the units
-            num: array-like
-                Array of shape (n-sections,3) containing the numerator coefficients of the units
-        """
-        sos = signal.butter(self.N, self.wcryt, self.ftype,
-                            analog=True, output='sos')
-        num = sos[:, :3]
-        den = sos[:, 3:]
-        return den, num
-
     def get_critical_w(self, k):
         """
         Calculates new crytical frequency given a certain denormalization degree 
@@ -365,8 +331,8 @@ class Chebyshev2(AnalogFilter):
 # b1.plot_mag()
 # b2.plot_mag()
 
-b = Butterworth("lowpass", 20E3, 50E3, 3, 40, k=0)
-plt.title(f"Magnintud Butterworth orden {b.N}")
+b = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
+plt.title(f"Magnintud Chebyshev1 orden {b.N}")
 # mag = 0
 # for s in b.stages:
 #     mag += s.mag
@@ -375,7 +341,6 @@ b.plot_mag(show=True)
 
 plt.title("Polos y ceros")
 b.plot_zp(show=True)
-
 
 # try:
 #     b = Butterworth("highpass", 10E3,20E3, 3, 40)
