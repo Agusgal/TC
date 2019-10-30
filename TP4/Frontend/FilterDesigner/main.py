@@ -53,7 +53,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         n = int(self.ui.input_orden_filtro.text())
 
-        try:
+        try: #falta agregar otro tipos de errores
             if aprox == 'Butterworth':
                 filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
                 self.agregar_filtro_lista(filtro)
@@ -125,6 +125,7 @@ class MainWindow(QtWidgets.QMainWindow):
         msg.setIcon(QMessageBox.Warning)
 
         x = msg.exec_()
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication([])

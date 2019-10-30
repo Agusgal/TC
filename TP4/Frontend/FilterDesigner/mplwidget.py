@@ -40,7 +40,10 @@ class MplWidget(QWidget):
             for key in filtro.is_graphed:
                 if filtro.is_graphed[key][0] and filtro.is_graphed[key][1] == self.id:
                     if key == 'Template':
-                        pass
+                        stencils = filtro.get_stencils(np.divide(filtro.get_w(), 2 * np.pi), -filtro.get_mag())
+                        for s in stencils:
+                            self.canvas.axes.fill(s[0], s[1], '1', lw=0)  # Set line-
+                            self.canvas.draw()
                     elif key == 'Magnitude':
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_mag())
                         self.canvas.draw()
