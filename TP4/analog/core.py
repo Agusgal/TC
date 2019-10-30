@@ -579,6 +579,3 @@ class AnalogFilter(ABC):
     def mark_not_graphed(self, name):
         self.is_graphed[name][0] = 0
         self.is_graphed[name][1] = 0
-
-    def set_window(self, window, key):
-        self.is_graphed[key][1] = window

@@ -12,7 +12,7 @@ from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as Navigatio
 
 class MplWidget(QWidget):
 
-    def __init__(self, parent=None):
+    def __init__(self, id, parent=None):
         QWidget.__init__(self, parent)
 
         self.canvas = FigureCanvas(Figure())
@@ -26,12 +26,15 @@ class MplWidget(QWidget):
         self.canvas.axes = self.canvas.figure.add_subplot(111)
         self.setLayout(layout)
 
+        self.id = id
+
     def plot(self, lista_filtros):
-        
+
+        self.canvas.axes.clear()
         for filtro in lista_filtros:
             for key in filtro.is_graphed:
-                if filtro.is_graphed[key][0]:
-                    if key == 'template':
+                if filtro.is_graphed[key][0] and filtro.is_graphed[key][1] == self.id:
+                    if key == 'Template':
                         pass
                     elif key == 'Magnitude':
                         self.canvas.axes.semilogx(filtro.get_w(), filtro.get_mag())
@@ -51,3 +54,4 @@ class MplWidget(QWidget):
 
     def clear_axes(self):
         self.canvas.axes.clear()
+        self.canvas.draw()
