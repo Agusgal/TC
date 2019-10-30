@@ -323,7 +323,284 @@ $f_{p}^{+}$ & $44184\ Hz$ \\
 \label{tabla:caracteristicas2}
 \end{table}
 
-Realizando la aproximación mediante Chebycheff Inverso, se determinó que el circuito final posee un orden de $n = 2$. Posteriormente se procedió a elaborar el filtro que cumpla con las especificaciones deseadas. 
+Realizando la aproximación mediante Chebycheff Inverso, se determinó que el circuito final posee un orden de $n = 2$. Posteriormente se procedió a elaborar el filtro que cumpla con las especificaciones deseadas.
+
+\subsubsection{Rango Dinámico}
+El rango dinámico se define como la razón entre el máximo y el mínimo valor que puede tomar el observable de interés. Para el caso en cuestión queda definido de la siguiente manera:
+\begin{equation}
+	R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
+\end{equation}
+
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se puede distinguir respecto al piso de ruido, la cual es determinada como $V_{in_{min}} \approx 10 \ mV$. Luego para el caso de $V_{in_{max}}$ se consideró la máxima tensión previa a la aparición de distorsiones o alinealidades del amplificador operacional, siendo el cross-over, slew-rate y saturación del mismo algunos de estos efectos. Tanto el cross-over como el slew-rate son aspectos de poco interés, dado que, como para este filtro se seleccionó el amplificador \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, ya que posee un elevado slew-rate y, dada su etapa de salida, el efecto de cross-over no genera problemas. Por otro lado, para el caso de la saturación, se vale de que la máxima tensión de salida del operacional es $V_{sat} = V_{CC} - 1.5 \ V$. Ya que $V_{CC} = 15 \ V$, $V_{sat} = 13.5 \ V$. Luego, para encontrar el valor de la tensión máxima de entrada, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas, esta queda definida por la expresión:
+\begin{equation}
+	V_{in_{max}}=\frac{V_{sat}}{  \max(H_{1} \cdot H_{2} )} = \frac{13.5 \ V}{9} = 1.5 \ V
+\end{equation}
+
+De esta forma, con todo lo establecido, se llega a que el rango dinámico es $R_d = 43.52 \ dB$.
+
+\subsubsection{Análisis de sensibilidades}
+\begin{center}
+	\Large{\textbf{\textcolor{red}{HISTOGRAMA.}}}
+\end{center}
+
+En la siguiente sección, se procede a calcular las sensibilidades de $H(s)$, $Q$ y $\omega_o$ con respecto de cada componente, definiéndose la sensibilidad de una función $y$ con respecto de $x$ de la forma:
+\begin{equation*}
+	S_{x}^{y} = \frac{\delta y}{\delta x} \frac{x}{y}
+\end{equation*}
+
+Primero, se presentan las sensibilidades de $H\left(s \right)$:
+\begin{equation}
+S_{R_1}^{H} = {{\it R1} \left( {1 \left( -{\frac {{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}-{\frac {{\it R4}\,
+ \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{{\it R1}}^{2}{\it 
+R7}}}+{\frac {{\it R4}\,{\it C1}\,s{\it R8}}{{\it R1}\,{\it R7}}}
+ \right)  \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2}}}+1 \right) ^{-1}}-{
+\frac {{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s
+{\it C2}\,{\it R2}} \left( -{\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{
+\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{
+\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}} \right)  \left( {
+\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {
+\it R7}\,s{\it C2}\,{\it R2}}}+1 \right) ^{-2}} \right)  \left( {
+\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {
+\it R7}\,s{\it C2}\,{\it R2}}}+1 \right)  \left( -{\frac {{\it R1}\,{
+\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}
+\,{\it R5}}}+{\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1
+ \right) {\it R8}}{{\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}}
+ \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{R_2}^{H} = {\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) 
+{\it R7}\,s{\it C2}\,{\it R2}} \left( {\frac {{\it R1}\,{\it R8}}{{
+\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2}
+}}+1 \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{R_3}^{H} = {{\it R3} \left( {\frac {{\it R1}\,{\it R8}}{{{\it R3}}^{2} \left( {
+\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}} \left( {\frac {{
+\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}
+\,s{\it C2}\,{\it R2}}}+1 \right) ^{-1}}+{\frac {{\it R1}\,{\it R8}}{{
+{\it R3}}^{2} \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{
+\it R2}} \left( -{\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{\frac {{\it R4}\,
+ \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{\it R1}\,{\it R7}}}
+-{\frac {{\it R8}}{{\it R6}}} \right)  \left( {\frac {{\it R1}\,{\it 
+R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{
+\it R2}}}+1 \right) ^{-2}} \right)  \left( {\frac {{\it R1}\,{\it R8}
+}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it 
+R2}}}+1 \right)  \left( -{\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{
+\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{
+\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}} \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{R_4}^{H} = {\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{
+\it R1}\,{\it R7}} \left( -{\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{
+\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{
+\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}} \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{R_5}^{H} = {\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) 
+{\it R7}\,s{\it C2}\,{\it R5}} \left( -{\frac {{\it R1}\,{\it R8}}{{
+\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}
+}}+{\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}
+}{{\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}} \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{R_6}^{H} = {\frac {{\it R8}}{{\it R6}} \left( -{\frac {{\it R1}\,{\it R8}}{{\it 
+R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{
+\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{
+\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}} \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{R_7}^{H} = {{\it R7} \left( {1 \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {{\it R7}}^{2}s{\it C2}\,{\it R5}}}-{
+\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{
+\it R1}\,{{\it R7}}^{2}}} \right)  \left( {\frac {{\it R1}\,{\it R8}}{
+{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2
+}}}+1 \right) ^{-1}}+{\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {
+\it R1C1}\,s+1 \right) {{\it R7}}^{2}s{\it C2}\,{\it R2}} \left( -{
+\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {
+\it R7}\,s{\it C2}\,{\it R5}}}+{\frac {{\it R4}\, \left( {\it C1}\,{
+\it R1}\,s+1 \right) {\it R8}}{{\it R1}\,{\it R7}}}-{\frac {{\it R8}}{
+{\it R6}}} \right)  \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2}}}+1
+ \right) ^{-2}} \right)  \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2}}}+1
+ \right)  \left( -{\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{\frac {{\it R4}\,
+ \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{\it R1}\,{\it R7}}}
+-{\frac {{\it R8}}{{\it R6}}} \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{R_8}^{H} ={{\it R8} \left( {1 \left( -{\frac {{\it R1}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{\frac {{\it R4}\,
+ \left( {\it C1}\,{\it R1}\,s+1 \right) }{{\it R1}\,{\it R7}}}-{{\it 
+R6}}^{-1} \right)  \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2}}}+1
+ \right) ^{-1}}-{\frac {{\it R1}}{{\it R3}\, \left( {\it R1C1}\,s+1
+ \right) {\it R7}\,s{\it C2}\,{\it R2}} \left( -{\frac {{\it R1}\,{
+\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}
+\,{\it R5}}}+{\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1
+ \right) {\it R8}}{{\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}}
+ \right)  \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2}}}+1 \right) ^{-2}}
+ \right)  \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R2}}}+1 \right)  \left( -
+{\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) 
+{\it R7}\,s{\it C2}\,{\it R5}}}+{\frac {{\it R4}\, \left( {\it C1}\,{
+\it R1}\,s+1 \right) {\it R8}}{{\it R1}\,{\it R7}}}-{\frac {{\it R8}}{
+{\it R6}}} \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{C_1}^{H} = {\frac {{\it R4}\,s{\it R8}\,{\it C1}}{{\it R7}} \left( -{\frac {{\it 
+R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{
+\it C2}\,{\it R5}}}+{\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1
+ \right) {\it R8}}{{\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}}
+ \right) ^{-1}}
+\end{equation}
+
+\begin{equation}
+S_{C_2}^{H} = {{\it C2} \left( {\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{{\it C2}}^{2}{\it R5}} \left( {\frac {{
+\it R1}\,{\it R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}
+\,s{\it C2}\,{\it R2}}}+1 \right) ^{-1}}+{\frac {{\it R1}\,{\it R8}}{{
+\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{{\it C2}}^{2}{
+\it R2}} \left( -{\frac {{\it R1}\,{\it R8}}{{\it R3}\, \left( {\it 
+R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{\frac {{\it R4}\,
+ \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{\it R1}\,{\it R7}}}
+-{\frac {{\it R8}}{{\it R6}}} \right)  \left( {\frac {{\it R1}\,{\it 
+R8}}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{
+\it R2}}}+1 \right) ^{-2}} \right)  \left( {\frac {{\it R1}\,{\it R8}
+}{{\it R3}\, \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it 
+R2}}}+1 \right)  \left( -{\frac {{\it R1}\,{\it R8}}{{\it R3}\,
+ \left( {\it R1C1}\,s+1 \right) {\it R7}\,s{\it C2}\,{\it R5}}}+{
+\frac {{\it R4}\, \left( {\it C1}\,{\it R1}\,s+1 \right) {\it R8}}{{
+\it R1}\,{\it R7}}}-{\frac {{\it R8}}{{\it R6}}} \right) ^{-1}}
+\end{equation}
+
+Luego, dado que la sensibilidades de $\omega_o$ y $Q$ resultan constantes, independientemente del componente del cual se las calcula, se presenta dichos valores de interés en la siguiente tabla.
+\begin{table}[H]
+\centering
+\begin{tabular}{ccccccccccc}
+\hline
+ & $\mathbf{R_1}$ & $\mathbf{R_2}$ & $\mathbf{R_3}$ & $\mathbf{R_4}$ & $\mathbf{R_5}$ & $\mathbf{R_6}$ & $\mathbf{R_7}$ & $\mathbf{R_8}$ & $\mathbf{C_1}$ & $\mathbf{C_2}$ \\
+\hline
+$\omega_o$ & 0 & -0.5 & -0.5 & 0 & 0 & 0 & -0.5 & 0.5 & -0.5 & -0.5 \\
+$Q$ & 1 & -0.5 & -0.5 & 0 & 0 & 0 & -0.5 & 0.5 & 0.5 & -0.5	\\
+\hline
+\end{tabular}
+\caption{Sensibilidades de $\omega_o$ y $Q$ con respecto de cada componente}
+\end{table}
+
+%Sensibilidades de $Q$, con respecto a cada componente:
+%
+%\begin{equation}
+%S_{R_1}^{Q} = 1
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_2}^{Q} = -0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_3}^{Q} = -0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_4}^{Q} = 0
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_5}^{Q} = 0
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_6}^{Q} = 0
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_7}^{Q} = -0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_8}^{Q} = 0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{C_1}^{Q} = 0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{C_2}^{Q} = -0.5
+%\end{equation}
+%
+%Sensibilidades de $\omega_o$, con respecto a cada componente:
+%
+%\begin{equation}
+%S_{R_1}^{\omega_o} = 0
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_2}^{\omega_o} = -0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_3}^{\omega_o} = -0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_4}^{\omega_o} = 0
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_5}^{\omega_o} = 0
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_6}^{\omega_o} = 0
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_7}^{\omega_o} = -0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{R_8}^{\omega_o} = 0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{C_1}^{\omega_o} = -0.5
+%\end{equation}
+%
+%\begin{equation}
+%S_{C_2}^{\omega_o} = -0.5
+%\end{equation}
+
+\subsubsection{Análisis de Montecarlo}
+A continuación, se presenta el diagrama de Montecarlo en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), donde en se consideró las resistencias con una tolerancia del $1\%$ y los capacitores con una tolerancia del $5\%$, debido a que por consigna no se aceptan tolerancias mayores y dado a que los capacitores empleados fueron medidos, garantizando así el uso de componentes que cumplan con lo dicho.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth,trim={0 3.5cm 1.5cm 0},clip]{ImagenesEjercicio4/MC-Mod-4.png}
+	\caption{Diagrama de Montecarlo en módulo.}
+	\label{fig:mc-mod}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth,trim={1.25cm 3.5cm 0 0},clip]{ImagenesEjercicio4/MC-Pha-4.png}
+	\caption{Diagrama de Montecarlo en fase.}
+	\label{fig:mc-pha}
+\end{figure}
 
 \subsubsection{Confección del filtro y mediciones}
 
@@ -343,7 +620,7 @@ $2^{da}$ Etapa & 1.2 k$\Omega$ & 55.2 k$\Omega$ & 150 $\Omega$ & 1.2 k$\Omega$ &
 \label{tab:componentes}
 \end{table} 
 
-Se decidió colocar en lugar de los capacitores pines hembra, los cuales permiten reemplazar con facilidad dichos componentes. Esto se debe a que los que se disponen son de una tolerancia del $10 \%$. De esta forma, se vale del analizador de impedancias para determinar la capacitancia de estos y así garantizar el uso del capacitor adecuado. Por otro lado, como la impedancia de entrada resulta del paralelo entre las resistencias $R_4$, $R_5$ y $R_6$, lo cual implica $Z_{in} = 15.67 \ k\Omega$, se coloca un buffer a la entrada de cada instancia, ya que de esta forma, la impedancia de entrada del circuito es la del buffer, garantizando que ambas instancias se acoplen adecuadamente. 
+Se decidió colocar en lugar de los capacitores pines hembra, los cuales permiten reemplazar con facilidad dichos componentes. Esto se debe a que los que se disponen son de una tolerancia del $10 \%$, y además a que, como se presentó anteriormente, estos dispositivos afectan tanto el $Q$ como el $\omega_o$ del circuito. Pequeñas variaciones en ellos puede modificar la frecuencia de notch de cada etapa, haciendo que estos se acerquen o se alejen. De esta forma, se vale del analizador de impedancias para determinar la capacitancia de estos y así garantizar el uso del capacitor adecuado. Por otro lado, como la impedancia de entrada resulta del paralelo entre las resistencias $R_4$, $R_5$ y $R_6$, lo cual implica $Z_{in} = 15.67 \ k\Omega$, se coloca un buffer a la entrada de cada instancia, ya que de esta forma, la impedancia de entrada del circuito es la del buffer, garantizando que ambas instancias se acoplen adecuadamente. 
 Al momento de realizar las placas, se optó por colocar jumpers, de forma tal que se pueda hacer las mediciones deseadas con y sin dichos buffers, para poder realizar comparaciones.   
 
 Se observa a continuación una comparación entre los diagramas de Bode teóricos, simulados y medidos.
@@ -360,21 +637,7 @@ Se observa a continuación una comparación entre los diagramas de Bode teórico
 	\label{fig:bode-pha}
 \end{figure}
 
-Como se mencionó anteriormente, los capacitores sos componentes importantes que afectan tanto el $Q$ como el $\omega_o$ del circuito. Pequeñas variaciones en ellos puede modificar la frecuencia de notch de cada etapa, haciendo que estos se acerquen o se alejen. Esto puede observarse en diagramas de Montecarlo de transferencia del sistema. Como se mencionó previamente, dado a cuestiones de disposición de componentes, se decidió presentar dicho diagrama en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), donde en se consideró las resistencias con una tolerancia del $1\%$ y los capacitores con una tolerancia del $5\%$, debido a que por consigna no se aceptan tolerancias mayores y dado a que los capacitores empleados fueron medidos, garantizando así el uso de componentes que cumplan con lo dicho
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.8\textwidth,trim={0 3.5cm 1.5cm 0},clip]{ImagenesEjercicio4/MC-Mod-4.png}
-	\caption{Diagrama de Montecarlo en módulo.}
-	\label{fig:mc-mod}
-\end{figure}
-\begin{figure}[H]
-\centering
-	\includegraphics[width=0.8\textwidth,trim={1.25cm 3.5cm 0 0},clip]{ImagenesEjercicio4/MC-Pha-4.png}
-	\caption{Diagrama de Montecarlo en fase.}
-	\label{fig:mc-pha}
-\end{figure}
-
-De esta forma, en ciertos casos y dependiendo de dichos componentes, el factor $f_\infty$ de cada etapa puede superponerse generando que no se observe el ripple característico de la plantilla de Chebycheff. Un ejemplo de esto se presenta a continuación.
+De manera similar a lo presentado en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), se analiza como los capacitores del circuito afectan el factor $f_\infty$ de cada etapa. Es así que los picos de atenuación máxima puede superponerse, generando que no se observe el ripple característico de la plantilla de Chebycheff. Un ejemplo de esto se presenta a continuación.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-3.png}
@@ -403,12 +666,6 @@ Tanto en la Figura (\ref{fig:picos}) como en la (\ref{fig:med-plant}), no se pre
 
 \begin{center}
 	\Large{\textbf{\textcolor{red}{JUSTIFICAR ALTAS FRECUENCIAS.}}}
-\end{center}
-
-\subsubsection{Análisis de sensibilidades}
-\begin{center}
-	\Large{\textbf{\textcolor{red}{CUENTAS: LEER CONSIGNA PARA VER QUE SENSIBILIDADES PIDE.}}}\\
-	\Large{\textbf{\textcolor{red}{RANGO DINÁMICO.}}}
 \end{center}
 
 \end{document}

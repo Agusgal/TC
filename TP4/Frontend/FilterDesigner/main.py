@@ -1,4 +1,5 @@
 from PyQt5 import QtWidgets, QtGui
+from PyQt5.QtWidgets import QMessageBox
 from Frontend.FilterDesigner.Lista_Filtros import  listaf
 from analog.filters import *
 import numpy as np
@@ -25,7 +26,9 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.boton_graficar.clicked.connect(self.update_grafico)
 
-        #self.ui.boton_limpiar.clicked.connect()
+        self.ui.boton_limpiar1.clicked.connect(lambda: self.clear_grafico(1))
+
+        self.ui.boton_limpiar2.clicked.connect(lambda: self.clear_grafico(2))
 
     def crear_filtro(self):  ##Conisderar que el usuario puede meter cosas mal, agregar chequeo errores
 
@@ -50,14 +53,17 @@ class MainWindow(QtWidgets.QMainWindow):
 
         n = int(self.ui.input_orden_filtro.text())
 
-        try:
+        try: #falta agregar otro tipos de errores
             if aprox == 'Butterworth':
                 filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
                 self.agregar_filtro_lista(filtro)
+                self.ui.lista_filtros.addItem(
+                    str(listaf.indice) + ')' + aprox + ' ' + str(round(wp)) + ' ' + str(round(ws)) + ' ' + str(
+                        Ap) + ' ' + str(As) + ' ' + str(ganancia) + ' ' + str(k) + ' ' + str(n))
         except ValueError as error:
-            print(error)
+            self.show_pop_up(str(error))
 
-        self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + str(round(wp)) + ' ' + str(round(ws)) + ' ' + str(Ap) + ' ' + str(As) + ' ' + str(ganancia) + ' ' + str(k) + ' ' + str(n))
+
 
     def remover_filtro_lista(self):
         ##Agregar q pasa cuando no hay  nada seleccionado
@@ -81,26 +87,44 @@ class MainWindow(QtWidgets.QMainWindow):
     def update_grafico(self):
 
         txt = self.ui.label_filtro_graficar.text()
-        ind = int(txt[0])
+        ind = int(txt[0]) - 1
         name = self.ui.selector_grafico.currentText()
+        window = self.ui.selector_ventana.currentText()
+        where = 0
 
-        listaf.lista_filtros[ind].mark_graphed(name)
+        if window == 'Window 1':
+            where = 1
+        else:
+            where = 2
 
-        self.ui.ventana_grafica1.plot(listaf.lista_filtros[ind])
-        self.ui.ventana_grafica2.plot()
+        listaf.lista_filtros[ind].mark_graphed(name, where)
 
-    def clear_grafico(self):
+        self.ui.ventana_grafica1.plot(listaf.lista_filtros)
+
+        self.ui.ventana_grafica2.plot(listaf.lista_filtros)
+
+    def clear_grafico(self, window):
+
         for f in listaf.lista_filtros:
             for key in f.is_graphed:
-                f.mark_not_graphed(key)
+                if window == f.is_graphed[key][1]:
+                    f.mark_not_graphed(key)
 
-        self.ui.ventana_grafica1.clear_axes()
-        self.ui.ventana_grafica2.clear_axes()
+        if window == 1:
+            self.ui.ventana_grafica1.clear_axes()
+        else:
+            self.ui.ventana_grafica2.clear_axes()
 
-    def errores(self):
+    def limpiar_entradas(self):
         pass
 
+    def show_pop_up(self, error):
+        msg = QMessageBox()
+        msg.setWindowTitle('Mistakes were made')
+        msg.setText(error)
+        msg.setIcon(QMessageBox.Warning)
 
+        x = msg.exec_()
 
 
 if __name__ == '__main__':

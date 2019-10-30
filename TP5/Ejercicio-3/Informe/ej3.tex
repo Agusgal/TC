@@ -84,8 +84,71 @@ Finalmente en el paper discutido se tomó la configuración de HPB dado a que es
 	\caption{Circuito celda SGB-HPB}
 \end{figure}
 \subsubsection{Cálculo Analítico}
----
+El circuito sobre el que trabajaremos es el siguiente:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej3/CircuitoDeGuido.pdf}
+	\label{fig:HPBSedrac}
+	\caption{Circuito celda}
+\end{figure}
+Plantenado los siguientes nodos es posible llegar a la expresión de la función transferencia:
+\begin{align}
+\frac{-V^-}{R_{a1}}+\frac{V_{in}-V^-}{R_{a2}}=\frac{V^--V_{out}}{R_b}
+\end{align}
+\begin{align}
+V^+=V^-
+\end{align}
+\begin{align}
+\frac{V_{in}-V^+}{R_{42}}=\frac{V^+}{R_{41}}+sC_3\cdot (V^+-V_a)
+\end{align}
+\begin{align}
+(V^+-V_a)\cdot sC_3 + (V_{in}-V_a)\cdot sC_{22}+\frac{V_{out}-V_a}{R_1}=V_a\cdot sC_{21}
+\end{align}
+\begin{align}
+H(s)=
+{\frac { \alpha +s \beta +{s}^{2} \gamma }{\delta+s \epsilon +{s}^{2} \zeta }
+}
+\end{align}
 
+
+\begin{align}
+\alpha = {\it R_{a2}}\,{\it R_B}\,{\it R_{41}}-{\it R_{a1}}\,{\it R_b}\,{\it R_{42}}+{
+\it R_{a1}}\,{\it R_{a2}}\,{\it R_{42}}
+\end{align}
+\begin{align}
+\beta =\left( {\it C_3}\,{\it R_{a1}}\,{\it R_{a2}}\,{
+\it R_{41}}\,{\it R_1}-{\it C_3}\,{\it R_{a1}}\,{\it R_b}\,{\it R{_41}}\,{\it R_{42}}-{
+\it C_3}\,{\it R_{a1}}\,{\it R_b}\,{\it R_{42}}\,{\it R_1}+{\it C_3}\,{\it R_{a2}}\,{
+\it R_b}\,{\it R_{41}}\,{\it R_1} \right)
+\end{align}
+\begin{align}
+\gamma = \left( -{\it C_{21}}\,{\it C_3
+}\,{\it R_{a1}}\,{\it R_b}\,{\it R_{41}}\,{\it R_{42}}\,{\it R_1}+{\it C_{22}}\,{\it C_3}
+\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{41}}\,{\it R_{42}}\,{\it R_1}+{\it C_{22}}\,{\it C_3}
+\,{\it R_{a2}}\,{\it R_b}\,{\it R_{41}}\,{\it R_{42}}\,{\it R_1} \right) 
+\end{align}
+\begin{align}
+\delta = {\it R_{a1}}
+\,{\it R_{a2}}\,{\it R_{42}}+{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{41}} 
+\end{align}
+\begin{align}
+\epsilon = \eta +  \iota
+\end{align}
+\begin{align}
+\eta ={\it C_3}\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{41}}\,{\it R_{1}}+{\it C_3}\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{42}}\,{\it R_1}-{\it C_3}\,{\it R_{a1}}\,{\it R_b}\,{\it R_{41}}\,{\it R_{42}}-{
+\it C_3}\,{\it R_{a2}}\,{\it R_b}\,{\it R_{41}}\,{\it R_{42}}
+\end{align}
+\begin{align}
+\iota={\it C_{21}}\,{\it R_{a1}}\,{
+\it R_{a2}}\,{\it R_{41}}\,{\it R_1}+{\it C_{21}}\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{42}}\,{
+\it R_1}+{\it C_{22}}\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{41}}\,{\it R_1}+{\it C_{22}}\,{
+\it R_{a1}}\,{\it R_{a2}}\,{\it R_{42}}\,{\it R_1}
+\end{align}
+\begin{align}
+\zeta = \left( {\it C_{21}}
+\,{\it C_3}\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{41}}\,{\it R_{42}}\,{\it R_1}+{\it C_{22}}
+\,{\it C_3}\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{41}}\,{\it R_{42}}\,{\it R_1} \right)
+\end{align}
 \subsubsection{Elecciones de diseño}
 Cada una de las funciones transferencia descriptas en (\ref{eq:trans})
  se pueden expresar de la siguiente manera:
@@ -94,7 +157,7 @@ Cada una de las funciones transferencia descriptas en (\ref{eq:trans})
 \end{align} 
 
 Luego se siguió con el análisis matemático desarrollado en el paper ``Optimum Configurations for Single Amplifiers Biquadratic Filters''.
-De allí se ve la necesidad de introducir algunos parámetros los cuales permiten el diseño de la celda, siendo estos $G_\infty$ el cual es la ganancia cuando $\omega \rightarrow \infty$ , K y $Q_0$ siendo esta ultima una constante que debe cumplir la condición $Q_0 < Q$ permite ajustar el valor de los componentes así queda nominal.  luego se definen los siguientes parámetros. 
+De allí se ve la necesidad de introducir algunos parámetros los cuales permiten el diseño de la celda, siendo estos $G_\infty$ el cual es la ganancia cuando $\omega \rightarrow \infty$ , K y $Q_0$ siendo esta ultima una constante que debe cumplir la condición $Q_0 < Q$ permite ajustar el valor de los componentes así queda nominal, se eligió el valor de $Q_0$ en base a una relación de dependencia con las sensibilidades.  luego se definen los siguientes parámetros. 
 \begin{align}
 k=\frac{G_\infty\cdot \left(\frac{\omega_z}{\omega_0} \right)^2}{1-\frac{Q_0}{Q}}\\
 K=1+\frac{1-\frac{Q_0}{Q}}{2\cdot Q_0^2}\\
@@ -237,6 +300,19 @@ Luego se prosiguió por la utilización de un preset en la segunda etapa, sobre 
 
 Finalmente dado a que inicialmente se realizó el filtro y cumplía las especificaciones se decidió no utilizar un preset, sin embargo se tuvo la precaución de diseñar una etapa de compensación de ganancia para el caso en el que la variación de las condiciones ambientales modifique el filtro y esta sea necesaria, esta etapa consiste en un no inversor con ganancia variable.
 
+Luego se realizó un histograma para la frecuencia de  aparición de la frecuencia de los polos en un análisis de montecarlo, donde el eje Y es el porcentaje de la probabilidad de aparición y el X es la frecuencia.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej3/histW01.png}
+	\label{fig:hist1}
+	\caption{Histograma primer polo.}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes-Ej3/histW02.png}
+	\label{fig:hist2}
+	\caption{Histograma segundo polo.}
+\end{figure}
 \subsubsection{Filtro definitivo.}
 Se realizó el filtro obteniendo la siguiente respuesta en frecuencia 
 \begin{figure}[H]
@@ -273,11 +349,11 @@ El rango dinámico se define como la razón de máximo y mínimo valor que puede
 \begin{align}
 R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
 \end{align}
-Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual fue de $V_{in_{min}} \approx xxmV$. Luego para definir $V_{in_{max}}$ se tuvo en cuenta la máxima tensión previo a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional, dos de estos problemas son arreglados por la elección del amplificador operacional , siendo el cross-over y el slewrate, dado a que se utilizó un TL081 el cual tiene un slew-rate elevado, y no tiene el problema del cross-over debido a su etapa de salida. Queda el problema de la saturación,es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc-1.5 =13.5$, para encontrar el valor de tensión máximo de entrada se tomó, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas finalmente queda definido por la siguiente expresión:
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual fue de $V_{in_{min}} \approx 10mV$. Luego para definir $V_{in_{max}}$ se tuvo en cuenta la máxima tensión previo a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional, dos de estos problemas son arreglados por la elección del amplificador operacional , siendo el cross-over y el slewrate, dado a que se utilizó un TL081 el cual tiene un slew-rate elevado, y no tiene el problema del cross-over debido a su etapa de salida. Queda el problema de la saturación,es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc-1.5 =13.5$, para encontrar el valor de tensión máximo de entrada se tomó, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas finalmente queda definido por la siguiente expresión:
 \begin{align}
-V_{in_{max}}=\frac{V_{sat}}{  \max(G_{E1} \cdot G_{E2} )} = xxV
+V_{in_{max}}=\frac{V_{sat}}{  \max(G_{E1} \cdot G_{E2} )} = 13V
 \end{align}
-Finalmente $R_d = xxdB$.
+Finalmente $R_d = 62.2dB$.
 \subsection{Estabilidad.}
 Se intentó en esta sección lograr que la celda oscile, introduciéndole una cuadrada la cual es sabido esta compuesta por un gran numero de frecuencias, así también variando no solo la amplitud de la misma sino también su frecuencia y duty-cycle, sin poder hacer oscilar a la celda. La siguiente imagen es la respuesta de la celda al escalón.
 \begin{figure}[H]
