@@ -84,8 +84,8 @@ Siendo
 Observando (\ref{equ:pbajo}), (\ref{equ:pband}) y (\ref{equ:palto}), se denota que, tomando cada una de dichas salidas, esta celda puede ser utilizada como un pasa bajos, de banda pasante y pasa altos respectivamente. Es por ello que a partir de ahora se considera $V_{PA} = V_{o1}$, $V_{BP} = V_{o2}$ y $V_{PB} = V_{o3}$. Tanto la frecuencia de corte, como el factor Q de cada etapa, es el mismo, ya que comparten denominador, siendo estos
 \begin{equation}
 \begin{split}
-	\omega_o = \sqrt{\frac{R_6}{R_1 R_2 R_5 C_1 C_2}} \\
-	Q = \frac{R_3 + R_4}{R_5 + R_6} \frac{R_5}{R_3} \sqrt{\frac{R_1 R_6 C_1}{R_2 R_5 C_2}} 
+	\omega_o = & \sqrt{\frac{R_6}{R_1 R_2 R_5 C_1 C_2}} \\
+	Q = & \frac{R_3 + R_4}{R_5 + R_6} \frac{R_5}{R_3} \sqrt{\frac{R_1 R_6 C_1}{R_2 R_5 C_2}} 
 \end{split}
 \end{equation}
 
@@ -181,7 +181,7 @@ La celda \r{A}ckerberg-Mossberg resulta de una variación de la TT. Del circuito
 En consecuencia, este sistema posee las mismas características que el anterior, poseyendo también las mismas transferencias y sensibilidades. Cabe destacar que esta configuración posee mejor compensación de fase a altas frecuencias.
 
 \subsubsection{Fleischer-Tow (FT)}
-En ocasiones es deseable poseer una señal de entrada que alimente varios nodos, obteniendo una única salida. Así como se denotó la existencia de sistemas SIMO, el caso previamente mencionado cae dentro de la definición lo que se conoce como sistemas MISO, suyas siglas en ingles significan ``multi-in single-out''. A continuación se presenta la celda Fleischer-Tow, la cual se caracteriza por poder presentar una única transferencia que, dependiendo de los componentes seleccionados, puede ser un pasa bajaso, pasa altos, pasa todo, de banda pasante y rechaza banda\footnote{R. Raut and M. N. S. Swamy, Modern Analog Filter Analysis and Design, 1st. ed. Weinheim: John Wiley and Sons, 2010.}.
+En ocasiones es deseable poseer una señal de entrada que alimente varios nodos, obteniendo una única salida. Así como se denotó la existencia de sistemas SIMO, el caso previamente mencionado cae dentro de la definición lo que se conoce como sistemas MISO, cuyas siglas en ingles significan ``multi-in single-out''. A continuación se presenta la celda Fleischer-Tow, la cual se caracteriza por poder presentar una única transferencia que, dependiendo de los componentes seleccionados, puede ser un pasa bajaso, pasa altos, pasa todo, de banda pasante y rechaza banda\footnote{R. Raut and M. N. S. Swamy, Modern Analog Filter Analysis and Design, 1st. ed. Weinheim: John Wiley and Sons, 2010.}.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/FT.pdf}
@@ -189,24 +189,7 @@ En ocasiones es deseable poseer una señal de entrada que alimente varios nodos,
 	\label{fig:FT}
 \end{figure}
 
-%\begin{table}[H]
-%\centering
-%\begin{tabular}{ccc}
-%\hline
-%\textbf{Tipo de filtro} & \textbf{Componentes} & \textbf{Observaciones} \\
-%\hline
-%Pasa Bajos & $R_4=R_6=\infty$, $R_5=\frac{R}{|K_{PB}|}$ & $K_{PB} = H(0) < 0$ \\
-%Banda Pasante & $R_5=R_6=\infty$, $R_4=\frac{R Q}{K_{BP}}$ & $K_{BP} = H(\omega_o) > 0$ \\
-%Pasa Altos & $R_5=\infty$, $R_4 = \frac{R Q}{|K_{PA}|}$, $R_6=\frac{R'}{|K_{PA}|}$ & $K_{PA} = H(\infty) < 0$ \\
-%Rechaza Banda & $R_5=\frac{\omega_{o}^{2} R}{\omega_{\infty}^{2} |K_{RB}|}$, $R_4 = \frac{R Q}{|K_{RB}|}$, $R_6=\frac{R'}{|K_{RB}|}$ & $K_{RB} = H(\infty) < 0$ \\ %, $\omega_{\infty}$ frecuencia de notch \\
-%Pasa Todo & $R_5=\frac{R}{|K_{PT}|}$, $R_4 = \frac{R Q}{2 |K_{PT}|}$, $R_6=\frac{R'}{|K_{PT}|}$ & $K_{PT} = H(\omega) < 0$ \\
-%\hline
-%\end{tabular}
-%\caption{Tipos de filtro y componentes para una celda FT.}
-%\label{tabla:tiposdefiltroft}
-%\end{table}
-
-Se decide obtener la función transferencia de esta celda, en un principio, considerando los operacionales ideales, por cuestiones que explicadas más adelante. Para calcular la función mencionada de esta celda, se observa primero la siguiente configuración:
+Se analiza el circuito presentado para poder obtener la transferencia de este. Para calcular la función mencionada de esta celda, se observa primero la siguiente configuración:
 \begin{figure}[H]
 \centering
 \begin{circuitikz}
@@ -223,7 +206,7 @@ Se decide obtener la función transferencia de esta celda, en un principio, cons
 \label{fig:generic}
 \end{figure}
 
-Observando la Figura (\ref{fig:generic}), aplicando el teorema de superposición, se obtiene que
+Observando la Figura (\ref{fig:generic}), aplicando el teorema de superposición, se presenta una configuración inversora, por lo que se obtiene
 \begin{equation}
 	V_c = -\frac{V_a}{\frac{Z_1}{Z_3} + \frac{Z_1}{Z_3 A_o} + \frac{1}{A_o}} - \frac{V_b}{\frac{Z_2}{Z_3} + \frac{Z_2}{Z_3 A_o} + \frac{1}{A_o}}
 	\label{equ:generic}
@@ -261,7 +244,7 @@ Si se consideran ideales los operacionales, es decir, se toma $A_o \rightarrow \
 \label{equ:transf-ft-i}
 \end{equation}
 
-De esta última ecuación se puede obtener los siguientes valores de interés.
+Es de interés obtener de esta los factores $\omega_o$ y $Q$ de los polos, siendo estos los presentados a continuación.
 \begin{equation}
 \begin{split}
 	\omega_o = \sqrt{\frac{R_8}{R_2 R_3 R_7 C_1 C_2}} \\
@@ -296,17 +279,17 @@ Plantilla & Chebycheff Inverso \\
 \label{tabla:caracteristicas1}
 \end{table}
 
-Como se busca confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. De forma similar, si bien la celda KHN posee transferencia pasa altos, se requiere un amplificador operacional extra que permita restar la pasa bajos y pasa altos, por lo cual también queda descartada. Por último para la celda FT basta con tomar los componentes adecuados, consiguiendo así la transferencia deseada. Es por ello que la celda considerada más optima para este caso es la FT. Esta es la razón por la cuál en (\ref{equ:generic}) se optó por considerar los operacionales reales.
+Como se desea confeccionar un filtro rechaza banda, se descartan los filtros TT y AM, ya que estos no poseen transferencias que sean pasa altos, por lo tanto no se puede confeccionar directamente un filtro del tipo notch. De forma similar, si bien la celda KHN posee transferencia pasa altos, se requiere un amplificador operacional extra que permita restar la salida pasa bajos y pasa altos, por lo cual también queda descartada. Por último para la celda FT basta con tomar los componentes adecuados, consiguiendo así la transferencia deseada. Es por ello que la celda considerada más optima para este caso es la FT. Esta es la razón por la cuál en (\ref{equ:generic}) se optó por considerar los operacionales reales.
 
 Con lo establecido en la Tabla (\ref{tabla:caracteristicas1}), y sabiendo que se debe cumplir
-\begin{equation}
+\begin{equation*}
 \begin{split}
 	f_{\infty}^{2} = f_{p}^{-} f_{p}^{+} = f_{a}^{-} & f_{a}^{+} \\
 	\Delta f_p = f_{p}^{+} - f_{p}^{-} \\
 	\Delta f_a = f_{a}^{+} - f_{a}^{-} 
 \end{split}
-\end{equation}
-se calculan las frecuencias de cada banda:
+\end{equation*}
+se calculan las frecuencias tanto de la banda pasante como atenuante:
 \begin{table}[H]
 \centering
 \begin{tabular}{cc}
@@ -331,7 +314,7 @@ El rango dinámico se define como la razón entre el máximo y el mínimo valor 
 	R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
 \end{equation}
 
-Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se puede distinguir respecto al piso de ruido, la cual es determinada como $V_{in_{min}} \approx 10 \ mV$. Luego para el caso de $V_{in_{max}}$ se consideró la máxima tensión previa a la aparición de distorsiones o alinealidades del amplificador operacional, siendo el cross-over, slew-rate y saturación del mismo algunos de estos efectos. Tanto el cross-over como el slew-rate son aspectos de poco interés, dado que, como para este filtro se seleccionó el amplificador \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, ya que posee un elevado slew-rate y, dada su etapa de salida, el efecto de cross-over no genera problemas. Por otro lado, para el caso de la saturación, se vale de que la máxima tensión de salida del operacional es $V_{sat} = V_{CC} - 1.5 \ V$. Ya que $V_{CC} = 15 \ V$, $V_{sat} = 13.5 \ V$. Luego, para encontrar el valor de la tensión máxima de entrada, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas, esta queda definida por la expresión:
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se puede distinguir respecto al piso de ruido, la cual es determinada como $V_{in_{min}} \approx 10 \ mV$. Luego, para el caso de $V_{in_{max}}$, se consideró la máxima tensión previa a la aparición de distorsiones o alinealidades del amplificador operacional, siendo el cross-over, slew-rate y saturación del mismo algunos de estos efectos. Tanto el cross-over como el slew-rate son aspectos de poco interés, dado que, como para este filtro se seleccionó el amplificador \href{http://www.ti.com/lit/ds/symlink/lm833-n.pdf}{LM833}, ya que posee un elevado slew-rate y, dada su etapa de salida, el efecto de cross-over no genera problemas. Por otro lado, para el caso de la saturación, se vale de que la máxima tensión de salida del operacional es $V_{sat} = V_{CC} - 1.5 \ V$. Ya que $V_{CC} = 15 \ V$, $V_{sat} = 13.5 \ V$. Luego, para encontrar el valor de la tensión máxima de entrada, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas, esta queda definida por la expresión:
 \begin{equation}
 	V_{in_{max}}=\frac{V_{sat}}{  \max(H_{1} \cdot H_{2} )} = \frac{13.5 \ V}{9} = 1.5 \ V
 \end{equation}
@@ -357,11 +340,13 @@ R_8}+{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{
 C_2}\,{R_2} \right]  \left[ s{R_3}\,{R_5}\, \left( {C_1
 }\,{R_1}\,{R_4}\,{R_7}\,s-{R_1}\,{R_6}+{R_4}\,{R_7} \right) {C_2}+{R_1}\,{R_4}\,{R_6} \right] }}
 \end{equation}
+
 \begin{equation}
 S_{R_2}^{H} =	{\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1
  \right) {R_7}\,s{C_2}\,{R_2}} \left[ {\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{
 C_2}\,{R_2}}}+1 \right] ^{-1}}
 \end{equation}
+
 \begin{equation}
 S_{R_3}^{H} = {\frac { \left\lbrace  \left[ s{C_1}\,{R_4}\, \left( -{R_2}\,{R_6}+{R_5}\,{R_8} \right) {R_7}-{R_8}\,{R_5}\,{R_6}
  \right] {R_1}+{R_7}\,{R_4}\, \left( -{R_2}\,{R_6}+{
@@ -373,6 +358,7 @@ R_5}\,{R_8} \right)  \right\rbrace s{C_2}\,{R_1}\,{R_3}}{
 -{R_4} \right)  \right] {R_1}+{R_3}\,{R_7}\,s{C_2}\,{
 R_5}\,{R_4} \right\rbrace }}
 \end{equation}
+
 \begin{equation}
 S_{R_4}^{H} = -{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {C_1}\,{R_1}\,s+1
  \right) {R_7}} \left[ -{\frac {{R_1}\,{R_8}}{{R_3}\,
@@ -380,6 +366,7 @@ S_{R_4}^{H} = -{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {C_1}\,{R_1}\,s+1
 }+{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {C_1}\,{R_1}\,s+
 1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}} \right] ^{-1}}
 \end{equation}
+
 \begin{equation}
 s_{R_5}^{H} ={\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1
  \right) {R_7}\,s{C_2}\,{R_5}} \left[ -{\frac {{R_1}\,{
@@ -388,11 +375,13 @@ R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s
 C_1}\,{R_1}\,s+1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}}
  \right] ^{-1}}
 \end{equation}
+
 \begin{equation}
 S_{R_6}^{H} ={\frac {{R_8}}{{R_6}} \left[ -{\frac {{R_1}\,{R_8}}{{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{C_2}\,{
 R_5}}}+{\frac {{R_1}\,{R_8}}{{R_4}\, \left( {C_1}\,{
 R_1}\,s+1 \right) {R_7}}}-{\frac {{R_8}}{{R_6}}} \right]^{-1}}
 \end{equation}
+
 \begin{equation}
 S_{R_7}^{H} = {\frac { s \left( {C_1}\,{R_1}\,s+1 \right) \left[ s{C_2}\,{
 R_2}\,{R_3}\,{R_5}\,{R_6}+{R_4}\, \left( -{R_2}\,{
@@ -402,11 +391,13 @@ R_6}+{R_5}\,{R_8} \right)  \right] {C_2}\,{R_1}\,{R_3}\,{R_7}}{ \left( {C_1}\,{C
  \left( -{R_1}\,{R_6}+{R_4}\,{R_7} \right) s+{R_1}\,{
 R_4}\,{R_6} \right] }}
 \end{equation}
+
 \begin{equation}
 S_{R_8}^{H} = {\frac {{R_3}\, \left( {C_1}\,{R_1}\,s+1 \right) {R_7}\,s{
 C_2}\,{R_2}}{{R_1}\,{R_8}+{R_3}\, \left( {C_1}\,{
 R_1}\,s+1 \right) {R_7}\,s{C_2}\,{R_2}}}
 \end{equation}
+
 \begin{equation}
 S_{C_1}^{H} = {\frac {{C_1}\,{s}^{2} \left[ s{C_2}\,{R_2}\,{R_3}\,{R_5}\,{R_6}+{R_4}\, \left( -{R_2}\,{R_6}+{R_5}\,{R_8}
  \right)  \right] {C_2}\,{{R_1}}^{2}{R_3}\,{R_7}}{ \left[ 
@@ -416,6 +407,7 @@ R_7}\,s{C_2}\,{R_2} \right]  \left[ s{R_3}\,{R_5}\,
 R_4}\,{R_7} \right) {C_2}+{R_1}\,{R_4}\,{R_6}
  \right] }}
 \end{equation}
+
 \begin{equation}
 S_{C_2}^{H} = {\frac { \left\lbrace  \left[ s{C_1}\,{R_4}\, \left( -{R_2}\,{R_6}+{R_5}\,{R_8} \right) {R_7}-{R_8}\,{R_5}\,{R_6}
  \right] {R_1}+{R_7}\,{R_4}\, \left( -{R_2}\,{R_6}+{
@@ -443,7 +435,7 @@ $Q$ & 1 & -0.5 & -0.5 & 0 & 0 & 0 & -0.5 & 0.5 & 0.5 & -0.5	\\
 \end{table}
 
 \subsubsection{Análisis de Montecarlo}
-A continuación, se presenta el diagrama de Montecarlo en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), donde en se consideró las resistencias con una tolerancia del $1\%$ y los capacitores con una tolerancia del $5\%$, debido a que por consigna no se aceptan tolerancias mayores y dado a que los capacitores empleados fueron medidos, garantizando así el uso de componentes que cumplan con lo dicho.
+A continuación, se presenta el diagrama de Montecarlo en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), donde en se consideró las resistencias con una tolerancia del $1\%$ y los capacitores con una tolerancia del $5\%$. Si bien los capacitores disponibles en el pañol son de tolerancia del $10\%$, dichos componentes fueron medidos previamente para poder garantizar que cumplan la tolerancia del $5\%$.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.8\textwidth,trim={0 3.5cm 1.5cm 0},clip]{ImagenesEjercicio4/MC-Mod-4.png}
@@ -475,7 +467,7 @@ $2^{da}$ Etapa & 1.2 k$\Omega$ & 55.2 k$\Omega$ & 150 $\Omega$ & 1.2 k$\Omega$ &
 \label{tab:componentes}
 \end{table} 
 
-Se decidió colocar en lugar de los capacitores pines hembra, los cuales permiten reemplazar con facilidad dichos componentes. Esto se debe a que los que se disponen son de una tolerancia del $10 \%$, y además a que, como se presentó anteriormente, estos dispositivos afectan tanto el $Q$ como el $\omega_o$ del circuito. Pequeñas variaciones en ellos puede modificar la frecuencia de notch de cada etapa, haciendo que estos se acerquen o se alejen. De esta forma, se vale del analizador de impedancias para determinar la capacitancia de estos y así garantizar el uso del capacitor adecuado. Por otro lado, como la impedancia de entrada resulta del paralelo entre las resistencias $R_4$, $R_5$ y $R_6$, lo cual implica $Z_{in} = 15.67 \ k\Omega$, se coloca un buffer a la entrada de cada instancia, ya que de esta forma, la impedancia de entrada del circuito es la del buffer, garantizando que ambas instancias se acoplen adecuadamente. 
+Se decidió colocar en lugar de los capacitores pines hembra, los cuales permiten reemplazar con facilidad dichos componentes. Esto se debe a que lo que se comentó previamente sobre la disponibilidad de estos. Además, como se presentó anteriormente, estos dispositivos afectan tanto el $Q$ como el $\omega_o$ del circuito. Pequeñas variaciones en ellos puede modificar la frecuencia de notch de cada etapa, haciendo que estos se acerquen o se alejen. Por otro lado, como la impedancia de entrada del sistema resulta del paralelo entre las resistencias $R_4$, $R_5$ y $R_6$, lo cual implica $Z_{in} = 15.67 \ k\Omega$, se coloca un buffer a la entrada de cada instancia, ya que de esta forma, la impedancia de entrada del circuito es la del buffer, garantizando que ambas instancias se acoplen adecuadamente. 
 Al momento de realizar las placas, se optó por colocar jumpers, de forma tal que se pueda hacer las mediciones deseadas con y sin dichos buffers, para poder realizar comparaciones.   
 
 Se observa a continuación una comparación entre los diagramas de Bode teóricos, simulados y medidos.

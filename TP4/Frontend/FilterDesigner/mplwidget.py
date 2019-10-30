@@ -13,9 +13,11 @@ import numpy as np
 
 from scipy import signal
 
+from analog.filters import Chebyshev1
+
 class MplWidget(QWidget):
 
-    def __init__(self, id, parent=None):
+    def __init__(self, identificador=0, parent=None):
         QWidget.__init__(self, parent)
 
         self.canvas = FigureCanvas(Figure())
@@ -29,7 +31,7 @@ class MplWidget(QWidget):
         self.canvas.axes = self.canvas.figure.add_subplot(111)
         self.setLayout(layout)
 
-        self.id = id
+        self.id = identificador
 
     def plot(self, lista_filtros):
 
@@ -44,6 +46,9 @@ class MplWidget(QWidget):
                         for s in stencils:
                             self.canvas.axes.fill(s[0], s[1], '1', lw=0)  # Set line-
                             self.canvas.draw()
+                    elif key == 'Attenuation':
+                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), -filtro.get_mag())
+                        self.canvas.draw()
                     elif key == 'Magnitude':
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_mag())
                         self.canvas.draw()
@@ -51,22 +56,31 @@ class MplWidget(QWidget):
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_pha())
                         self.canvas.draw()
                     elif key == 'Group Delay':
-                        self.canvas.axes.semilogx(np.divide(filtro.get_w()[1:], 2 * np.pi), -np.diff(filtro.get_mag()) / np.diff(filtro.get_w()))
+                        w, gdelay = filtro.get_gdelay()
+                        self.canvas.axes.semilogx(np.divide(w, gdelay))
                         self.canvas.draw()
                     elif key == 'Maximun Q':
                         pass
                     elif key == 'Impulse Response':
-                        T, yout = signal.impulse(filtro.sys)
+                        T, yout = filtro.gte_impulse()
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
                         pass
                     elif key == 'Step Response':
-                        T, yout = signal.step(filtro.sys)
+                        T, yout = filtro.get_step(filtro.sys)
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
                     elif key == 'Poles and Zeroes':
-                        pass
+                        for z in filtro.zeros:
+                            self.canvas.axes.scatter(z.real, z.imag, c='red', marker='o')
+                            self.canvas.draw()
+                        for p in filtro.poles:
+                            self.canvas.axes.scatter(p.real, p.imag, c='blue', marker='x')
+                            self.canvas.draw()
 
     def clear_axes(self):
         self.canvas.axes.clear()
         self.canvas.draw()
+
+    def check_compatibility(self):
+        pass
