@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1280</width>
-    <height>874</height>
+    <width>1329</width>
+    <height>883</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -32,7 +32,7 @@
       </property>
       <property name="maximumSize">
        <size>
-        <width>280</width>
+        <width>310</width>
         <height>16777215</height>
        </size>
       </property>
@@ -83,7 +83,7 @@ QGroupBox::title {
       <property name="maximumSize">
        <size>
         <width>16777215</width>
-        <height>450</height>
+        <height>400</height>
        </size>
       </property>
      </widget>
@@ -98,7 +98,7 @@ QGroupBox::title {
       </property>
       <property name="maximumSize">
        <size>
-        <width>280</width>
+        <width>310</width>
         <height>16777215</height>
        </size>
       </property>
@@ -171,7 +171,7 @@ QGroupBox::title {
       </property>
       <property name="maximumSize">
        <size>
-        <width>280</width>
+        <width>310</width>
         <height>300</height>
        </size>
       </property>
@@ -191,39 +191,15 @@ QGroupBox::title {
        <string>Filter Configuration:</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
-       <item row="7" column="2">
-        <widget class="QLabel" name="label_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_ganancia">
          <property name="text">
-          <string>%</string>
+          <string>Gain:</string>
          </property>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QLabel" name="label_frecuencia_bp">
-         <property name="text">
-          <string>Passband Frequency (Fp):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="0">
-        <widget class="QLabel" name="label_atenuacion_br">
-         <property name="text">
-          <string>Stopband Attenuation(Aa):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="2">
-        <widget class="QLabel" name="label_dB_ganancia">
-         <property name="text">
-          <string>dB</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="1">
-        <widget class="QLineEdit" name="input_ganancia"/>
-       </item>
-       <item row="3" column="1">
-        <widget class="QLineEdit" name="input_atenuacion_bp"/>
+       <item row="7" column="1">
+        <widget class="QLineEdit" name="input_desnormalizacion"/>
        </item>
        <item row="2" column="2">
         <widget class="QLabel" name="label_Hz_br">
@@ -232,61 +208,19 @@ QGroupBox::title {
          </property>
         </widget>
        </item>
-       <item row="7" column="1">
-        <widget class="QLineEdit" name="input_desnormalizacion"/>
-       </item>
-       <item row="10" column="0">
-        <widget class="QLabel" name="label_Q_maximo">
-         <property name="text">
-          <string>Maximun Q:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="0" column="0">
-        <widget class="QLabel" name="label_ganancia">
-         <property name="text">
-          <string>Gain:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="2" column="0">
-        <widget class="QLabel" name="label_frecuencia_br">
-         <property name="text">
-          <string>Stopband Frequency(Fa):</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="0">
-        <widget class="QLabel" name="label_orden_filtro">
-         <property name="text">
-          <string>Filter Order:</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QLabel" name="label_dB_atenuacion_bp">
-         <property name="text">
-          <string>dB</string>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="2">
-        <widget class="QLabel" name="label_dB_atenuacion_br">
-         <property name="text">
-          <string>dB</string>
-         </property>
-        </widget>
+       <item row="9" column="1">
+        <widget class="QLineEdit" name="input_orden_filtro"/>
        </item>
        <item row="10" column="1">
         <widget class="QLineEdit" name="input_maximo_Q"/>
        </item>
-       <item row="1" column="1">
-        <widget class="QLineEdit" name="input_frecuencia_bp"/>
+       <item row="3" column="1">
+        <widget class="QLineEdit" name="input_atenuacion_bp"/>
        </item>
-       <item row="7" column="0">
-        <widget class="QLabel" name="label_desnormalizacion">
+       <item row="1" column="2">
+        <widget class="QLabel" name="label_Hz_bp">
          <property name="text">
-          <string>Denormalization</string>
+          <string>Hz</string>
          </property>
         </widget>
        </item>
@@ -297,19 +231,99 @@ QGroupBox::title {
          </property>
         </widget>
        </item>
-       <item row="9" column="1">
-        <widget class="QLineEdit" name="input_orden_filtro"/>
+       <item row="10" column="0">
+        <widget class="QLabel" name="label_Q_maximo">
+         <property name="text">
+          <string>Maximun Q:</string>
+         </property>
+        </widget>
        </item>
        <item row="2" column="1">
         <widget class="QLineEdit" name="input_frecuencia_br"/>
        </item>
+       <item row="0" column="2">
+        <widget class="QLabel" name="label_dB_ganancia">
+         <property name="text">
+          <string>dB</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="2">
+        <widget class="QLabel" name="label_2">
+         <property name="text">
+          <string>%</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_frecuencia_br">
+         <property name="text">
+          <string>Stopband Frequency(Fa):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_atenuacion_br">
+         <property name="text">
+          <string>Stopband Attenuation(Aa):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="0">
+        <widget class="QLabel" name="label_orden_filtro">
+         <property name="text">
+          <string>Filter Order:</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_desnormalizacion">
+         <property name="text">
+          <string>Denormalization</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_frecuencia_bp">
+         <property name="text">
+          <string>Passband Frequency (Fp):</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QLineEdit" name="input_ganancia"/>
+       </item>
+       <item row="4" column="2">
+        <widget class="QLabel" name="label_dB_atenuacion_br">
+         <property name="text">
+          <string>dB</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="2">
+        <widget class="QLabel" name="label_dB_atenuacion_bp">
+         <property name="text">
+          <string>dB</string>
+         </property>
+        </widget>
+       </item>
        <item row="4" column="1">
         <widget class="QLineEdit" name="input_atenuacion_br"/>
        </item>
-       <item row="1" column="2">
-        <widget class="QLabel" name="label_Hz_bp">
+       <item row="1" column="1">
+        <widget class="QLineEdit" name="input_frecuencia_bp"/>
+       </item>
+       <item row="9" column="2">
+        <widget class="QCheckBox" name="checkbox_orden">
          <property name="text">
-          <string>Hz</string>
+          <string>Fixed</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="2">
+        <widget class="QCheckBox" name="checkbox_Q">
+         <property name="text">
+          <string>Fixed</string>
          </property>
         </widget>
        </item>
@@ -326,7 +340,7 @@ QGroupBox::title {
       </property>
       <property name="maximumSize">
        <size>
-        <width>280</width>
+        <width>310</width>
         <height>16777215</height>
        </size>
       </property>
@@ -580,6 +594,13 @@ QGroupBox::title {
          </property>
         </widget>
        </item>
+       <item row="6" column="0">
+        <widget class="QCheckBox" name="checkbox_plantilla">
+         <property name="text">
+          <string>Template</string>
+         </property>
+        </widget>
+       </item>
       </layout>
      </widget>
     </item>
@@ -590,7 +611,7 @@ QGroupBox::title {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1280</width>
+     <width>1329</width>
      <height>22</height>
     </rect>
    </property>
