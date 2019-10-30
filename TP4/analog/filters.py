@@ -72,23 +72,6 @@ class Butterworth(AnalogFilter):
         return signal.butter(
             self.N, self.wcryt, self.ftype, analog=True, output='zpk')
 
-    def compute_filter_stages(self):
-        """
-        Split the obtained filter into second and first order units
-        
-        Returns
-        -------
-            den: array-like
-                Array of shape (n-sections,3) containing the denominator coefficients of the units
-            num: array-like
-                Array of shape (n-sections,3) containing the numerator coefficients of the units
-        """
-        sos = signal.butter(self.N, self.wcryt, self.ftype,
-                            analog=True, output='sos')
-        num = sos[:, :3]
-        den = sos[:, 3:]
-        #Due to the sos nature. numerator will b
-        return den, num
 
     def get_critical_w(self, k):
         """
@@ -134,7 +117,6 @@ class Butterworth(AnalogFilter):
 
 class Chebyshev1(AnalogFilter):
     def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
-        print(N)
         """
         Parameters
         ----------
@@ -373,17 +355,28 @@ class Chebyshev2(AnalogFilter):
             pass
 
 # plt.grid(axis='both', which='both')
-for i in np.linspace(0, 1, 10):
+# for i in np.linspace(0, 1, 1):
     # b = Chebyshev1("highpass", 40E3, 10E3, 3, 40,rp=3, k=i)
-    b = Butterworth("lowpass", 20E3, 40E3, 3, 40, k=i)
-    b.plot_mag(name=f'{i}')
-
+    # b = Butterworth("lowpass", 20E3, 50E3, 3, 40, k=i)
+    # b.plot_mag(name=f'{i}')
 # b = Chebyshev1("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
 # b1= Chebyshev1("highpass", 40E3, 20E3, 10, 40,rp=3, k=0)
 # b2 = Chebyshev1("highpass", 40E3, 20E3, 10, 40,N=5,rp=3, k=0)
 # b1.plot_mag()
 # b2.plot_mag()
-plt.show()
+
+b = Butterworth("lowpass", 20E3, 50E3, 3, 40, k=0)
+plt.title(f"Magnintud Butterworth orden {b.N}")
+# mag = 0
+# for s in b.stages:
+#     mag += s.mag
+# plt.semilogx(b.w,-mag+b.kZP,label="sumada")
+b.plot_mag(show=True)
+
+plt.title("Polos y ceros")
+b.plot_zp(show=True)
+
+
 # try:
 #     b = Butterworth("highpass", 10E3,20E3, 3, 40)
 # except ValueError as e:
