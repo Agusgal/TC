@@ -331,16 +331,16 @@ class Chebyshev2(AnalogFilter):
 # b1.plot_mag()
 # b2.plot_mag()
 
-#b = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
-#plt.title(f"Magnintud Chebyshev1 orden {b.N}")
+b = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
+plt.title(f"Magnintud Chebyshev1 orden {b.N}")
 # mag = 0
 # for s in b.stages:
 #     mag += s.mag
 # plt.semilogx(b.w,-mag+b.kZP,label="sumada")
-#b.plot_mag(show=True)
+b.plot_mag(show=True)
 
-#plt.title("Polos y ceros")
-#b.plot_zp(show=True)
+plt.title("Polos y ceros")
+b.plot_zp(show=True)
 
 # try:
 #     b = Butterworth("highpass", 10E3,20E3, 3, 40)

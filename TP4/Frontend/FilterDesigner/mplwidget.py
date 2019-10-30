@@ -13,6 +13,7 @@ import numpy as np
 
 from scipy import signal
 
+from analog.filters import Chebyshev1
 
 class MplWidget(QWidget):
 
@@ -45,6 +46,9 @@ class MplWidget(QWidget):
                         for s in stencils:
                             self.canvas.axes.fill(s[0], s[1], '1', lw=0)  # Set line-
                             self.canvas.draw()
+                    elif key == 'Attenuation':
+                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), -filtro.get_mag())
+                        self.canvas.draw()
                     elif key == 'Magnitude':
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_mag())
                         self.canvas.draw()
@@ -77,3 +81,6 @@ class MplWidget(QWidget):
     def clear_axes(self):
         self.canvas.axes.clear()
         self.canvas.draw()
+
+    def check_compatibility(self):
+        pass
