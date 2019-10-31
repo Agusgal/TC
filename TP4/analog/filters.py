@@ -45,8 +45,12 @@ class Butterworth(AnalogFilter):
         """
         Must return optimal filter order
         """
-        self.N, self.Wn = signal.buttord(
-            self.wp, self.ws, self.Ap, self.As, analog=True)
+        if self.N is None:
+            self.N, self.Wn = signal.buttord(
+                self.wp, self.ws, self.Ap, self.As, analog=True)
+        else:
+            _, self.Wn = signal.buttord(
+                self.wp, self.ws, self.Ap, self.As, analog=True)
 
     def compute_ba(self):
         """
@@ -371,13 +375,14 @@ class Chebyshev2(AnalogFilter):
 
 # filter1 = Butterworth("lowpass", 10E3*2*np.pi,40E3*2*np.pi, 3, 40)
 # filter1 = Butterworth("lowpass", 10E3,40E3, 3, 40)
+# filter1 = Butterworth("highpass", 40E3,10E3, 3, 40)
 
 # filter1 = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
 # filter1 = Butterworth("highpass",20E3, 10E3, 3, 40)
 
-# filter1 = Chebyshev2("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
-# filter1 = Butterworth("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
-filter1 = Chebyshev1("bandstop",  [5E3,20E3],[10E3,15E3], 10, 40, rp=3, k=0)
+# filter1 = Chebyshev1("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
+filter1 = Butterworth("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
+# filter1 = Chebyshev1("bandstop",  [5E3,20E3],[10E3,15E3], 10, 40, rp=3, k=0)
 
 
 filter1.plot_zp(show=True)
@@ -418,3 +423,9 @@ plt.show()
 
 # filter2 =Butterworth("lowpass", 20E3, 50E3, 3, 40, gain = 5, k=0)
 # filter2.plot_mag(show=True)
+
+
+for n in range(1,10):
+    b1 = Butterworth('lowpass',5E3,30E3,3,40,N=n)
+    b1.plot_mag(name=f"{n}")
+plt.show()
