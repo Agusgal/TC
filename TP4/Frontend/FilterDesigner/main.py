@@ -1,6 +1,6 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import QMessageBox
-from Frontend.FilterDesigner.Lista_Filtros import  listaf
+from Frontend.FilterDesigner.Lista_Filtros import listaf
 from analog.filters import *
 import numpy as np
 
@@ -110,7 +110,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             self.ui.ventana_polos_zeros.clear_axes()
         except AttributeError:
-            self.show_pop_up('Debe seleccionar algún filtro de la lista!')
+            self.show_pop_up('You must select a filter from the list')
 
     def agregar_filtro_lista(self, filtro): ##Agrega filtro a lista que se usa para llevar cuenta de filtros a graficar
         listaf.agregar_filtro(filtro)
@@ -127,29 +127,31 @@ class MainWindow(QtWidgets.QMainWindow):
             listaf.seleccionar(ind)
 
             listaf.lista_filtros[ind].mark_graphed('Poles and Zeroes', where)
-            self.ui.ventana_polos_zeros.plot(listaf.lista_filtros)
+            self.ui.ventana_polos_zeros.zplot(listaf.lista_filtros[ind])
         except AttributeError:
-            self.show_pop_up('Debe Seleccionar algun filtro de la lista!')
+            self.show_pop_up('You Must select a Filter from the list')
 
     def update_grafico(self):
+        try:
+            txt = self.ui.label_filtro_graficar.text()
+            ind = int(txt[0]) - 1
+            name = self.ui.selector_grafico.currentText()
+            window = self.ui.selector_ventana.currentText()
+            where = 0
 
-        txt = self.ui.label_filtro_graficar.text()
-        ind = int(txt[0]) - 1
-        name = self.ui.selector_grafico.currentText()
-        window = self.ui.selector_ventana.currentText()
-        where = 0
+            if window == 'Window 1':
+                where = 1
+            else:
+                where = 2
 
-        if window == 'Window 1':
-            where = 1
-        else:
-            where = 2
+            self.checkboxes(ind, where)
+            listaf.lista_filtros[ind].mark_graphed(name, where)
 
-        self.checkboxes(ind, where)
-        listaf.lista_filtros[ind].mark_graphed(name, where)
+            self.ui.ventana_grafica1.plot(listaf.lista_filtros)
 
-        self.ui.ventana_grafica1.plot(listaf.lista_filtros)
-
-        self.ui.ventana_grafica2.plot(listaf.lista_filtros)
+            self.ui.ventana_grafica2.plot(listaf.lista_filtros)
+        except ValueError:
+            self.show_pop_up('You must select a filter first.')
 
     def clear_grafico(self, window):
 
@@ -180,7 +182,10 @@ class MainWindow(QtWidgets.QMainWindow):
             listaf.lista_filtros[i].mark_graphed('Template', where)
 
     def first_window(self):
-        self.switch_window.emit()
+        if listaf.seleccionado:
+            self.switch_window.emit()
+        else:
+            self.show_pop_up('To Acces the second window you must select a filter first.')
 
 
 class Window2(QtWidgets.QWidget):

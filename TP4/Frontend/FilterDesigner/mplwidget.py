@@ -15,6 +15,7 @@ from scipy import signal
 
 from analog.filters import Chebyshev1
 
+
 class MplWidget(QWidget):
 
     def __init__(self, identificador=0, parent=None):
@@ -62,12 +63,12 @@ class MplWidget(QWidget):
                     elif key == 'Maximun Q':
                         pass
                     elif key == 'Impulse Response':
-                        T, yout = filtro.gte_impulse()
+                        T, yout = filtro.get_impulse_response()
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
                         pass
                     elif key == 'Step Response':
-                        T, yout = filtro.get_step(filtro.sys)
+                        T, yout = filtro.get_step()
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
                     elif key == 'Poles and Zeroes':
@@ -81,6 +82,9 @@ class MplWidget(QWidget):
     def clear_axes(self):
         self.canvas.axes.clear()
         self.canvas.draw()
+
+    def plot_zplane(self):
+        pass
 
     def check_compatibility(self):
         pass
