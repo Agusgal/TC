@@ -1,14 +1,13 @@
 import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
-
+import numpy as np
 from core import AnalogFilter
-from core import Cell
 from cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=6, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
         """
         Parameters
         ----------
@@ -116,11 +115,10 @@ class Butterworth(AnalogFilter):
             return self.Wn
         elif self.ftype == 'bandstop':
             return self.Wn
-            pass
 
 
 class Chebyshev1(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
         """
         Parameters
         ----------
@@ -223,7 +221,7 @@ class Chebyshev1(AnalogFilter):
 
 
 class Chebyshev2(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
         """
         Chebyshev 2 analog filter
         
@@ -329,7 +327,7 @@ class Chebyshev2(AnalogFilter):
 
 
 class Cauer(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
         """
         Chebyshev 2 analog filter
         
@@ -362,7 +360,7 @@ class Cauer(AnalogFilter):
         N: int
         Order filter. If this N is None the order will be calculated (recommended)
     """
-        super().__init__(ftype,  wp, ws, Ap, As, rp=Ap, k=k, N=N)
+        super().__init__(ftype,  wp, ws, Ap, As,gain=gain, rp=Ap, k=k, N=N)
 
     def compute_order(self):
         """
@@ -483,12 +481,13 @@ class Cauer(AnalogFilter):
 # filter1 = Butterworth("lowpass", 10E3,40E3, 3, 40)
 # filter1 = Butterworth("highpass", 40E3,10E3, 3, 40)
 
-# filter1 = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
+filter1 = Chebyshev1("lowpass", 20E3, 30E3, 3, 40, k=0)
 # filter1 = Butterworth("highpass",20E3, 10E3, 3, 40)
 
-filter1 = Cauer("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
+# filter1 = Cauer("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
 # filter1 = Butterworth("bandpass", [10E3,15E3], [5E3,20E3], -10, 40, rp=3, k=0)
 # filter1 = Chebyshev1("bandstop",  [5E3,20E3],[10E3,15E3], 10, 40, rp=3, k=0)
+# filter1 = Chebyshev1("bandpass",[10E3*2*np.pi,15E3*2*np.pi],  [5E3*2*np.pi,20E3*2*np.pi], 10, 40, rp=3, k=0)
 
 
 # filter1.plot_zp(show=True)
@@ -500,11 +499,11 @@ plt.show()
 # fig, axs = plt.subplots(1, len(filter1.stages)+2, figsize=(9, 3), sharey=True)
 fig, axs = plt.subplots(2+len(filter1.stages),sharex=True)
 summag = np.zeros_like(filter1.stages[0].mag)
-ganancia = np.full_like(filter1.w,20*np.log10(filter1.kZP))
+ganancia = np.full_like(filter1.w,10*np.log10(filter1.kZP))
          
 for counter, stage in enumerate(filter1.stages):
     plt.grid(which="both", axis="both")
-    axs[counter].semilogx(stage.w,-stage.mag)
+    axs[counter].semilogx(stage.w,-stage.mag+ganancia)
     axs[counter].set_title(f"""
                             Etapa {counter}
                             Q:{np.round(stage.Q,2)}
@@ -518,7 +517,7 @@ for stage in filter1.stages:
     print(f'{np.where(np.max(-stage.mag)==(-stage.mag))}')
     summag += stage.mag
 
-axs[counter+1].semilogx(filter1.stages[0].w,-summag+ganancia) #+20*np.log10(filter1.kZP)
+axs[counter+1].semilogx(filter1.stages[0].w,-summag+2*ganancia) #+20*np.log10(filter1.kZP)
 
 #Plot del original
 axs[counter+2].semilogx(filter1.w,-filter1.mag)
@@ -536,8 +535,11 @@ plt.show()
 #     b1.plot_mag(name=f"{n}")
 # plt.show()
 
-filter2 = Cauer("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
-# filter2 = Cauer('lowpass',5E3,30E3,3,40)
+# filter2 = Cauer("bandpass", [10E3,15E3], [5E3,20E3], 10, 40,gain=15, rp=3, k=0)
+# filter2 = Cauer("bandstop",  [5E3,20E3],[10E3,15E3], 10, 40,gain=15, rp=3, k=0)
+
+# filter2 = Cauer('lowpass',5E3,30E3,3,40,gain=15)
 # filter2 = Cauer('highpass',23.3E3*2*np.pi,11.65E3*2*np.pi,1,40)
+filter2 = Cauer('highpass',30E3,5E3,3,40,gain=15)
 
 filter2.plot_mag(show=True)

@@ -20,18 +20,21 @@ class Cell:
     Parameters:
     num: array_like
     den: array_like
+    w: frequency range to evaluate the cell
 
     """
 
-    def __init__(self, num,den):
+    def __init__(self, num,den,w):
         print("Hola")
         self.den = den
         self.num = num
-
+        print(den,num)
+        print(type(den))
         self.sys = signal.TransferFunction(self.num, self.den)
-        self.w, self.mag, self.pha = signal.bode(self.sys)
-        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*100)
-        self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
+        # self.sys = signal.sos2tf(np.concatenate(num,den))
+        # self.w, self.mag, self.pha = signal.bode(self.sys)
+        # whd = np.linspace(self.w[0], self.w[-1], len(self.w)*1000)
+        self.w, self.mag, self.pha = signal.bode(self.sys, w=w)
         self.zeros, self.poles, self.kZP = signal.tf2zpk(self.num,self.den)
         self.Q = self.compute_q()
 
@@ -89,10 +92,9 @@ class Cell:
 
         for z in self.zeros:
             plt.scatter(z.real, z.imag, c=colorz, marker=zc)
-            patches.Ellipse(00,z.real,z.imag)
         for p in self.poles:
             plt.scatter(p.real, p.imag, c=colorp, marker=pc)
-            patches.Ellipse(00,p.real,p.imag)
+            # patches.Ellipse(00,p.real,p.imag)
 
         if show:
             plt.show()
@@ -159,7 +161,7 @@ class AnalogFilter(ABC):
     Analog Filter base class
     """
 
-    def __init__(self, ftype, wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
+    def __init__(self, ftype, wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
         self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
         # self.aprox_types = {'butterworth', 'bessel',
         #                     'chevy1', 'chevy2', 'cauer', 'legendre'}
@@ -190,6 +192,9 @@ class AnalogFilter(ABC):
         k: float
         By default give minimum.
         Selectivity factor. Ranges from 0 to 1.
+
+        gain: float
+            Filter gain
 
         N: int
         Order filter. If this N is None the order will be calculated (recommended)
@@ -254,7 +259,8 @@ class AnalogFilter(ABC):
         self.k = k
         self.N = N  # Filter order
         self.rp = rp
-
+        #TODO añadir checks
+        self.gain = gain
         # dict that stores if a certain graph is already on the screen nad where it is [is graphed, where]
         self.is_graphed = {'Template': [0, 0], 'Attenuation': [0, 0], 'Magnitude': [0, 0], 'Phase': [0, 0], 'Group Delay': [0, 0], 'Maximun Q': [0, 0], 'Impulse Response': [0, 0], 'Step Response': [0, 0], 'Poles and Zeroes': [0, 0]}
 
@@ -276,7 +282,7 @@ class AnalogFilter(ABC):
         #Step 4: Split high order filter into first and second order cells
         self.stages = self.compute_filter_stages()
 
-    def pair_singularities(self, zp):
+    def pair_singularities(self,zp):
         """
         Return an array containing singularities paired if they are complex conjugates
         
@@ -316,7 +322,11 @@ class AnalogFilter(ABC):
                     done.append(x)
                     done.append(y)
                     prev = None
+        for x in array:
+            if x not in done:
+                results.append([x])
         return results
+
 
     def compute_filter_stages(self):
         print(f"el orden del filtro es: {self.N}")
@@ -336,20 +346,27 @@ class AnalogFilter(ABC):
         print(f"los polos son{self.poles}")
         if  len(self.zeros) == 0:
             ordered_poles = self.pair_singularities(self.poles)
+            ordered_zeros = self.pair_singularities(self.zeros)
             print(f"Los polos ordenados son {ordered_poles}")
+            # print(f"Los polos ordenados son {ordered_poles}")
+
             for poles in ordered_poles:
                 print(poles)
                 n,d = signal.zpk2tf([], poles, self.kZP)
-                stages.append(Cell(n,d))
+                stages.append(Cell(n,d,self.w))
         else:
-            print("hola")
+            # print("hola")
             sos = signal.zpk2sos(self.zeros, self.poles, self.kZP, pairing="keep_odd")
-            num = sos[:, :3]
+            num = sos[:, :3][::-1]
             den = sos[:, 3:]
             for n, d in zip(num, den):
                 print(n, d)
-                stages.append(Cell(n,d))
-        #TODO fix!!
+                stages.append(Cell(n,d,self.w))
+            # ordered_poles = self.pair_singularities(self.poles)
+            # ordered_zeros = self.pair_singularities(self.zeros)
+            # if len(ordered_poles) > len(ordered_zeros):
+                
+             
         stages = sorted(stages,key=lambda x:x.Q,reverse=False)
         return stages
 
@@ -404,13 +421,13 @@ class AnalogFilter(ABC):
             #Pass  band (left side of bode plot)
             p1x = [[x[0],  np.divide(self.wp, 2*np.pi),
                     np.divide(self.wp, 2*np.pi),   x[0]]]
-            p1y = [[self.Ap, self.Ap, np.max(y), np.max(y)]]
+            p1y = [[self.Ap-self.gain, self.Ap-self.gain, np.max(y), np.max(y)]]
             p = p1x + p1y
 
             #Stop  band (right side of bode plot)
             s2x = [[np.divide(self.ws, 2*np.pi), x[-1],
                     x[-1],  np.divide(self.ws, 2*np.pi)]]
-            s2y = [[self.As, self.As, 0, 0]]
+            s2y = [[self.As-self.gain, self.As-self.gain, -self.gain, -self.gain]]
             s = s2x + s2y
 
             stencils = [p]+[s]
@@ -418,33 +435,34 @@ class AnalogFilter(ABC):
         elif self.ftype == 'highpass':
             fs = np.divide(self.ws, 2*np.pi)
             s1x = [[x[0], fs, fs, x[0]]]
-            s1y = [[np.min(y), np.min(y), self.As, self.As]]
+            s1y = [[np.min(y), np.min(y), self.As-self.gain, self.As-self.gain]]
             s = s1x + s1y
 
             fp = np.divide(self.wp, 2*np.pi)
             p2x = [[fp, x[-1], x[-1], fp]]
-            p2y = [[self.Ap, self.Ap, np.max(y), np.max(y)]]
+            p2y = [[self.Ap-self.gain, self.Ap-self.gain, np.max(y), np.max(y)]]
             p = p2x +  p2y
             stencils = [p] + [s]
             return stencils
         elif self.ftype == 'bandpass':
+            print(f'mi ganacia es:{self.gain}')
             #Left stop band
             fsL = np.divide(self.ws[0], 2*np.pi)
             aLx = [[x[0], fsL, fsL, x[0]]]
-            aLy = [[0, 0, self.As, self.As]]
+            aLy = [[-self.gain, -self.gain, self.As-self.gain, self.As-self.gain]]
             aL = aLx + aLy
 
             #Pass band
             fpL = np.divide(self.wp[0], 2*np.pi)
             fpR = np.divide(self.wp[1], 2*np.pi)
             px = [[fpL, fpR, fpR, fpL]]
-            py = [[self.Ap, self.Ap, max(y), max(y)]]
+            py = [[self.Ap-self.gain, self.Ap-self.gain, max(y), max(y)]]
             pband = px + py
 
             #Right stop band
             fsR = np.divide(self.ws[1], 2*np.pi)
             aRx = [[fsR, x[-1], x[-1], fsR]]
-            aRy = [[self.As, self.As, 0, 0]]
+            aRy = [[self.As-self.gain, self.As-self.gain, -self.gain, -self.gain]]
             aR = aRx + aRy
 
             stencils = [aL] + [aR] + [pband]
@@ -454,20 +472,20 @@ class AnalogFilter(ABC):
             fpL = np.divide(self.wp[0], 2*np.pi)
             (self.wp[0], self.wp[1])
             pLx = [[x[0], fpL, fpL, x[0]]]
-            pLy = [[np.max(y), np.max(y), self.Ap, self.Ap]]
+            pLy = [[np.max(y), np.max(y), self.Ap-self.gain, self.Ap-self.gain]]
             pL = pLx + pLy
 
             #Stop band
             fsL = np.divide(self.ws[0], 2*np.pi)
             fsR = np.divide(self.ws[1], 2*np.pi)
             sx = [[fsL, fsR, fsR, fsL]]
-            sy = [[0, 0, self.As, self.As]]
+            sy = [[-self.gain, -self.gain, self.As-self.gain, self.As-self.gain]]
             sband = sx + sy
 
             #Right pass band
             fpR = np.divide(self.wp[1], 2*np.pi)
             pRx = [[fpR, x[-1], x[-1], fpR]]
-            pRy = [[np.max(y), np.max(y), self.Ap, self.Ap]]
+            pRy = [[np.max(y), np.max(y), self.Ap-self.gain, self.Ap-self.gain]]
             pR = pRx + pRy
 
             stencils = [sband]+[pL] + [pR]  # + [sband]
