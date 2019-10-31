@@ -459,3 +459,4 @@ dmypy.json
 ##############VsCode###################
 *.vscode
 *.pycache
+TP4/analog/core.py
