@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
 
-from analog.core import AnalogFilter
-from analog.core import Cell
-from analog.cusfunc.cusfunc import maprange
+from core import AnalogFilter
+from core import Cell
+from cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):
@@ -72,23 +72,6 @@ class Butterworth(AnalogFilter):
         return signal.butter(
             self.N, self.wcryt, self.ftype, analog=True, output='zpk')
 
-    def compute_filter_stages(self):
-        """
-        Split the obtained filter into second and first order units
-        
-        Returns
-        -------
-            den: array-like
-                Array of shape (n-sections,3) containing the denominator coefficients of the units
-            num: array-like
-                Array of shape (n-sections,3) containing the numerator coefficients of the units
-        """
-        sos = signal.butter(self.N, self.wcryt, self.ftype,
-                            analog=True, output='sos')
-        num = sos[:, :3]
-        den = sos[:, 3:]
-        #Due to the sos nature. numerator will b
-        return den, num
 
     def get_critical_w(self, k):
         """
@@ -134,7 +117,6 @@ class Butterworth(AnalogFilter):
 
 class Chebyshev1(AnalogFilter):
     def __init__(self, ftype,  wp, ws, Ap, As, gain=1, rp=0, k=0, N=None):
-        print(N)
         """
         Parameters
         ----------
@@ -196,23 +178,6 @@ class Chebyshev1(AnalogFilter):
         """
         self.wcryt = self.get_critical_w(self.k)  # Compute cut-off frequencies
         return signal.butter(self.N, self.wcryt, self.ftype, analog=True, output='zpk')
-
-    def compute_filter_stages(self):
-        """
-        Split the obtained filter into second and first order units
-        
-        Returns
-        -------
-            den: array-like
-                Array of shape (n-sections,3) containing the denominator coefficients of the units
-            num: array-like
-                Array of shape (n-sections,3) containing the numerator coefficients of the units
-        """
-        sos = signal.butter(self.N, self.wcryt, self.ftype,
-                            analog=True, output='sos')
-        num = sos[:, :3]
-        den = sos[:, 3:]
-        return den, num
 
     def get_critical_w(self, k):
         """
@@ -318,23 +283,6 @@ class Chebyshev2(AnalogFilter):
         self.wcryt = self.get_critical_w(self.k)  # Compute cut-off frequencies
         return signal.butter(self.N, self.wcryt, self.ftype, analog=True, output='zpk')
 
-    def compute_filter_stages(self):
-        """
-        Split the obtained filter into second and first order units
-        
-        Returns
-        -------
-            den: array-like
-                Array of shape (n-sections,3) containing the denominator coefficients of the units
-            num: array-like
-                Array of shape (n-sections,3) containing the numerator coefficients of the units
-        """
-        sos = signal.butter(self.N, self.wcryt, self.ftype,
-                            analog=True, output='sos')
-        num = sos[:, :3]
-        den = sos[:, 3:]
-        return den, num
-
     def get_critical_w(self, k):
         """
         Calculates new crytical frequency given a certain denormalization degree 
@@ -352,9 +300,9 @@ class Chebyshev2(AnalogFilter):
 
         if self.ftype == 'lowpass':
             # Compute maximum frequency allowed that still might meet requirements
-            wcstop = self.ws * np.cosh(np.cosh(1 / (np.sqrt(np.power(10, -self.As/10) - 1))) / self.N)
+            wcstop = self.ws * np.cosh(np.cosh(1 / (np.sqrt(np.power(10, self.As/10) - 1))) / self.N)
             # Compute minimum allowed frequency that still might meet requirements
-            wcpass = self.wp * np.cosh(np.arccosh(1 / np.sqrt(np.power(10, self.Ap/10) - 1)) / self.N)
+            wcpass = self.wp#self.wp * np.cosh(np.arccosh(1 / np.sqrt(np.power(10, self.Ap/10) - 1)) / self.N)
             print(f"wcstop:{wcstop}")
             print(f"wcpass:{wcpass}")
 
@@ -373,17 +321,30 @@ class Chebyshev2(AnalogFilter):
             pass
 
 # plt.grid(axis='both', which='both')
-for i in np.linspace(0, 1, 10):
+# for i in np.linspace(0, 1, 1):
     # b = Chebyshev1("highpass", 40E3, 10E3, 3, 40,rp=3, k=i)
-    b = Butterworth("lowpass", 20E3, 40E3, 3, 40, k=i)
-    b.plot_mag(name=f'{i}')
-
+    # b = Butterworth("lowpass", 20E3, 50E3, 3, 40, k=i)
+    # b.plot_mag(name=f'{i}')
 # b = Chebyshev1("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
 # b1= Chebyshev1("highpass", 40E3, 20E3, 10, 40,rp=3, k=0)
 # b2 = Chebyshev1("highpass", 40E3, 20E3, 10, 40,N=5,rp=3, k=0)
 # b1.plot_mag()
 # b2.plot_mag()
-plt.show()
+# b = Butterworth("lowpass", 20E3, 50E3, 3, 40, k=0)
+
+# b = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
+# b = Chebyshev1("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
+
+# plt.title(f"Magnintud Chebyshev1 orden {b.N}")
+# mag = 0
+# for s in b.stages:
+#     mag += s.mag
+# plt.semilogx(b.w,-mag+b.kZP,label="sumada")
+# b.plot_mag(show=True)
+
+# plt.title("Polos y ceros")
+# b.plot_zp(show=True)
+
 # try:
 #     b = Butterworth("highpass", 10E3,20E3, 3, 40)
 # except ValueError as e:
@@ -403,3 +364,57 @@ plt.show()
 # https://d1.amobbs.com/bbs_upload782111/files_32/ourdev_573166.pdf
 # http://www.matheonics.com/Tutorials/Specification.html
 # http://www.matheonics.com/Tutorials/Butterworth.html#Paragraph_3.1
+
+
+#Prueba de etapas!
+
+
+# filter1 = Butterworth("lowpass", 10E3*2*np.pi,40E3*2*np.pi, 3, 40)
+# filter1 = Butterworth("lowpass", 10E3,40E3, 3, 40)
+
+# filter1 = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
+# filter1 = Butterworth("highpass",20E3, 10E3, 3, 40)
+
+# filter1 = Chebyshev2("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
+# filter1 = Butterworth("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
+filter1 = Chebyshev1("bandstop",  [5E3,20E3],[10E3,15E3], 10, 40, rp=3, k=0)
+
+
+filter1.plot_zp(show=True)
+print(filter1.sys)
+for stage in filter1.stages:
+    print(f'sys de stage{stage.sys}')
+    stage.plot_zp()
+plt.show()
+# fig, axs = plt.subplots(1, len(filter1.stages)+2, figsize=(9, 3), sharey=True)
+fig, axs = plt.subplots(2+len(filter1.stages),sharex=True)
+summag = np.zeros_like(filter1.stages[0].mag)
+ganancia = np.full_like(filter1.w,20*np.log10(filter1.kZP))
+         
+for counter, stage in enumerate(filter1.stages):
+    plt.grid(which="both", axis="both")
+    axs[counter].semilogx(stage.w,-stage.mag)
+    axs[counter].set_title(f"""
+                            Etapa {counter}
+                            Q:{np.round(stage.Q,2)}
+                            """)
+    print(f'mag cant: {len(stage.mag)}')
+    # summag = summag + stage.mag
+
+#Plot de la suma
+for stage in filter1.stages:
+    print(f'{np.max(-stage.mag)}')
+    print(f'{np.where(np.max(-stage.mag)==(-stage.mag))}')
+    summag += stage.mag
+
+axs[counter+1].semilogx(filter1.stages[0].w,-summag+ganancia) #+20*np.log10(filter1.kZP)
+
+#Plot del original
+axs[counter+2].semilogx(filter1.w,-filter1.mag)
+
+axs[counter+2].set_title("original")
+
+plt.show()
+
+# filter2 =Butterworth("lowpass", 20E3, 50E3, 3, 40, gain = 5, k=0)
+# filter2.plot_mag(show=True)

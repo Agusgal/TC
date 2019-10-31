@@ -4,30 +4,35 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
   
-from analog.cusfunc.cusfunc import maprange
-from analog.custexcp.custexcp import *
+from cusfunc import maprange
+from custexcp import *
 
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
 #TODO tener cuidado con las unidades de las frecuencias.
+
 
 class Cell:
     """
     Circuit mimimun unit.  
     
     Parameters:
-    den: array_like
     num: array_like
+    den: array_like
+
     """
-    def __init__(self,den,num):
-        self.num = num
+
+    def __init__(self, num,den):
+        print("Hola")
         self.den = den
-        self.sys = signal.TransferFunction(self.den,self.num)
+        self.num = num
+
+        self.sys = signal.TransferFunction(self.num, self.den)
         self.w, self.mag, self.pha = signal.bode(self.sys)
-        whd = np.linspace(self.w[0],self.w[-1],len(self.w)*20)
-        self.w, self.mag, self.pha = signal.bode(self.sys,w=whd)
-        self.zeros, self.poles, self.kZP = signal.tf2zpk(self.den,self.num)
-        # self.Q = self.computeQ()
+        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*40)
+        self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
+        self.zeros, self.poles, self.kZP = signal.tf2zpk(self.num,self.den)
+        self.Q = self.compute_q()
 
     def plot_mag(self, name=None, show=False, lc=None):
         """
@@ -48,10 +53,9 @@ class Cell:
             plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, color=lc, label=name)
         else:
             plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, label=name)
-        
+
         if name:
             plt.legend()
-
         if show:
             plt.show()
 
@@ -81,7 +85,7 @@ class Cell:
             plt.show()
 
     def plot_zp(self, colorz='red', colorp='blue', zc='o', pc='x', show=False):
-        
+
         for z in self.zeros:
             plt.scatter(z.real, z.imag, c=colorz, marker=zc)
         for p in self.poles:
@@ -115,7 +119,6 @@ class Cell:
                 plt.legend()
             plt.show()
 
-
     def plot_impulse_response(self, name=None, show=False, lc=None):
         T, yout = signal.impulse(self.sys)
         if lc:
@@ -127,10 +130,10 @@ class Cell:
                 plt.legend()
             plt.show()
 
-
     def plot_group_delay(self, name=None, show=False, lc=None):
         if lc:
-            plt.semilogx(np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
+            plt.semilogx(np.divide(
+                self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
         else:
             plt.semilogx(
                 np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name)
@@ -138,10 +141,15 @@ class Cell:
             if name:
                 plt.legend()
             plt.show()
-    
-    def compute_q(self):
-        pass
 
+    def compute_q(self):
+        print(f"Los polos son: {self.poles}")
+        print(f"Los ceros son: {self.zeros}")
+
+        w = self.poles[0].imag
+        sigma = self.poles[0].real
+        q = np.abs(w/(2*sigma))
+        return q
 
 class AnalogFilter(ABC):
     """
@@ -190,6 +198,12 @@ class AnalogFilter(ABC):
         if Ap > As:
             raise ValueError(
                 "Pass band attenuation must be lower than stop band")
+        if Ap < 0:
+            raise ValueError(
+                "Passband attenuation must be a non negative number")
+        if As < 0:
+            raise ValueError(
+                "Passband attenuation must be a non negative number")
 
         if ftype in ('lowpass', 'highpass'):
             if np.size(wp) != 1 or np.size(ws) != 1:
@@ -201,7 +215,6 @@ class AnalogFilter(ABC):
             if wp < ws and ftype == 'highpass':
                     raise ValueError(
                         f"Passband frequency (wp={wp} was given) must be greater than Stopfrequency (ws={ws} was given)")
-
         elif ftype in ('bandpass', 'bandstop'):
             if np.size(wp) != 2 and np.size(ws) != 2:
                 raise ValueError(
@@ -233,14 +246,14 @@ class AnalogFilter(ABC):
         self.ftype = ftype
         self.wp = wp
         self.ws = ws
-        self.Ap = Ap
-        self.As = As
+        self.Ap = Ap 
+        self.As = As 
         self.k = k
         self.N = N  # Filter order
         self.rp = rp
 
         # dict that stores if a certain graph is already on the screen nad where it is [is graphed, where]
-        self.is_graphed = {'Template': [0, 0], 'Magnitude': [0, 0], 'Phase': [0, 0], 'Group Delay': [0, 0], 'Maximun Q': [0, 0], 'Impulse Response': [0, 0], 'Step Response': [0, 0], 'Poles and Zeroes': [0, 0]}
+        self.is_graphed = {'Template': [0, 0], 'Attenuation': [0, 0], 'Magnitude': [0, 0], 'Phase': [0, 0], 'Group Delay': [0, 0], 'Maximun Q': [0, 0], 'Impulse Response': [0, 0], 'Step Response': [0, 0], 'Poles and Zeroes': [0, 0]}
 
         # Step 1: Compute filter order
         self.compute_order()
@@ -250,26 +263,99 @@ class AnalogFilter(ABC):
         self.sys = signal.TransferFunction(self.b, self.a)
 
         self.w, self.mag, self.pha = signal.bode(self.sys)
-        whd = np.linspace(self.w[0],self.w[-1],len(self.w)*20)
-        self.w, self.mag, self.pha = signal.bode(self.sys,w=whd)
-
-        self.zeros, self.poles, self.kZP = self.compute_zpk() #kZP will denote de gain returned by the compute_zpk method
-        #Step 4: Split high order filter into first and second order cells
-        # self.stages = self.compute_filter_stages()
-        # print(self.stages)
-    # @abstractmethod
-    # def compute_filter_stages(self):
-    #     """
-    #     Split the obtained filter into second and first order units
+        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*40)
+        self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
         
-    #     Returns
-    #     -------
-    #         den: array-like
-    #             Array of shape (n-sections,3) containing the denominator coefficients of the units
-    #         num: array-like
-    #             Array of shape (n-sections,3) containing the numerator coefficients of the units
-    #     """ 
-    #     raise NotImplementedError
+        self.mag = self.mag + gain
+        print(np.min(-self.mag))
+        # kZP will denote de gain returned by the compute_zpk method
+        self.zeros, self.poles, self.kZP = self.compute_zpk()
+        #Step 4: Split high order filter into first and second order cells
+        self.stages = self.compute_filter_stages()
+
+    def pair_singularities(self, zp):
+        """
+        Return an array containing singularities paired if they are complex conjugates
+        
+        Parameters
+        ----------
+        zp: array_like
+            Zeros or poles in array format.
+        
+        Returns
+        -------
+        out: array_like
+            Array containing the singularities paired if they complex conjugates
+        
+        Examples
+        --------
+
+        >>> pair_singularities([1+4j,1-4j,3,58,5+3.24342j,5+3.24342j])
+            [[(1-4j), (1+4j)], [3], [58], [(5+3.24342j), (5+3.24342j)]]
+
+        Notes
+        -----
+        This method relies on 'allclose' by numpy to compare between floating point numbers. 
+        """
+        result = []
+        prev = None
+        results = []
+        done = []
+        array = zp
+        for x in array:
+            if not prev and x not in done:
+                prev = x
+            else:
+                continue
+            for y in array:
+                if x.real == y.real and abs(x.imag)==abs(y.imag) and not np.allclose(x,y):
+                    results.append([x,y])
+                    done.append(x)
+                    done.append(y)
+                    prev = None
+        return results
+
+    def compute_filter_stages(self):
+        print(f"el orden del filtro es: {self.N}")
+        """
+        Split the obtained filter into second and first order units
+        
+        Returns
+        -------
+            den: array-like
+                Array of shape (n-sections,3) containing the denominator coefficients of the units
+            num: array-like
+                Array of shape (n-sections,3) containing the numerator coefficients of the units
+        """
+        #Check if it is an all poles filter
+        stages = []
+        print(f'hola:{len(self.zeros)}')
+        print(f"los polos son{self.poles}")
+        if  len(self.zeros) == 0:
+            ordered_poles = self.pair_singularities(self.poles)
+            print(f"Los polos ordenados son {ordered_poles}")
+            for poles in ordered_poles:
+                print(poles)
+                n,d = signal.zpk2tf([], poles, self.kZP)
+                stages.append(Cell(n,d))
+        else:
+            print("hola")
+            sos = signal.zpk2sos(self.zeros, self.poles, self.kZP, pairing="keep_odd")
+            num = sos[:, :3]
+            den = sos[:, 3:]
+            for n, d in zip(num, den):
+                print(n, d)
+                stages.append(Cell(n,d))
+        #TODO fix!!
+        stages = sorted(stages,key=lambda x:x.Q,reverse=False)
+        return stages
+
+    
+    # def compute_stagehm(self,zeros,poles):
+
+
+
+
 
     @abstractmethod
     def compute_order(self):
@@ -404,8 +490,7 @@ class AnalogFilter(ABC):
         """
         stencils = self.get_stencils(np.divide(self.w, 2*np.pi), -self.mag)
         if lc:
-            plt.semilogx(np.divide(self.w, 2*np.pi), -
-                         self.mag, color=lc, label=name)
+            plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, color=lc, label=name)
         else:
             plt.semilogx(np.divide(self.w, 2*np.pi), -self.mag, label=name)
 
@@ -415,7 +500,7 @@ class AnalogFilter(ABC):
 
         if name:
             plt.legend()
-        
+
         if show:
             plt.show()
 
@@ -438,16 +523,16 @@ class AnalogFilter(ABC):
                          self.pha, color=lc, label=name)
         else:
             plt.semilogx(np.divide(self.w, 2*np.pi), self.pha, label=name)
-        
+
         if name:
             plt.legend()
-        
+
         if show:
 
             plt.show()
 
-
     #TODO comentar
+
     def plot_zp(self, colorz='red', colorp='blue', zc='o', pc='x', show=False):
         for z in self.zeros:
             plt.scatter(z.real, z.imag, c=colorz, marker=zc)
@@ -478,7 +563,7 @@ class AnalogFilter(ABC):
             plt.plot(T, yout, color=lc, label=name)
         else:
             plt.plot(T, yout, label=name)
-        
+
         if name:
             plt.legend()
         #Would you like to show your plot.
@@ -492,17 +577,18 @@ class AnalogFilter(ABC):
             plt.plot(T, yout, color=lc, label=name)
         else:
             plt.plot(T, yout, label=name)
-        
+
         if name:
             plt.legend()
-        
+
         if show:
             plt.show()
 
     #TODO comentar
     def plot_group_delay(self, name=None, show=False, lc=None):
         if lc:
-            plt.semilogx(np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
+            plt.semilogx(np.divide(
+                self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name, color=lc)
         else:
             plt.semilogx(
                 np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w), label=name)
@@ -522,7 +608,7 @@ class AnalogFilter(ABC):
 
     def get_mag(self):
         return self.mag
-    
+
     def get_pha(self):
         return self.pha
 
@@ -563,7 +649,7 @@ class AnalogFilter(ABC):
         --------
         >>> w, gdelay = my_filter.get_gdelay()
         """
-        return np.divide(self.w[1:], 2*np.pi) , -np.diff(self.mag)/np.diff(self.w)
+        return np.divide(self.w[1:], 2*np.pi), -np.diff(self.mag)/np.diff(self.w)
 
     # Return True if name is already graphed and False if not
     def isgraphed(self, name):
