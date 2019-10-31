@@ -37,20 +37,11 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.boton_etapa2.clicked.connect(self.first_window)
 
         self.ui.selector_filtro.currentIndexChanged.connect(self.change_image)
+        self.ui.selector_filtro.currentIndexChanged.connect(self.change_parameter_box)
 
     def crear_filtro(self):
 
         aprox = self.ui.selector_aproximacion.currentText()
-
-        if self.ui.selector_filtro.currentText() == 'Low-pass':
-            tipo = 'lowpass'
-        elif self.ui.selector_filtro.currentText() == 'High-pass':
-            tipo = 'highpass'
-        elif self.ui.selector_filtro.currentText() == 'Band-pass':
-            tipo = 'bandpass'
-        else:
-            tipo = 'bandstop'
-
         wp = None
         ws = None
         Ap = None
@@ -60,41 +51,57 @@ class MainWindow(QtWidgets.QMainWindow):
         n = None
 
         try:
-            wp = float(self.ui.input_frecuencia_bp.text()) * 2 * np.pi
-            ws = float(self.ui.input_frecuencia_br.text()) * 2 * np.pi
+            if self.ui.selector_filtro.currentText() == 'Low-pass':
+                tipo = 'lowpass'
+                wp = float(self.ui.input_frecuencia_bp.text()) * 2 * np.pi
+                ws = float(self.ui.input_frecuencia_br.text()) * 2 * np.pi
+            elif self.ui.selector_filtro.currentText() == 'High-pass':
+                tipo = 'highpass'
+                wp = float(self.ui.input_frecuencia_bp.text()) * 2 * np.pi
+                ws = float(self.ui.input_frecuencia_br.text()) * 2 * np.pi
+            elif self.ui.selector_filtro.currentText() == 'Band-pass':  # Agregar que el amrco de parametros cambie a los que tiene que tener
+                tipo = 'bandpass'
+                self.change_parameter_box()
+                wp = [float(self.ui.input_frecuencia_bpmenos.text()), float(self.ui.input_frecuencia_bp.text())]
+                ws = [float(self.ui.input_frecuencia_brmenos.text()), float(self.ui.input_frecuencia_br.text())]
+                print(1)
+            else:
+                tipo = 'bandstop'
+                self.change_parameter_box()
+                wp = [float(self.ui.input_frecuencia_bpmenos.text()), float(self.ui.input_frecuencia_bp.text())]
+                ws = [float(self.ui.input_frecuencia_brmenos.text()), float(self.ui.input_frecuencia_br.text())]
+
             Ap = float(self.ui.input_atenuacion_bp.text())
             As = float(self.ui.input_atenuacion_br.text())
-            ganancia = int(self.ui.input_ganancia.text())
+            ganancia = float(self.ui.input_ganancia.text())
 
-            k = int(self.ui.input_desnormalizacion.text()) / 100
+            k = float(self.ui.input_desnormalizacion.text()) / 100
 
             n = int(self.ui.input_orden_filtro.text())
 
             #Todo agregar los demas filtros que tincho estuvo haciendo
-            #Todo agregar errores de compatibilidad
-            #Butter ya anda perfecto
             try:
                 if aprox == 'Butterworth':
                     filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
+                    print(2)
                     self.agregar_filtro_lista(filtro)
-                    self.ui.lista_filtros.addItem(
-                        str(listaf.indice) + ')' + aprox + ' orden ' + str(n) + ' ' + str(round(wp)) + ' ' + str(round(ws)) + ' ' + str(
-                            Ap) + ' ' + str(As) + ' ' + str(ganancia) + ' ' + str(k))
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
                 elif aprox == 'Chebycheff':
                     filtro = Chebyshev1(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
                     self.agregar_filtro_lista(filtro)
-                    self.ui.lista_filtros.addItem(
-                        str(listaf.indice) + ')' + aprox + ' orden ' + str(n) + ' ' + str(round(wp)) + ' ' + str(
-                            round(ws)) + ' ' + str(
-                            Ap) + ' ' + str(As) + ' ' + str(ganancia) + ' ' + str(k))
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
                 elif aprox == 'Chebycheff Inverso':
-                    pass
+                    filtro = Chebyshev2(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
+                    self.agregar_filtro_lista(filtro)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
                 elif aprox == 'Legendre':
                     pass
                 elif aprox == 'gauss':
                     pass
                 elif aprox == 'Cauer':
-                    pass
+                    filtro = Cauer(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
+                    self.agregar_filtro_lista(filtro)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
                 else:
                     pass
             except ValueError as error:
@@ -130,6 +137,7 @@ class MainWindow(QtWidgets.QMainWindow):
             ind = int(value[0]) - 1
             where = 3
             listaf.seleccionar(ind)
+            print(ind)
 
             listaf.lista_filtros[ind].mark_graphed('Poles and Zeroes', where)
             self.ui.ventana_polos_zeros.zplot(listaf.lista_filtros[ind])
@@ -155,8 +163,9 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.ventana_grafica1.plot(listaf.lista_filtros)
 
             self.ui.ventana_grafica2.plot(listaf.lista_filtros)
-        except ValueError:
-            self.show_pop_up('You must select a filter first.')
+        except ValueError as error:
+            print(1)
+            self.show_pop_up(str(error))
 
     def clear_grafico(self, window):
 
@@ -182,6 +191,8 @@ class MainWindow(QtWidgets.QMainWindow):
 
         if self.ui.checkbox_plantilla.isChecked():
             listaf.lista_filtros[i].mark_graphed('Template', where)
+        else:
+            listaf.lista_filtros[i].mark_not_graphed('Template')
 
     def change_image(self):
         path = os.path.dirname(os.path.abspath(__file__))
@@ -196,12 +207,23 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'RechazaBanda.png')))
 
+    def change_parameter_box(self):#AORDENAR BIEN VENTANAS Y HACER QUE VUELVNA A LA NORMALIDAD
+
+        if self.ui.selector_filtro.currentText() == 'Band-pass' or self.ui.selector_filtro.currentText() == 'Band-stop':
+            self.ui.input_frecuencia_bpmenos.setEnabled(True)
+            self.ui.input_frecuencia_brmenos.setEnabled(True)
+
+        else:
+            self.ui.input_frecuencia_bpmenos.setEnabled(False)
+            self.ui.input_frecuencia_brmenos.setEnabled(False)
+
+
+
     def first_window(self):
         if listaf.seleccionado:
             self.switch_window.emit()
         else:
             self.show_pop_up('To Acces the second window you must select a filter first.')
-
 
 
 class Window2(QtWidgets.QWidget):

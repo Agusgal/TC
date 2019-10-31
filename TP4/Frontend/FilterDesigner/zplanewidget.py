@@ -49,3 +49,7 @@ class ZplaneWidget(QWidget):
             zeros = self.canvas.axes.plot(z.real, z.imag, 'o', markersize=9, color='red', alpha=0.5)
 
         self.canvas.draw()
+
+    def clear_axes(self):
+        self.canvas.axes.clear()
+        self.canvas.draw()

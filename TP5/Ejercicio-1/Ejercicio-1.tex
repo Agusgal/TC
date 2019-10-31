@@ -135,7 +135,7 @@ Utilizando realimentación positiva se pueden lograr Q mucho mayores. Al colocar
 	\caption{Topología Sallen-Key para un filtro pasa-bajos de segundo orden.}
 \end{figure}
 
-La topología Sallen-Key posee varias ventajas. La primera es que esta topología presenta la menor dependencia frente a el GBP del operacional utilizado, ya que estas celdas utilizan al operacional como amplificador y no como integrador. La segunda ventaja de este tipo de celdas es el pequeño desvío entre los valores de capacitores y entre los valores de resistencias en la misma celda, lo que es beneficioso para la manufactura de estos filtros. La desventaja de esta topología, sin embargo, es la alta sensibilidad del factor de calidad respecto a los componentes de la celda, más aún cuanto más alto sea este. 
+La topología Sallen-Key posee varias ventajas. La primera es que esta topología presenta la menor dependencia frente a el GBP del operacional utilizado, ya que estas celdas utilizan al operacional como amplificador y no como integrador. La segunda ventaja de este tipo de celdas es el pequeño desvío entre los valores de capacitores y entre los valores de resistencias en la misma celda, lo que es beneficioso para la manufactura de estos filtros. La desventaja de esta topología, sin embargo, es la alta sensibilidad del factor de calidad respecto a los componentes pasivos de la celda, más aún cuanto más alto sea este. 
 
 \subsection{Aproximación de Legendre.}
 
@@ -193,7 +193,7 @@ y por último también con el software \textit{Maple}, el gráfico de polos y ce
 
 Se utilizaron tres etapas, dos de segundo orden y una de primer orden. Para la etapa de primer orden, la de menor factor de calidad, se utilizó la configuración integradora compensada inversora. Para esta etapa se utilizaron valores de resistencias tales que la impedancia de entrada del filtro total sea mayor a los $50K\Omega$.
 
-El ordenamiento de las etapas fue según factor de calidad creciente para reducir la pérdida de rango dinámico del filtro dado que las señales de entrada de este filtro serán de gran amplitud. Además, dado que la segunda etapa del filtro posee un gran sobrepico, se decidió atenuar en esta etapa y amplificar en la siguiente para reducir las chances de saturación.
+El ordenamiento de las etapas fue según factor de calidad creciente dado que las señales de entrada de este filtro serán de gran amplitud. Además, dado que la segunda etapa del filtro posee un gran sobrepico, se decidió atenuar en esta etapa y amplificar en la siguiente para reducir las chances de saturación en esta etapa y así disminuir la perdida de rango dinámico del filtro.
 
 Los componentes utilizados para la realización del filtro junto a su implementación y error cometido son los siguientes:
 
@@ -287,7 +287,7 @@ Se puede observar en el montecarlo del filtro realizado con la aproximación Leg
 
 \subsubsection{Rango Dinámico}
 
-Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $-2.238721$. Luego, la tensión de entrada máxima será
+Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $0.446684$. Luego, la tensión de entrada máxima será
 \begin{equation}
 V_{i_{max}}= \frac{V_{o_{max}}}{2.238721}
 \end{equation}
@@ -348,7 +348,7 @@ Luego, se graficó el diagrama de Bode con el software \textit{Maple}, resultand
 	\label{fig:bodebes}
 	\caption{Diagrama de Bode del filtro aproximación Bessel.}
 \end{figure}
-y por último, el gráfico de polos y ceros con el software \textit{Maple}:
+También se realizó el gráfico de polos y ceros con el software \textit{Maple}:
 
 \begin{figure}[H]
 \centering
@@ -357,6 +357,18 @@ y por último, el gráfico de polos y ceros con el software \textit{Maple}:
 	\caption{Diagrama de polos y ceros del filtro aproximación Bessel}
 	\label{leg_poles}
 \end{figure}
+
+y finalmente el gráfico del group delay.
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/groupdelay_calc.png}
+	\caption{Group delay del filtro aproximación Bessel.}
+	\label{bes_group_calc}
+\end{figure}
+
+El desvío del group-delay se encuentra por debajo del $5\%$ y es de $\approx 0.149\%$.
 
 \subsubsection{Elecciones de diseño}
 
@@ -452,9 +464,10 @@ Se simuló utilizando el operacional $TL-081$ y el software \textit{LTSpiceXVII}
 
 Se puede observar en el montecarlo del filtro realizado con la aproximación Bessel con tolerancias del \%1  para resistencias y \%10 para los capacitores que todas las curvas cumplen con la plantilla utilizada por lo que se optó a no utilizar presets en la celda midiendo por separado los valores de las resistencias y capacitores más sensibles.
 
+
 \subsubsection{Rango Dinámico}
 
-Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $-2.238721$. Luego, la tensión de entrada máxima será
+Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $0.446684$. Luego, la tensión de entrada máxima será
 \begin{equation}
 V_{i_{max}}= \frac{V_{o_{max}}}{2.238721}
 \end{equation}

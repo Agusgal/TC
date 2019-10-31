@@ -1,6 +1,7 @@
 from abc import ABC, abstractclassmethod, abstractmethod
 
 import matplotlib.pyplot as plt
+from matplotlib import patches
 import numpy as np
 from scipy import signal
   
@@ -29,7 +30,7 @@ class Cell:
 
         self.sys = signal.TransferFunction(self.num, self.den)
         self.w, self.mag, self.pha = signal.bode(self.sys)
-        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*40)
+        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*100)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
         self.zeros, self.poles, self.kZP = signal.tf2zpk(self.num,self.den)
         self.Q = self.compute_q()
@@ -88,8 +89,10 @@ class Cell:
 
         for z in self.zeros:
             plt.scatter(z.real, z.imag, c=colorz, marker=zc)
+            patches.Ellipse(00,z.real,z.imag)
         for p in self.poles:
             plt.scatter(p.real, p.imag, c=colorp, marker=pc)
+            patches.Ellipse(00,p.real,p.imag)
 
         if show:
             plt.show()
@@ -246,8 +249,8 @@ class AnalogFilter(ABC):
         self.ftype = ftype
         self.wp = wp
         self.ws = ws
-        self.Ap = Ap + gain
-        self.As = As + gain
+        self.Ap = Ap 
+        self.As = As 
         self.k = k
         self.N = N  # Filter order
         self.rp = rp
@@ -261,9 +264,11 @@ class AnalogFilter(ABC):
         self.b, self.a = self.compute_ba()
         # Step 3: Construct Transfer function
         self.sys = signal.TransferFunction(self.b, self.a)
+
         self.w, self.mag, self.pha = signal.bode(self.sys)
-        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*40)
+        whd = np.linspace(self.w[0], self.w[-1], len(self.w)*100)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
+
         self.mag = self.mag + gain
         print(np.min(-self.mag))
         # kZP will denote de gain returned by the compute_zpk method
@@ -329,7 +334,7 @@ class AnalogFilter(ABC):
         stages = []
         print(f'hola:{len(self.zeros)}')
         print(f"los polos son{self.poles}")
-        if len(self.zeros) == 0:
+        if  len(self.zeros) == 0:
             ordered_poles = self.pair_singularities(self.poles)
             print(f"Los polos ordenados son {ordered_poles}")
             for poles in ordered_poles:
@@ -419,7 +424,7 @@ class AnalogFilter(ABC):
             fp = np.divide(self.wp, 2*np.pi)
             p2x = [[fp, x[-1], x[-1], fp]]
             p2y = [[self.Ap, self.Ap, np.max(y), np.max(y)]]
-            p = p2x + p2y
+            p = p2x +  p2y
             stencils = [p] + [s]
             return stencils
         elif self.ftype == 'bandpass':
@@ -532,10 +537,14 @@ class AnalogFilter(ABC):
     #TODO comentar
 
     def plot_zp(self, colorz='red', colorp='blue', zc='o', pc='x', show=False):
+        # https://matplotlib.org/3.1.1/gallery/units/ellipse_with_units.html#sphx-glr-gallery-units-ellipse-with-units-py
         for z in self.zeros:
             plt.scatter(z.real, z.imag, c=colorz, marker=zc)
+            patches.Ellipse((0,0),z.real,z.imag,linewidth=2, fill=False, zorder=2)
         for p in self.poles:
             plt.scatter(p.real, p.imag, c=colorp, marker=pc)
+            patches.Ellipse((0,0),p.real,p.imag,linewidth=2, fill=False, zorder=2)
+
 
         if show:
             plt.show()
@@ -663,3 +672,4 @@ class AnalogFilter(ABC):
     def mark_not_graphed(self, name):
         self.is_graphed[name][0] = 0
         self.is_graphed[name][1] = 0
+

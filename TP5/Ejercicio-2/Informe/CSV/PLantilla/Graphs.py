@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-df = pd.read_csv('BodeRauch.csv')
+df = pd.read_csv('BodeRauch2.csv')
 
 def not_num(content):
     if content == "0":
@@ -75,7 +75,7 @@ def read_file_spice(filename):
         data["pha"].append(c3)
 
     return data
-df = pd.read_csv('BodeRauch.csv')
+#df = pd.read_csv('BodeRauch.csv')
 H = np.asarray(df['MAG'])
 f = np.asarray(df['Frequency'])
 ph = np.asarray(df['pha'])
@@ -104,13 +104,13 @@ Hphcalc1=90-np.rad2deg(np.arctan(s*51101/((s)**2+(2.7236*10**10))))
 Hphcalc2=90-np.rad2deg(np.arctan(s*71653/((s)**-+(5.2722*10**10))))
 Hphcalc=Hsp2
 
-fstop1 = np.arange(100,2200,10)
+fstop1 = np.arange(100,2630,10)
 Astop1=fstop1*0-40
 fpass = np.arange(26*10**3,29.5*10**3,10)
 Apass=fpass*0-3
 fstop2 = np.arange(295*10**3,1*10**6,10)
 Astop2=fstop2*0-40
-Verticals1=[2200,2200]
+Verticals1=[2630,2630]
 Avertical1=[-40,3]
 Verticals2=[29.5*10**3,29.5*10**3]
 Avertical2=[-100,-3]
@@ -129,8 +129,8 @@ plt.plot(fpass,Apass,'-k')
 
 
 plt.xscale('log')
-plt.plot(fs,Hs,'r',label = 'Simulado' )
-plt.plot(fc,Hcalc,'b',label = 'Calculado' )
+#plt.plot(fs,Hs,'r',label = 'Simulado' )
+#plt.plot(fc,Hcalc,'b',label = 'Calculado' )
 plt.plot(f,H,'y',label = 'Medido')
 plt.plot(fstop1,Astop1,'-k')
 plt.plot(f,H,'y')
@@ -144,8 +144,8 @@ plt.show()
 
 plt.xscale('log')
 plt.plot(f,ph,'y',label = 'Medida')
-plt.plot(fs,Hsp,'r',label = 'Simulado' )
-plt.plot(fs2,Hphcalc,'b',label = 'Calculado')
+#plt.plot(fs,Hsp,'r',label = 'Simulado' )
+#plt.plot(fs2,Hphcalc,'b',label = 'Calculado')
 plt.ylabel("Transferencia fase [°]")
 plt.xlabel("Frecuencia [Hz]")
 plt.legend()
