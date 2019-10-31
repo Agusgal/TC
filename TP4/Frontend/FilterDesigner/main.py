@@ -1,9 +1,9 @@
 from PyQt5 import QtWidgets, QtGui, QtCore
 from PyQt5.QtWidgets import QMessageBox
-from Frontend.FilterDesigner.Lista_Filtros import  listaf
+from Frontend.FilterDesigner.Lista_Filtros import listaf
 from analog.filters import *
 import numpy as np
-
+import os
 
 from Frontend.FilterDesigner.MainWindow import Ui_MainWindow  # Se importa archivo generado por designer
 
@@ -35,6 +35,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.boton_limpiar2.clicked.connect(lambda: self.clear_grafico(2))
 
         self.ui.boton_etapa2.clicked.connect(self.first_window)
+
+        self.ui.selector_filtro.currentIndexChanged.connect(self.change_image)
 
     def crear_filtro(self):
 
@@ -68,7 +70,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
             n = int(self.ui.input_orden_filtro.text())
 
-            try:  # falta agregar otro tipos de errores
+            #Todo agregar los demas filtros que tincho estuvo haciendo
+            #Todo agregar errores de compatibilidad
+            #Butter ya anda perfecto
+            try:
                 if aprox == 'Butterworth':
                     filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
                     self.agregar_filtro_lista(filtro)
@@ -110,7 +115,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             self.ui.ventana_polos_zeros.clear_axes()
         except AttributeError:
-            self.show_pop_up('Debe seleccionar algún filtro de la lista!')
+            self.show_pop_up('You must select a filter from the list')
 
     def agregar_filtro_lista(self, filtro): ##Agrega filtro a lista que se usa para llevar cuenta de filtros a graficar
         listaf.agregar_filtro(filtro)
@@ -124,31 +129,34 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.label_filtro_graficar.setText(value)
             ind = int(value[0]) - 1
             where = 3
+            listaf.seleccionar(ind)
 
             listaf.lista_filtros[ind].mark_graphed('Poles and Zeroes', where)
-            self.ui.ventana_polos_zeros.plot(listaf.lista_filtros)
+            self.ui.ventana_polos_zeros.zplot(listaf.lista_filtros[ind])
         except AttributeError:
-            self.show_pop_up('Debe Seleccionar algun filtro de la lista!')
+            self.show_pop_up('You Must select a Filter from the list')
 
     def update_grafico(self):
+        try:
+            txt = self.ui.label_filtro_graficar.text()
+            ind = int(txt[0]) - 1
+            name = self.ui.selector_grafico.currentText()
+            window = self.ui.selector_ventana.currentText()
+            where = 0
 
-        txt = self.ui.label_filtro_graficar.text()
-        ind = int(txt[0]) - 1
-        name = self.ui.selector_grafico.currentText()
-        window = self.ui.selector_ventana.currentText()
-        where = 0
+            if window == 'Window 1':
+                where = 1
+            else:
+                where = 2
 
-        if window == 'Window 1':
-            where = 1
-        else:
-            where = 2
+            self.checkboxes(ind, where)
+            listaf.lista_filtros[ind].mark_graphed(name, where)
 
-        self.checkboxes(ind, where)
-        listaf.lista_filtros[ind].mark_graphed(name, where)
+            self.ui.ventana_grafica1.plot(listaf.lista_filtros)
 
-        self.ui.ventana_grafica1.plot(listaf.lista_filtros)
-
-        self.ui.ventana_grafica2.plot(listaf.lista_filtros)
+            self.ui.ventana_grafica2.plot(listaf.lista_filtros)
+        except ValueError:
+            self.show_pop_up('You must select a filter first.')
 
     def clear_grafico(self, window):
 
@@ -161,9 +169,6 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.ventana_grafica1.clear_axes()
         else:
             self.ui.ventana_grafica2.clear_axes()
-
-    def limpiar_entradas(self):
-        pass
 
     def show_pop_up(self, error):
         msg = QMessageBox()
@@ -178,8 +183,25 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.ui.checkbox_plantilla.isChecked():
             listaf.lista_filtros[i].mark_graphed('Template', where)
 
+    def change_image(self):
+        path = os.path.dirname(os.path.abspath(__file__))
+        path += '/Recursos'
+
+        if self.ui.selector_filtro.currentText() == 'Low-pass':
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'PasaBajo.png')))
+        elif self.ui.selector_filtro.currentText() == 'High-pass':
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'PasaAlto.png')))
+        elif self.ui.selector_filtro.currentText() == 'Band-pass':
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'PasaBanda.png')))
+        else:
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'RechazaBanda.png')))
+
     def first_window(self):
-        self.switch_window.emit()
+        if listaf.seleccionado:
+            self.switch_window.emit()
+        else:
+            self.show_pop_up('To Acces the second window you must select a filter first.')
+
 
 
 class Window2(QtWidgets.QWidget):

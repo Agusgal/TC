@@ -3,6 +3,8 @@
 # ------------------------------------------------------
 from PyQt5.QtWidgets import *
 
+from PyQt5 import QtGui
+
 from matplotlib.backends.backend_qt5agg import FigureCanvas
 
 from matplotlib.figure import Figure
@@ -11,16 +13,26 @@ from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as Navigatio
 
 import numpy as np
 
+from webcolors import *
 from scipy import signal
 
 from analog.filters import Chebyshev1
+
 
 class MplWidget(QWidget):
 
     def __init__(self, identificador=0, parent=None):
         QWidget.__init__(self, parent)
 
-        self.canvas = FigureCanvas(Figure())
+        # Esto detecta color background y se lo pone a la figura del grafico (asi es generico)
+        color = self.palette().color(QtGui.QPalette.Background)
+        color.red(), color.green(), color.blue()
+        hex = rgb_to_hex((color.red(), color.green(), color.blue()))
+
+        self.fig = Figure(facecolor=hex)
+        self.fig.savefig("image_filename.png", edgecolor=self.fig.get_edgecolor())
+
+        self.canvas = FigureCanvas(self.fig)
 
         self.toolbar = NavigationToolbar(self.canvas, self)
 
@@ -62,12 +74,12 @@ class MplWidget(QWidget):
                     elif key == 'Maximun Q':
                         pass
                     elif key == 'Impulse Response':
-                        T, yout = filtro.gte_impulse()
+                        T, yout = filtro.get_impulse_response()
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
                         pass
                     elif key == 'Step Response':
-                        T, yout = filtro.get_step(filtro.sys)
+                        T, yout = filtro.get_step()
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
                     elif key == 'Poles and Zeroes':
@@ -81,6 +93,9 @@ class MplWidget(QWidget):
     def clear_axes(self):
         self.canvas.axes.clear()
         self.canvas.draw()
+
+    def plot_zplane(self):
+        pass
 
     def check_compatibility(self):
         pass
