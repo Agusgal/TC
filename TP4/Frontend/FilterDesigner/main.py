@@ -3,7 +3,7 @@ from PyQt5.QtWidgets import QMessageBox
 from Frontend.FilterDesigner.Lista_Filtros import listaf
 from analog.filters import *
 import numpy as np
-
+import os
 
 from Frontend.FilterDesigner.MainWindow import Ui_MainWindow  # Se importa archivo generado por designer
 
@@ -35,6 +35,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.boton_limpiar2.clicked.connect(lambda: self.clear_grafico(2))
 
         self.ui.boton_etapa2.clicked.connect(self.first_window)
+
+        self.ui.selector_filtro.currentIndexChanged.connect(self.change_image)
 
     def crear_filtro(self):
 
@@ -165,9 +167,6 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ui.ventana_grafica2.clear_axes()
 
-    def limpiar_entradas(self):
-        pass
-
     def show_pop_up(self, error):
         msg = QMessageBox()
         msg.setWindowTitle('Mistakes were made')
@@ -181,11 +180,25 @@ class MainWindow(QtWidgets.QMainWindow):
         if self.ui.checkbox_plantilla.isChecked():
             listaf.lista_filtros[i].mark_graphed('Template', where)
 
+    def change_image(self):
+        path = os.path.dirname(os.path.abspath(__file__))
+        path += '/Recursos'
+
+        if self.ui.selector_filtro.currentText() == 'Low-pass':
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'PasaBajo.png')))
+        elif self.ui.selector_filtro.currentText() == 'High-pass':
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'PasaAlto.png')))
+        elif self.ui.selector_filtro.currentText() == 'Band-pass':
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'PasaBanda.png')))
+        else:
+            self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'RechazaBanda.png')))
+
     def first_window(self):
         if listaf.seleccionado:
             self.switch_window.emit()
         else:
             self.show_pop_up('To Acces the second window you must select a filter first.')
+
 
 
 class Window2(QtWidgets.QWidget):
