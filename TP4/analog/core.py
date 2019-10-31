@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
   
-from analog.cusfunc.cusfunc import maprange
-from analog.custexcp.custexcp import *
+from cusfunc import maprange
+from custexcp import *
 
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
@@ -246,8 +246,8 @@ class AnalogFilter(ABC):
         self.ftype = ftype
         self.wp = wp
         self.ws = ws
-        self.Ap = Ap + gain
-        self.As = As + gain
+        self.Ap = Ap 
+        self.As = As 
         self.k = k
         self.N = N  # Filter order
         self.rp = rp
@@ -261,9 +261,11 @@ class AnalogFilter(ABC):
         self.b, self.a = self.compute_ba()
         # Step 3: Construct Transfer function
         self.sys = signal.TransferFunction(self.b, self.a)
+
         self.w, self.mag, self.pha = signal.bode(self.sys)
         whd = np.linspace(self.w[0], self.w[-1], len(self.w)*40)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=whd)
+        
         self.mag = self.mag + gain
         print(np.min(-self.mag))
         # kZP will denote de gain returned by the compute_zpk method
@@ -329,7 +331,7 @@ class AnalogFilter(ABC):
         stages = []
         print(f'hola:{len(self.zeros)}')
         print(f"los polos son{self.poles}")
-        if len(self.zeros) == 0:
+        if  len(self.zeros) == 0:
             ordered_poles = self.pair_singularities(self.poles)
             print(f"Los polos ordenados son {ordered_poles}")
             for poles in ordered_poles:

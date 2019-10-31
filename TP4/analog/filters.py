@@ -2,9 +2,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
 
-from analog.core import AnalogFilter
-from analog.core import Cell
-from analog.cusfunc.cusfunc import maprange
+from core import AnalogFilter
+from core import Cell
+from cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):
@@ -369,41 +369,52 @@ class Chebyshev2(AnalogFilter):
 #Prueba de etapas!
 
 
-filter1 = Butterworth("lowpass", 10E3*2*np.pi,40E3*2*np.pi, 3, 40)
+# filter1 = Butterworth("lowpass", 10E3*2*np.pi,40E3*2*np.pi, 3, 40)
 # filter1 = Butterworth("lowpass", 10E3,40E3, 3, 40)
 
 # filter1 = Chebyshev1("lowpass", 20E3, 50E3, 3, 40, k=0)
 # filter1 = Butterworth("highpass",20E3, 10E3, 3, 40)
 
-# filter1 = Chebyshev1("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
+# filter1 = Chebyshev2("bandpass", [20E3,30E3],[10E3,50E3], 3, 40, k=0)
 # filter1 = Butterworth("bandpass", [10E3,15E3], [5E3,20E3], 10, 40, rp=3, k=0)
+filter1 = Chebyshev1("bandstop",  [5E3,20E3],[10E3,15E3], 10, 40, rp=3, k=0)
 
+
+filter1.plot_zp(show=True)
+print(filter1.sys)
+for stage in filter1.stages:
+    print(f'sys de stage{stage.sys}')
+    stage.plot_zp()
+plt.show()
 # fig, axs = plt.subplots(1, len(filter1.stages)+2, figsize=(9, 3), sharey=True)
-fig, axs = plt.subplots(1+len(filter1.stages))
-
-summag  = 0
+fig, axs = plt.subplots(2+len(filter1.stages),sharex=True)
+summag = np.zeros_like(filter1.stages[0].mag)
+ganancia = np.full_like(filter1.w,20*np.log10(filter1.kZP))
+         
 for counter, stage in enumerate(filter1.stages):
     plt.grid(which="both", axis="both")
-    # axs.sub(f"etapa {counter} con q{stage.Q}")
-    if counter == len(filter1.stages)-1:
-        ganancia = np.arange(len(stage.w))
-        ganancia.fill(20*np.log10(filter1.kZP))
-        axs[counter].semilogx(stage.w,-stage.mag+ganancia)
-    else:
-        axs[counter].semilogx(stage.w,-stage.mag)
+    axs[counter].semilogx(stage.w,-stage.mag)
     axs[counter].set_title(f"""
                             Etapa {counter}
                             Q:{np.round(stage.Q,2)}
                             """)
+    print(f'mag cant: {len(stage.mag)}')
+    # summag = summag + stage.mag
+
+#Plot de la suma
+for stage in filter1.stages:
+    print(f'{np.max(-stage.mag)}')
+    print(f'{np.where(np.max(-stage.mag)==(-stage.mag))}')
     summag += stage.mag
 
-# axs[counter+1].semilogx(filter1.w,-summag) #+20*np.log10(filter1.kZP)
-axs[counter+1].semilogx(filter1.w,-filter1.mag-ganancia)
-axs[counter+1].semilogx(filter1.w,-summag)
+axs[counter+1].semilogx(filter1.stages[0].w,-summag+ganancia) #+20*np.log10(filter1.kZP)
 
-axs[counter+1].set_title("original")
+#Plot del original
+axs[counter+2].semilogx(filter1.w,-filter1.mag)
+
+axs[counter+2].set_title("original")
 
 plt.show()
 
-filter2 =Butterworth("lowpass", 20E3, 50E3, 3, 40, gain = 5, k=0)
-filter2.plot_mag(show=True)
+# filter2 =Butterworth("lowpass", 20E3, 50E3, 3, 40, gain = 5, k=0)
+# filter2.plot_mag(show=True)
