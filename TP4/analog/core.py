@@ -424,7 +424,7 @@ class AnalogFilter(ABC):
             fp = np.divide(self.wp, 2*np.pi)
             p2x = [[fp, x[-1], x[-1], fp]]
             p2y = [[self.Ap, self.Ap, np.max(y), np.max(y)]]
-            p = p2x + p2y
+            p = p2x +  p2y
             stencils = [p] + [s]
             return stencils
         elif self.ftype == 'bandpass':
