@@ -360,14 +360,14 @@ En contraparte al preset en la primer etapa, el segundo cambia de una manera mas
 Luego se realizó un histograma de la aparición de $\omega_0$ en el análisis de montecarlo.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Imagenes-Ej2/histW0.png}
+	\includegraphics[width=0.7\textwidth]{Imagenes-Ej2/histW0.png}
 	\label{fig:graph}
 	\caption{Histograma aparición de $\omega_0$.}
 \end{figure}
 
 \subsubsection{Filtro definitivo.}
 
-También se midió la respuesta en frecuencia del filtro, se notó que la celda estaba amplificando de mas y no llegaba a cumplir la plantilla, por lo que se hizo una etapa de compensación de ganancia, la cual permitió que se cumplan las especificaciones. Finalmente se midió la respuesta en frecuencia obteniendo los siguientes resultados:
+Se midió la respuesta en frecuencia del filtro obteniendo los siguientes resultados:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauch.png}
@@ -389,14 +389,42 @@ Luego se cotejó con tanto con la simulación como con el cálculo teórico.
 	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchCalcsimF.png}
 	\label{fig:Bodecalcsimf}
 \end{figure}
-Se puede observar como el calculado y el simulado diferen ligeramente del medido, lo cual es esperado, se podría ajustar el medido mediante la utilización de presets como fue discutido previamente pero dado a que cumplía plantilla se decidió no hacerlo.
+Se puede observar como el calculado y el simulado diferen ligeramente del medido, lo que se hizo para ajustar el gráfico se colocaron presets sobre la resistencia R3 ya que controla el Q como fue analizado previamente, obteniendo los siguientes resultados.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchV2.png}
+	\label{fig:graph}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchFaseV2.png}
+	\label{fig:graph}
+\end{figure}
+Debido ala calibración ahora el bode tiene una banda mucho mas ancha y cumple con mayor facilidad la plantilla, a continuación se presenta una superposición de el simulado el calculado y el medido.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchCalcsimV2.png}
+	\label{fig:Bodecalcsim}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/BodeRauchCalcsimFV2.png}
+	\label{fig:Bodecalcsimf}
+\end{figure}
+Ahora todos los gráficos tienen una gran coincidencia.
 \subsection{Estabilidad}
-Holi
+Se intentó en esta sección lograr que la celda oscile, introduciéndole una cuadrada la cual es sabido esta compuesta por un gran numero de frecuencias, así también variando no solo la amplitud de la misma sino también su frecuencia y duty-cycle, sin poder hacer oscilar a la celda. La siguiente imagen es la respuesta de la celda al escalón.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej2/Step.png}
+	\label{fig:stepresponse}
+	\caption{Respuesta al escalón}
+\end{figure}
+
 \subsection{Conclusiones}
 Se pudo realizar correctamente la implementación de un filtro pasa banda con la aproximación de chebycheff mediante celdas rauch.
 Una ventaja de la celda Rauch es que permite la implementación de un filtro de segundo orden con tan solo 1 operacional, mientras que por ejemplo la celda universal utiliza 3 de ellos, también tiene el beneficio de poder sintetizar valores de Q relativamente altos gracias a su doble realimentación tanto negativa como positiva (mediante la utilización del Q enhancement), dando esta ultima una de sus desventajas que es la posibilidad de que haya una oscilación en el circuito.
-También, se compensó la ganancia de manera satisfactoria al agregársele un etapa de compensación a la salida del
-filtro.
+Una cualidad que fue de gran utilidad es fue la capacidad de ajustar el Q del circuito mediante el uso de presets.
 
 %
 %\begin{figure}[H]
