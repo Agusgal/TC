@@ -70,7 +70,10 @@ class MainWindow(QtWidgets.QMainWindow):
 
             n = int(self.ui.input_orden_filtro.text())
 
-            try:  # falta agregar otro tipos de errores
+            #Todo agregar los demas filtros que tincho estuvo haciendo
+            #Todo agregar errores de compatibilidad
+            #Butter ya anda perfecto
+            try:
                 if aprox == 'Butterworth':
                     filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
                     self.agregar_filtro_lista(filtro)
