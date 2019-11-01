@@ -47,8 +47,6 @@ class MplWidget(QWidget):
 
     def plot(self, lista_filtros):
 
-
-        #Falta agregar compatibilidad entre tipos de graficos
         self.canvas.axes.clear()
         for filtro in lista_filtros:
             for key in filtro.is_graphed:

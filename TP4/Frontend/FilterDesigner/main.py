@@ -5,6 +5,10 @@ from analog.filters import *
 import numpy as np
 import os
 
+from Frontend.FilterDesigner.mplwidget import MplWidget
+
+from Frontend.FilterDesigner.stagewidget import StageWidget
+
 from Frontend.FilterDesigner.MainWindow import Ui_MainWindow  # Se importa archivo generado por designer
 
 from Frontend.FilterDesigner.Window2 import Ui_Window2
@@ -161,7 +165,6 @@ class MainWindow(QtWidgets.QMainWindow):
             listaf.lista_filtros[ind].mark_graphed(name, where)
 
             self.ui.ventana_grafica1.plot(listaf.lista_filtros)
-
             self.ui.ventana_grafica2.plot(listaf.lista_filtros)
         except ValueError as error:
             print(1)
@@ -220,7 +223,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
 
     def first_window(self):
-        if listaf.seleccionado:
+        if len(listaf.lista_filtros):
             self.switch_window.emit()
         else:
             self.show_pop_up('To Acces the second window you must select a filter first.')
@@ -229,16 +232,48 @@ class MainWindow(QtWidgets.QMainWindow):
 class Window2(QtWidgets.QWidget):
     switch_window = QtCore.pyqtSignal()
 
-    def __init__(self):
+    def __init__(self, selected):
         super(Window2, self).__init__()
         self.ui = Ui_Window2()
         self.ui.setupUi(self)
-        # agregar callbacks y metodos de botones
 
-        self.ui.boton_etapa1.clicked.connect(self.switch)
+        self.selected = selected
+
+        self.filtro = listaf.lista_filtros[selected]
+
+        celdas = self.filtro.get_stages()
+       # self.verticallayout = QtWidgets.QVBoxLayout(self.ui.scrollArea_etapas)
+
+        #self.ui.ventana_pz.zplot(self.selected)
+
+
+        #self.ui.scrollArea_etapas.set
+
+
+        self.ui.boton_etapa1.clicked.connect(self.create_graph)
+
+
+    def create_stages(self):
+        pass
+
+    def create_graph(self, name):
+        ventana = StageWidget(self.ui.marco_etapas)
+        ventana.setObjectName(name)
+        ventana.setMaximumSize(QtCore.QSize(200, 300))
+        self.ui.horizontalLayout_2.addWidget(ventana)
+
+    def set_pz(self):
+        pass
+
 
     def switch(self):
         self.switch_window.emit()
+        self.close()
+
+
+
+
+
 
 # Controlador de ventanas, conecta señales que le dicen a las distintas ventanas cuando abrirse y cerrarse
 class Controller:
@@ -252,7 +287,7 @@ class Controller:
         self.window.show()
 
     def show_window_two(self):
-        self.window_two = Window2()
+        self.window_two = Window2(listaf.lista_filtros[listaf.seleccionado])
         self.window.close()
         self.window_two.switch_window.connect(self.show_main)
         self.window_two.show()

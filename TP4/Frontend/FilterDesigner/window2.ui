@@ -6,45 +6,32 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1329</width>
-    <height>883</height>
+    <width>1217</width>
+    <height>870</height>
    </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
   <property name="windowTitle">
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
-   <item row="2" column="0">
-    <widget class="QGroupBox" name="marco_etapas">
-     <property name="styleSheet">
-      <string notr="true">QGroupBox {
-    border: 1px solid gray;
-    margin-top: 0.5em;
-}
-
-QGroupBox::title {
-    subcontrol-origin: margin;
-    left: 10px;
-    padding: 0 3px 0 3px;
-}</string>
-     </property>
-     <property name="title">
-      <string>Stage Configuration</string>
-     </property>
-    </widget>
-   </item>
-   <item row="0" column="0" rowspan="2">
-    <widget class="QGroupBox" name="groupBox">
+   <item row="0" column="0" rowspan="5">
+    <widget class="QGroupBox" name="marco_edicion_etapas">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Preferred">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
+     <property name="maximumSize">
       <size>
-       <width>250</width>
-       <height>1</height>
+       <width>380</width>
+       <height>16777215</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -60,31 +47,94 @@ QGroupBox::title {
 }</string>
      </property>
      <property name="title">
-      <string>GroupBox</string>
+      <string>Stage Edition</string>
      </property>
     </widget>
    </item>
-   <item row="0" column="2">
-    <widget class="QPushButton" name="boton_etapa1">
+   <item row="0" column="1">
+    <widget class="MplWidget" name="ventana_etapas" native="true">
      <property name="sizePolicy">
-      <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
        <horstretch>0</horstretch>
        <verstretch>0</verstretch>
       </sizepolicy>
      </property>
-     <property name="minimumSize">
+     <property name="maximumSize">
       <size>
-       <width>250</width>
-       <height>0</height>
+       <width>700</width>
+       <height>16777215</height>
       </size>
-     </property>
-     <property name="text">
-      <string>PushButton</string>
      </property>
     </widget>
    </item>
-   <item row="1" column="2">
-    <widget class="QGroupBox" name="groupBox_3">
+   <item row="4" column="1">
+    <widget class="QGroupBox" name="marco_setup">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>80</height>
+      </size>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+     </property>
+     <property name="title">
+      <string>Stage Set-up</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="boton_izquierda">
+        <property name="text">
+         <string>Left Stage</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="boton_borrar_etapa">
+        <property name="text">
+         <string>Delete Stage</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="boton_derecha">
+        <property name="text">
+         <string>Right Stage</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="2" rowspan="5">
+    <widget class="QGroupBox" name="marco_pz">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>2</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>380</width>
+       <height>16777215</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">QGroupBox {
     border: 1px solid gray;
@@ -101,18 +151,106 @@ QGroupBox::title {
       <string>Poles and Zeroes</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_2">
-      <item row="0" column="0">
+      <item row="3" column="2">
+       <widget class="QListWidget" name="lista_ceros">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>42</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1" colspan="2">
+       <widget class="ZplaneWidget" name="ventana_pz" native="true">
+        <property name="maximumSize">
+         <size>
+          <width>375</width>
+          <height>375</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="2">
+       <widget class="QLabel" name="label_ceros">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Zeros</string>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="1">
+       <widget class="QPushButton" name="boton_agregar_etapa">
+        <property name="text">
+         <string>Add Stage</string>
+        </property>
+       </widget>
+      </item>
+      <item row="2" column="1">
+       <widget class="QLabel" name="label_polos">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>15</height>
+         </size>
+        </property>
+        <property name="text">
+         <string>Poles</string>
+        </property>
+       </widget>
+      </item>
+      <item row="3" column="1">
+       <widget class="QListWidget" name="lista_polos">
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>42</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item row="4" column="2">
        <widget class="QPushButton" name="boton_etapas_automaticas">
         <property name="text">
-         <string>Create Stages Automatically</string>
+         <string>Automatic Stages</string>
+        </property>
+       </widget>
+      </item>
+      <item row="5" column="1" colspan="2">
+       <widget class="QPushButton" name="boton_etapa1">
+        <property name="text">
+         <string>PushButton</string>
         </property>
        </widget>
       </item>
      </layout>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QGroupBox" name="groupBox_2">
+   <item row="5" column="0" colspan="3">
+    <widget class="QGroupBox" name="marco_etapas">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>200</height>
+      </size>
+     </property>
      <property name="styleSheet">
       <string notr="true">QGroupBox {
     border: 1px solid gray;
@@ -126,15 +264,10 @@ QGroupBox::title {
 }</string>
      </property>
      <property name="title">
-      <string>GroupBox</string>
+      <string>Stages</string>
      </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2"/>
     </widget>
-   </item>
-   <item row="0" column="1" rowspan="3">
-    <widget class="MplWidget" name="ventana_etapas" native="true"/>
-   </item>
-   <item row="4" column="0" colspan="3">
-    <widget class="QWidget" name="widget" native="true"/>
    </item>
   </layout>
  </widget>
@@ -143,6 +276,12 @@ QGroupBox::title {
    <class>MplWidget</class>
    <extends>QWidget</extends>
    <header>mplwidget.h</header>
+   <container>1</container>
+  </customwidget>
+  <customwidget>
+   <class>ZplaneWidget</class>
+   <extends>QWidget</extends>
+   <header>zplanewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
