@@ -5,8 +5,8 @@ from matplotlib import patches
 import numpy as np
 from scipy import signal
   
-from analog.cusfunc.cusfunc import maprange
-from analog.custexcp.custexcp import *
+from cusfunc import maprange
+from custexcp import *
 
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
@@ -31,12 +31,27 @@ class Cell:
         print(den,num)
         print(type(den))
         self.sys = signal.TransferFunction(self.num, self.den)
-        # self.sys = signal.sos2tf(np.concatenate(num,den))
-        # self.w, self.mag, self.pha = signal.bode(self.sys)
-        # whd = np.linspace(self.w[0], self.w[-1], len(self.w)*1000)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=w)
         self.zeros, self.poles, self.kZP = signal.tf2zpk(self.num,self.den)
         self.Q = self.compute_q()
+
+    def get_q(self):
+        return self.Q
+
+    def get_mag(self):
+        return self.mag
+
+    def get_w(self):
+        return self.w
+
+    def get_zeros(self):
+        return self.zeros
+
+    def get_poles(self):
+        return self.poles
+    
+    def get_gain(self):
+        return self.kZP
 
     def plot_mag(self, name=None, show=False, lc=None):
         """
@@ -281,6 +296,9 @@ class AnalogFilter(ABC):
         self.zeros, self.poles, self.kZP = self.compute_zpk()
         #Step 4: Split high order filter into first and second order cells
         self.stages = self.compute_filter_stages()
+    
+    def get_stages(self):
+        return self.stages
 
     def pair_singularities(self,zp):
         """
@@ -327,6 +345,13 @@ class AnalogFilter(ABC):
                 results.append([x])
         return results
 
+    def plot_qstages(self, show=False):
+        for counter, stage in enumerate(self.stages):
+            plt.stem(stage.get_q(),label=f'Q{counter}')
+
+        plt.legend()
+        if show:
+            plt.show()
 
     def compute_filter_stages(self):
         print(f"el orden del filtro es: {self.N}")
@@ -355,26 +380,12 @@ class AnalogFilter(ABC):
                 n,d = signal.zpk2tf([], poles, self.kZP)
                 stages.append(Cell(n,d,self.w))
         else:
-            # print("hola")
             sos = signal.zpk2sos(self.zeros, self.poles, self.kZP, pairing="keep_odd")
-            num = sos[:, :3][::-1]
-            den = sos[:, 3:]
-            for n, d in zip(num, den):
-                print(n, d)
-                stages.append(Cell(n,d,self.w))
-            # ordered_poles = self.pair_singularities(self.poles)
-            # ordered_zeros = self.pair_singularities(self.zeros)
-            # if len(ordered_poles) > len(ordered_zeros):
-                
+            for section in sos:
+                stages.append(Cell(section[:3],section[3:],self.w))
              
         stages = sorted(stages,key=lambda x:x.Q,reverse=False)
         return stages
-
-    
-    # def compute_stagehm(self,zeros,poles):
-
-
-
 
 
     @abstractmethod
@@ -597,6 +608,9 @@ class AnalogFilter(ABC):
 
     #TODO comentar
     def plot_impulse_response(self, name=None, show=False, lc=None):
+        """
+        Plots the impulse response of the given filter
+        """
         T, yout = signal.impulse(self.sys)
         if lc:
             plt.plot(T, yout, color=lc, label=name)
