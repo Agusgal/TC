@@ -2,12 +2,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
 import numpy as np
-#from core import AnalogFilter
-#from cusfunc import maprange
+from core import AnalogFilter
+from cusfunc import maprange
 
-from analog.core import AnalogFilter
-from analog.core import Cell
-from analog.cusfunc.cusfunc import maprange
+# from analog.core import AnalogFilter
+# from analog.core import Cell
+# from analog.cusfunc.cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):
@@ -371,8 +371,13 @@ class Cauer(AnalogFilter):
         """
         Must return optimal filter order
         """
-        self.N, self.Wn = signal.ellipord(
-            self.wp, self.ws, self.Ap, self.As, analog=True)
+        if self.N is None:
+            self.N, self.Wn = signal.ellipord(
+                self.wp, self.ws, self.Ap, self.As, analog=True)
+        else:
+            _, self.Wn = signal.ellipord(
+                self.wp, self.ws, self.Ap, self.As, analog=True)
+
 
     def compute_ba(self):
         """
@@ -598,8 +603,8 @@ class Bessel(AnalogFilter):
 
 testCompleto = True
 if testCompleto:
-    f1 = Chebyshev1('bandpass',[30E3,40E3],[10E3,60E3],3,40)
-    plt.title(f"Original Chebyshev1 orden {f1.N}")
+    f1 = Butterworth('bandstop',[10E3,60E3],[30E3,40E3],3,40)
+    plt.title(f"Original Butterworth orden {f1.N}")
     f1.plot_mag(show=True)
     suma = 0
     for counter, stage in enumerate(f1.stages):
