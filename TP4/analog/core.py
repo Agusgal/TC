@@ -24,11 +24,11 @@ class Cell:
 
     """
 
-    def __init__(self, num,den,w):
+    def __init__(self, num, den, w):
         print("Hola")
         self.den = den
         self.num = num
-        print(den,num)
+        print(den, num)
         print(type(den))
         self.sys = signal.TransferFunction(self.num, self.den)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=w)

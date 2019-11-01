@@ -140,7 +140,7 @@ class Ui_Window2(object):
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.marco_etapas.sizePolicy().hasHeightForWidth())
         self.marco_etapas.setSizePolicy(sizePolicy)
-        self.marco_etapas.setMaximumSize(QtCore.QSize(16777215, 200))
+        self.marco_etapas.setMaximumSize(QtCore.QSize(16777215, 250))
         self.marco_etapas.setStyleSheet("QGroupBox {\n"
 "    border: 1px solid gray;\n"
 "    margin-top: 0.5em;\n"

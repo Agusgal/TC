@@ -34,6 +34,7 @@ class ZplaneWidget(QWidget):
         layout.addWidget(self.canvas)
 
         self.canvas.axes = self.canvas.figure.add_subplot(111)
+        self.canvas.axes.set_facecolor("#e1ddbf")
 
         self.setLayout(layout)
 

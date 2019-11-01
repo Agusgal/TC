@@ -4,6 +4,7 @@ from webcolors import *
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_qt5agg import FigureCanvas
 
+import numpy as np
 
 class StageWidget(QWidget):
 
@@ -25,9 +26,9 @@ class StageWidget(QWidget):
         layout.addWidget(self.canvas)
 
         self.canvas.axes = self.canvas.figure.add_subplot(111)
+        self.canvas.axes.set_facecolor("#e1ddbf")
 
         self.setLayout(layout)
-
 
     def plot_stage_pz(self, stage, opacity):
         zeros = stage.get_zeros()
@@ -53,9 +54,24 @@ class StageWidget(QWidget):
             self.canvas.axes.scatter(x.real, x.imag, c=color, marker=mark, alpha=1)
             self.canvas.draw()
 
-    def plot_mag(self, stage):
+    def plot_mag(self, stage, name):
+        self.canvas.axes.semilogx(np.divide(stage.w, 2 * np.pi), stage.mag, color='blue', label=name)
+        self.canvas.draw()
 
-        plt.semilogx(np.divide(self.w, 2 * np.pi), -self.mag, color=lc, label=name)
+    def select(self):
+        self.canvas.axes.spines['top'].set_color('red')
+        self.canvas.axes.spines['top'].set_linewidth(2)
+
+        self.canvas.axes.spines['bottom'].set_color('red')
+        self.canvas.axes.spines['bottom'].set_linewidth(2)
+
+        self.canvas.axes.spines['right'].set_color('red')
+        self.canvas.axes.spines['right'].set_linewidth(2)
+
+        self.canvas.axes.spines['left'].set_color('red')
+        self.canvas.axes.spines['left'].set_linewidth(2)
+
+        self.canvas.draw()
 
     def clear_axes(self):
         self.canvas.axes.clear()

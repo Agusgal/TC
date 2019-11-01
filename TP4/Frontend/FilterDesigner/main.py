@@ -239,6 +239,9 @@ class Window2(QtWidgets.QWidget):
         self.ui = Ui_Window2()
         self.ui.setupUi(self)
 
+        self.stages_list = []
+        self.selected_stage = 0
+
         self.selected = selected
 
         cells = self.selected.get_stages()
@@ -254,15 +257,18 @@ class Window2(QtWidgets.QWidget):
 
         self.disable_zeros()
 
-
         self.ui.lista_polos.itemSelectionChanged.connect(lambda: self.select('polo'))
         self.ui.lista_ceros.itemSelectionChanged.connect(lambda: self.select('cero'))
 
+        self.ui.boton_agregar_etapa.clicked.connect(self.add_stage)
 
+        self.ui.boton_derecha.clicked.connect(self.etapa_derecha)
+
+        self.ui.boton_izquierda.clicked.connect(self.etapa_izquierda)
+
+        self.ui.boton_borrar_etapa.clicked.connect(self.delete_stage)
 
         self.ui.boton_etapa1.clicked.connect(self.switch)
-
-        #self.ui.boton_agregar_etapa.clicked.connect()
 
     def add_stages_list(self):
         for celda in self.celdas:
@@ -272,7 +278,7 @@ class Window2(QtWidgets.QWidget):
 
             if len(celda[1].get_zeros()):
                 ceros = celda[1].get_zeros()
-                self.ui.lista_ceros.addItem(str(celda[0]) + ' Cero con real = ' + str(round(cero.real, 2)) + ' imaginario = ' + str(round(cero.imag, 2)))
+                self.ui.lista_ceros.addItem(str(celda[0]) + ' Cero con real = ' + str(round(ceros.real, 2)) + ' imaginario = ' + str(round(ceros.imag, 2)))
             else:
                 self.ui.lista_ceros.addItem('None')
 
@@ -280,12 +286,6 @@ class Window2(QtWidgets.QWidget):
         item = self.ui.lista_ceros.item(0)
         if item.text() == 'None':
             self.ui.lista_ceros.setEnabled(False)
-
-    def create_graph(self, name):
-        ventana = StageWidget(self.ui.marco_etapas)
-        ventana.setObjectName(name)
-        ventana.setMaximumSize(QtCore.QSize(200, 300))
-        self.ui.horizontalLayout_2.addWidget(ventana)
 
     def set_pz(self):
         for cell in self.celdas:
@@ -307,9 +307,9 @@ class Window2(QtWidgets.QWidget):
                 et = cell[1]
 
         if tipo == 'polo':
-            selected = et.get_poles()
+            slc = et.get_poles()
         else:
-            selected = et.get_zeros()
+            slc = et.get_zeros()
 
         #bajo opacidad demas polos y ceros
         self.ui.ventana_pz.clear_axes()
@@ -317,15 +317,78 @@ class Window2(QtWidgets.QWidget):
             self.ui.ventana_pz.plot_stage_pz(cell[1], 0.2)
 
         #subo opacidad a lo que este seleccionado
-        self.ui.ventana_pz.select_pz(selected, tipo)
+        self.ui.ventana_pz.select_pz(slc, tipo)
 
-    def add_stage(self):
+    def add_stage(self):#Agregar que funcione con ceros
+        self.selected_stage = 1
+        item = self.ui.lista_polos.currentItem()
+        text = item.text()
+        number = text[0]
+
+        print(number)
+        celda = None
+        for cell in self.celdas:
+            if cell[0] == int(number):
+                celda = cell[1]
+
+        new_stage = Stages(celda.get_w(), celda.get_mag(), celda.get_q())
+        print(celda.get_w())
+        print(celda.get_mag())
+        self.stages_list.append(new_stage)
+
+        self.graph_stages()
+
+    def graph_stages(self):
+        #esto borra los widgets anteriores
+        for i in reversed(range(self.ui.horizontalLayout_2.count())):
+            self.ui.horizontalLayout_2.itemAt(i).widget().setParent(None)
+
+        suma = 0
+        for counter, stg in enumerate(self.stages_list):
+
+            ventana = StageWidget(self.ui.marco_etapas)
+            ventana.plot_mag(stg, name=f"Etapa {counter}")
+            if counter + 1 == self.selected_stage:
+                ventana.select()
+            suma += stg.mag
+            print(suma)
+
+            ventana.setMaximumSize(QtCore.QSize(250, 300))
+            self.ui.horizontalLayout_2.addWidget(ventana)
+
+    def etapa_derecha(self):
+        if self.selected_stage < len(self.stages_list):
+            self.selected_stage += 1
+            self.graph_stages()
+
+    def etapa_izquierda(self):
+        if self.selected_stage != 1:
+            self.selected_stage -= 1
+            self.graph_stages()
+
+    def delete_stage(self):
+        self.stages_list.pop(self.selected_stage - 1)
+        self.selected_stage -= 1
+        self.graph_stages()
+
+
+
+    def auto_stages(self):
         pass
+
 
 
     def switch(self):
         self.switch_window.emit()
         self.close()
+
+
+class Stages:
+    def __init__(self, w, mag, q):
+        self.w = w
+        self.mag = mag
+        self.q = q
+
 
 
 
