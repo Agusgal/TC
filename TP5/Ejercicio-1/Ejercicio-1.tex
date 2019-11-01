@@ -212,7 +212,7 @@ $C_1 [F]$ & $196.1p$ & $220p+1.8n$ & $196.04p$ & $0.1\%$ & 0 & -1 \\
 \begin{table}[H]
 \centering
 \begin{tabular}{@{}cccccccc@{}}
-\multicolumn{8}{c}{2da Etapa - Sallen-Key - Orden 2 - $f_0 = 31.2KHz$ - $G=-7dB$} \\ \midrule
+\multicolumn{8}{c}{2da Etapa - Sallen-Key - Orden 2 - $f_0 = 31.2KHz$ - $G=-5dB$} \\ \midrule
 - & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
 $R_1 [\Omega]$ & $21.43K$ & $22K//820K$ & $10K$ & $0.1\%$ & -0.6 & 0 & -0.2 \\
 $R_2 [\Omega]$ & $8.53K$ & $330+8.2K$ & $8.53K$ & $0.1\%$ & 0 & 0 & -0.5 \\
@@ -225,7 +225,7 @@ $C_2 [F]$ & $100p$ &  & $100p$ & $0\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
 \begin{table}[H]
 \centering
 \begin{tabular}{@{}cccccccc@{}}
-\multicolumn{8}{c}{3ra Etapa - Sallen-Key - Orden 2 - $f_0 = 23KHz$ - $G=7dB$} \\ \midrule
+\multicolumn{8}{c}{3ra Etapa - Sallen-Key - Orden 2 - $f_0 = 23KHz$ - $G=5dB$} \\ \midrule
 - & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
 $R_1 [\Omega]$ & $57.31K$ & $1.2K+56K$ & $57.2K$ & $0.2\%$ & 0 & 0.54 & -0.2 \\
 $R_2 [\Omega]$ & $57.31K$ & 1.2K+56K & $57.2K$ & $0.2\%$ & 0 & -0.54 & -0.5 \\
@@ -287,23 +287,40 @@ Se puede observar en el montecarlo del filtro realizado con la aproximación Leg
 
 \subsubsection{Rango Dinámico}
 
-Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $0.446684$. Luego, la tensión de entrada máxima será
+Para el rango dinámico se utilizó la ganancia máxima de $1.78 \ (5dB)$ y una ganancia mínima de $0.56 \ (-5dB)$. Luego, la tensión de entrada máxima será
 \begin{equation}
-V_{i_{max}}= \frac{V_{o_{max}}}{2.238721}
+V_{i_{max}}= \frac{V_{o_{max}}}{1.78}
 \end{equation}
 y la tensión mínima de entrada será
 \begin{equation}
-V_{i_{min}}= \frac{V_{o_{min}}}{0.446684}
+V_{i_{min}}= \frac{V_{o_{min}}}{0.56}
 \end{equation}
 y considerando que nuestra tensión máxima es de $13.5V$ fijada por la saturación del opamp y nuestro piso de ruido se encuentra en los $10mV$, el rango dinámico será
 \begin{equation}
-DR=20log(\frac{V_{i_{max}}}{V_{i_{min}}}) = 48.6dB
+DR=20log(\frac{V_{i_{max}}}{V_{i_{min}}}) = 52.56dB
 \end{equation}
 
 
 \subsubsection{Mediciones}
 
+Para una frecuencia de $31KHz$ se midió una atenuación de $-4.27dB$ lo cual estaba dentro de la dispersión de montecarlo por lo que se añadió una etapa de ganancia consiguiendo así una atenuación de $2.27dB$ en la frecuencia de paso, obteniendo los siguientes resultados
 
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_hs_med.png}
+	\caption{Medición del bode en amplitud del filtro aproximación Legendre.}
+	\label{leg_bodeamp_med}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/legendre_hspha_med.png}
+	\caption{Medición del bode en fase del filtro aproximación Legendre.}
+	\label{leg_bodepha_med}
+\end{figure}
+
+cumpliéndose satisfactoriamente la plantilla propuesta.
 
 \subsection{Aproximación de Bessel.}
 
@@ -379,7 +396,7 @@ Los componentes utilizados para la realización del filtro junto a su implementa
 \begin{table}[H]
 \centering
 \begin{tabular}{@{}cccccccc@{}}
-\multicolumn{8}{c}{1ra Etapa - Sallen-Key - Orden 2 - $f_0 = 3.2KHz$ - $G=7dB$} \\ \midrule
+\multicolumn{8}{c}{1ra Etapa - Sallen-Key - Orden 2 - $f_0 = 3.2KHz$ - $G=5dB$} \\ \midrule
 - & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
 $R_1 [\Omega]$ & $50K$ & $100K//100K$ & $50K$ & $0\%$ & 0 & 0.15 & -0.5 \\
 $R_2 [\Omega]$ & $50K$ & $100K//100K$ & $50K$ & $0\%$ & 0 & -0.15 & -0.5 \\
@@ -405,7 +422,7 @@ $C_2 [F]$ & $8.13n$ & $8.2n+1u$ & $8.13n$ & $0\%$ & 0 & -0.5 & -0.5 \\ \bottomru
 \begin{table}[H]
 \centering
 \begin{tabular}{@{}cccccccc@{}}
-\multicolumn{8}{c}{3ra Etapa - Sallen-Key - Orden 2 - $f_0 = 3.8KHz$ - $G=-7dB$} \\ \midrule
+\multicolumn{8}{c}{3ra Etapa - Sallen-Key - Orden 2 - $f_0 = 3.8KHz$ - $G=-5dB$} \\ \midrule
 - & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
 $R_1 [\Omega]$ & $2.13K$ & $3.9K//4.7K$ & $2.13K$ & $0\%$ & -0.44 & 0 & -0.28 \\
 $R_2 [\Omega]$ & $1.2K$ &  & $1.2K$ & $0\%$ & 0 & 0 & -0.5 \\
@@ -467,31 +484,42 @@ Se puede observar en el montecarlo del filtro realizado con la aproximación Bes
 
 \subsubsection{Rango Dinámico}
 
-Para el rango dinámico se utilizó la ganancia máxima de $2.238721$ y una ganancia mínima de $0.446684$. Luego, la tensión de entrada máxima será
+Para el rango dinámico se utilizó la ganancia máxima de $1.78 \ (5dB)$ y una ganancia mínima de $0.56 \ (-5dB)$. Luego, la tensión de entrada máxima será
 \begin{equation}
-V_{i_{max}}= \frac{V_{o_{max}}}{2.238721}
+V_{i_{max}}= \frac{V_{o_{max}}}{1.78}
 \end{equation}
 y la tensión mínima de entrada será
 \begin{equation}
-V_{i_{min}}= \frac{V_{o_{min}}}{0.446684}
+V_{i_{min}}= \frac{V_{o_{min}}}{0.56}
 \end{equation}
 y considerando que nuestra tensión máxima es de $13.5V$ fijada por la saturación del opamp y nuestro piso de ruido se encuentra en los $10mV$, el rango dinámico será
 \begin{equation}
-DR=20log(\frac{V_{i_{max}}}{V_{i_{min}}}) = 48.6dB
+DR=20log(\frac{V_{i_{max}}}{V_{i_{min}}}) = 52.56dB
 \end{equation}
 
 
 \subsubsection{Mediciones}
 
+Se realizaron las mediciones de bode del filtro implementado resultando:
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_hs_med.png}
+	\caption{Medición del bode en amplitud del filtro aproximación Bessel.}
+	\label{bes_bodeamp_med}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/bessel_hspha_med.png}
+	\caption{Medición del bode en fase del filtro aproximación Bessel.}
+	\label{bes_bodepha_med}
+\end{figure}
+
+Para una frecuencia de $1644Hz$ se midió una atenuación de $-2.1dB$ y para una frecuencia de $7870Hz$ se registró una atenuación de $-42.35dB$. Dado que la curva medida posee una gran similitud a la curva simulada y se comprobó que esta última cumple con las especificaciones de desvío de retardo de grupo por un gran margen, se puede afirmar que el filtro cumple exitosamente con la plantilla propuesta. Se descartan mediciones para frecuencias mayores a $10KHz$ ya que estas mediciones se realizaron por debajo del piso de ruido dado el orden del filtro implementado y la atenuación de $\geq 80dB$ que este produce a la salida a partir de esta frecuencia.
 
 \subsection{Conclusiones}
 
+Se implementaron exitosamente dos filtros calculados con aproximaciones de Bessel y de Legendre utilizando la topología Sallen-Key. Esta topología ofrece varias ventajas sobre otras topologías. Por ejemplo, solo se precisa utilizar un operacional a diferencia de celdas realizadas con la topología universal que precisa de tres operacionales. Otra ventaja que posee la Sallen-Key es una muy baja sensibilidad respecto a variaciones en parámetros intrínsecos del operacional utilizado. Sin embargo, si se desea tener un factor de calidad alto, las sensibilidades respecto a los componentes pasivos de las celdas aumenta en gran consideración, como se puede ver en el anexo de sensibilidades. Esto nos permite llegar a la conclusión de que esta topología se podría utilizar cuando o las etapas por separado poseen un bajo factor de calidad, o los operacionales utilizados poseen poca fidelidad en sus parámetros intrínsecos.
 
-
-\subsection{Anexo de Sensibilidades}
-\begin{equation}
-S^{G}_{C_2}={{\it C2}\,{\pi }^{2}\\
-\mbox{}{f}^{2} \left( {\it R2}+{\it R1} \right)  \left( {\it C2}\, \left( {\it R2}+{\it R1} \right) -{\frac {{\it C1}\,{\it R1}\,{\it R4}}{{\it R3}}}\\
-\mbox{} \right)  \left(  \left( -4\,{\pi }^{2}{f}^{2}{\it R2R1C2C1}+1 \right) ^{2}+4\,{\pi }^{2}{f}^{2} \left( {\it C2}\, \left( {\it R2}+{\it R1} \right) -{\frac {{\it C1}\,{\it R1}\,{\it R4}}{{\it R3}}} \right) ^{2} \right) ^{-1}}
-\end{equation}
 \end{document}

@@ -102,20 +102,19 @@ for abs in data["abs"]:
     abss.append(10**(abs/20))
 
 
-#medido_data=pandas.read_csv("filtrocongiczout.csv")
+medido_data=pandas.read_csv("leg.csv")
 abs=[]
 phase=[]
-#print(medido_data[['pha']])
-#phase = np.asarray(medido_data[['pha']])*(-1) + 100
-#abs=np.asarray(medido_data[['imp']])*0.7
+phase = np.asarray(medido_data[['Channel 2 Phase (*)']])
+abs=np.asarray(medido_data[['Channel 2 Magnitude (dB)']])+1.67
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Ganancia [dB]")
 plt.grid()
 plt.xscale("log")
 plt.plot(f, amp1, color='green', label="Calculado")
 plt.plot(data["f"], data["abs"], color = 'blue', label ="Simulado")
-#plt.plot(medido_data[['frequency']], abs, color = 'red', marker='.', label ="Medido", linestyle='-')
-#plt.plot([2926,2926],[10, -55],color='orange', label="Frecuencia de notch deseada")
+plt.plot(medido_data[['Frequency (Hz)']], abs, color = 'red', label ="Medido")
+plt.plot([0,31000,31000.01],[-3, -3, -161],color='black')
 plt.legend()
 plt.show()
 
@@ -125,7 +124,7 @@ plt.grid()
 plt.xscale("log")
 plt.plot(f, pha, color='green', label="Calculado")
 plt.plot(data["f"], data["pha"], color = 'blue', label ="Simulado")
-#plt.plot(medido_data[['frequency']], phase, color = 'red', marker='.', label='Medido', linestyle='-')
+plt.plot(medido_data[['Frequency (Hz)']], phase, color = 'red', label='Medido')
 plt.legend()
 plt.show()
 
