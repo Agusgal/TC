@@ -268,6 +268,10 @@ class Window2(QtWidgets.QWidget):
 
         self.ui.boton_borrar_etapa.clicked.connect(self.delete_stage)
 
+        self.ui.boton_etapas_automaticas.clicked.connect(self.auto_stages)
+
+        self.ui.boton_reset.clicked.connect(self.reset())
+
         self.ui.boton_etapa1.clicked.connect(self.switch)
 
     def add_stages_list(self):
@@ -278,7 +282,7 @@ class Window2(QtWidgets.QWidget):
 
             if len(celda[1].get_zeros()):
                 ceros = celda[1].get_zeros()
-                self.ui.lista_ceros.addItem(str(celda[0]) + ' Cero con real = ' + str(round(ceros.real, 2)) + ' imaginario = ' + str(round(ceros.imag, 2)))
+                self.ui.lista_ceros.addItem(str(celda[0]) + ' Cero con real = ' + str(round(ceros.real, 2)) + ' imaginario = ' + str((ceros.imag, 2)))
             else:
                 self.ui.lista_ceros.addItem('None')
 
@@ -374,9 +378,20 @@ class Window2(QtWidgets.QWidget):
 
 
     def auto_stages(self):
-        pass
+        stgs = self.selected.get_stages()
+        self.stages_list = []
+        self.selected_stage = 1
 
+        for s in stgs:
+            etp = Stages(s.get_w(), s.get_mag(), s.get_q())
+            self.stages_list.append(etp)
 
+        self.graph_stages()
+
+    def reset(self):
+        self.stages_list = []
+        self.selected_stage = 0
+        self.graph_stages()
 
     def switch(self):
         self.switch_window.emit()
