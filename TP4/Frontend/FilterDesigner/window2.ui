@@ -153,16 +153,19 @@ QGroupBox::title {
      <layout class="QGridLayout" name="gridLayout_2">
       <item row="3" column="2">
        <widget class="QListWidget" name="lista_ceros">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>42</height>
+          <height>75</height>
          </size>
         </property>
        </widget>
       </item>
       <item row="1" column="1" colspan="2">
-       <widget class="ZplaneWidget" name="ventana_pz" native="true">
+       <widget class="StageWidget" name="ventana_pz" native="true">
         <property name="maximumSize">
          <size>
           <width>375</width>
@@ -212,10 +215,13 @@ QGroupBox::title {
       </item>
       <item row="3" column="1">
        <widget class="QListWidget" name="lista_polos">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
         <property name="maximumSize">
          <size>
           <width>16777215</width>
-          <height>42</height>
+          <height>75</height>
          </size>
         </property>
        </widget>
@@ -230,7 +236,7 @@ QGroupBox::title {
       <item row="5" column="1" colspan="2">
        <widget class="QPushButton" name="boton_etapa1">
         <property name="text">
-         <string>PushButton</string>
+         <string>Etapa 1</string>
         </property>
        </widget>
       </item>
@@ -248,7 +254,7 @@ QGroupBox::title {
      <property name="maximumSize">
       <size>
        <width>16777215</width>
-       <height>200</height>
+       <height>250</height>
       </size>
      </property>
      <property name="styleSheet">
@@ -279,9 +285,9 @@ QGroupBox::title {
    <container>1</container>
   </customwidget>
   <customwidget>
-   <class>ZplaneWidget</class>
+   <class>StageWidget</class>
    <extends>QWidget</extends>
-   <header>zplanewidget.h</header>
+   <header location="global">stagewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>

@@ -5,8 +5,8 @@ from matplotlib import patches
 import numpy as np
 from scipy import signal
   
-from cusfunc import maprange
-from custexcp import *
+from analog.cusfunc.cusfunc import maprange
+from analog.custexcp.custexcp import *
 
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 
@@ -24,11 +24,11 @@ class Cell:
 
     """
 
-    def __init__(self, num,den,w):
+    def __init__(self, num, den, w):
         print("Hola")
         self.den = den
         self.num = num
-        print(den,num)
+        print(den, num)
         print(type(den))
         self.sys = signal.TransferFunction(self.num, self.den)
         self.w, self.mag, self.pha = signal.bode(self.sys, w=w)
