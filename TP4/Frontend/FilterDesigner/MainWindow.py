@@ -387,5 +387,6 @@ class Ui_MainWindow(object):
         self.label_Q_maximo.setText(_translate("MainWindow", "Maximun Q:"))
         self.label_orden_filtro.setText(_translate("MainWindow", "Filter Order:"))
         self.label_dB_atenuacion_bp.setText(_translate("MainWindow", "dB"))
+
 from mplwidget import MplWidget
 from zplanewidget import ZplaneWidget

@@ -5,8 +5,8 @@ from matplotlib import patches
 import numpy as np
 from scipy import signal
   
-from cusfunc import maprange
-from custexcp import *
+from analog.cusfunc.cusfunc import maprange
+from analog.custexcp.custexcp import *
 
 # __aprox__ = {'butterworth', 'bessel', 'chevy1', 'chevy2', 'cauer', 'legendre'}
 

@@ -107,7 +107,9 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.agregar_filtro_lista(filtro)
                     self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
                 else:
-                    pass
+                    filtro = Bessel(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n) #no anda el orden de bessel
+                    self.agregar_filtro_lista(filtro)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
             except ValueError as error:
                 self.show_pop_up(str(error))
 
@@ -239,22 +241,45 @@ class Window2(QtWidgets.QWidget):
 
         self.selected = selected
 
-        self.filtro = listaf.lista_filtros[selected]
+        cells = self.selected.get_stages()
+        self.celdas = []  #lista de listas con id mas la celda
+        id = 1
 
-        celdas = self.filtro.get_stages()
-       # self.verticallayout = QtWidgets.QVBoxLayout(self.ui.scrollArea_etapas)
+        for cell in cells:
+            self.celdas.append([id, cell])
+            id += 1
 
-        #self.ui.ventana_pz.zplot(self.selected)
+        self.add_stages_list()
+        self.set_pz()
 
-
-        #self.ui.scrollArea_etapas.set
-
-
-        self.ui.boton_etapa1.clicked.connect(self.create_graph)
+        self.disable_zeros()
 
 
-    def create_stages(self):
-        pass
+        self.ui.lista_polos.itemSelectionChanged.connect(lambda: self.select('polo'))
+        self.ui.lista_ceros.itemSelectionChanged.connect(lambda: self.select('cero'))
+
+
+
+        self.ui.boton_etapa1.clicked.connect(self.switch)
+
+        #self.ui.boton_agregar_etapa.clicked.connect()
+
+    def add_stages_list(self):
+        for celda in self.celdas:
+            if len(celda[1].get_poles()):
+                polos = celda[1].get_poles()
+                self.ui.lista_polos.addItem(str(celda[0]) + ' Polo Q = ' + str(round(celda[1].get_q(), 2)) + ' ubicacion:' + str(round(polos[0])))
+
+            if len(celda[1].get_zeros()):
+                ceros = celda[1].get_zeros()
+                self.ui.lista_ceros.addItem(str(celda[0]) + ' Cero con real = ' + str(round(cero.real, 2)) + ' imaginario = ' + str(round(cero.imag, 2)))
+            else:
+                self.ui.lista_ceros.addItem('None')
+
+    def disable_zeros(self):
+        item = self.ui.lista_ceros.item(0)
+        if item.text() == 'None':
+            self.ui.lista_ceros.setEnabled(False)
 
     def create_graph(self, name):
         ventana = StageWidget(self.ui.marco_etapas)
@@ -263,15 +288,44 @@ class Window2(QtWidgets.QWidget):
         self.ui.horizontalLayout_2.addWidget(ventana)
 
     def set_pz(self):
+        for cell in self.celdas:
+            self.ui.ventana_pz.plot_stage_pz(cell[1], 0.5)
+
+    def select(self, tipo):
+        if tipo == 'polo':
+            item_polo = self.ui.lista_polos.currentItem()
+            value_polo = item_polo.text()
+            ind = int(value_polo[0])
+        else:
+            item_cero = self.ui.lista_ceros.currentItem()
+            value_cero = item_cero.text()
+            ind = int(value_cero[0])
+
+        et = None
+        for cell in self.celdas:
+            if cell[0] == ind:
+                et = cell[1]
+
+        if tipo == 'polo':
+            selected = et.get_poles()
+        else:
+            selected = et.get_zeros()
+
+        #bajo opacidad demas polos y ceros
+        self.ui.ventana_pz.clear_axes()
+        for cell in self.celdas:
+            self.ui.ventana_pz.plot_stage_pz(cell[1], 0.2)
+
+        #subo opacidad a lo que este seleccionado
+        self.ui.ventana_pz.select_pz(selected, tipo)
+
+    def add_stage(self):
         pass
 
 
     def switch(self):
         self.switch_window.emit()
         self.close()
-
-
-
 
 
 

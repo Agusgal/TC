@@ -39,14 +39,14 @@ class ZplaneWidget(QWidget):
 
     def zplot(self, filtro):
 
-
+        self.clear_axes()
         # Plot the poles and set marker properties
         for p in filtro.poles:
-            poles = self.canvas.axes.plot(p.real, p.imag, 'x', markersize=9, color='blue', alpha=0.5)
+            poles = self.canvas.axes.plot(p.real, p.imag, 'x', markersize=9, color='blue', alpha=0.7)
 
         # Plot the zeros and set marker properties
         for z in filtro.zeros:
-            zeros = self.canvas.axes.plot(z.real, z.imag, 'o', markersize=9, color='red', alpha=0.5)
+            zeros = self.canvas.axes.plot(z.real, z.imag, 'o', markersize=9, color='red', alpha=0.7)
 
         self.canvas.draw()
 

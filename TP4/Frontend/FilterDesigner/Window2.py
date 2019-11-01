@@ -2,13 +2,11 @@
 
 # Form implementation generated from reading ui file 'window2.ui'
 #
-# Created by: PyQt5 UI code generator 5.13.1
+# Created by: PyQt5 UI code generator 5.10.1
 #
 # WARNING! All changes made in this file will be lost!
 
-
 from PyQt5 import QtCore, QtGui, QtWidgets
-
 
 class Ui_Window2(object):
     def setupUi(self, Window2):
@@ -100,10 +98,11 @@ class Ui_Window2(object):
         self.gridLayout_2 = QtWidgets.QGridLayout(self.marco_pz)
         self.gridLayout_2.setObjectName("gridLayout_2")
         self.lista_ceros = QtWidgets.QListWidget(self.marco_pz)
-        self.lista_ceros.setMaximumSize(QtCore.QSize(16777215, 42))
+        self.lista_ceros.setEnabled(True)
+        self.lista_ceros.setMaximumSize(QtCore.QSize(16777215, 75))
         self.lista_ceros.setObjectName("lista_ceros")
         self.gridLayout_2.addWidget(self.lista_ceros, 3, 2, 1, 1)
-        self.ventana_pz = ZplaneWidget(self.marco_pz)
+        self.ventana_pz = StageWidget(self.marco_pz)
         self.ventana_pz.setMaximumSize(QtCore.QSize(375, 375))
         self.ventana_pz.setObjectName("ventana_pz")
         self.gridLayout_2.addWidget(self.ventana_pz, 1, 1, 1, 2)
@@ -124,7 +123,8 @@ class Ui_Window2(object):
         self.label_polos.setObjectName("label_polos")
         self.gridLayout_2.addWidget(self.label_polos, 2, 1, 1, 1)
         self.lista_polos = QtWidgets.QListWidget(self.marco_pz)
-        self.lista_polos.setMaximumSize(QtCore.QSize(16777215, 42))
+        self.lista_polos.setEnabled(True)
+        self.lista_polos.setMaximumSize(QtCore.QSize(16777215, 75))
         self.lista_polos.setObjectName("lista_polos")
         self.gridLayout_2.addWidget(self.lista_polos, 3, 1, 1, 1)
         self.boton_etapas_automaticas = QtWidgets.QPushButton(self.marco_pz)
@@ -174,5 +174,6 @@ class Ui_Window2(object):
         self.boton_etapas_automaticas.setText(_translate("Window2", "Automatic Stages"))
         self.boton_etapa1.setText(_translate("Window2", "PushButton"))
         self.marco_etapas.setTitle(_translate("Window2", "Stages"))
+
 from mplwidget import MplWidget
-from zplanewidget import ZplaneWidget
+from stagewidget import StageWidget

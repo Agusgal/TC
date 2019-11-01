@@ -371,8 +371,11 @@ class Cauer(AnalogFilter):
         """
         Must return optimal filter order
         """
-        self.N, self.Wn = signal.ellipord(
-            self.wp, self.ws, self.Ap, self.As, analog=True)
+        if self.N is None:
+            self.N, self.Wn = signal.ellipord(self.wp, self.ws, self.Ap, self.As, analog=True)
+        else:
+            _, self.Wn = signal.ellipord(self.wp, self.ws, self.Ap, self.As, analog=True)
+
 
     def compute_ba(self):
         """
