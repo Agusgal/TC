@@ -89,6 +89,10 @@ class MplWidget(QWidget):
                             self.canvas.axes.scatter(p.real, p.imag, c='blue', marker='x')
                             self.canvas.draw()
 
+    def plot_stage2(self, w, mag):
+        self.clear_axes()
+        self.canvas.axes.semilogx(np.divide(w, 2 * np.pi), mag)
+        self.canvas.draw()
 
     def clear_axes(self):
         self.canvas.axes.clear()
