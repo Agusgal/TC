@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1329</width>
+    <width>1217</width>
     <height>870</height>
    </rect>
   </property>
@@ -528,11 +528,7 @@ QGroupBox::title {
         <widget class="QLineEdit" name="input_atenuacion_bp"/>
        </item>
        <item row="1" column="2">
-        <widget class="QLineEdit" name="input_frecuencia_bpmenos">
-         <property name="enabled">
-          <bool>false</bool>
-         </property>
-        </widget>
+        <widget class="QLineEdit" name="input_frecuencia_bpmenos"/>
        </item>
        <item row="0" column="2">
         <widget class="QLabel" name="label_dB_ganancia">
@@ -637,7 +633,7 @@ QGroupBox::title {
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1329</width>
+     <width>1217</width>
      <height>17</height>
     </rect>
    </property>

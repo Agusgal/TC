@@ -41,44 +41,43 @@ class MplWidget(QWidget):
         layout.addWidget(self.canvas)
 
         self.canvas.axes = self.canvas.figure.add_subplot(111)
+        self.canvas.axes.set_facecolor("#e1ddbf")
         self.setLayout(layout)
 
         self.id = identificador
 
     def plot(self, lista_filtros):
 
-
-        #Falta agregar compatibilidad entre tipos de graficos
         self.canvas.axes.clear()
         for filtro in lista_filtros:
             for key in filtro.is_graphed:
                 if filtro.is_graphed[key][0] and filtro.is_graphed[key][1] == self.id:
-                    if key == 'Template':
+                    if key == 'Template' and  self.check_compatibility(filtro, key):
                         stencils = filtro.get_stencils(np.divide(filtro.get_w(), 2 * np.pi), -filtro.get_mag())
                         for s in stencils:
                             self.canvas.axes.fill(s[0], s[1], '1', lw=0)  # Set line-
                             self.canvas.draw()
-                    elif key == 'Attenuation':
+                    elif key == 'Attenuation' and self.check_compatibility(filtro, key):
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), -filtro.get_mag())
                         self.canvas.draw()
-                    elif key == 'Magnitude':
+                    elif key == 'Magnitude' and self.check_compatibility(filtro, key):
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_mag())
                         self.canvas.draw()
-                    elif key == 'Phase':
+                    elif key == 'Phase' and self.check_compatibility(filtro, key):
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_pha())
                         self.canvas.draw()
-                    elif key == 'Group Delay':
+                    elif key == 'Group Delay' and self.check_compatibility(filtro, key):
                         w, gdelay = filtro.get_gdelay()
                         self.canvas.axes.semilogx(np.divide(w, gdelay))
                         self.canvas.draw()
-                    elif key == 'Maximun Q':
+                    elif key == 'Maximun Q' and self.check_compatibility(filtro, key):
                         pass
-                    elif key == 'Impulse Response':
+                    elif key == 'Impulse Response' and self.check_compatibility(filtro, key):
                         T, yout = filtro.get_impulse_response()
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
                         pass
-                    elif key == 'Step Response':
+                    elif key == 'Step Response' and self.check_compatibility(filtro, key):
                         T, yout = filtro.get_step()
                         self.canvas.axes.plot(T, yout)
                         self.canvas.draw()
@@ -90,12 +89,57 @@ class MplWidget(QWidget):
                             self.canvas.axes.scatter(p.real, p.imag, c='blue', marker='x')
                             self.canvas.draw()
 
+
     def clear_axes(self):
         self.canvas.axes.clear()
         self.canvas.draw()
 
-    def plot_zplane(self):
-        pass
+    def check_compatibility(self, filtro, key): #retorna error si no es compatible con algun grafico
 
-    def check_compatibility(self):
-        pass
+        if key == 'Template':
+            for den in filtro.is_graphed:
+                if den != 'Template' and den != 'Attenuation' and den != 'Poles and Zeroes':
+                    if filtro.is_graphed[den][0]:
+                        filtro.is_graphed[den][0] = 0
+                        raise ValueError("Can't plot " + den + 'and template at the same time as it is only made for attenuation.' )
+            return True
+
+        elif key == 'Attenuation':
+            for den in filtro.is_graphed:
+                if den != 'Template' and den != 'Magnitude' and den != 'Attenuation' and den != 'Poles and Zeroes':
+                    if filtro.is_graphed[den][0]:
+                        filtro.is_graphed[den][0] = 0
+                        raise ValueError('Graphs are not compatible, axes are diferent.')
+            return True
+
+        elif key == 'Magnitude':
+            for den in filtro.is_graphed:
+                if den == 'Template' and den != 'Poles and Zeroes':
+                    if filtro.is_graphed[den][0]:
+                        filtro.is_graphed[den][0] = 0
+                        raise("Can't plot template and magitude as it is only made for attenuation.")
+
+                elif den != 'Magnitude' and den != 'Attenuation' and den != 'Poles and Zeroes':
+                    if filtro.is_graphed[den][0]:
+                        filtro.is_graphed[den][0] = 0
+                        raise ValueError('Graphs are not compatible, axes are diferent.')
+            return True
+
+        elif key == 'Phase':
+            for den in filtro.is_graphed:
+                if den != 'Phase' and den != 'Poles and Zeroes':
+                    if filtro.is_graphed[den][0]:
+                        filtro.is_graphed[den][0] = 0
+                        raise ValueError('Graphs are not compatible.')
+            return True
+
+        elif key == 'Group Delay' or key == 'Step Response' or key == 'Impulse Response':
+            for den in filtro.is_graphed:
+                if den != 'Group Delay' and den != 'Step Response' and den != 'Impulse Response' and den != 'Poles and Zeroes':
+                    if filtro.is_graphed[den][0]:
+                        filtro.is_graphed[den][0] = 0
+                        raise ValueError('Graphs are not compatible.')
+            return True
+
+
+

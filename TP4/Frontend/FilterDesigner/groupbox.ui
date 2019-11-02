@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>custom_box</class>
+ <widget class="QGroupBox" name="custom_box">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>310</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>310</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="windowTitle">
+   <string>GroupBox</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QGroupBox {
+    border: 1px solid gray;
+    margin-top: 0.5em;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 3px 0 3px;
+}</string>
+  </property>
+  <property name="title">
+   <string>Filter Configuration</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="8" column="0">
+    <widget class="QLabel" name="label_orden_filtro">
+     <property name="text">
+      <string>Filter Order:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="8" column="2">
+    <widget class="QCheckBox" name="checkbox_orden">
+     <property name="text">
+      <string>Fixed</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="0">
+    <widget class="QLabel" name="label_ganancia">
+     <property name="text">
+      <string>Gain:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="0">
+    <widget class="QLabel" name="label_Q_maximo">
+     <property name="text">
+      <string>Maximun Q:</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="2">
+    <widget class="QLabel" name="label_2">
+     <property name="text">
+      <string>%</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="2">
+    <widget class="QLabel" name="label_Hz_br_mas">
+     <property name="text">
+      <string>Hz</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="2">
+    <widget class="QCheckBox" name="checkbox_Q">
+     <property name="text">
+      <string>Fixed</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0">
+    <widget class="QLabel" name="label_desnormalizacion">
+     <property name="text">
+      <string>Denormalization</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="2">
+    <widget class="QLabel" name="label_dB_atenuacion_bp">
+     <property name="text">
+      <string>dB</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="2">
+    <widget class="QLabel" name="label_dB_atenuacion_br">
+     <property name="text">
+      <string>dB</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="0">
+    <widget class="QLabel" name="label_atenuacion_br">
+     <property name="text">
+      <string>Stopband Attenuation(Aa):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="6" column="1">
+    <widget class="QLineEdit" name="input_atenuacion_br"/>
+   </item>
+   <item row="1" column="0">
+    <widget class="QLabel" name="label_frecuencia_fpmenos">
+     <property name="text">
+      <string>Passband Freq-  (Fp-):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="0">
+    <widget class="QLabel" name="label_atenuacion_bp">
+     <property name="text">
+      <string>Passband Attenuation(Ap):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="5" column="1">
+    <widget class="QLineEdit" name="input_atenuacion_bp"/>
+   </item>
+   <item row="0" column="1">
+    <widget class="QLineEdit" name="input_ganancia"/>
+   </item>
+   <item row="2" column="1">
+    <widget class="QLineEdit" name="input_frecuencia_bp_menos"/>
+   </item>
+   <item row="3" column="1">
+    <widget class="QLineEdit" name="input_frecuencia_br_mas"/>
+   </item>
+   <item row="8" column="1">
+    <widget class="QLineEdit" name="input_orden_filtro"/>
+   </item>
+   <item row="2" column="0">
+    <widget class="QLabel" name="label_frecuencia_fpmas">
+     <property name="text">
+      <string>Passband Freq+ (Fp+)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="2">
+    <widget class="QLabel" name="label_Hz_bpmas">
+     <property name="text">
+      <string>Hz</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="2">
+    <widget class="QLabel" name="label_dB_ganancia">
+     <property name="text">
+      <string>dB</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1">
+    <widget class="QLineEdit" name="input_frecuencia_bp_mas"/>
+   </item>
+   <item row="3" column="0">
+    <widget class="QLabel" name="label_frecuencia_famas">
+     <property name="text">
+      <string>Stopband Freq (Fa+):</string>
+     </property>
+    </widget>
+   </item>
+   <item row="9" column="1">
+    <widget class="QLineEdit" name="input_maximo_Q"/>
+   </item>
+   <item row="7" column="1">
+    <widget class="QLineEdit" name="input_desnormalizacion"/>
+   </item>
+   <item row="4" column="0">
+    <widget class="QLabel" name="label_frecuencia_famenos">
+     <property name="text">
+      <string>Stopband Freq- (Fa-)</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <widget class="QLineEdit" name="input_frecuencia_br_menos"/>
+   </item>
+   <item row="2" column="2">
+    <widget class="QLabel" name="label_Hz_bpmenos">
+     <property name="text">
+      <string>Hz</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="2">
+    <widget class="QLabel" name="label_Hz_br_menos">
+     <property name="text">
+      <string>Hz</string>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

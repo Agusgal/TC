@@ -265,7 +265,7 @@ Se busca confeccionar un filtro con las siguientes características:
 \hline
 \textbf{Variable} & \textbf{Valor} \\
 \hline
-$f_\infty$ & $30 \ kHz$ \\
+$f_\infty$ & $37 \ kHz$ \\
 $\Delta f_a$ & $600 \ Hz$ \\
 $\Delta f_p$ & $13.2 \ kHz$ \\
 $A_a$ & $40 \ dB$ \\
@@ -322,10 +322,6 @@ Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se puede d
 De esta forma, con todo lo establecido, se llega a que el rango dinámico es $R_d = 43.52 \ dB$.
 
 \subsubsection{Análisis de sensibilidades}
-\begin{center}
-	\Large{\textbf{\textcolor{red}{HISTOGRAMA.}}}
-\end{center}
-
 En la siguiente sección, se procede a calcular las sensibilidades de $H(s)$, $Q$ y $\omega_o$ con respecto de cada componente, definiéndose la sensibilidad de una función $y$ con respecto de $x$ de la forma:
 \begin{equation*}
 	S_{x}^{y} = \frac{\delta y}{\delta x} \frac{x}{y}
@@ -438,16 +434,23 @@ $Q$ & 1 & -0.5 & -0.5 & 0 & 0 & 0 & -0.5 & 0.5 & 0.5 & -0.5	\\
 A continuación, se presenta el diagrama de Montecarlo en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), donde en se consideró las resistencias con una tolerancia del $1\%$ y los capacitores con una tolerancia del $5\%$. Si bien los capacitores disponibles en el pañol son de tolerancia del $10\%$, dichos componentes fueron medidos previamente para poder garantizar que cumplan la tolerancia del $5\%$.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.8\textwidth,trim={0 3.5cm 1.5cm 0},clip]{ImagenesEjercicio4/MC-Mod-4.png}
+	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/MC-Mod-1.png}
 	\caption{Diagrama de Montecarlo en módulo.}
 	\label{fig:mc-mod}
 \end{figure}
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.8\textwidth,trim={1.25cm 3.5cm 0 0},clip]{ImagenesEjercicio4/MC-Pha-4.png}
+	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/MC-Pha-1.png}
 	\caption{Diagrama de Montecarlo en fase.}
 	\label{fig:mc-pha}
 \end{figure}
+
+En cuanto a la dispersión obtenida
+
+\begin{center}
+	\Large{\textbf{\textcolor{red}{HISTOGRAMA.}}}
+\end{center}
+
 
 \subsubsection{Confección del filtro y mediciones}
 
@@ -473,9 +476,16 @@ Al momento de realizar las placas, se optó por colocar jumpers, de forma tal qu
 Se observa a continuación una comparación entre los diagramas de Bode teóricos, simulados y medidos.
 \begin{figure}[H]
 \centering
+\begin{subfigure}{\textwidth}
+\centering
 	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-1.png}
-	\caption{Comparación de diagramas de Bode en módulo.}
-	\label{fig:bode-mod}
+\end{subfigure}
+\begin{subfigure}{\textwidth}
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-3.png}
+\end{subfigure}
+\caption{Comparación de diagramas de Bode en módulo.}
+\label{fig:bode-mod}
 \end{figure}
 \begin{figure}[H]
 \centering
@@ -484,10 +494,12 @@ Se observa a continuación una comparación entre los diagramas de Bode teórico
 	\label{fig:bode-pha}
 \end{figure}
 
+Se presentó en la Figura (\ref{fig:bode-pha}) las fases acotadas entre $180^o$ y $-180^o$. Es importante notar que la fase teórica difiere de las demás ya que en esta, los picos de atenuación máxima, se encuentran más separados, mientras que en el simulado y el medido se encuentran más próximos, siendo difícil diferenciarlos. 
+
 De manera similar a lo presentado en las Figuras (\ref{fig:mc-mod}) y (\ref{fig:mc-pha}), se analiza como los capacitores del circuito afectan el factor $f_\infty$ de cada etapa. Es así que los picos de atenuación máxima puede superponerse, generando que no se observe el ripple característico de la plantilla de Chebycheff. Un ejemplo de esto se presenta a continuación.
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-3.png}
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/Bode-Mod-2.png}
 	\caption{Picos de atenuación máximos medidos variando $C_1$ y $C_2$.}
 	\label{fig:picos}
 \end{figure}
