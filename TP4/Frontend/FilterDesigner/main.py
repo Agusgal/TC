@@ -15,7 +15,7 @@ from Frontend.FilterDesigner.Window2 import Ui_Window2
 
 import sys
 
-
+#Clase de ventana principal
 class MainWindow(QtWidgets.QMainWindow):
     switch_window = QtCore.pyqtSignal()
 
@@ -26,6 +26,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         self.ui.setupUi(self)
 
+        #Defino todos los callbacks de botones y demas
         self.ui.boton_agregar_filtro.clicked.connect(self.crear_filtro)
 
         self.ui.boton_borrar_filtro.clicked.connect(self.remover_filtro_lista)
@@ -43,6 +44,7 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.selector_filtro.currentIndexChanged.connect(self.change_image)
         self.ui.selector_filtro.currentIndexChanged.connect(self.change_parameter_box)
 
+    #crea los diferentes filtros y los agrega a las listas de la gui
     def crear_filtro(self):
 
         aprox = self.ui.selector_aproximacion.currentText()
@@ -83,7 +85,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             n = int(self.ui.input_orden_filtro.text())
 
-            #Todo agregar los demas filtros que tincho estuvo haciendo
+            #Este try comprueba que el suuario haya creado bien el filtrp
             try:
                 if aprox == 'Butterworth':
                     filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
@@ -100,14 +102,14 @@ class MainWindow(QtWidgets.QMainWindow):
                     self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
                 elif aprox == 'Legendre':
                     pass
-                elif aprox == 'gauss':
+                elif aprox == 'Gauss':
                     pass
                 elif aprox == 'Cauer':
                     filtro = Cauer(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
                     self.agregar_filtro_lista(filtro)
                     self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
                 else:
-                    filtro = Bessel(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n) #no anda el orden de bessel
+                    filtro = Bessel(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
                     self.agregar_filtro_lista(filtro)
                     self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
             except ValueError as error:
@@ -116,7 +118,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except ValueError:
             self.show_pop_up('Entrada vacía')
 
-
+    #Remueve filtro de la lista de filtros visual de la gui
     def remover_filtro_lista(self):
         try:
             item = self.ui.lista_filtros.takeItem(self.ui.lista_filtros.currentRow())
@@ -130,10 +132,12 @@ class MainWindow(QtWidgets.QMainWindow):
         except AttributeError:
             self.show_pop_up('You must select a filter from the list')
 
+    #agrega filtro a la lista de la gui
     def agregar_filtro_lista(self, filtro): ##Agrega filtro a lista que se usa para llevar cuenta de filtros a graficar
         listaf.agregar_filtro(filtro)
         listaf.indice_up()
 
+    #selecciona el filtro para poder graficarlo
     def seleccionar_filtro(self):
 
         try:
@@ -150,6 +154,7 @@ class MainWindow(QtWidgets.QMainWindow):
         except AttributeError:
             self.show_pop_up('You Must select a Filter from the list')
 
+    #updatea grafico el try es por compatibilidad de graficos
     def update_grafico(self):
         try:
             txt = self.ui.label_filtro_graficar.text()
@@ -172,6 +177,7 @@ class MainWindow(QtWidgets.QMainWindow):
             print(1)
             self.show_pop_up(str(error))
 
+    #limpia ejes de graficos
     def clear_grafico(self, window):
 
         for f in listaf.lista_filtros:
@@ -184,6 +190,7 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ui.ventana_grafica2.clear_axes()
 
+    #muestra pop up de advertencia
     def show_pop_up(self, error):
         msg = QMessageBox()
         msg.setWindowTitle('Mistakes were made')
@@ -192,6 +199,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         x = msg.exec_()
 
+    #maneja uso de checkboxes
     def checkboxes(self, i, where):
 
         if self.ui.checkbox_plantilla.isChecked():
@@ -199,6 +207,7 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             listaf.lista_filtros[i].mark_not_graphed('Template')
 
+    #cambia imagens plantillas
     def change_image(self):
         path = os.path.dirname(os.path.abspath(__file__))
         path += '/Recursos'
@@ -212,6 +221,7 @@ class MainWindow(QtWidgets.QMainWindow):
         else:
             self.ui.label_imagen.setPixmap(QtGui.QPixmap(os.path.join(path, 'RechazaBanda.png')))
 
+    #cambia inputs para pasa banda y rechaza banda
     def change_parameter_box(self):
 
         if self.ui.selector_filtro.currentText() == 'Band-pass' or self.ui.selector_filtro.currentText() == 'Band-stop':
@@ -223,14 +233,14 @@ class MainWindow(QtWidgets.QMainWindow):
             self.ui.input_frecuencia_brmenos.setEnabled(False)
 
 
-
+    #cambia de ventana
     def first_window(self):
         if len(listaf.lista_filtros):
             self.switch_window.emit()
         else:
             self.show_pop_up('To Acces the second window you must select a filter first.')
 
-
+#clase correspondiente a ventana 2
 class Window2(QtWidgets.QWidget):
     switch_window = QtCore.pyqtSignal()
 
@@ -238,6 +248,9 @@ class Window2(QtWidgets.QWidget):
         super(Window2, self).__init__()
         self.ui = Ui_Window2()
         self.ui.setupUi(self)
+
+        self.last_selected = -1
+        self.stage_numbers = []
 
         self.stages_list = []
         self.selected_stage = 0
@@ -274,11 +287,13 @@ class Window2(QtWidgets.QWidget):
 
         self.ui.boton_etapa1.clicked.connect(self.switch)
 
+    #añade celdas a la lista
     def add_stages_list(self):
         for celda in self.celdas:
             if len(celda[1].get_poles()):
                 polos = celda[1].get_poles()
                 self.ui.lista_polos.addItem(str(celda[0]) + ' Polo Q = ' + str(round(celda[1].get_q(), 4)) + ' ubicacion:' + str(round(polos[0])))
+                self.stage_numbers.append(celda[0])
 
             if len(celda[1].get_zeros()):
                 ceros = celda[1].get_zeros()
@@ -287,16 +302,21 @@ class Window2(QtWidgets.QWidget):
             else:
                 self.ui.lista_ceros.addItem('None')
 
+    #deshabilita selecionar ceros si no los hay
     def disable_zeros(self):
         item = self.ui.lista_ceros.item(0)
         if item.text() == 'None':
             self.ui.lista_ceros.setEnabled(False)
-
+    #setea grafico polos y ceros
     def set_pz(self):
         for cell in self.celdas:
             self.ui.ventana_pz.plot_stage_pz(cell[1], 0.5)
 
+    #selecciona una etapa y la grafica abajo
     def select(self, tipo):
+        poles_and_zeros = False
+        zeros_and_poles = False
+
         if tipo == 'polo':
             item_polo = self.ui.lista_polos.currentItem()
             value_polo = item_polo.text()
@@ -307,7 +327,7 @@ class Window2(QtWidgets.QWidget):
                 if item.text()[0] == str(ind):
                     poles_and_zeros = True
 
-        else:#corregir error eleccion cero
+        else:
             item_cero = self.ui.lista_ceros.currentItem()
             value_cero = item_cero.text()
             ind = int(value_cero[0])
@@ -333,6 +353,7 @@ class Window2(QtWidgets.QWidget):
         for cell in self.celdas:
             self.ui.ventana_pz.plot_stage_pz(cell[1], 0.2)
 
+
         #subo opacidad a lo que este seleccionado
         self.ui.ventana_pz.select_pz(slc, tipo)
         if poles_and_zeros:
@@ -342,30 +363,55 @@ class Window2(QtWidgets.QWidget):
             slc2 = et.get_poles()
             self.ui.ventana_pz.select_pz(slc2, 'polo')
 
+
+
+    #agrega la etapa
     def add_stage(self):
-        if self.stages_list < len(self.selected.get_stages()):
 
-            self.selected_stage = 1
+        item_polo = self.ui.lista_polos.currentItem()
+        if item_polo is not None:
+            value_polo = item_polo.text()
+            ind = int(value_polo[0])
 
-            itemp = self.ui.lista_polos.currentItem()
-            textp = itemp.text()
-            numberp = textp[0]
+        item_cero = self.ui.lista_ceros.currentItem()
+        if item_cero is not None:
+            value_cero = item_cero.text()
+            ind2 = int(value_cero[0])
 
-            celda = None
-            for cell in self.celdas:
-                if cell[0] == int(numberp):
-                    celda = cell[1]
+        if ind in self.stage_numbers or ind2 in self.stage_numbers:
 
-            new_stage = Stages(celda.get_w(), celda.get_mag(), celda.get_q())
-            print(celda.get_w())
-            print(celda.get_mag())
-            self.stages_list.append(new_stage)
+            if len(self.stages_list) < len(self.selected.get_stages()):
 
-            self.graph_stages()
-            self.graph_total_transfer()
+                self.selected_stage = 1
+
+                itemp = self.ui.lista_polos.currentItem()
+                textp = itemp.text()
+                numberp = textp[0]
+
+                celda = None
+                for cell in self.celdas:
+                    if cell[0] == int(numberp):
+                        celda = cell[1]
+
+
+                new_stage = Stages(celda.get_w(), celda.get_mag(), celda.get_q(), ind)
+                print(celda.get_w())
+                print(celda.get_mag())
+                self.stages_list.append(new_stage)
+
+                self.graph_stages()
+                self.graph_total_transfer()
+                print(ind)
+                try:
+                    self.stage_numbers.remove(ind)
+                except ValueError:
+                    self.stage_numbers.remove(ind2)
+            else:
+                self.show_popup('You cant add more stages because you reached the maximun given by your filter aproximation')
         else:
-            self.show_popup('You cant add more stages because you reached the maximun given by your filter aproximation')
+            self.show_popup('Stage already selected!')
 
+    #grafica las etapas
     def graph_stages(self):
         #esto borra los widgets anteriores
         for i in reversed(range(self.ui.horizontalLayout_2.count())):
@@ -384,41 +430,57 @@ class Window2(QtWidgets.QWidget):
             ventana.setMaximumSize(QtCore.QSize(250, 300))
             self.ui.horizontalLayout_2.addWidget(ventana)
 
+    #cambia a etapa derecha
     def etapa_derecha(self):
         if self.selected_stage < len(self.stages_list):
             self.selected_stage += 1
             self.graph_stages()
 
+    #cambia a etapa izquierda
     def etapa_izquierda(self):
         if self.selected_stage != 1:
             self.selected_stage -= 1
             self.graph_stages()
 
+    #borra etapa
     def delete_stage(self):
+        self.stage_numbers.append(self.stages_list[self.selected_stage - 1].id)
+
+
         self.stages_list.pop(self.selected_stage - 1)
         self.selected_stage -= 1
         self.graph_stages()
-        self.graph_total_transfer()
+        if not len(self.stages_list):
+            self.ui.ventana_etapas.clear_axes()
+            for celda in self.celdas:
+                self.stage_numbers.append(celda[0])
+        else:
+            self.graph_total_transfer()
 
 
 
+
+    #etapas automaticas
     def auto_stages(self):
         stgs = self.selected.get_stages()
         self.stages_list = []
         self.selected_stage = 1
 
         for s in stgs:
-            etp = Stages(s.get_w(), s.get_mag(), s.get_q())
+            etp = Stages(s.get_w(), s.get_mag(), s.get_q(), 0)
             self.stages_list.append(etp)
 
         self.graph_stages()
+        self.graph_total_transfer()
 
+    #reseta all
     def reset(self):
         self.stages_list = []
         self.selected_stage = 0
         self.graph_stages()
+        self.ui.ventana_etapas.clear_axes()
 
-
+    #muestra mensaje pop up si el usuario hizo algo mal
     def show_popup(self, error):
         msg = QMessageBox()
         msg.setWindowTitle('Mistakes were made')
@@ -427,28 +489,29 @@ class Window2(QtWidgets.QWidget):
 
         x = msg.exec_()
 
+    #grafica trasnferencia total
     def graph_total_transfer(self):
         if len(self.stages_list) == len(self.selected.get_stages()):
             self.ui.ventana_etapas.plot_stage2(self.selected.get_w(), self.selected.get_mag())
         else:
             mag = 0
-            for stage in self.stages_list:
-                mag += stage.mag
+            for stg in self.stages_list:
+                mag += stg.mag
+            print(1)
+            self.ui.ventana_etapas.plot_stage2(self.selected.get_w(), mag)
 
-            self.ui.ventana_etapas.plot_stage2(mag, self.selected.get_mag())
-
-
+    #cambio de ventana
     def switch(self):
         self.switch_window.emit()
         self.close()
 
-
-
+#clase etapa
 class Stages:
-    def __init__(self, w, mag, q):
+    def __init__(self, w, mag, q, id):
         self.w = w
         self.mag = mag
         self.q = q
+        self.id = id
 
 
 
@@ -473,6 +536,7 @@ class Controller:
         self.window_two.show()
 
 
+#main
 def main():
     app = QtWidgets.QApplication(sys.argv)
     controller = Controller()
