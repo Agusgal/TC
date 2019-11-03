@@ -2,8 +2,28 @@
 \begin{document}
 
 \subsection{Introducción}
+En esta sección se implementará un oscilador de Wien, el cual se basa en el criterio de Barkhausen para funcionar.
 \subsection{Oscilador de Wien.}
+El oscilador de Wien es un oscilador que permite generar señales senoidales de un amplio espectro de frecuencias, desde 5Hz hasta aproximadamente 1MHz.
+Para lograr esto cuenta con una retroalmientación positiva y negativa. Con la particularidad que en el lazo de retroalimentación positiva utiliza una resistencia dinámica.
+Un factor vital para que el oscilador funcione, es la correcta utilización del criterio de Barkhausen, el mismo dice que dado un sistema realimentado, la ganancia del lazo debe ser unitaria para una cierta frecuencia f, única frecuencia a la cual el amplificador realimentado será inestable.
+A continuación se procederá a analizar el circuito propuesto por la cátedra.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/oscCatedra.PNG}
+	\label{fig:cirosc}
+	\caption{Oscilador de Wien}
+\end{figure}
+
 \subsubsection{Cálculo analítico}
+Para el análisis se observo que existen 3 secciones bien definidas, siendo estas la realimentación positiva, la realimentación negativa y el AGC (Automatic Gain Control).
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/oscCatedraEtapas.PNG}
+	\label{fig:cirosc}
+	\caption{Oscilador de Wien separado por etapas.}
+\end{figure}
+
 \subsubsection{Singularidades}
 \subsection{Elecciones de diseño.}
 \subsection{Simulaciones.}
