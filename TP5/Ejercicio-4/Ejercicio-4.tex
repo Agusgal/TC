@@ -445,12 +445,21 @@ A continuación, se presenta el diagrama de Montecarlo en las Figuras (\ref{fig:
 	\label{fig:mc-pha}
 \end{figure}
 
-En cuanto a la dispersión obtenida
+Con la información adquirida de estos análisis, se realizaron histogramas, los cuales permiten observar la dispersión ciertas variables, como lo son la atenuación máxima y la frecuencia de Notch.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/Hist-Amp.png}
+	\caption{Dispersión de la profundidad de Notch.}
+	\label{fig:hist1}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/Hist-FN.png}
+	\caption{Dispersión de la frecuencia de Notch.}
+	\label{fig:hist2}
+\end{figure}
 
-\begin{center}
-	\Large{\textbf{\textcolor{red}{HISTOGRAMA.}}}
-\end{center}
-
+Es así que se observa de las Figuras (\ref{fig:hist1}) y (\ref{fig:hist2}) que existen posibilidades de que el filtro no cumpla con la plantilla deseada, aún respetando las tolerancias indicadas. Es por ello que se tuvo sumo cuidado al seleccionar los componentes, realizando una medición previa de ellos, para garantizar su valor real.
 
 \subsubsection{Confección del filtro y mediciones}
 
@@ -523,8 +532,9 @@ En esta figura se observa como el pico de la primer etapa sobrepasa la banda pro
 
 Tanto en la Figura (\ref{fig:picos}) como en la (\ref{fig:med-plant}), no se presentan los diagramas de Bode en fase, ya que estos no presentan variaciones significantes comparados con lo presentado en la Figura (\ref{fig:bode-pha}).
 
-\begin{center}
-	\Large{\textbf{\textcolor{red}{JUSTIFICAR ALTAS FRECUENCIAS.}}}
-\end{center}
+Finalmente, cabe destacarse de la Figura (\ref{fig:med-plant}) dos aspectos de interés. El primero se centra en la pequeña sección de la zona prohibida, en la cual la curva teórica la atraviesa. Si bien este error cae dentro de lo aceptable, esto puede ser solucionado mediante el uso de una etapa amplificadora, la cual permita aumentar la ganancia total del sistema unos pocos $dB$, haciendo que el filtro cumpla la plantilla. En la práctica no fue necesaria dicha etapa. Por otro lado el comportamiento del filtro a altas frecuencias resulta también de interés. Se denota que idealmente, el filtro cumple la plantilla deseada, mientras que la simulación y en la medición, decaen lentamente, hasta atravesar la zona prohibida. Esto se debe a las limitaciones propias del operacional seleccionado, ya que la frecuencia de polo dominante del operacional se encuentra próxima a esos valores. 
+\begin{equation*}
+	f_b = \frac{f_t}{A_o} = \frac{10 \ MHz}{90} \approx 110 \ kHz
+\end{equation*}
 
 \end{document}
