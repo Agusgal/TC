@@ -446,20 +446,50 @@ A continuación, se presenta el diagrama de Montecarlo en las Figuras (\ref{fig:
 \end{figure}
 
 Con la información adquirida de estos análisis, se realizaron histogramas, los cuales permiten observar la dispersión ciertas variables, como lo son la atenuación máxima y la frecuencia de Notch.
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/Hist-AB.png}
+%	\caption{Dispersión del ancho de banda de Notch.}
+%	\label{fig:hist0}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/Hist-Amp.png}
+%	\caption{Dispersión de la profundidad de Notch.}
+%	\label{fig:hist1}
+%\end{figure}
+%\begin{figure}[H]
+%\centering
+%	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/Hist-FN.png}
+%	\caption{Dispersión de la frecuencia de Notch.}
+%	\label{fig:hist2}
+%\end{figure}
+
 \begin{figure}[H]
 \centering
-	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/Hist-Amp.png}
-	\caption{Dispersión de la profundidad de Notch.}
+\begin{subfigure}{.8\textwidth}
+\centering
+	\includegraphics[width=\textwidth, page=1]{ImagenesEjercicio4/Hist-AB.png}
+	\caption{Ancho de banda.}
+	\label{fig:hist0}
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
+\centering
+	\includegraphics[width=\textwidth, page=2]{ImagenesEjercicio4/Hist-Amp.png}
+	\caption{Atenuación máxima.}
 	\label{fig:hist1}
-\end{figure}
-\begin{figure}[H]
+\end{subfigure}
+\begin{subfigure}{.8\textwidth}
 \centering
-	\includegraphics[width=0.8\textwidth]{ImagenesEjercicio4/Hist-FN.png}
-	\caption{Dispersión de la frecuencia de Notch.}
+	\includegraphics[width=\textwidth, page=3]{ImagenesEjercicio4/Hist-FN.png}
+	\caption{Frecuencia central.}
 	\label{fig:hist2}
+\end{subfigure}
+\caption{Dispersiones de variables de Notch, siendo el eje vertical la probabilidad de aparición.}
+\label{fig:pardar}
 \end{figure}
 
-Es así que se observa de las Figuras (\ref{fig:hist1}) y (\ref{fig:hist2}) que existen posibilidades de que el filtro no cumpla con la plantilla deseada, aún respetando las tolerancias indicadas. Es por ello que se tuvo sumo cuidado al seleccionar los componentes, realizando una medición previa de ellos, para garantizar su valor real.
+Es así que se observa de las Figuras (\ref{fig:hist0}), (\ref{fig:hist1}) y (\ref{fig:hist2}) que existen posibilidades de que el filtro no cumpla con la plantilla deseada, aún respetando las tolerancias indicadas. Es por ello que se tuvo sumo cuidado al seleccionar los componentes, realizando una medición previa de ellos, para garantizar su valor real.
 
 \subsubsection{Confección del filtro y mediciones}
 
