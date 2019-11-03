@@ -1,41 +1,30 @@
-\input{../../Informe/Header.tex}
-\begin{document}
-
 \subsection{Introducción}
 
-En esta sección se implementó un filtro High-Pass utilizando una aproximación \textbf{Cauer} e implementandola con celdas \textbf{Sedra}, el filtro a diseñar deberá cumplir con la siguiente plantilla.
+En esta sección se implementó un filtro High-Pass, utilizando una aproximación \textbf{Cauer} e implementándola con celdas \textbf{Sedra}. El filtro diseñado cumple con la siguiente plantilla.
 \begin{table}[H]
 \centering
 \begin{tabular}{|c|c|}
 \hline
-$f_s$      & 11.65kHz          \\ \hline
-$f_p$      & 23.3kHz           \\ \hline
-$A_p$      & 2dB               \\ \hline
-$A_s$      & 40dB              \\ \hline
-$|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
+$f_s$      & 11.65 kHz          \\ \hline
+$f_p$      & 23.3 kHz           \\ \hline
+$A_p$      & 2 dB               \\ \hline
+$A_s$      & 40 dB              \\ \hline
+$|Z_{in}|$ & $\geq 50 \ k \Omega$ \\ \hline
 \end{tabular}
+\caption{Plantilla del filtro.}
+\label{tab:plantilla}
 \end{table}
-\subsection{Aproximación de Cauer.}
-Para esta sección se utlizó la aproximación elíptica de \textbf{Cauer}, además se propuso una plantilla mas restrictiva, con el fin de asegurar el cumplimiento de la original, siendo esta la plantilla final.
-\begin{table}[H]
-\centering
-\begin{tabular}{|c|c|}
-\hline
-$f_s$      & 11.65kHz          \\ \hline
-$f_p$      & 23.3kHz           \\ \hline
-$A_p$      & 1dB               \\ \hline
-$A_s$      & 45dB              \\ \hline
-$|Z_{in}|$ & $\geq 50k \Omega$ \\ \hline
-\end{tabular}
-\end{table}
-Obteniendo la siguiente función transferencia, expresándola como producto de transferencias de segundo orden:
+\subsection{Aproximación de Cauer}
+Se utilizó la aproximación elíptica de \textbf{Cauer}, además se propuso una plantilla mas restrictiva, con el fin de asegurar el cumplimiento de la original, siendo la plantilla final la presentada en la Tabla (\ref{tab:plantilla}).
+
+Obteniendo la siguiente función transferencia, se expresa como producto de transferencias de segundo orden, teniendo los pares de polos con un Q de 0.84 la primer etapa y 4.17.
 \begin{align}
 	H(s)=\frac{ {s}^{2}+ 124088460.2 
  }{s^2+s\cdot 5466 + 519.84\cdot 10^6 } \cdot \frac{  {s}^{2}+
  23794591.32 }{s^2+s\cdot 48182 + 1.6\cdot 10^9 }
 \label{eq:trans}
 \end{align}
-Y el siguiente diagrama de polos y ceros:
+De esta forma, se presenta el diagrama de polos y ceros de dicha función:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/DiagramaPolosYCeros.png}
@@ -43,53 +32,42 @@ Y el siguiente diagrama de polos y ceros:
 	\caption{Diagrama Polos y Ceros}
 \end{figure}
 
-Teniendo los pares de polos con un Q de 0.84 la primer etapa y 4.17.
-
-
 Finalmente se graficó la respuesta en frecuencia tanto en fase como en módulo:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/BodeCalc.png}
+	\caption{Diagrama de bode Módulo.}
 	\label{fig:Bodecalc}
-	\caption{Diagrama de bode Módulo}
 \end{figure}
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/BodeFaseCalc.png}
+	\caption{Diagrama de bode Fase.}
 	\label{fig:BodeCalcF}
-	\caption{Diagrama de bode Fase}
 \end{figure}
-\subsubsection{Elecciones de diseño}
-Se decidió armar etapas con celdas segundo orden en cascada dado a que el orden es 4.
-Para la asociación de polos se tomo como criterio agrupar los polos por su cercanía, agrupandolos de las siguiente forma.
+Se aclara que en la Figura ({fig:BodeCalcF}) la fase se encuentra acotada entre $-180 ^o$ y $180 ^o$. 
 
+\subsubsection{Elecciones de diseño}
+Se decidió armar etapas con celdas de segundo orden en cascada, dado a que el orden del filtro es de 4. Para la asociación de polos se tomó como criterio agrupar los polos por su cercanía, obteniendose así la siguiente forma.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/UnionCeros.png}
-	\label{fig:CeroPoleUnion}
 	\caption{Diagrama Polos y Ceros para cada etapa}
+	\label{fig:CeroPoleUnion}
 \end{figure}
 
-Luego se decidió colocar la etapa de mayor Q al final.
+Una vez determinado esto, se optó por colocar la etapa de mayor Q al final.
 
+\subsection{Celda Sedra-Ghorab-Martin}
+La celda Sedra-Ghorab-Martin fue propuesta en el paper ``Optimum Configurations for Single Amplifiers Biquadratic Filters'', originalmente como una mejora de la celda Deliyannis. Es un diseño que permite sintetizar celdas de segundo orden con Q relativamente altos, con un único amplificador operacional, razón por la cual por eso son llamadas Single-Amplifier-Biquad. Es destacable que este diseño tiene una baja sensibilidad del factor Q con respecto a la gananica a lazo abierto del amplificador operacional. Este beneficio de la reducción de la sensibilidad del $A_0$, trae un aumento en la sensibilidad respecto a otros componentes pasivos. Finalmente, en el artículo mencionado, se tomó la configuración de HPB, dado a que es lo único utilizado, siendo el circuito propuesto el presentado en la Figura (\ref{fig:HPBSedrac}).
 
-\subsection{Celda Sedra-Ghorab-Martin.}
-La celda Sedra-Ghorab-Martin fue propuesta en el paper ``Optimum Configurations for Single Amplifiers Biquadratic Filters'' como un diseño que permite con un único amplificador operacional (Por eso son llamados Single-Amplifier-Biquad), sintetizar celdas de segundo orden con Q relativamente altos, es destacable que este diseño tiene una baja sensibilidad del Q respecto de la gananica a lazo abierto del amplificador operacional. Este beneficio de la reducción de la sensibilidad del $A_0$, trae un aumento en la sensibilidad respecto a otros componentes pasivos. Originalmente esta celda fue propuesta como una mejora de la celda Deliyannis.
-Finalmente en el paper discutido se tomó la configuración de HPB dado a que es lo único que utlizaremos, siendo este el circuito propuesto por el paper.
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.5\textwidth]{Imagenes-Ej3/HPBSedra.PNG}
-	\label{fig:HPBSedra}
-	\caption{Circuito celda SGB-HPB}
-\end{figure}
 \subsubsection{Cálculo Analítico}
-El circuito sobre el que trabajaremos es el siguiente:
+Como se mencionó previamente, se presenta el circuito a analizar.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Imagenes-Ej3/CircuitoDeGuido.pdf}
+	\caption{Circuito celda.}
 	\label{fig:HPBSedrac}
-	\caption{Circuito celda}
 \end{figure}
 Plantenado los siguientes nodos es posible llegar a la expresión de la función transferencia:
 \begin{align}
@@ -150,69 +128,91 @@ H(s)=
 \,{\it C_3}\,{\it R_{a1}}\,{\it R_{a2}}\,{\it R_{41}}\,{\it R_{42}}\,{\it R_1} \right)
 \end{align}
 \subsubsection{Elecciones de diseño}
-Cada una de las funciones transferencia descriptas en (\ref{eq:trans})
- se pueden expresar de la siguiente manera:
+Cada una de las funciones transferencia descriptas en (\ref{eq:trans}) pueden ser expresadas de la siguiente manera:
 \begin{align}
 	H_i(s)=\frac{G_\infty (s^2+\omega_z^2)}{s^2+\frac{\omega_0 \cdot s}{Q}+\omega_0^2}
 \end{align} 
 
-Luego se siguió con el análisis matemático desarrollado en el paper ``Optimum Configurations for Single Amplifiers Biquadratic Filters''.
-De allí se ve la necesidad de introducir algunos parámetros los cuales permiten el diseño de la celda, siendo estos $G_\infty$ el cual es la ganancia cuando $\omega \rightarrow \infty$ , K y $Q_0$ siendo esta ultima una constante que debe cumplir la condición $Q_0 < Q$ permite ajustar el valor de los componentes así queda nominal, se eligió el valor de $Q_0$ en base a una relación de dependencia con las sensibilidades.  luego se definen los siguientes parámetros. 
-\begin{align}
-k=\frac{G_\infty\cdot \left(\frac{\omega_z}{\omega_0} \right)^2}{1-\frac{Q_0}{Q}}\\
-K=1+\frac{1-\frac{Q_0}{Q}}{2\cdot Q_0^2}\\
-n= k\cdot (1-\frac{Q_0 }{K\cdot Q})\\
-m=  \left( k-\frac{k}{K} \right) \cdot \left(1+2\cdot \left(\frac{Q_0\cdot \omega_0}{\omega_z}\right)^2 \right)  
-\end{align}
+Luego, siguiendo con el análisis matemático desarrollado en el paper ``Optimum Configurations for Single Amplifiers Biquadratic Filters'', se ve la necesidad de introducir algunos parámetros, los cuales permiten el diseño de la celda. Estos son $G_\infty$, el cual es la ganancia cuando $\omega \rightarrow \infty$, K y $Q_0$, siendo esta ultima una constante que debe cumplir la condición $Q_0 < Q$. Es así que permite ajustar el valor de los componentes. Se eligió el valor de $Q_0$ en base a una relación de dependencia con las sensibilidades. Luego se definen los parámetros de interés, presentados a continuación. 
+\begin{equation}
+	k=\frac{G_\infty\cdot \left(\frac{\omega_z}{\omega_0} \right)^2}{1-\frac{Q_0}{Q}}
+\end{equation}
+\begin{equation}
+	K=1+\frac{1-\frac{Q_0}{Q}}{2\cdot Q_0^2}
+\end{equation}
+\begin{equation}
+	n= k\cdot (1-\frac{Q_0 }{K\cdot Q})
+\end{equation}
+\begin{equation}
+	m=  \left( k-\frac{k}{K} \right) \cdot \left[1+2\cdot \left(\frac{Q_0\cdot \omega_0}{\omega_z}\right)^2 \right]
+\end{equation}
 
-A partir de aquí asignando valores para $Q_0$ , C y $R_b$, permite obtener los valores para el resto de las variables con estas equivalencias.  
-\begin{align}
-	R_a= \frac{1}{(K-1) R_b}\\
-	R_{a1}=\frac{1}{(1-k)\cdot R_a}\\
-	R_{a2}=\frac{1}{k \cdot R_a}\\
-	R_{41}=	\frac{1}{(1-n)\cdot R_4}\\
-	R_{42}=	\frac{1}{n\cdot R_4}\\
-	C_{21} = (1-m) \cdot C\\
-	C_{22} = m \cdot C\\
-\end{align}
-El análisis de sensibilidades que se obtiene del circuito, el cual coincide con lo publicado en el paper es la siguiente: 
+A partir de aquí, y asignando valores para $Q_0$, C y $R_b$, se puede obtener los valores para el resto de las variables con dichas equivalencias.  
+\begin{equation}
+	R_a= \frac{1}{(K-1) R_b}
+\end{equation}
+\begin{equation}
+	R_{a1}=\frac{1}{(1-k)\cdot R_a}
+\end{equation}
+\begin{equation}
+	R_{a2}=\frac{1}{k \cdot R_a}
+\end{equation}
+\begin{equation}
+	R_{41}=	\frac{1}{(1-n)\cdot R_4}
+\end{equation}
+\begin{equation}
+	R_{42}=	\frac{1}{n\cdot R_4}
+\end{equation}
+\begin{equation}
+	C_{21} = (1-m) \cdot C
+\end{equation}
+\begin{equation}
+	C_{22} = m \cdot C
+\end{equation}
+
+Se presenta a continuación el análisis de sensibilidades del circuito, el cual coincide con lo publicado en el paper: 
 \begin{table}[H]
 \centering
 \begin{tabular}{ccc}
+\hline
 Componente & $S^\omega_0$ & $S^Q$                                      \\ \hline
 $S_{R_1}$  & -0.5         & $-\left( \frac{Q}{Q_0} -0.5 \right)$       \\
 $S_{C}$    & -0.5         & $0.5\cdot \left( \frac{Q}{Q_0} -1 \right)$ \\
 $S_{R_4}$  & -0.5         & $\left( \frac{Q}{Q_0} -0.5 \right)$        \\
 $S_{R_a}$  & 0            & $-\left( \frac{Q}{Q_0} -1 \right)$         \\
-$S_{R_b}$  & 0            & $\left( \frac{Q}{Q_0} -1 \right)$         
+$S_{R_b}$  & 0            & $\left( \frac{Q}{Q_0} -1 \right)$         \\
+\hline
 \end{tabular}
+\caption{Cuadro de sensibilidades del filtro.}
+\label{tab:sensibilidad}
 \end{table}
 
-
-En base a esta tabla se tomo especial cuidado en la elección de componentes y en el matcheo de impedancias.
-
-Se tomaron como valor de los componentes los presentados en la siguiente tabla:
+En base a lo expuesto en la Tabla (\ref{tab:sensibilidad}), se tomó especial cuidado en la elección de componentes y en el matcheo de impedancias. De esta forma, se tomaron como valor de los componentes los presentados a continuación:
 \begin{table}[H]
 \centering
 \begin{tabular}{ccccc}
+\hline
 \multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{1er Etapa} & \multicolumn{1}{c}{Composición} & 2da Etapa        & Composición            \\ \hline
-$R_{a1}$                          & 12.36k $\Omega$               & 330+12k $\Omega$                & 6.2k $\Omega$    & 1.5k + 4.7k $\Omega$   \\
-$R_{a2}$                          & 100k $\Omega$                 & 100k $\Omega$                   & 89.67 k $\Omega$ & 22k + 68k $\Omega$     \\
-$R_b$                          & 50.72 k $\Omega$              & 3.9k + 47k $\Omega$             & 1k$\Omega$       & 1k$\Omega$             \\
-$R_{41}$                          & 23.88k $\Omega$               & 1.8k+22k $\Omega$               & 203.36k $\Omega$ & 270k // 820 k $\Omega$ \\
-$R_{42}$                          & 207k $\Omega$                 & 27k + 180k $\Omega$             & 4.19 M$\Omega$   & 1.8M + 2.2M $\Omega$   \\
-$R_1$                          & 74.05k $\Omega$               & 18k + 56k $\Omega$              & 25.07k $\Omega$  & 10k+15k $\Omega$       \\
+$R_{a1}$                          & 12.36 k$\Omega$               & 330 + 12 k$\Omega$                & 6.2 k$\Omega$    & (1.5 + 4.7) k$\Omega$   \\
+$R_{a2}$                          & 100 k$\Omega$                 & 100 k$\Omega$                   & 89.67 k$\Omega$ & (22 + 68) k$\Omega$     \\
+$R_b$                          & 50.72 k$\Omega$              & (3.9 + 47) k$\Omega$             & 1 k$\Omega$       & 1 k$\Omega$             \\
+$R_{41}$                          & 23.88 k$\Omega$               & (1.8 + 22) k$\Omega$               & 203.36 k$\Omega$ & (270 // 820) k$\Omega$ \\
+$R_{42}$                          & 207 k$\Omega$                 & (27 + 180) k$\Omega$             & 4.19 M$\Omega$   & (1.8 + 2.2) M$\Omega$   \\
+$R_1$                          & 74.05 k$\Omega$               & (18 + 56) k$\Omega$              & 25.07 k$\Omega$  & (10 + 15) k$\Omega$       \\
 $C_3$                          & 100 pF                        & 100 pF                          & 100 pF           & 100 pF                 \\
-$C_{21}$                          & 74.14 pF                      & 18p // 56p F                    & 18.52p F         & 22pF + 120pF           \\
-$C_{22}$                          & 25.86pF                       & 33p + 120p F                    & 81.48pF          & 82pF+12nF             
+$C_{21}$                          & 74.14 pF                      & (18 // 56) pF                    & 18.52 pF         & (22 + 120) pF           \\
+$C_{22}$                          & 25.86 pF                       & (33 + 120) pF                    & 81.48 pF          & (82p +12n) F         \\
+\hline    
 \end{tabular}
+\caption{Componentes seleccionados.}
+\label{tab:componentes}
 \end{table}
 
-
-Se calculó el error porcentual asociado a la aproximación de la resistencias viéndose en la siguiente tabla.
+Además, se calculó el error porcentual asociado a la aproximación de las impedancias.
 \begin{table}[H]
 \centering
-\begin{tabular}{lll}
+\begin{tabular}{ccc}
+\hline
 \multicolumn{1}{c}{Error Porcentual} & \multicolumn{1}{c}{1er Etapa} & \multicolumn{1}{c}{2da Etapa} \\ \hline
 $R_{a1}$                                & 0.2 $\%$                      & $\approx 0 \%$                \\
 $R_{a2}$                                & $\approx 0 \%$                & 0.4 $\%$                      \\
@@ -222,153 +222,148 @@ $R_{42}$                                & $\approx 0 \%$                & 0.3 $\
 $R_1$                                & 0.1 $\%$                      & 0.3 $\%$                      \\
 $C_3$                                & $\approx 0 \%$                & $\approx 0 \%$                \\
 $C_{21}$                                & 0.2 $\%$                      & 0.4 $\%$                      \\
-$C_{22}$                                & 0.1 $\%$                      & 0.1 $\%$                     
+$C_{22}$                                & 0.1 $\%$                      & 0.1 $\%$        \\
+\hline
 \end{tabular}
+\caption{Error porcentual de los componentes.}
 \end{table}
 
-Un criterio utilizado fue tomar capacitores pequeños dado a que ellos son mas certeros y no varían tanto frente a la temperatura.  
+Un criterio utilizado para seleccionar dichos valores fue tomar capacitores pequeños, dado a que ellos son mas certeros y no varían tanto frente a la temperatura. En base a esto, definir el resto de los componentes.  
 
-\subsubsection{Acoplamiento de Impedancias.}
-Para que ambas etapas no se carguen entre si la impedancia de entrada de la segunda etapa debe ser mucho mayor a la de salida de la primera.
-Así se simuló la impedancia de entrada de ambas etapas obteniendo las siguientes gráficas:
+\subsubsection{Acoplamiento de Impedancias}
+Para que ambas etapas no se carguen entre si, la impedancia de entrada de la segunda etapa debe ser mucho mayor a la de salida de la primera. De esta forma, se simuló la impedancia de entrada de ambas etapas.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/ZinE1.png}
 	\label{fig:zine1}
-	\caption{Impedancia de entrada 1ra etapa}
+	\caption{Impedancia de entrada de la primer etapa.}
 \end{figure}
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/ZoutE1.png}
 	\label{fig:zoute1}
-	\caption{Impedancia de salida 1ra etapa}
+	\caption{Impedancia de salida de la primer etapa.}
 \end{figure}
-
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/ZinE2.png}
 	\label{fig:zine2}
-	\caption{Impedancia de entrada 2da etapa}
+	\caption{Impedancia de entrada de la segunda etapa.}
 \end{figure}
-Se puede concluir luego de estas gráficas que el acoplamiento de impedancias se dará, por lo tanto se decidió no utilizar un  buffer para conectar etapas.
-\subsection{Respuesta en Frecuencia.}
-Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al 1$\%$ y capacitores al 10$\%$ obteniendo la siguiente dispersión
+
+Se puede concluir, luego de estas gráficas, que el acoplamiento de impedancias de da adecuadamente, por lo tanto se decidió no utilizar un buffer para conectar cada etapa.
+
+\subsection{Respuesta en Frecuencia}
+Se realizó un análisis de Montecarlo a la respuesta en frecuencia del circuito, utilizando una tolerancia de las resistencias al $1\%$ y capacitores al $10\%$, obteniendo la siguiente dispersión.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/mcsedra.png}
 	\label{fig:mcsedra}
 	\caption{Análisis de Montecarlo Filtro entero.}
 \end{figure}
-Se puede apreciar una dispersión en la frecuencia de corte del sistema, a causa de esto se tuvo en cuenta en el diseño utilizar un preset el cual tenga sensibilidad con este con el propósito de poder ajustarlo, un problema con esta metodología es que no solamente importa la ubicación del cero de transmisión sino también su Q, una solución a esta problemática fue utilizar un preset en cada etapa, donde en la primer etapa el preset sería colocado sobre $R_1$ dado a la sensibilidad del $\omega_z$ para con el, y un preset en la segunda etapa (la de mayor Q) en la resistencia  $R_b$, finalmente se midió el circuito previo a la colocación de los presets, y el mismo cumplía con las especificaciones, por lo tanto se tomo la decisión de no utilizar un preset. 
-\subsubsection{Etapas.}
-Además de el montecarlo de el filtro en su totalidad de realizó un análisis de montecarlo para cada etapa por separado.
+Se puede apreciar una dispersión en la frecuencia de corte del sistema. Es a causa de esto que se tuvo en cuenta en el diseño el hecho de utilizar un preset, con el propósito de poder ajustar el filtro. Un problema que se presenta con esta metodología es que, no solamente importa la ubicación del cero de transmisión, sino que también el $Q$ presente. Para poder solucionar esta problemática, se utiliza un preset en cada etapa. En la primera, el componente es colocado sobre $R_1$, dado a que la sensibilidad de $\omega_z$ depende de esta. Por otro lado, en la segunda etapa, es decir, la de mayor Q, se lo coloca en la resistencia $R_b$. Dado que se decidió medir el circuito previamente a la colocación de los presets, es decir, con resistencias fijas, y dado a que el mismo cumplía con las especificaciones, se tomo la decisión de no utilizar los componentes variables.
+ 
+\subsubsection{Etapas}
+Además del Montecarlo del filtro en su totalidad, se realizó el mismo análisis para cada etapa por separado.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/mcsedraE1.png}
+	\caption{Análisis de Montecarlo de la primer etapa.}
 	\label{fig:mcsedrae1}
-	\caption{Análisis de Montecarlo primer etapa.}
 \end{figure}
-En esta imagen se puede observar como la dispersion de la primer etapa modifica seriamente el Q tanto como la posición del cero de transmisión.
+En la Figura (\ref{fig:mcsedrae1}) se puede observar como la dispersión modifica seriamente el Q tanto como la posición del cero de transmisión.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/mcsedraE2.png}
-	\caption{Análisis de Montecarlo segunda etapa.}
+	\caption{Análisis de Montecarlo de la segunda etapa.}
 	\label{fig:mcsedrae2}
 \end{figure}
-Algo que se puede apreciar en la figura ( \ref{fig:mcsedrae2} ) es que dependiendo en cual de las variaciones se encuentre el circuito, corresponderá directamente con la altura del sobrepico que habrá, aparte de su correspondietne cero, si bien para ambas simulaciones los valores de la transferencia para $s\rightarrow 0$ y $s\rightarrow \infty$ son aproximadamente constantes mas allá de la dispersión.
+Por otro lado, se puede apreciar en la Figura (\ref{fig:mcsedrae2}) que la altura del sobrepico posee una gran dispersión, si bien los valores de la transferencia para $s\rightarrow 0$ y $s\rightarrow \infty$ son aproximadamente constantes mas allá de la dispersión.
 
-Además se hicieron simulaciones de como el preset podría ser utilizado para variar el Q del circuito.
-
-Comenzando por utilizar un preset en la primer etapa sobre $R_1$.
+Luego, se hicieron simulaciones de como el preset podría ser utilizado para variar el Q del circuito, comenzando por utilizar un preset en la primer etapa sobre $R_1$, como se mencionó previamente.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/mcPoteR6E1.png}
 	\label{fig:presete1}
 	\caption{Análisis uso de preset primer etapa.}
 \end{figure}
-De aqui se puede concluir que la utilización de un preset en esta etapa ayuda a fijar tanto a fijar un Q como a ajustar el cero de transmisión.
+De aquí se puede concluir que la utilización de un preset en esta etapa ayuda a fijar tanto a un Q como a ajustar el cero de transmisión.
 
-Luego se prosiguió por la utilización de un preset en la segunda etapa, sobre la resistencia $R_b$:
+Luego se prosiguió con la segunda etapa, sobre la resistencia $R_b$:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/mcPoteR3E2.png}
 	\label{fig:presete2}
 	\caption{Análisis uso de preset segunda etapa.}
 \end{figure}
- De aquí, como era esperado, se ve que tiene una mayor sensibilidad respecto al Q lo cual sería el preset ideal para ajustarlo.
 
-Finalmente dado a que inicialmente se realizó el filtro y cumplía las especificaciones se decidió no utilizar un preset, sin embargo se tuvo la precaución de diseñar una etapa de compensación de ganancia para el caso en el que la variación de las condiciones ambientales modifique el filtro y esta sea necesaria, esta etapa consiste en un no inversor con ganancia variable.
+De aquí, como era esperado, se ve que esta etapa tiene una mayor sensibilidad respecto a Q, lo cual implica que idealmente se debe utilizar un preset para ajustarlo.
 
-Luego se realizó un histograma para la frecuencia de  aparición de la frecuencia de los polos en un análisis de montecarlo, donde el eje Y es el porcentaje de la probabilidad de aparición y el X es la frecuencia.
+Además, dado a que inicialmente se realizó el filtro y cumplía las especificaciones, se decidió no utilizar un preset, como ya se había mencionado. Sin embargo, se tuvo la precaución de diseñar una etapa de compensación de ganancia para el caso en el que la variación de las condiciones ambientales modifique el filtro, resultando esta necesaria. Dicha etapa consiste en un no inversor con ganancia variable.
+
+Luego se realizó un histograma para la frecuencia de los polos, datos extraídos del análisis de Montecarlo, donde el eje Y es el porcentaje de la probabilidad de aparición y el X es la frecuencia.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.5\textwidth]{Imagenes-Ej3/histW01.png}
-	\label{fig:hist1}
 	\caption{Histograma primer polo.}
+	\label{fig:hist1}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Imagenes-Ej3/histW02.png}
-	\label{fig:hist2}
 	\caption{Histograma segundo polo.}
+	\label{fig:hist2}
 \end{figure}
-\subsubsection{Filtro definitivo.}
+
+\subsubsection{Filtro definitivo}
 Se realizó el filtro obteniendo la siguiente respuesta en frecuencia 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/BodeSedra.png}
+	\caption{Filtro High-Pass en módulo.}
 	\label{fig:BodeSedra}
-	\caption{Filtro High-Pass Módulo}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/FaseBodeSedra.png}
 	\label{fig:FaseBodeSedra}
-	\caption{Filtro High-Pass Fase}
+	\caption{Filtro High-Pass en fase}
 \end{figure}
-Es de valor apreciar el hecho de que se cumple la plantilla.
 
-
-También puede tomarse en cuenta que los resultados obtenidos se corresponden con lo simulado y calculado:
-
+Se destaca de la Figura (\ref{fig:BodeSedra}) que el filtro realizado efectivamente cumple la plantilla deseada. También puede tomarse en cuenta que los resultados obtenidos se corresponden con lo simulado y calculado de forma teórica:
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/BodeMedCalcSim.png}
+	\caption{Comparación del filtro High-Pass en módulo.}
 	\label{fig:BodeSedraComp}
-	\caption{Filtro High-Pass Módulo comparación.}
 \end{figure}
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/BodeMedCalcSimFase.png}
-	\label{fig:FaseBodeSedraComp}
-	\caption{Filtro High-Pass Fase comparación.}
+	\label{fig:FaseBodeSedraComp}	
+	\caption{Comparación del filtro High-Pass en fase.}
 \end{figure}
-\subsection{Rango Dinámico.}
-El rango dinámico se define como la razón de máximo y mínimo valor que puede tomar el observable de interés. Para el caso en cuestión queda definido de la siguiente manera:
+
+\subsection{Rango Dinámico}
+El rango dinámico se define como la razón de máximo y mínimo valor que puede tomar un observable de interés. Para el caso en cuestión, queda definido de la siguiente manera:
 \begin{align}
-R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
+	R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
 \end{align}
-Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual fue de $V_{in_{min}} \approx 10mV$. Luego para definir $V_{in_{max}}$ se tuvo en cuenta la máxima tensión previo a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional, dos de estos problemas son arreglados por la elección del amplificador operacional , siendo el cross-over y el slewrate, dado a que se utilizó un TL081 el cual tiene un slew-rate elevado, y no tiene el problema del cross-over debido a su etapa de salida. Queda el problema de la saturación,es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc-1.5 =13.5$, para encontrar el valor de tensión máximo de entrada se tomó, dada la ganancia del sistema y teniendo en cuenta la conexión entre etapas finalmente queda definido por la siguiente expresión:
+
+Para definir $V_{in_{min}}$, se tuvo en cuenta la tensión mínima que se pudo distinguir respecto al piso de ruido, la cual es de $V_{in_{min}} \approx 10 \ mV$. Luego, para el caso de $V_{in_{max}}$, se tuvo en cuenta la máxima tensión previa a la aparición de alinealidades, siendo estos efectos el cross-over, slew-rate y saturación del amplificador operacional. Dos de estos problemas son solucionados mediante la elección del integrado, ya que se utiliza un TL081, el cual tiene un slew-rate elevado y no posee el problema del cross-over debido a su etapa de salida. Por su parte, para el problema de la saturación, es de utilidad saber que la máxima tensión de salida es $V_{sat} = Vcc - 1.5 \ V = 13.5 \ V$. Para encontrar el valor de tensión máximo de entrada se consideró la ganancia del sistema y, teniendo en cuenta la conexión entre etapas, este factor queda definido por la siguiente expresión:
 \begin{align}
 V_{in_{max}}=\frac{V_{sat}}{  \max(G_{E1} \cdot G_{E2} )} = 13V
 \end{align}
-Finalmente $R_d = 62.2dB$.
-\subsection{Estabilidad.}
-Se intentó en esta sección lograr que la celda oscile, introduciéndole una cuadrada la cual es sabido esta compuesta por un gran numero de frecuencias, así también variando no solo la amplitud de la misma sino también su frecuencia y duty-cycle, sin poder hacer oscilar a la celda. La siguiente imagen es la respuesta de la celda al escalón.
+Es así que con lo mencionado previamente, se obtiene $R_d = 62.2dB$.
+
+\subsection{Estabilidad}
+Se buscó en esta sección lograr que la celda oscile, introduciéndole una señal cuadrada, la cual es sabido que está compuesta por un gran numero de frecuencias. De esta forma, y variando, no solo la amplitud de la misma sino también su frecuencia y duty-cycle, no se pudo hacer oscilar a la celda. La siguiente imagen es la respuesta de la celda al escalón.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej3/Step.png}
 	\label{fig:stepresponse}
-	\caption{Respuesta al escalón}
+	\caption{Respuesta al escalón del circuito.}
 \end{figure}
-\subsection{Conclusiones}
-La celda sedra es una gran alternativa cuando no se tiene un amplificador operacional con una ganancia a lazo abierto relativamente estable, también permite la implementación de un filtro de segundo orden con tan solo 1 operacional, mientras que por ejemplo la celda universal utiliza 3 de ellos, también tiene el beneficio de poder sintetizar valores de Q relativamente altos gracias a su doble realimentación tanto negativa como positiva, dando esta ultima una de sus desventajas que es la posibilidad de que haya una oscilación en el circuito.
-%
-%\begin{figure}[H]
-%	\centering
-%	\includegraphics[width=0.4\textwidth]{/ImagenesEjercicio3/Graph.png}
-%	\label{fig:graph}
-%\end{figure}
 
-\end{document}
+\subsection{Conclusiones}
+La celda Sedra es una gran alternativa cuando no se tiene un amplificador operacional con una ganancia a lazo abierto relativamente estable. También permite la implementación de un filtro de segundo orden con tan solo 1 operacional, mientras que por ejemplo la celda universal utiliza 3 de ellos en el mejor de los casos. Además, cuenta con el beneficio de poder sintetizar valores de Q relativamente altos gracias a su doble realimentación, tanto negativa como positiva, dando esta última una de sus desventajas, la cual consiste en la posibilidad de que haya una oscilación en el circuito.

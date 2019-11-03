@@ -1,0 +1,32 @@
+\input{Header-Stda.tex}
+
+\begin{document}
+
+%Celda Rauch
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [op amp](O){};
+	\draw (O.+) node[ground](){};
+	\draw (O.-) to[R, l_=$R_2$] ++(0,2) node[](aux1){} -| (O.out) -- ++(0.5,0) node[ocirc, label=above:$V_o$](){};
+	\draw (O.-) to[C, l_=$C_1$] ++(-2,0) node[](aux2){};
+	\draw (aux1) to[C, l_=$C_2$] ++(-2,0) -| (aux2.center);
+	\draw (aux2) to[R, l_=$R_1$] ++(-2,0) node[ocirc, label=above:$V_i$](){};
+	\draw (aux2) to[R, l_=$R_3$] ++(0,-2) node[ground](){};
+\end{circuitikz}
+\end{page}
+
+%Celda Rauch Q mejorado
+\begin{page}
+\begin{circuitikz}[european voltages]
+	\node [op amp](O){};
+	\draw (O.-) to[R, l_=$R_2$] ++(0,2) node[](aux1){} -| (O.out) -- ++(0.5,0) node[ocirc, label=above:$V_o$](){};
+	\draw (O.-) to[C, l_=$C_1$] ++(-2,0) node[](aux2){};
+	\draw (aux1) to[C, l_=$C_2$] ++(-2,0) -| (aux2.center);
+	\draw (aux2) to[R, l_=$R_1$] ++(-2,0) node[ocirc, label=above:$V_i$](){};
+	\draw (aux2) to[R, l_=$R_3$] ++(0,-2) node[ground](){};
+	\draw (O.out) to[R, l=$R (1-K)$] ++(0,-2) node[](aux3){} to[R, l=$R K$] ++(0,-2) node[ground](){};
+	\draw (O.+) |- (aux3.center);
+\end{circuitikz}
+\end{page}
+
+\end{document}
