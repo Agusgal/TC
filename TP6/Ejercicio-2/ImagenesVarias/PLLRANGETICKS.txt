@@ -1,0 +1,57 @@
+
+
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt        
+
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,393.01705169677734); %set diagram left start at 0, and has height of 393.01705169677734
+
+%Straight Lines [id:da9328765721525385] 
+\draw    (160,212.87) -- (12,212.87) ;
+\draw [shift={(10,212.87)}, rotate = 360] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+%Straight Lines [id:da7162115714387371] 
+\draw [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ]   (160,212.87) -- (160,64.87) ;
+\draw [shift={(160,62.87)}, rotate = 450] [color={rgb, 255:red, 255; green, 0; blue, 0 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+%Straight Lines [id:da2506894355764968] 
+\draw [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ]   (60,212.87) -- (60,114.87) ;
+\draw [shift={(60,112.87)}, rotate = 450] [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+%Straight Lines [id:da25210427343521835] 
+\draw [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ]   (260,212.87) -- (260,114.87) ;
+\draw [shift={(260,112.87)}, rotate = 450] [color={rgb, 255:red, 65; green, 117; blue, 5 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+%Straight Lines [id:da7260800409055701] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][fill={rgb, 255:red, 74; green, 144; blue, 226 }  ,fill opacity=1 ]   (110,212.87) -- (110,154.87) ;
+\draw [shift={(110,152.87)}, rotate = 450] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+%Straight Lines [id:da8573526535551632] 
+\draw [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ]   (210,212.87) -- (210,154.87) ;
+\draw [shift={(210,152.87)}, rotate = 450] [color={rgb, 255:red, 74; green, 144; blue, 226 }  ,draw opacity=1 ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+%Straight Lines [id:da8574570697540524] 
+\draw    (160,212.87) -- (308,212.87) ;
+\draw [shift={(310,212.87)}, rotate = 180] [color={rgb, 255:red, 0; green, 0; blue, 0 }  ][line width=0.75]    (10.93,-3.29) .. controls (6.95,-1.4) and (3.31,-0.3) .. (0,0) .. controls (3.31,0.3) and (6.95,1.4) .. (10.93,3.29)   ;
+
+%Shape: Brace [id:dp5121748434913267] 
+\draw   (206.5,53) .. controls (206.51,48.33) and (204.18,46) .. (199.51,45.99) -- (169.88,45.96) .. controls (163.21,45.95) and (159.88,43.62) .. (159.88,38.95) .. controls (159.88,43.62) and (156.55,45.95) .. (149.88,45.94)(152.88,45.94) -- (115.62,45.9) .. controls (110.95,45.9) and (108.62,48.23) .. (108.61,52.9) ;
+%Shape: Brace [id:dp04436865169289983] 
+\draw   (65,252.02) .. controls (65.05,256.69) and (67.4,259) .. (72.07,258.95) -- (153.07,258.13) .. controls (159.74,258.06) and (163.09,260.36) .. (163.14,265.03) .. controls (163.09,260.36) and (166.4,258) .. (173.07,257.93)(170.07,257.96) -- (254.07,257.11) .. controls (258.74,257.06) and (261.05,254.71) .. (261,250.04) ;
+
+% Text Node
+\draw (162,20.5) node   {$Rango\ de\ captura$};
+% Text Node
+\draw (160,231.37) node   {$f_{o}$};
+% Text Node
+\draw (158,279.5) node   {$Rango\ de\ bloqueo$};
+% Text Node
+\draw (261,228.5) node   {$f_{L}$};
+% Text Node
+\draw (56,231.5) node   {$-f_{L}$};
+% Text Node
+\draw (113,231.5) node   {$-f_{C}$};
+% Text Node
+\draw (208.5,231.5) node   {$f_{C}$};
+
+
+\end{tikzpicture}
