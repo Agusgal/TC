@@ -599,71 +599,71 @@ class Bessel(AnalogFilter):
 # filter1 = Chebyshev1("bandstop",  [5E3,20E3],[10E3,15E3], 10, 40, rp=3, k=0)
 
 
-testCompleto = True
-if testCompleto:
-    f1 = Butterworth('bandstop',[10E3,60E3],[30E3,40E3],3,40)
-    plt.title(f"Original Butterworth orden {f1.N}")
-    f1.plot_mag(show=True)
-    suma = 0
-    for counter, stage in enumerate(f1.stages):
-        stage.plot_mag(name=f"etapa{counter}")
-        suma += stage.get_mag()
+#testCompleto = True
+#if testCompleto:
+ #   f1 = Butterworth('bandstop',[10E3,60E3],[30E3,40E3],3,40)
+  #  plt.title(f"Original Butterworth orden {f1.N}")
+   # f1.plot_mag(show=True)
+    #suma = 0
+    #for counter, stage in enumerate(f1.stages):
+     #   stage.plot_mag(name=f"etapa{counter}")
+      #  suma += stage.get_mag()
 
-    plt.semilogx(np.divide(f1.stages[0].w,2*np.pi),-suma+20*np.log10(f1.kZP),label="suma")
-    f1.plot_mag(name="original")
-    plt.show()
+    #plt.semilogx(np.divide(f1.stages[0].w,2*np.pi),-suma+20*np.log10(f1.kZP),label="suma")
+    #f1.plot_mag(name="original")
+    #plt.show()
 
-testCheby=False
-if testCheby:
-    filter1 = Chebyshev1("bandpass",[10E3*2*np.pi,15E3*2*np.pi],  [5E3*2*np.pi,20E3*2*np.pi], 10, 40, rp=3, k=0)
+#testCheby=False
+#if testCheby:
+ #   filter1 = Chebyshev1("bandpass",[10E3*2*np.pi,15E3*2*np.pi],  [5E3*2*np.pi,20E3*2*np.pi], 10, 40, rp=3, k=0)
 
-    fig, axs = plt.subplots(2+len(filter1.stages),sharex=True)
-    suma = 0
-    for counter, stage in enumerate(filter1.stages):
-        plt.grid(which="both", axis="both")
-        axs[counter].semilogx(stage.w,-stage.mag)
-        axs[counter].set_title(f"""Etapa {counter}""")
-        print(f'mag cant: {len(stage.mag)}')
-        suma = suma + stage.mag
+  #  fig, axs = plt.subplots(2+len(filter1.stages),sharex=True)
+   # suma = 0
+    #for counter, stage in enumerate(filter1.stages):
+     #   plt.grid(which="both", axis="both")
+      #  axs[counter].semilogx(stage.w,-stage.mag)
+       # axs[counter].set_title(f"""Etapa {counter}""")
+        #print(f'mag cant: {len(stage.mag)}')
+       # suma = suma + stage.mag
 
     #Plot de la suma
-    axs[counter+1].semilogx(filter1.stages[0].w,-suma) #+20*np.log10(filter1.kZP)
+    #axs[counter+1].semilogx(filter1.stages[0].w,-suma) #+20*np.log10(filter1.kZP)
 
     #Plot del original
-    axs[counter+2].semilogx(filter1.w,-filter1.mag)
-    axs[counter+2].set_title("original")
-    plt.show()
+    #axs[counter+2].semilogx(filter1.w,-filter1.mag)
+    #axs[counter+2].set_title("original")
+    #plt.show()
 
 
 #Plot conjunto
-testc = False
-if testc:
-    plt.title("Ejemplo 1")
-    N2,Wn2 = signal.ellipord([5E3*2*np.pi,20E3*2*np.pi],[10E3*2*np.pi,15E3*2*np.pi],10, 40,analog=True)
-    # filter2 = signal.cheby2(N2,10,Wn2,btype="bandpass",analog=True)
-    filter2 = signal.ellip(N2,10,40,Wn2,btype="bandpass",analog=True)
+#testc = False
+#if testc:
+ #   plt.title("Ejemplo 1")
+  #  N2,Wn2 = signal.ellipord([5E3*2*np.pi,20E3*2*np.pi],[10E3*2*np.pi,15E3*2*np.pi],10, 40,analog=True)
+   # # filter2 = signal.cheby2(N2,10,Wn2,btype="bandpass",analog=True)
+    #filter2 = signal.ellip(N2,10,40,Wn2,btype="bandpass",analog=True)
 
-    zchb1,pchb1,kchb1 = signal.cheby1(N2,10,Wn2,btype="bandpass",analog=True,output='zpk')
-    cheby1original = signal.lti(zchb1,pchb1,kchb1)
-    soschb1 = signal.zpk2sos(zchb1,pchb1,kchb1,pairing="keep_odd")
+ #   zchb1,pchb1,kchb1 = signal.cheby1(N2,10,Wn2,btype="bandpass",analog=True,output='zpk')
+  #  cheby1original = signal.lti(zchb1,pchb1,kchb1)
+   # soschb1 = signal.zpk2sos(zchb1,pchb1,kchb1,pairing="keep_odd")
 
-    sumachb1 = 0
-    wchb1,magchb1,_= cheby1original.bode()
-    wchb1=np.linspace(wchb1[0],wchb1[-1],len(wchb1)*50)
-    wchb1,magchb1,_= cheby1original.bode(w=wchb1)
+    #sumachb1 = 0
+    #wchb1,magchb1,_= cheby1original.bode()
+    #wchb1=np.linspace(wchb1[0],wchb1[-1],len(wchb1)*50)
+    #wchb1,magchb1,_= cheby1original.bode(w=wchb1)
 
-    plt.figure(figsize=(10,10))
-    for etapa, section in enumerate(soschb1):
-        t = signal.TransferFunction(section[:3],section[3:])
-        wt,mt,ft = t.bode(w=wchb1)
-        sumachb1 += mt
-        if etapa == 0:
-            plt.semilogx(wt,mt-20*np.log10(kchb1),label=f"etapa: {etapa}") #Le resto la ganancia a la primera etapa
-        else:
-            plt.semilogx(wt,mt,label=f"etapa: {etapa}")
+    #plt.figure(figsize=(10,10))
+    #for etapa, section in enumerate(soschb1):
+     #   t = signal.TransferFunction(section[:3],section[3:])
+      #  wt,mt,ft = t.bode(w=wchb1)
+      #  sumachb1 += mt
+       # if etapa == 0:
+        #    plt.semilogx(wt,mt-20*np.log10(kchb1),label=f"etapa: {etapa}") #Le resto la ganancia a la primera etapa
+        #else:
+         #   plt.semilogx(wt,mt,label=f"etapa: {etapa}")
 
-    plt.semilogx(wchb1,sumachb1-20*np.log10(kchb1),label="suma")  #En la suma restamos la ganacia de nuevo
-    plt.semilogx(wchb1,magchb1,label="original")
-    plt.axhline(0,color='black')
-    plt.legend()
+    #plt.semilogx(wchb1,sumachb1-20*np.log10(kchb1),label="suma")  #En la suma restamos la ganacia de nuevo
+    #plt.semilogx(wchb1,magchb1,label="original")
+    #plt.axhline(0,color='black')
+    #plt.legend()
 

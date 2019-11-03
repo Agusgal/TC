@@ -1,11 +1,14 @@
-\documentclass[a4paper]{article}
+\documentclass[border={0.5cm 0.5cm 0.5cm 0.5cm}]{standalone}
 \usepackage[utf8]{inputenc}
 \usepackage[spanish, es-tabla, es-noshorthands]{babel}
-\usepackage[table,xcdraw]{xcolor}
-\usepackage[a4paper, footnotesep = 1cm, width=20cm, top=2.5cm, height=25cm, textwidth=18cm, textheight=25cm]{geometry}
+
+\usepackage[a4paper, footnotesep = 1cm, width=18cm, left=2cm, top=2.5cm, height=25cm, textwidth=18cm, textheight=25cm]{geometry}
 %\geometry{showframe}
 
 \usepackage{tikz}
+\usepackage{textcomp}
+\usetikzlibrary{shapes,arrows}
+
 \usepackage{amsmath}
 \usepackage{amsfonts}
 \usepackage{amssymb}
@@ -31,14 +34,20 @@
 \usepackage{array}
 \newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
 \usepackage[american]{circuitikz}
-\usetikzlibrary{calc}
 \usepackage{fancyhdr}
-\usepackage{units} 
+\usepackage{units}
 
-\graphicspath{{../Ejercicio-1/}{../Ejercicio-2/Informe/}{../Ejercicio-3/Informe/}{../Ejercicio-4/}}
+% Definition of blocks:
+\tikzset{%
+  block/.style    = {draw, thick, rectangle, minimum height = 3em,
+    minimum width = 3em},
+  sum/.style      = {draw, circle, node distance = 2cm}, % Adder
+  input/.style    = {coordinate}, % Input
+  output/.style   = {coordinate}, % Output
+  >=Stealth
+}
 
-\pagestyle{fancy}
-\fancyhf{}
-\lhead{22.01 Teoría de Circuitos}
-\rhead{Mechoulam, Lambertucci, Rodriguez Turco, Londero, Galdeman}
-\rfoot{\centering \thepage}
+% Defining string as labels of certain blocks.
+\newcommand{\suma}{\Large $\Sigma$}
+\newcommand{\inte}{$\displaystyle \int$}
+\newcommand{\derv}{\huge $\frac{d}{dt}$}

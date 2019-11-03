@@ -1,13 +1,14 @@
 # TP4 Diseñador de Filtros Analogicos
 Este trabajo tiene como objetivo crear una programa con interfaz grafica que asista en el diseño e implementación de filtros analogicos
-<!-- ## :construction: Filtro Butterworth :construction: -->
 
-<!-- ### Lowpass
-Para los filtros __lowpass__ butterworth se tienen en cuenta los siguientes parámetros
-<li>
-<ul>Frecuencia en banda pasante</ul>
-<ul>Frecuencia en banda atenuada</ul>
-<ul>Atenuación maxima</ul>
-<ul></ul>
+Bilbiotecas Requeridas: 
 
-</li> -->
+-PyQt5 (todos sus módulos)
+-numpy
+-scipy
+-matplotlib
+-os (standard)
+-webcolors (para colores fondo gráficos)
+
+
+La primera etapa del programa permite pilotear diversos gráficos al mismo tiempo, y mientras sean compatibles, distintos tipos de gráficos. Para ingresar los datos de las frecuencias en el pasaban y el rechazaban, la primera casilla corresponde a fp+/fs+ y la segunda a fp-/fs-.
