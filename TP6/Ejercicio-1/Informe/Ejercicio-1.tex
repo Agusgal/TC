@@ -58,11 +58,23 @@ para una ganancia neta menor de uno. La intuición indica que esta perturbación
 posible establecer que la retroalimentación negativa (a través de R2 y R1) prevalece 
 sobre la retroalimentación positiva (a través de Zs y Zp), lo que resulta en un sistema estable. En consecuencia, los polos del circuito descansan en la mitad izquierda del
 plano complejo. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/r1r2m.png}
+	\label{fig:r1r2m}
+	\caption{$V_0 \implies \frac{R_2}{R_1}<2$}
+\end{figure}
 \item 	 $T(jf_o) > 1$, esto es, $A> 3$. Ahora la retroalimentación positiva prevalece sobre la
 retroalimentación negativa, lo cual indica que una perturbación de frecuencia $fo$ se amplificará en forma regenerativa, ocasionando que el circuito rompa en oscilaciones de
 magnitud creciente. Así, el circuito es inestable y sus polos descansan en la mitad derecha del plano complejo. Como es sabido, las oscilaciones se presentarán hasta que se
 alcancen los límites de saturación del amplificador operacional. Después de eso, cuando se observe a Vo
 con el osciloscopio aparecerá como una onda senoidal recortada.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/r1r2g.png}
+	\label{fig:r1r2g}
+	\caption{$V_0 \implies \frac{R_2}{R_1}>2$}
+\end{figure}
 \item  $T(jf_o) = 1$, o bien $A= 3$ exactamente, esta condición se denomina como estabilidad
 neutral, debido a que las retroalimentaciones positiva y negativa se aplican en cantidades iguales. Cualquier perturbación de frecuencia $fo$ primero es amplificada por 3  y
 después por $\frac{1}{3}$ , lo cual indica que, una vez iniciada, se sostendrá en forma indefinida. Como es sabido, esto corresponde a un par de polo que está justo sobre el eje jw. Las
@@ -74,6 +86,12 @@ ecuación (\ref{eq:107}), la estabilidad neutral se alcanza con
 \frac{R_2}{R_1}=2
 \end{align}
 Resulta evidente que, cuando se cumple esta condicion, los componentes alrededor del amplificador operacional forman un puente balanceado en $f=f_0$.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/r2r1e.png}
+	\label{fig:r1r2e}
+	\caption{$V_0 \implies \frac{R_2}{R_1}=2$}
+\end{figure}
 \end{enumerate}
 Finalmente se obtiene la transferencia del circuito:
 \begin{align}
@@ -86,6 +104,7 @@ puente balanceado de manera exacta. Además, se deben tomar precauciones:
 oscilación inicie en forma espontánea al encender el circuito.
 \item Para que su amplitud se
 mantenga por debajo de los límites de saturación del amplificador operacional y así evitar la distorsión excesiva.
+
 \end{itemize}
 
  Estos objetivos se satisfacen haciendo que la relación $\frac{R_2}{R_1}$ sea dependiente de la
