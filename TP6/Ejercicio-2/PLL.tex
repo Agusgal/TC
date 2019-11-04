@@ -17,16 +17,26 @@
 		\includegraphics[width=\linewidth]{ImagenesVarias/PLLblockDiagram.PNG}
 		\caption{Diagrama en bloques de un PLL}
 	\end{figure}
-El comparador emite una señal de error proporcional a la diferencia de frecuencia y fase con respecto a la señal de entrada. De no haber entrada (es decir tensión nula) el VCO operara a la frecuencia central ya configurada. La señal de error $V_e(t)$ es filtrada para asegurar que el VCO reciba una señal continua en su entrada. La configuración de retroalimentación busca minimizar la tensión de error. Para esto el VCO ajustara su frecuencia de operación. Por ejemplo, supongamos que la frecuencia central del VCO es $1Khz$ y nuestra entrada opera a $2Khz$. En este caso la señal de error proporcional a dicha diferencia forzara al VCO a aumentar su frecuencia de oscilación. 
+El comparador emite una señal de error proporcional a la diferencia de frecuencia y fase con respecto a la señal de entrada. De no haber entrada (es decir tensión nula) el VCO operara a la frecuencia central ya configurada. La señal de error $V_e(t)$ es filtrada para asegurar que el VCO reciba una señal continua en su entrada. La configuración de retroalimentación busca minimizar la tensión de error. Para esto el VCO ajustara su frecuencia de operación. Por ejemplo, supongamos que la frecuencia central del VCO es $1Khz$ y nuestra entrada opera a $2Khz$. En este caso la señal de error proporcional a dicha diferencia forzara al VCO a aumentar su frecuencia de oscilación. Cuando nuestra frecuencia de entrada se aproxima a la frecuencia de central del VCO se dice que entra al \emph{Rango de captura o enganche}. Al entrar en esta zona y por efecto del circuito de realimentación, el VCO sincroniza su frecuencia de oscilación con aquella en la entrada del PLL.
+
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.3]{ImagenesVarias/PLL_range2.png}
 	\caption{Rango de bloque y enganche}
+	\label{blockLockRange}
 \end{figure}
 
+Como podemos observar en la figura \ref{blockLockRange}. Existe la ya antes mencionada \textbf{zona de captura}. Una señal que se ecuentre en este rango de frecuencias forzara al PLL a sincronizar la frecuencia de oscilación de su VCO interno con la frecuencia de la señal entrante. Una vez dentro de esta zona es posible utilizar el PLL dentro de la llamada \textbf{zona de bloqueo}. En esta zona el PLL mantendra la frecuencia de oscilación sincronizada. Notemos que el rango de bloqueo es más grande que el rango de captura.
+
+\subsubsection{Sintesis de frecuencias}
+Los circuitos PLL son utilizados para la síntesis de frecuencias. Para conseguirlo se recurre a colocar un divisor de frecuencia  la salida del VCO. Entonces el comparador de fase y frecuencia reconocera que para igualar la frecuencia de entrada debera forzar al VCO a aumentar la frecuencia de osicilación
 \end{document}
 
+
+
+%Notas
+%
 
 %https://sites.google.com/site/ccolonelec101/wentworth-institute-of-technology/electronic-design/phase-lock-loop
