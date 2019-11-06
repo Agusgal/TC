@@ -1,7 +1,3 @@
-\input{../Informe/Header.tex}
-
-\begin{document}
-
 \subsection{Celda universal}
 Una celda universal es un conjunto de filtros RC activos de segundo orden, compuestos por amplificadores en cascada. Estos pueden estar dispuestos en diversas configuraciones, como lo son la sumadora, restadora, integradora, amplificadora o atenuadora. Estos filtros son también conocidos como celdas de variables de estado, debido al uso de dicho método para la resolución de las ecuaciones diferenciales. Las universales se caracteriza por poseer bajas sensibilidades con respecto a sus componentes, alta flexibilidad y buen rendimiento. Existen distintos tipos de configuraciones, donde cada una de estas posee sus respectivas ventajas y desventajas. A continuación, se procede a analizar cada una de ellas\footnote{L. Huelsman, Active and passive analog filter design, 2nd ed. New York: McGraw-Hill, 1993.}.
 
@@ -562,9 +558,12 @@ En esta figura se observa como el pico de la primer etapa sobrepasa la banda pro
 
 Tanto en la Figura (\ref{fig:picos}) como en la (\ref{fig:med-plant}), no se presentan los diagramas de Bode en fase, ya que estos no presentan variaciones significantes comparados con lo presentado en la Figura (\ref{fig:bode-pha}).
 
-Finalmente, cabe destacarse de la Figura (\ref{fig:med-plant}) dos aspectos de interés. El primero se centra en la pequeña sección de la zona prohibida, en la cual la curva teórica la atraviesa. Si bien este error cae dentro de lo aceptable, esto puede ser solucionado mediante el uso de una etapa amplificadora, la cual permita aumentar la ganancia total del sistema unos pocos $dB$, haciendo que el filtro cumpla la plantilla. En la práctica no fue necesaria dicha etapa. Por otro lado el comportamiento del filtro a altas frecuencias resulta también de interés. Se denota que idealmente, el filtro cumple la plantilla deseada, mientras que la simulación y en la medición, decaen lentamente, hasta atravesar la zona prohibida. Esto se debe a las limitaciones propias del operacional seleccionado, ya que la frecuencia de polo dominante del operacional se encuentra próxima a esos valores. 
-\begin{equation*}
-	f_b = \frac{f_t}{A_o} = \frac{10 \ MHz}{90} \approx 110 \ kHz
-\end{equation*}
+Finalmente, cabe destacarse de la Figura (\ref{fig:med-plant}) dos aspectos de interés. El primero se centra en la pequeña sección de la zona prohibida, en la cual la curva teórica la atraviesa. Si bien este error cae dentro de lo aceptable, esto puede ser solucionado mediante el uso de una etapa amplificadora, la cual permita aumentar la ganancia total del sistema unos pocos $dB$, haciendo que el filtro cumpla la plantilla. En la práctica no fue necesaria dicha etapa. Por otro lado el comportamiento del filtro a altas frecuencias resulta también de interés. Se denota que idealmente, el filtro cumple la plantilla deseada, mientras que la simulación y en la medición, decaen lentamente, hasta atravesar la zona prohibida. Esto se debe a las limitaciones propias del operacional seleccionado, como lo es el GBP. Se presentan a continuación simulaciones variando el dicho factor del integrado, obteniendo así diversos resultados.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.9\textwidth]{ImagenesEjercicio4/GBP.png}
+	\caption{Variación del comportamiento a altas frecuencias variando el GBP.}
+	\label{fig:GBP}
+\end{figure}
 
-\end{document}
+Es así que de la Figura (\ref{fig:GBP}) se observa como características propias del amplificador pueden afectar el cumplimiento del filtro a altas frecuencias. Una solución posible a dicho inconveniente es el uso de diferentes amplificadores.
