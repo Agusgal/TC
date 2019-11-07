@@ -227,14 +227,14 @@ $C_2 [F]$ & $100p$ &  & $100p$ & $0\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
 $R_1 [\Omega]$ & $57.31K$ & $1.2K+56K$ & $57.2K$ & $0.2\%$ & 0 & 0.54 & -0.2 \\
 $R_2 [\Omega]$ & $57.31K$ & 1.2K+56K & $57.2K$ & $0.2\%$ & 0 & -0.54 & -0.5 \\
 $R_3 [\Omega]$ & $1K$ &  & $1K$ & $0\%$ & -0.6 & -1.08 & 0 \\
-$R_4 [\Omega]$ & $1.72K$ & $12+1.5K$ & $1.51K$ & $0.1\%$ & 0.6 & 1.08 & 0 \\
+$R_4 [\Omega]$ & $1.77K$ & $270+1.5K$ & $1.77K$ & $0\%$ & 0.6 & 1.08 & 0 \\
 $C_1 [F]$ & $100p$ &  & $100p$ & $0\%$ & 0 & 1.58 & -0.5 \\
 $C_2 [F]$ & $145.32p$ & $150p+4.7n$ & $145.36p$ & $0.1\%$ & 0 & -1.58 & -0.5 \\ \bottomrule
 \end{tabular}
 \end{table}
 
 \subsubsection{Acoplamiento de Impedancias.}
-Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$. Luego, como la celda con la que se trabaja posee una impedancia de salida extremadamente baja, habrá un buen acoplamiento de impedancias.
+Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$. Luego, como la celda con la que se trabaja posee una impedancia de salida extremadamente baja, habrá un buen acoplamiento de impedancias dado que todas las celdas poseen a la entrada una resistencia en serie del orden los $K\Omega$.
 
 \subsubsection{Simulaciones}
 
@@ -280,7 +280,14 @@ Se simuló utilizando el operacional $TL-081$ y el software \textit{LTSpiceXVII}
 	\label{leg_mont_sim}
 \end{figure}
 
-Se puede observar en el montecarlo del filtro realizado con la aproximación Legendre con tolerancias del \%1  para resistencias y \%10 para los capacitores que solamente cuatro en cien curvas no cumplen con la plantilla utilizada por lo que se optó a no utilizar presets en la celda midiendo por separado los valores de las resistencias y capacitores más sensibles.
+Se puede observar en el montecarlo del filtro realizado con la aproximación Legendre con tolerancias del \%1  para resistencias y \%10 para los capacitores que solamente cuatro en cien curvas no cumplen con la plantilla utilizada por lo que se optó a no utilizar presets en la celda midiendo por separado los valores de las resistencias y capacitores más sensibles. A continuación se presenta el histograma realizado obteniendo los valores de $f_c$ de las curvas simuladas del montecarlo:
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=0.65\textwidth]{Imagenes-Ej1/histoleg.png}
+	\caption{Histograma de la dispersión de $f_c$ del Montecarlo del filtro aproximación Legendre.}
+\end{figure}
 
 \subsubsection{Rango Dinámico}
 
@@ -409,7 +416,7 @@ $C_2 [F]$ & $1.26n$ & $68p//1.2n$ & $1.27n$ & $0.4\%$ & 0 & -0.81 & -0.5 \\ \bot
 \begin{tabular}{@{}cccccccc@{}}
 \multicolumn{8}{c}{2da Etapa - Sallen-Key - Orden 2 - $f_0 = 3.4KHz$ - $G=0dB$} \\ \midrule
 - & Valor Teórico & Implementación & Valor Final & Error & Sens G & Sens Q & Sens Wp \\ \midrule
-$R_1 [\Omega]$ & $4.7K$ & $Preset$ & $10K$ & $0\%$ & 0 & 0 & -0.5 \\
+$R_1 [\Omega]$ & $4.7K$ &  & $10K$ & $0\%$ & 0 & 0 & -0.5 \\
 $R_2 [\Omega]$ & $4.7K$ &  & $4.7K$ & $0\%$ & 0 & 0 & -0.5 \\
 $C_1 [F]$ & $12.15n$ & $150p//12n$ & $12.15n$ & $0\%$ & 0 & 0.5 & -0.5 \\
 $C_2 [F]$ & $8.13n$ & $8.2n+1u$ & $8.13n$ & $0\%$ & 0 & -0.5 & -0.5 \\ \bottomrule
@@ -430,7 +437,7 @@ $C_2 [F]$ & $16.87n$ & $1n//6.8n$ & $16.80n$ & $0.2\%$ & 0 & -0.5 & -0.5 \\ \bot
 \end{table}
 
 \subsubsection{Acoplamiento de Impedancias.}
-Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$. Luego, como la celda con la que se trabaja posee una impedancia de salida extremadamente baja, habrá un buen acoplamiento de impedancias.
+Dado que la primera etapa posee a la entrada una resistencia serie de $50K\Omega$ se asegura que el filtro cumpla con la restricción de $|Z_{in}| \geq 50K\Omega$. Luego, como la celda con la que se trabaja posee una impedancia de salida extremadamente baja, habrá un buen acoplamiento de impedancias dado que todas las celdas poseen a la entrada una resistencia en serie del orden los $K\Omega$.
 
 \subsubsection{Simulaciones}
 
@@ -476,7 +483,14 @@ Se simuló utilizando el operacional $TL-081$ y el software \textit{LTSpiceXVII}
 	\label{bes_mont_sim}
 \end{figure}
 
-Se puede observar en el montecarlo del filtro realizado con la aproximación Bessel con tolerancias del \%1  para resistencias y \%10 para los capacitores que todas las curvas cumplen con la plantilla utilizada por lo que se optó a no utilizar presets en la celda midiendo por separado los valores de las resistencias y capacitores más sensibles.
+Se puede observar en el montecarlo del filtro realizado con la aproximación Bessel con tolerancias del \%1  para resistencias y \%10 para los capacitores que todas las curvas cumplen con la plantilla utilizada por lo que se optó a no utilizar presets en la celda midiendo por separado los valores de las resistencias y capacitores más sensibles. A continuación se presenta el histograma realizado obteniendo los valores de $f_c$ de las curvas simuladas del montecarlo:
+
+\begin{figure}[H]
+\centering
+	\centering
+	\includegraphics[width=0.65\textwidth]{Imagenes-Ej1/histobes.png}
+	\caption{Histograma de la dispersión de $f_c$ del Montecarlo del filtro aproximación Bessel.}
+\end{figure}
 
 
 \subsubsection{Rango Dinámico}
