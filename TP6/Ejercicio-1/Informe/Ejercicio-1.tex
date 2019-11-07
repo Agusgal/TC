@@ -22,9 +22,8 @@ cantidad dada por la ecuación.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.7\textwidth]{Imagenes-Ej1/102.png}
-	\caption{Circuito de puente de Wien y su lazo de ganancia T(jf) para el caso
-	\label{fig:wienbasico}
-$\frac{R_2}{R_1} =2$. }
+	\caption{Circuito de puente de Wien y su lazo de ganancia T(jf) para el caso $\frac{R_2}{R_1} =2$. }
+		\label{fig:wienbasico}
 \end{figure}
 donde, por simplicidad, se supone un amplificador operacional ideal. Después, se sustituye Vp por el mismo amplificador operacional a través de los dos circuitos RC como:
 \begin{align}
@@ -219,31 +218,107 @@ Los amplificadores operacionales considerados son los siguientes:
 Considerando las restricciones para con el SR y GBP las mejores opciones son los operacionales \emph{TL082} ,\emph{LF356} y \emph{NE5534}, donde este ultimo fue descartado debido a su baja impedanica de entrada, y el LF356 debido a no contar con el dato de la distorsión armónica.
 Finalmente queda el TL082 que es el que fue utilizado.
 \subsection{Simulaciones}
+Se simuló el circuito en \textbf{LtSpice} obteniendo el siguiente resultado
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/osc.png}
+	\caption{Simulación Distorsión armónica.}
+	\label{fig:osc}
+\end{figure}
+
+También fue posible observar el transitorio del circuito, se puede notar como cambia la ganancia del lazo ajustándose finalmente al criterio de Barkhausen.
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{Imagenes-Ej1/trans.png}
 	\caption{Respuesta transitoria}
 	\label{fig:trans}
 \end{figure}
-Se obtuvo la distorsión armónica atravez de una simulación la cual dio...
+Se obtuvo la distorsión armónica en la simulación Obteniendo los siguientes resultados:
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{Imagenes-Ej1/Distorcion.png}
+	\caption{Simulación Distorsión armónica.}
+	\label{fig:distSpice}
+\end{figure}
+
+
 \subsection{Mediciones.}
 Finalmente se midió el circuito realizado, obteniendo la frecuencia de oscilación deseada.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Imagenes-Ej1/oscilador.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/oscilador.png}
 	\caption{Respuesta transitoria}
 	\label{fig:trans}
 \end{figure}
+Aqui también se aprendió que el rango de valores de alimentación que puede tener el circuito varía entre $V_{max}$ del opamp que en este caso es $V_{max}\approx 18V$ y $V_p$
 
 También se midió el transitorio del circuito al comenzar.
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=\textwidth]{Imagenes-Ej1/osciladorstep.png}
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/osciladorstep.png}
 	\caption{Respuesta transitoria}
-	\label{fig:trans}
+	\label{fig:transStep}
 \end{figure}
+Es notable en la figura (\ref{fig:transStep}) que dado a la calibración del circuito, este posee una suave transición entre una $T(jf)>1$ hacia $T(jf) = 1$ en caso opuesto a la simulación.
 
+
+Adicionalmente se midió la distorsión armónica del circuito, la cual fue hecha en el analizador de espectros, incialmente se observó el espectro entero.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes-Ej1/Espectro.jpeg}
+	\caption{Espectro de la señal}
+	\label{fig:Espectro}
+\end{figure}
+Luego se hizo foco en la frecuencia fundamental y en el resto de los armónicos. Es importante tener en cuenta que el analizador de espectros no se encuentra calibrado, por lo cual el 0 de la continua que sería el pico central se encuentra desplazado hacia aproximadamente 38.5kHz, por lo que los picos de la señal estarán todos desplazados por esta cantidad.
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/Fundamental.jpeg}
+	\caption{Armónico Fundamental}
+	\label{fig:Fund}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/1Armonico.jpeg}
+	\caption{Primer Armónico}
+	\label{fig:1er}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/2Armonico.jpeg}
+	\caption{Segundo Armónico}
+	\label{fig:2do}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/3Armonico.jpeg}
+	\caption{Tercer Armónico}
+	\label{fig:3er}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/4Armonico.jpeg}
+	\caption{Cuarto Armónico}
+	\label{fig:4to}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/5Armonico.jpeg}
+	\caption{Quinto Armónico}
+	\label{fig:5to}
+\end{figure}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes-Ej1/6Armonico.jpeg}
+	\caption{Sexto Armónico}
+	\label{fig:6to}
+\end{figure}
+ A partir de aquí se puede calcular la THD bajo la siguiente fórmula:
+ \begin{align}
+ THD= \frac{\sum_{i\neq 0} P_i}{P_0}
+ \end{align}
+Al realizar la cuenta se obtiene un $THD\approx 0.5\%$ el cual es bastante inferior al simulado, esta gran diferencia se le atribuye a la calibración realizada en el circuito con el uso de los presets.
 \subsection{Conclusiones.}
+Se pudo realizar correctamente un oscilador de Wien, con una distorsión armónica menor al $1\%$, es un circuito simple, que permite generar funciones, que con la introducción de un potenciómetro, sobre las resistencias R puede ser un generador de frecuencia variable, y adicionalmente puede variarse su amplitud.
 %\begin{figure}[H]
 %	\centering
 %	\includegraphics[width=\textwidth]{Imagenes-Ej3/DiagramaPolosYCeros.png}

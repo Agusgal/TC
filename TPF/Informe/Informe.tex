@@ -1,0 +1,126 @@
+\input{Header.tex}
+
+\begin{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%
+%		Caratula		%
+%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\input{Caratula.tex}
+
+%%%%%%%%%%%%%%%%%%%%%
+%		Indice		%
+%%%%%%%%%%%%%%%%%%%%%
+
+\tableofcontents
+\newpage
+
+%%%%%%%%%%%%%%%%%%%%%
+%		Informe		%
+%%%%%%%%%%%%%%%%%%%%%
+\begin{table}[]
+\centering
+\begin{tabular}{|c|c|}
+\hline
+\textbf{$f_p^-$} & 11.712 kHz   \\ \hline
+\textbf{$f_a^-$} & 13.802kHz    \\ \hline
+\textbf{$f_a^+$} & 16.301kHz    \\ \hline
+\textbf{$f_p^+$} & 19.211kHz    \\ \hline
+\textbf{$A_a$}   & 45dB         \\ \hline
+\textbf{$A_p$}   & 1dB          \\ \hline
+\textbf{k}       & $\frac{1}{3}$ \\ \hline
+\end{tabular}
+\end{table}
+	\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.7\textwidth]{Imagenes/TF.PNG}
+	\caption{Circuito }
+		\label{fig:circ}
+\end{figure}
+Elección de componentes:
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{1er Etapa}                                              \\ \hline
+\multicolumn{1}{c|}{Componente} & \multicolumn{1}{c|}{Valor} & Composición \\ \hline
+$R_1$                           & 33.68K                     & 680+33K     \\
+$R_2$                           & 334.28K                    & 3.9K+330K   \\
+$R_3$                           & 47K                        & 47K         \\
+$R_4$                           & 334.28K                    & 3.9K+330K   \\
+$R_5$                           & 47K                        & 47K         \\
+$R_6$                           & 47K                        & 47K         \\
+$R_7$                           & 47K                        & 47K         \\
+$R_8$                           & 47K                        & 47K         \\
+$C_1$                           & 95P                        & 68p//27p     \\
+$C_2$                           & 95P                        & 68p //27p    
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{2da Etapa}                                               \\ \hline
+\multicolumn{1}{c|}{Componente} & \multicolumn{1}{c|}{Valor} & Composición  \\ \hline
+$R_1$                           & 27.03                      & 680+33K      \\
+$R_2$                           & 371.57k                    & 680k // 820k \\
+$R_3$                           & 47k                        & 47k          \\
+$R_4$                           & 371.57k                    & 680k //820k   \\
+$R_5$                           & 52.5k                      & 56k//820k    \\
+$R_6$                           & 49.77k                     & 2.7k+47k     \\
+$R_7$                           & 47k                        & 47k          \\
+$R_8$                           & 47k                        & 47k          \\
+$C_1$                           & 100p                       & 100p         \\
+$C_2$                           & 100p                       & 100p        
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{3ra Etapa}                                              \\ \hline
+\multicolumn{1}{c|}{Componente} & \multicolumn{1}{c|}{Valor} & Composición \\ \hline
+$R_1$                           & 27.13                      & 120+27k     \\
+$R_2$                           & 465.31k                    & 680k//1.5M  \\
+$R_3$                           & 47k                        & 47k         \\
+$R_4$                           & 465.31k                    & 680k//1.5M  \\
+$R_5$                           & 42.08k                     & 15k+27k     \\
+$R_6$                           & 49.77k                     & 2.7k+47k    \\
+$R_7$                           & 47k                        & 47k         \\
+$R_8$                           & 47k                        & 47k         \\
+$C_1$                           & 100p                       & 100p        \\
+$C_2$                           & 100p                       & 100p       
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{4ta Etapa}                                              \\ \hline
+\multicolumn{1}{c|}{Componente} & \multicolumn{1}{c|}{Valor} & Composición \\ \hline
+$R_1$                           & 10.29k                     & 4.7k+5.6k   \\
+$R_2$                           & 1.32M                      & 120k+1.2M   \\
+$R_3$                           & 47k                        & 47k         \\
+$R_4$                           & 1.32M                      & 120k+1.2M   \\
+$R_5$                           & 39.44k                     & 470+39k     \\
+$R_6$                           & 49.77K                     & 2.7k+47k    \\
+$R_7$                           & 47k                        & 47k         \\
+$R_8$                           & 47k                        & 47k         \\
+$C_1$                           & 92p                        & 10p // 82p  \\
+$C_2$                           & 92p                        & 10p // 82p 
+\end{tabular}
+\end{table}
+\begin{table}[H]
+\centering
+\begin{tabular}{ccc}
+\multicolumn{3}{c}{5ta Etapa}                                              \\ \hline
+\multicolumn{1}{c|}{Componente} & \multicolumn{1}{c|}{Valor} & Composición \\ \hline
+$R_1$                           & 10.19k                     & 12k//68k    \\
+$R_2$                           & 918.2k                     & 100k+820k   \\
+$R_3$                           & 47k                        & 47k         \\
+$R_4$                           & 918.2k                     & 100k+820k   \\
+$R_5$                           & 56k                        & 56k         \\
+$R_6$                           & 49.77k                     & 2.7k+47k    \\
+$R_7$                           & 47k                        & 47k         \\
+$R_8$                           & 47k                        & 47k         \\
+$C_1$                           & 95.5p                      & 68p//27p    \\
+$C_2$                           & 95.5p                      & 68p//27p   
+\end{tabular}
+\end{table}
+\end{document}
