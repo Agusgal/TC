@@ -214,7 +214,6 @@ Los amplificadores operacionales considerados son los siguientes:
 \textit{NE5534}                   & 10                 & 13                              & 100k                       & 0.3                        & 500n                & 20n                   & 0.5                    & -           
 \end{tabular}
 \end{table}
-
 Considerando las restricciones para con el SR y GBP las mejores opciones son los operacionales \emph{TL082} ,\emph{LF356} y \emph{NE5534}, donde este ultimo fue descartado debido a su baja impedanica de entrada, y el LF356 debido a no contar con el dato de la distorsión armónica.
 Finalmente queda el TL082 que es el que fue utilizado.
 \subsection{Simulaciones}
@@ -261,7 +260,7 @@ También se midió el transitorio del circuito al comenzar.
 \end{figure}
 Es notable en la figura (\ref{fig:transStep}) que dado a la calibración del circuito, este posee una suave transición entre una $T(jf)>1$ hacia $T(jf) = 1$ en caso opuesto a la simulación.
 
-
+También se observó que es la amplitud de la señal  depende de la tension de almientacion del amplificador yd e la tensión de ruptura del zener. En cuanto al rango de frecuencias en las que puede trabajar se notó que puede variar entre aproximadamente 65kHz a 80kHz.
 Adicionalmente se midió la distorsión armónica del circuito, la cual fue hecha en el analizador de espectros, incialmente se observó el espectro entero.
 \begin{figure}[H]
 	\centering
@@ -317,6 +316,9 @@ Luego se hizo foco en la frecuencia fundamental y en el resto de los armónicos.
  THD= \frac{\sum_{i\neq 0} P_i}{P_0}
  \end{align}
 Al realizar la cuenta se obtiene un $THD\approx 0.5\%$ el cual es bastante inferior al simulado, esta gran diferencia se le atribuye a la calibración realizada en el circuito con el uso de los presets.
+
+
+La tensión de gate se midió, siendo esta de $V_g \approx -3V$ una vez alcanzado el transitorio. Gracias a esta tensión la resistencia dinámica del transistor se ajuste según la tensión de salida, para permitir la oscilación.
 \subsection{Conclusiones.}
 Se pudo realizar correctamente un oscilador de Wien, con una distorsión armónica menor al $1\%$, es un circuito simple, que permite generar funciones, que con la introducción de un potenciómetro, sobre las resistencias R puede ser un generador de frecuencia variable, y adicionalmente puede variarse su amplitud.
 %\begin{figure}[H]
