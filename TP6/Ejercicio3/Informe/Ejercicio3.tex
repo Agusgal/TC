@@ -1,0 +1,146 @@
+\input{Header.tex}
+\begin{document}
+
+\subsection{Introducción}
+
+Un oscilador es un circuito electrónico capaz de producir una señal oscilante periódica, a menudo senoidal o cuadrada. Existen dos tipos de oscialdors: los oscialdores armónicos y los osciladores de relajación. Los primeros producen una señal sinusoidal a la salida y se rijen por el criterio de BarkHausen. En cambio, los osciladores de relajación u osciladores no lienales, producen una señal no sinusoidal a su salida, como por ejemplo una triangular, un diente de sierra o un tren de pulsos. Basicamente concisten en dos partes: un elemento que almacena energía (por lo general un copacitor) y un dispositivo de switching no lineal, ambos conectados por algún tipo de realimentación. El dispositivo switching se encarga de cargar y descargar el capacitor periodicamente, ocasionando cambios abruptos en la salida del circuito. 
+
+
+\subsection{Oscilador controlado por tension}
+
+Un tipo especial de osciladores de relajación son los VCO u osciladores controlados por voltaje por sus siglas en inglés. La función principal de los mismos es la de convertir una señal DC de entrada a una frecuencia de señal a la salida, frecuentemente una señal sinusoidal o triangular. Al ser un tipo de osciladores los VCOs poseen dos partes, una activa que actúa como amplificador y una red de retroalimentación que provee retroalimentación positiva al sistema. Esta red de retroalimentación contiene por lo general un elemento de reactancia variable, el cuál controla la frecuencia de salida del circuito. 
+Los VCOs poseen infinidad de aplicaciones, entre ellas son componentes fundamentales de los circuitos amarradores de fase (PLL), sirven de sintetizadores de frecuencia controlables, son usados también como entrada de frecuencia de la portadora para moduladores, etc.
+
+En la siguiente figura puede verse un diagram del circuito utilizado:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\ctikzset{tripoles/mos style/arrows}
+	\node [op amp, label = center:$AO1$](U1){};
+	\draw (U1.-) to[short] ++(-1, 0) node[](v-){};
+	\draw (v-) to[short, *-*] ++(0, 1) node[](cizq){};
+	\draw (cizq) to[R, l = $2R$, *-*] ++(-2.5, 0) node[](2rizq){}	;
+	\draw (2rizq) to[short] ++(-1.5, 0) to[american voltage source, l = $V_{in}$] ++(0, -3) node[ground]{};
+	\draw (2rizq) coordinate(leftR3) to[R, *-*, l = $R_3$] (leftR3 |- U1.+) to[short] (U1.+);
+	\draw (leftR3 |- U1.+) to[R, *-, l = $R_3$] ++(0, -2) node[ground]{};
+	
+	\draw (v-) to[R, l = $R$] ++(0, -4) node[nmos,xscale=-1](mos){};
+	\draw (mos.drain) node[anchor = north]{} (mos.source) node[anchor = south]{} (mos.gate) node[anchor = east]{};
+	\draw (mos.source) node[ground]{};
+	
+	\draw (cizq) to[short] ++(0, 0.5) coordinate(leftC) to[C, l = $C$] (leftC -| U1.out) to[short] (U1.out);
+	
+	\draw (U1.out) to[open] ++(3, -0.5) node[op amp, label=center:$AO2$](CMP){};
+	
+	\draw (CMP.-) to[short] (U1.out);
+	
+	
+	
+	
+	\draw (mos.gate) to[short] (mos.gate -|CMP.-) to[short] ++(0, 1.5) node[](feedback){};	
+	\draw (feedback) to[short] (CMP.+);
+	\draw (feedback) to[short, *-*] (feedback -| CMP.out) node[](divisor){};
+	\draw (divisor) to[R, l = $R_1$] ++(0, -2) node[ground]{};
+	
+	\draw (divisor) to[short, *-*] (CMP.out);
+	
+	\draw (CMP.out) to[R, l = $R_2$, -*] ++(0, 2.5) node[label=right:$V$]{};
+	
+	
+\end{circuitikz}
+	\caption{VCO implementado}
+	\label{fig:VCO}
+\end{center}
+\end{figure}
+
+Como se mencionó anteriormente el circuito consta de dos partes que logran tener una señal triangular a la salida con frecuencia dependiente de la tension $V_{in}$. Más precisamente la frecuencia final de la señal de salida se comportará de la siguiente manera:
+
+\begin{equation}
+f_0 = kV_{in}  \qquad  V_{in} > 0
+\end{equation}
+
+donde $k$ es la sensibilidad del VCO en Hertz por Volt. 
+
+
+El primer amplificador operacional se comporta como convertidor $V-I$ y obliga al capacitor a conducir una corriente linelamente proporcional a $V_{in}$. Pero para conseguir una onda triangular a la salida, el capacitor debe cargarse y descargarse y por ende, alternar entre polaridades opuestas. Dicha polaridad se controla mediante el transsitor MOSFET tipo n que esta actuando de interruptor en este circuito. 
+
+Por otro lado, el segundo op-amp forma un disparador Schmitt. Se utiliza el integrado LM311, el cual posee un trasnsitor BJT a la salida. Entonces se logra así, que el nivel de salida $V_{OL}$ sea igual a $0$, esto cuando el BJT de salida este saturado, mientras que $V_{OH}$ responderá a la siguiente ecuación:
+
+\begin{equation}
+V_{OH} = \frac{V}{1 + \frac{R_2}{R_1}}
+\end{equation}
+
+Entonces controlando la relación entre las dos resistencias $R_1$ y $R_2$ y la tension $V$ se obtiene $V_{OH}$ y por lo tanto, la amplitud de la señal de salida del circuito. Por último, debido a que la entrada no inversora del disparador Schmitt se obtiene de su propia salida los umbrales de disparo serán: $V_{TL} = 0 Volt$ y $V_{TH} = 10 Volt$.
+
+
+Ya habiendo explicaod la función de cada parte del circuito, se procede a describir como se ocmporta en el tiempo:
+
+Partiendo por $AO1$ la tension en sus entradas es igual a $\frac{V_{in}}{2}$ debido al divisor de tension de $R_3$, por lo tanto la corriente a través de de la resistencia $2R$ es siempre:
+
+\begin{equation}
+i_{2R} = \frac{(V_{in} - \frac{V_{in}}{2})}{2R}
+\end{equation}
+
+Suponiendo que el disparador comienza siempre en estado bajo, con dicha tension el transistro esta apagado, de esta manera toda la corriente suministrada por la resistencia $2R$ fluye hacia C, por ende la tensión a la salida del primer operacional disminuye rapidamente. Cuando dicha tension se hace igual a cero, el disparador salta y el voltaje a su salida se hace igual a $10 Volt$. Con una tension alta, se prende el transistor, por $R$ circula una corriente $i_R = \frac{\frac{V_{in}}{2}}{2R}$ que va a Tierra. Solo la mitad de esa corriente la da la resistencia $2R$, entonces la mitad restante debe ser suministrada por C. En otras palabras, la acción de prender el transistor ocaciona la descarga del capacitor, es decir, se invierte la corriente si afectar su magnitud y la tension a la salida del primer amplificador aumenta. Luego, cuando dicha tension alcance los 10 Volt el disprador salta de regreso y se restablecen las condicions iniciales. 
+
+Cuando una corriente excita uan capacitancia la siguiente ecuación describe el transitorio:
+
+\begin{equation}
+\Delta t = \frac{C}{I}\Delta v
+\end{equation}
+
+En el circuito desarrollado, si se analiza un semiciclo $\Delta t = \frac{t}{2}$, $I = \frac{V_{in}}{4R}$ y $\Delta v = V_{TH} - V_{TL} = 10  Volt$.
+
+Resolviendo para $f_0 = \frac{1}{T}$:
+
+\begin{equation}
+f_0 = \frac{V_{in}}{8RC(V_{TH} - V_{TL})}
+\end{equation}
+
+como $V_{TH} - V_{TL} = 10  Volt$:
+
+\begin{equation}
+f_0 = \frac{V_{in}}{80RC}
+\end{equation}
+
+es decir:
+
+\begin{equation}
+f_0 = kV_{in} \qquad con \qquad k = \frac{1}{80RC}
+\end{equation}
+
+
+\subsection{Conversion onda triangular a senoidal}
+En la sección anterior se explicó el funcionamiento de un VCO con salida triangular proporcional a la tension de entrada. Para lograr una salida senoidal es necesario agregar una etapa de conversion. Para eso, lo único que se necesita es un circuito cuyas características de trasnferencia sean sinusoidales. Tal es el caso del siguiente circuito, el cual explota las características no lineales de los trasnsitores:
+
+
+
+
+
+
+
+%%Agregar explciacion de distorison armonica 
+%%Agregar Explicacion Jitter 
+
+\subsection{Eleccion de componentes}
+
+
+
+
+\subsection{Simulaciones}
+
+\subsection{Mediciones}
+
+\subsection{Conclusiones}
+
+
+
+
+
+
+
+
+
+\end{document}

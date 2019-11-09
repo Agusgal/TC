@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1329</width>
-    <height>870</height>
+    <height>984</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -638,7 +638,7 @@ QGroupBox::title {
      <x>0</x>
      <y>0</y>
      <width>1329</width>
-     <height>17</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
@@ -648,13 +648,13 @@ QGroupBox::title {
   <customwidget>
    <class>MplWidget</class>
    <extends>QWidget</extends>
-   <header location="global">mplwidget.h</header>
+   <header>mplwidget.h</header>
    <container>1</container>
   </customwidget>
   <customwidget>
    <class>ZplaneWidget</class>
    <extends>QWidget</extends>
-   <header location="global">zplanewidget.h</header>
+   <header>zplanewidget.h</header>
    <container>1</container>
   </customwidget>
  </customwidgets>
