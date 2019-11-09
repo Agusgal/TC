@@ -1,0 +1,39 @@
+\input{Header-Stda.tex}
+
+\begin{document}
+
+%Oscilador de Wien
+\begin{page}
+\begin{circuitikz}
+	\node [op amp, yscale=-1](oa){};
+	\draw (oa.out) -- ++(2,0) node[](vo){} -- ++(0.5,0) node[label=right:$V_o$, ocirc](){};
+	\draw (oa.-) -- ++(0,-1.5) to[R, l=$R_2$] ++(4,0) -| (vo.center);
+	\draw (oa.-) ++(0,-1.5) to[R, l=$R_1$] ++(0,-2) node[ground](){};
+	\draw (oa.+) -- ++(0,1.5) node[circ, label=above:$V_p$](aux1){} to[C, l=$C$] ++(2,0) to[R, l=$R_1$] ++(2,0) -| (vo.center);
+	\draw (aux1) -- ++(-2.5,0) to[C, l_=$C$] ++(0,-2) node[ground](gnd){}; 
+	\draw (aux1) ++(-1,0) to[R, l=$R$] ++(0,-2) |- (gnd);	
+\end{circuitikz}
+\end{page}
+
+%Puente de Wien con ACG
+\begin{page}
+\begin{circuitikz}
+	\node [op amp, yscale=-1](oa){};
+	\draw (oa.out) -- ++(2,0) node[](vo){} -- ++(0.5,0) node[label=right:$V_o$, ocirc](){};
+	\draw (oa.-) -- ++(0,-1.5) to[R, l=$R_2$] ++(4,0) -| (vo.center);
+	\draw (oa.-) ++(0,-1.5) to[R, l=$R_1$] ++(0,-2) node[](aux2){};
+	\draw (oa.+) -- ++(0,1.5) node[circ, label=above:$V_p$](aux1){} to[C, l=$C$] ++(2,0) to[R, l=$R_1$] ++(2,0) -| (vo.center);
+	\draw (aux1) -- ++(-2.5,0) to[C, l_=$C$] ++(0,-2) node[ground](gnd){}; 
+	\draw (aux1) ++(-1,0) to[R, l=$R$] ++(0,-2) |- (gnd);
+		
+	\draw (aux2.center) node[njfet, anchor=D, xscale=-1](jfet){};
+	\draw (jfet.S) -- ++(0,-1.5) node[ground](){};
+	\draw (jfet.G) ++(1,0) to[C, l=$C_3$] ++(0,-2) node[ground](){};
+	\draw (jfet.G) ++(3.4,0) to[R, l=$R_X$] ++(0,-2) node[ground](){};
+	
+	\draw (vo.center) ++(0,-2) node[](aux3){} ++(0,-1.5) node[](aux4){} to[zzDo, mirror, l=$1N5230$] ++(0,-1.5) |- (jfet.G);
+	\draw (aux4) to[Do, l_=$1N4148$] (aux3);	
+\end{circuitikz}
+\end{page}
+
+\end{document}
