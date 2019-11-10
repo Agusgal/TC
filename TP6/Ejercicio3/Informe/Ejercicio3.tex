@@ -11,6 +11,8 @@ Un oscilador es un circuito electrónico capaz de producir una señal oscilante 
 Un tipo especial de osciladores de relajación son los VCO u osciladores controlados por voltaje por sus siglas en inglés. La función principal de los mismos es la de convertir una señal DC de entrada a una frecuencia de señal a la salida, frecuentemente una señal sinusoidal o triangular. Al ser un tipo de osciladores los VCOs poseen dos partes, una activa que actúa como amplificador y una red de retroalimentación que provee retroalimentación positiva al sistema. Esta red de retroalimentación contiene por lo general un elemento de reactancia variable, el cuál controla la frecuencia de salida del circuito. 
 Los VCOs poseen infinidad de aplicaciones, entre ellas son componentes fundamentales de los circuitos amarradores de fase (PLL), sirven de sintetizadores de frecuencia controlables, son usados también como entrada de frecuencia de la portadora para moduladores, etc.
 
+
+%%Agregar teroia sobre distorsion armonica y jitter aca
 En la siguiente figura puede verse un diagram del circuito utilizado:
 
 \begin{figure}[H]
@@ -23,10 +25,10 @@ En la siguiente figura puede verse un diagram del circuito utilizado:
 	\draw (v-) to[short, *-*] ++(0, 1) node[](cizq){};
 	\draw (cizq) to[R, l = $2R$, *-*] ++(-2.5, 0) node[](2rizq){}	;
 	\draw (2rizq) to[short] ++(-1.5, 0) to[american voltage source, l = $V_{in}$] ++(0, -3) node[ground]{};
-	\draw (2rizq) coordinate(leftR3) to[R, *-*, l = $R_3$] (leftR3 |- U1.+) to[short] (U1.+);
-	\draw (leftR3 |- U1.+) to[R, *-, l = $R_3$] ++(0, -2) node[ground]{};
+	\draw (2rizq) coordinate(leftR3) to[R, *-*, l = $10k\Omega$] (leftR3 |- U1.+) to[short] (U1.+);
+	\draw (leftR3 |- U1.+) to[R, *-, l = $10k\Omega$] ++(0, -2) node[ground]{};
 	
-	\draw (v-) to[R, l = $R$] ++(0, -4) node[nmos,xscale=-1](mos){};
+	\draw (v-) to[R, l = $R$] ++(0, -6.5) node[nmos,xscale=-1](mos){};
 	\draw (mos.drain) node[anchor = north]{} (mos.source) node[anchor = south]{} (mos.gate) node[anchor = east]{};
 	\draw (mos.source) node[ground]{};
 	
@@ -36,18 +38,20 @@ En la siguiente figura puede verse un diagram del circuito utilizado:
 	
 	\draw (CMP.-) to[short] (U1.out);
 	
+	\draw (CMP.out) to[short] ++(1, 0) node[](out){};
 	
 	
+	\draw (mos.gate) to[R, l = $1k\Omega$] (mos.gate -|out) to[short] (out);	
 	
-	\draw (mos.gate) to[short] (mos.gate -|CMP.-) to[short] ++(0, 1.5) node[](feedback){};	
-	\draw (feedback) to[short] (CMP.+);
-	\draw (feedback) to[short, *-*] (feedback -| CMP.out) node[](divisor){};
-	\draw (divisor) to[R, l = $R_1$] ++(0, -2) node[ground]{};
+	\draw (CMP.+) to[short] ++(-0.5, 0) to[short, -*] ++(0, -1) node[](feedback){};
+	 
+	\draw (feedback) to[R, l = $1k\Omega$] ++(0, -2) node[ground]{};
 	
-	\draw (divisor) to[short, *-*] (CMP.out);
+	\draw (feedback) to[vR, l = $5k\Omega$, *-*] (feedback -| out);
 	
-	\draw (CMP.out) to[R, l = $R_2$, -*] ++(0, 2.5) node[label=right:$V$]{};
+	\draw (U1.out) to[open] ++(1, 0) to[short,label = $V_{TR}$, -*] ++(0, 1);
 	
+	\draw (out) to[short, -*, label = $V_{SQ}$] ++(1, 0);
 	
 \end{circuitikz}
 	\caption{VCO implementado}
@@ -61,59 +65,141 @@ Como se mencionó anteriormente el circuito consta de dos partes que logran tene
 f_0 = kV_{in}  \qquad  V_{in} > 0
 \end{equation}
 
-donde $k$ es la sensibilidad del VCO en Hertz por Volt. 
+donde $k$ es la sensibilidad del VCO en Hertz por Volt. \newline
 
 
-El primer amplificador operacional se comporta como convertidor $V-I$ y obliga al capacitor a conducir una corriente linelamente proporcional a $V_{in}$. Pero para conseguir una onda triangular a la salida, el capacitor debe cargarse y descargarse y por ende, alternar entre polaridades opuestas. Dicha polaridad se controla mediante el transsitor MOSFET tipo n que esta actuando de interruptor en este circuito. 
+El primer amplificador operacional se comporta como convertidor $V-I$ y obliga al capacitor a conducir una corriente linelamente proporcional a $V_{in}$. Pero para conseguir una onda triangular a la salida, el capacitor debe cargarse y descargarse y, por ende, alternar entre polaridades opuestas. Dicha polaridad se controla mediante el transsitor MOSFET tipo n que esta actuando de interruptor en este circuito. Si el transistor conduce por al resistencia R circula una corriente igual a $\frac{V_{in}}{2R}$, pero solo la mitad de esta corriente es suministrada por la resistencia $2R$, por ende, la mitad restante la suministra el capacitor. En el caso que el transistor este apagado y no conduzca, toda la corriente que llega al terminal no inversor debe fluir por el capacitor pero con sentido contrario al anterior. 
 
-Por otro lado, el segundo op-amp forma un disparador Schmitt. Se utiliza el integrado LM311, el cual posee un trasnsitor BJT a la salida. Entonces se logra así, que el nivel de salida $V_{OL}$ sea igual a $0$, esto cuando el BJT de salida este saturado, mientras que $V_{OH}$ responderá a la siguiente ecuación:
+
+A partir de la ecuación fundamental de carga y descarga del capacitor:
 
 \begin{equation}
-V_{OH} = \frac{V}{1 + \frac{R_2}{R_1}}
+\Delta t = \frac{C}{I}\Delta v 
 \end{equation}
 
-Entonces controlando la relación entre las dos resistencias $R_1$ y $R_2$ y la tension $V$ se obtiene $V_{OH}$ y por lo tanto, la amplitud de la señal de salida del circuito. Por último, debido a que la entrada no inversora del disparador Schmitt se obtiene de su propia salida los umbrales de disparo serán: $V_{TL} = 0 Volt$ y $V_{TH} = 10 Volt$.
+y teniendo en cuenta la corriente que circula por el mismo se llega a la siguiente expresión que caracteriza la salida del primer amplificador operacional:
 
-
-Ya habiendo explicaod la función de cada parte del circuito, se procede a describir como se ocmporta en el tiempo:
-
-Partiendo por $AO1$ la tension en sus entradas es igual a $\frac{V_{in}}{2}$ debido al divisor de tension de $R_3$, por lo tanto la corriente a través de de la resistencia $2R$ es siempre:
-
-\begin{equation}
-i_{2R} = \frac{(V_{in} - \frac{V_{in}}{2})}{2R}
+\begin{equation}\label{eq:rampa}
+V_{TR} = \frac{V_{in}}{2} + V_C = \frac{V_{in}}{2}(1 \pm \frac{\Delta t}{2RC})
 \end{equation}
 
-Suponiendo que el disparador comienza siempre en estado bajo, con dicha tension el transistro esta apagado, de esta manera toda la corriente suministrada por la resistencia $2R$ fluye hacia C, por ende la tensión a la salida del primer operacional disminuye rapidamente. Cuando dicha tension se hace igual a cero, el disparador salta y el voltaje a su salida se hace igual a $10 Volt$. Con una tension alta, se prende el transistor, por $R$ circula una corriente $i_R = \frac{\frac{V_{in}}{2}}{2R}$ que va a Tierra. Solo la mitad de esa corriente la da la resistencia $2R$, entonces la mitad restante debe ser suministrada por C. En otras palabras, la acción de prender el transistor ocaciona la descarga del capacitor, es decir, se invierte la corriente si afectar su magnitud y la tension a la salida del primer amplificador aumenta. Luego, cuando dicha tension alcance los 10 Volt el disprador salta de regreso y se restablecen las condicions iniciales. 
-
-Cuando una corriente excita uan capacitancia la siguiente ecuación describe el transitorio:
+Entonces los cambios en la tension de salida $V_{TR}$ vienen dados por:
 
 \begin{equation}
-\Delta t = \frac{C}{I}\Delta v
+\Delta V_{TR	} = V_{in} \frac{\Delta t}{4RC}
 \end{equation}
 
-En el circuito desarrollado, si se analiza un semiciclo $\Delta t = \frac{t}{2}$, $I = \frac{V_{in}}{4R}$ y $\Delta v = V_{TH} - V_{TL} = 10  Volt$.
+ 
 
-Resolviendo para $f_0 = \frac{1}{T}$:
+Por otro lado, el segundo op-amp forma un Schmidtt trigger el cual controla la tension en la base del transistor y por consiguiente, la pendiente de la rampa. La salida del Schmidtt trigger cumple $V_{out} = A_{vol}(V^{+} - V^{-})$, limitada por la saturación del operacional. Dada esta ecuación el comparador tiene dos estados posibles:
 
-\begin{equation}
+\begin{itemize}
+	\item Con $V^{+} > V_{TR}$ $V_{SQ}$ adopta el valor $+V_{SAT}$ y luego $V^{+}$ será un valor menor a $V_{SAT}$ que dependerá del valor de la resistencias de realimentación, este estado se define como $V_{TH}$ (trigger high).
+	\item Con  $V^{+} < V_{TR}$ $V_{SQ}$ adopta el valor $-V_{SAT}$ y ocurre lo mismo que en el caso anterior con $V^{+}$, este estado será definido como $V_{TL}$ (trigger low).
+\end{itemize}
+
+
+En consecuencia, la rampa cambiará de pendiente positiva  negativa cuando $V_{TR} = V_{TH}$ y de pendiente negtaiva a positiva cuando $V_{TR} = V{TL}$. Si se reemplaza $\Delta V_{TR}$ por $V_{TH} - V_{TL}$ y $\Delta t $ por $\frac{1}{2f_0}$ en la ecuación \ref{eq:rampa}:
+
+\begin{equation}\label{eq:frecuencia}
 f_0 = \frac{V_{in}}{8RC(V_{TH} - V_{TL})}
 \end{equation}
 
-como $V_{TH} - V_{TL} = 10  Volt$:
+consiguiendose así una frecuecnia variable dependiente de la tensión de entrada. \newline
+
+El diseño anterior funciona como VCO pero posee dos complicaciones: \newline
+
+En primer lugar, cuando la señal de entrada es nula la salida también. Por ende, debe agregarse una etapa que logre una tensión de 1 Volt cuando la entrada sea nula, y de 10 Volt cuando sea igual a 5, ya que así se obtiene una relación 1:1 tensión-frecuencia. \newline
+
+En segundo lugar, el VCO diseñado es un oscilador de relajación, es decir, con salida no sinusoidal, por ende debe efectuarse una conversión triangular-sinusoidal a la salida del primer opamp. 
+
+\subsection{Eleccion de componentes}
+
+Los primeros Componentes a tener en cuenta son el capacitor y las resistencias del primer opamp. Deben elegirse dos valores respetandose la tension máxima de saturación del Schmidtt trigger $V_{TH} - V_{TL}$, la cual rondará los 13 Volt. Se hizo la resistencia de realimentación del comparador variable ya que así puede calibrarse la tensión de disparo para los valores de resistencias y capacitor elegidos. Con un capacitor de $10nF$ y resistencias de $1.5k\Omega$ para una tensión de entrada de 1 Volt debe ser igual a $1kHz$:
 
 \begin{equation}
-f_0 = \frac{V_{in}}{80RC}
+1000 = \frac{1}{8\cdot 1500 \cdot 10^{-8} \cdot (V_{TH} - V_{TL}) } \Rightarrow (V_{TH} - V_{TL}) = 8.33 \; Volt
 \end{equation}
 
-es decir:
+Por ende se esta dentro del rango de tensiones adecuado. \newline
+
+El operacional usado es el TL084, contiene los 4 opamps necesarios para el diseño y posee características deseadas como alto slew-rate ($13 \frac{V}{\ s}$), baja corriente de bias ($30pA$) y baja distorsión armónica (menor al $0.0003\%$).
+
+%%Agregar transistor usado.
+\subsection{Cirucito Sumador}
+
+El circuito deseado debe cumplir la siguiente ecuación de la recta:
+
+\begin{equation}\label{eq:lineal}
+V_{out} = \frac{9}{5}V_{in} + 1
+\end{equation}
+
+Lo natural es utilizar con este propósito un circuito sumador no inversor:
+
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\ctikzset{tripoles/mos style/arrows}
+	
+	\node [op amp, label = center:$AO1$, yscale = -1](U1){};
+	
+	\draw (U1.+) to[short] ++(-0.5, 0) node[](vmas){} to[short] ++(0, 1.5) to[R, l = $R_1$, -*] ++(-2, 0) node[label = left:$15V$](15v){};
+
+	\draw (vmas) to[R, label = $R_2$, -*] ++(-2, 0) node[label = left:$V_{in}$](vin){};
+	
+	\draw (U1.-) to[short] ++(-0.5, 0) to[short] ++(0, -1.3) node[](feedback){};
+	\draw (feedback) to[R, l = $R_4$] ++(0, -2) node[ground](){};
+	
+	\draw (feedback) to[R, l = $R_3$, *-] (feedback -| U1.out) to[short] (U1.out);
+	
+	\draw (U1.out) to[short, -*] ++(0.5, 0) node[label = right:$V_{out}$](out){};
+	
+	
+	
+\end{circuitikz}
+	\caption{Sumador no Inversor}
+	\label{fig:sum}
+\end{center}
+\end{figure}
+
+Si se usa el teorema de superposición se llega a la siguiente ecuación para la tension de salida:
 
 \begin{equation}
-f_0 = kV_{in} \qquad con \qquad k = \frac{1}{80RC}
+V_{out} = (\frac{1 + \frac{R_3}{R_4}}{R_1 + R_2})\cdot (R_1\cdot V_{in} + R_2\cdot 15)
 \end{equation}
 
+Si se iguala coeficiente a coeficiente la expresión anterior con \ref{eq:lineal} se llega a la siguiente relación entre resistencias:
+
+\begin{equation}
+1 + \frac{R_3}{R_4} = \frac{9}{5} \cdot (1 + \frac{R_2}{R_1}) =\frac{1}{15} \cdot (1 + \frac{R_1}{R_2})
+\end{equation}
+
+Despejando de la segunda igualdad se llega a la siguiente relación entre $R_1$ y $R_2$:
+
+\begin{equation}
+R_1 = 27R_2
+\end{equation}
+
+si luego se despeja la primera igualdad:
+
+\begin{equation}
+13R_4 = 15R_3
+\end{equation}
+
+Los siguientes valores comerciales cumplen a la perfección ambas igualdades:
+
+\begin{itemize}
+\item $R_1 = 1k\Omega$
+\item $R_2 = 27k\Omega$
+\item $R_3 = 1.3k\Omega$
+\item $R_4 = 1.5k\Omega$
+\end{itemize}
+
+\newpage
 
 \subsection{Conversion onda triangular a senoidal}
-En la sección anterior se explicó el funcionamiento de un VCO con salida triangular proporcional a la tension de entrada. Para lograr una salida senoidal es necesario agregar una etapa de conversion. Para eso, lo único que se necesita es un circuito cuyas características de transferencia sean sinusoidales. Tal es el caso del siguiente circuito, el cual explota las características no lineales de los transitores:
+Existen diversor métodos para transformar una señal triangular a senoidal, en este caso se optó por la utilización de un par diferencial, ya que si se hubiera utilizado algún tipo de filtro la respuesta en frecuencia podría afectar la trasnformación.
 
 
 \begin{figure}[H]
@@ -121,33 +207,33 @@ En la sección anterior se explicó el funcionamiento de un VCO con salida trian
 \begin{circuitikz}
 	
 	\draw node[label = left:$V_{in}$](beginning){};
-	\draw (beginning) to[short, o-] ++(1, 0) node[](leftp1){} to[american potentiometer,n=mypot,l = $R_1$] ++(2,0) to[short, -*] ++(1, 0) node[](leftQ1){} to[R, l = $R_2$] ++(0, -2.5) node[ground]{};
+	\draw (beginning) to[short, o-] ++(1, 0) node[](leftp1){} to[american potentiometer,n=mypot,l = $100k\Omega$] ++(2,0) to[short, -*] ++(1, 0) node[](leftQ1){} to[R, l = $2.2k\Omega$] ++(0, -2.5) node[ground]{};
 	\draw (mypot.wiper) to[short] ++(-1,0) to[short] (leftp1);
 	
 	\draw (leftQ1) to[open] ++(2, 0) node[npn](Q1){};
 	\draw (leftQ1) to[short] (Q1.B);
 	\draw (Q1.E) to[short] ++(0, -1) node[](botQ1){};
-	\draw (botQ1) to[R, l = $R_2$] ++(2.5, 0) node[](botQ2){};
-	\draw (botQ1) to[short] ++(0, -1.5) node[](leftp2){} to[american potentiometer,mirror, n=pot2, l = $R_6$] ++(2.5, 0) node[](rightp2){};
-	\draw (pot2.wiper) to[R, l = $R_7$] ++(0, -1.9) node[ground]{}; 
+	\draw (botQ1) to[R, l = $680\Omega$] ++(2.5, 0) node[](botQ2){};
+	\draw (botQ1) to[short] ++(0, -1.5) node[](leftp2){} to[american potentiometer,mirror, n=pot2, l = $50k\Omega$] ++(2.5, 0) node[](rightp2){};
+	\draw (pot2.wiper) to[R, l = $18k\Omega$] ++(0, -1.9) node[ground]{}; 
 		
 	\draw (botQ2) to[open] (botQ2 |- Q1.B) node[npn, xscale = -1](Q2){};
 	\draw (Q2.E) to[short] (rightp2);
-	\draw (Q2.B)to[short] ++(0.20, 0) to[R, label = $R_5$ ] ++(0, -2) node[ground]{};
+	\draw (Q2.B)to[short] ++(0.20, 0) to[R, label = $2.2k\Omega$ ] ++(0, -2) node[ground]{};
 	
-	\draw (Q1.C) to[short] ++(0, 1) node[](out1){} to[R, l = $R_3$] ++(0, 1.8) to[short] ++(1.25, 0) node[](middle){} to[short] ++(1.25, 0);
-	\draw (Q2.C) to[short] ++(0, 0.5) node[](out2){} to[short] ++(0, 0.5) to[R, l = $R_4$] ++(0, 1.8);
+	\draw (Q1.C) to[short] ++(0, 1) node[](out1){} to[R, l = $10k\Omega$] ++(0, 1.8) to[short] ++(1.25, 0) node[](middle){} to[short] ++(1.25, 0);
+	\draw (Q2.C) to[short] ++(0, 0.5) node[](out2){} to[short] ++(0, 0.5) to[R, l = $10k\Omega$] ++(0, 1.8);
 	\draw (middle) to[short, -*, l = {$V_{cc}$}] ++(0, 0.5);
 	
-	\draw (out1) to[open] ++(6, -0.5) node[op amp, label = center:$AO1$](U1){};
+	\draw (out1) to[open] ++(7, -0.5) node[op amp, label = center:$AO1$](U1){};
 	\draw (out1) to[short]  (U1.-);
 	
 	\draw (U1.+) to[short, -*] (U1.+ -| Q2.C);
 	
-	\draw (U1.+) to[short] ++(0, -0.5) to[R, l = $R_8$] ++(0, -1.5) node[ground]{};
+	\draw (U1.+) to[short] ++(0, -1.5) node[ground]{};
 	\draw (U1.-) to[short] ++(0, 1) node[](leftR9){};
-	\draw (leftR9) to[R, l = $R_9$] (leftR9 -| U1.out) to[short] (U1.out);
-	\draw (U1.out) to[short, -*] ++(0.5, 0);
+	\draw (leftR9) to[vR, l = $5k\Omega$] (leftR9 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[short, -*] ++(0.5, 0) node[label = right:$V_{out}$](out){};
 	
 	
 \end{circuitikz}
@@ -156,15 +242,20 @@ En la sección anterior se explicó el funcionamiento de un VCO con salida trian
 \end{center}
 \end{figure}
 
+%%Agregar pequeña explicación
+ 
+
+\subsection{Calibración}
+
+En total, el circuito posee 4 potenciómetros que deben ajustarse para calibrar correctamente el VCO:
 
 
-
-%%Agregar explciacion de distorison armonica 
-%%Agregar Explicacion Jitter 
-
-\subsection{Eleccion de componentes}
-
-
+\begin{itemize}
+\item La resistencia de realimentación del Schmitt trigger debe ajustarse para lograr el nivel de tension deseado, dados los componentes elegidos. Para eso se ponen 0 Volts a la entrada y se ajusta el preset hasta lograr una señal de $1kHz$.
+\item El preset entre los emisores de los trasnsitores en el par diferencial debe ajustarse para lograr mejor simetría en la onda senoidal.
+\item El preset a la entrada del conversor se ajusta para suavizar la triangular y lograr una onda senoidal.
+\item El preset a la salida del sistema se ajusta para lograr una señal de 1 $Volt$ de amplitud. 
+\end{itemize}
 
 
 \subsection{Simulaciones}
