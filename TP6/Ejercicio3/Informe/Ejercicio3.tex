@@ -113,10 +113,48 @@ f_0 = kV_{in} \qquad con \qquad k = \frac{1}{80RC}
 
 
 \subsection{Conversion onda triangular a senoidal}
-En la sección anterior se explicó el funcionamiento de un VCO con salida triangular proporcional a la tension de entrada. Para lograr una salida senoidal es necesario agregar una etapa de conversion. Para eso, lo único que se necesita es un circuito cuyas características de trasnferencia sean sinusoidales. Tal es el caso del siguiente circuito, el cual explota las características no lineales de los trasnsitores:
+En la sección anterior se explicó el funcionamiento de un VCO con salida triangular proporcional a la tension de entrada. Para lograr una salida senoidal es necesario agregar una etapa de conversion. Para eso, lo único que se necesita es un circuito cuyas características de transferencia sean sinusoidales. Tal es el caso del siguiente circuito, el cual explota las características no lineales de los transitores:
 
 
-
+\begin{figure}[H]
+\begin{center}
+\begin{circuitikz}
+	
+	\draw node[label = left:$V_{in}$](beginning){};
+	\draw (beginning) to[short, o-] ++(1, 0) node[](leftp1){} to[american potentiometer,n=mypot,l = $R_1$] ++(2,0) to[short, -*] ++(1, 0) node[](leftQ1){} to[R, l = $R_2$] ++(0, -2.5) node[ground]{};
+	\draw (mypot.wiper) to[short] ++(-1,0) to[short] (leftp1);
+	
+	\draw (leftQ1) to[open] ++(2, 0) node[npn](Q1){};
+	\draw (leftQ1) to[short] (Q1.B);
+	\draw (Q1.E) to[short] ++(0, -1) node[](botQ1){};
+	\draw (botQ1) to[R, l = $R_2$] ++(2.5, 0) node[](botQ2){};
+	\draw (botQ1) to[short] ++(0, -1.5) node[](leftp2){} to[american potentiometer,mirror, n=pot2, l = $R_6$] ++(2.5, 0) node[](rightp2){};
+	\draw (pot2.wiper) to[R, l = $R_7$] ++(0, -1.9) node[ground]{}; 
+		
+	\draw (botQ2) to[open] (botQ2 |- Q1.B) node[npn, xscale = -1](Q2){};
+	\draw (Q2.E) to[short] (rightp2);
+	\draw (Q2.B)to[short] ++(0.20, 0) to[R, label = $R_5$ ] ++(0, -2) node[ground]{};
+	
+	\draw (Q1.C) to[short] ++(0, 1) node[](out1){} to[R, l = $R_3$] ++(0, 1.8) to[short] ++(1.25, 0) node[](middle){} to[short] ++(1.25, 0);
+	\draw (Q2.C) to[short] ++(0, 0.5) node[](out2){} to[short] ++(0, 0.5) to[R, l = $R_4$] ++(0, 1.8);
+	\draw (middle) to[short, -*, l = {$V_{cc}$}] ++(0, 0.5);
+	
+	\draw (out1) to[open] ++(6, -0.5) node[op amp, label = center:$AO1$](U1){};
+	\draw (out1) to[short]  (U1.-);
+	
+	\draw (U1.+) to[short, -*] (U1.+ -| Q2.C);
+	
+	\draw (U1.+) to[short] ++(0, -0.5) to[R, l = $R_8$] ++(0, -1.5) node[ground]{};
+	\draw (U1.-) to[short] ++(0, 1) node[](leftR9){};
+	\draw (leftR9) to[R, l = $R_9$] (leftR9 -| U1.out) to[short] (U1.out);
+	\draw (U1.out) to[short, -*] ++(0.5, 0);
+	
+	
+\end{circuitikz}
+	\caption{Conversor triangular-sinusoidal}
+	\label{fig:CTS}
+\end{center}
+\end{figure}
 
 
 
