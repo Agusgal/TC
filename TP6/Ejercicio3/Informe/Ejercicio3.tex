@@ -51,7 +51,7 @@ En la siguiente figura puede verse un diagram del circuito utilizado:
 	
 	\draw (U1.out) to[open] ++(1, 0) to[short,label = $V_{TR}$, -*] ++(0, 1);
 	
-	\draw (out) to[short, -*, label = $V_{SQ}$] ++(1, 0);
+	\draw (out) to[short, -*] ++(1, 0) node[label = right:$V_{Sq}$](){};
 	
 \end{circuitikz}
 	\caption{VCO implementado}
