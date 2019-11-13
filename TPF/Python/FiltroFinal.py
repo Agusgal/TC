@@ -4,10 +4,10 @@ import pandas as pnd
 
 #MEDICION
 
-# df = pnd.read_csv('FiltroFinal.csv', sep=',')
-# freq_mt = np.asarray(df["Frequency (Hz)"])
-# mag_mt = np.asarray(df["Channel 2 Magnitude (dB)"])
-# pha_mt = np.asarray(df["Channel 2 Phase (*)"])
+df = pnd.read_csv('tpf.csv', sep=',')
+freq_mt = np.asarray(df["Frequency"])
+mag_mt = np.asarray(df["Mag"])
+pha_mt = np.asarray(df["Pha"])
 
 magias = 0.8 #0.765
 
@@ -23,8 +23,8 @@ famin = 13.802E3
 famax = 16.301E3
 
 medicion_min = 100
-medicion_max = 250e3 #192E3
-at_max = -70
+medicion_max = 192E3 #192E3
+at_max = -100
 
 
 #R = 1K ; C = 680p
@@ -53,12 +53,11 @@ plt.fill_between([famin, famax], [aa, aa], facecolor='red', alpha=0.25)
 plt.title("Plantilla del filtro")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Amplitud [dB]")
-
-plt.plot(freq_m, np.asarray(mag_m) + magias, label = "Medido")
-
-plt.xscale('log')
+magias2=0.8
+plt.semilogx(freq_m, np.asarray(mag_m) + magias, label = "Medido")
+plt.semilogx(freq_mt, np.asarray(mag_mt), label = "Medido Analog")
+plt.legend()
 plt.grid()
-#plt.legend()
 plt.show()
 
 #print("f ", np.size(freq_m))
@@ -67,8 +66,9 @@ plt.show()
 plt.title("Fase")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Diagrama de Bode en fase [°]")
-plt.plot(freq_m, pha_m, label = "Medido")
-plt.xscale('log')
+plt.semilogx(freq_m, pha_m, label = "Medido")
+plt.semilogx(freq_mt, pha_mt, label = "Medido Analog")
+plt.legend()
 plt.grid()
 #plt.legend()
 plt.show()
