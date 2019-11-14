@@ -44,6 +44,8 @@ class MainWindow(QtWidgets.QMainWindow):
         self.ui.selector_filtro.currentIndexChanged.connect(self.change_image)
         self.ui.selector_filtro.currentIndexChanged.connect(self.change_parameter_box)
 
+
+
     #crea los diferentes filtros y los agrega a las listas de la gui
     def crear_filtro(self):
 
@@ -83,35 +85,47 @@ class MainWindow(QtWidgets.QMainWindow):
 
             k = float(self.ui.input_desnormalizacion.text()) / 100
 
-            n = int(self.ui.input_orden_filtro.text())
+            label = str(self.ui.input_maximo_Q.text())
+            print(label)
 
-            #Este try comprueba que el suuario haya creado bien el filtrp
+            try:
+                n = int(self.ui.input_orden_filtro.text())
+                if n == 0:
+                    n = None
+            except:
+                if n == 0:
+                    n = None
+            #Este try comprueba que el usuario haya creado bien el filtro
             try:
                 if aprox == 'Butterworth':
-                    filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n)
-                    print(2)
+                    filtro = Butterworth(tipo, wp, ws, Ap, As, ganancia, rp=0, k=k, N=n, name=label)
                     self.agregar_filtro_lista(filtro)
-                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
+                    listaf.cambiar_label(label)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(filtro.get_order()))
                 elif aprox == 'Chebycheff':
-                    filtro = Chebyshev1(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
+                    filtro = Chebyshev1(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n, name=label)
                     self.agregar_filtro_lista(filtro)
-                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
+                    listaf.cambiar_label(label)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(filtro.get_order()))
                 elif aprox == 'Chebycheff Inverso':
-                    filtro = Chebyshev2(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
+                    filtro = Chebyshev2(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n, name=label)
                     self.agregar_filtro_lista(filtro)
-                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
+                    listaf.cambiar_label(label)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(filtro.get_order()))
                 elif aprox == 'Legendre':
                     pass
                 elif aprox == 'Gauss':
                     pass
                 elif aprox == 'Cauer':
-                    filtro = Cauer(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
+                    filtro = Cauer(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n, name=label)
                     self.agregar_filtro_lista(filtro)
-                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
+                    listaf.cambiar_label(label)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(filtro.get_order()))
                 else:
-                    filtro = Bessel(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n)
+                    filtro = Bessel(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n, name=label)
                     self.agregar_filtro_lista(filtro)
-                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(n))
+                    listaf.cambiar_label(label)
+                    self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(filtro.get_order()))
             except ValueError as error:
                 self.show_pop_up(str(error))
 
@@ -148,6 +162,7 @@ class MainWindow(QtWidgets.QMainWindow):
             where = 3
             listaf.seleccionar(ind)
             print(ind)
+
 
             listaf.lista_filtros[ind].mark_graphed('Poles and Zeroes', where)
             self.ui.ventana_polos_zeros.zplot(listaf.lista_filtros[ind])
@@ -504,6 +519,9 @@ class Window2(QtWidgets.QWidget):
     def switch(self):
         self.switch_window.emit()
         self.close()
+
+    def get_label(self):
+        return self.label
 
 #clase etapa
 class Stages:

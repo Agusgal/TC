@@ -3,16 +3,18 @@
 
 \subsection{Introducción}
 
-Un oscilador es un circuito electrónico capaz de producir una señal oscilante periódica, a menudo senoidal o cuadrada. Existen dos tipos de oscialdors: los oscialdores armónicos y los osciladores de relajación. Los primeros producen una señal sinusoidal a la salida y se rijen por el criterio de BarkHausen. En cambio, los osciladores de relajación u osciladores no lienales, producen una señal no sinusoidal a su salida, como por ejemplo una triangular, un diente de sierra o un tren de pulsos. Basicamente concisten en dos partes: un elemento que almacena energía (por lo general un copacitor) y un dispositivo de switching no lineal, ambos conectados por algún tipo de realimentación. El dispositivo switching se encarga de cargar y descargar el capacitor periodicamente, ocasionando cambios abruptos en la salida del circuito. 
+Un oscilador es un circuito electrónico capaz de producir una señal oscilante periódica, a menudo senoidal o cuadrada. Existen dos tipos de oscialdors: los osciladores armónicos y los osciladores de relajación. Los primeros producen una señal sinusoidal a la salida y se rijen por el criterio de Barkhausen. En cambio, los osciladores de relajación u osciladores no lienales, producen una señal no sinusoidal, como por ejemplo una triangular, un diente de sierra o un tren de pulsos. Basicamente consisten de dos partes: un elemento que almacena energía (por lo general un capacitor) y un dispositivo de switching no lineal, ambos conectados por algún tipo de realimentación. El dispositivo switching se encarga de cargar y descargar el capacitor periodicamente, ocasionando cambios abruptos en la salida del circuito. 
 
 
 \subsection{Oscilador controlado por tension}
 
-Un tipo especial de osciladores de relajación son los VCO u osciladores controlados por voltaje por sus siglas en inglés. La función principal de los mismos es la de convertir una señal DC de entrada a una frecuencia de señal a la salida, frecuentemente una señal sinusoidal o triangular. Al ser un tipo de osciladores los VCOs poseen dos partes, una activa que actúa como amplificador y una red de retroalimentación que provee retroalimentación positiva al sistema. Esta red de retroalimentación contiene por lo general un elemento de reactancia variable, el cuál controla la frecuencia de salida del circuito. 
+Un tipo especial de osciladores de relajación son los VCO u osciladores controlados por voltaje por sus siglas en inglés. La función principal de los mismos es la de convertir una señal DC de entrada a una frecuencia de señal a la salida, por lo genera sinusoidal o triangular. Al ser un tipo de osciladores los VCOs poseen dos partes, una activa que actúa como amplificador y una red de retroalimentación que provee retroalimentación positiva al sistema. Esta red de retroalimentación contiene por lo general un elemento de reactancia variable, el cuál controla la frecuencia de salida del circuito. 
 Los VCOs poseen infinidad de aplicaciones, entre ellas son componentes fundamentales de los circuitos amarradores de fase (PLL), sirven de sintetizadores de frecuencia controlables, son usados también como entrada de frecuencia de la portadora para moduladores, etc.
 
 
-%%Agregar teroia sobre distorsion armonica y jitter aca
+Existen dos par\'ametros que definen el funcionamiento correcto de un VCO: la distoris\'on arm\'onica y el jitter o fluctuaci\'on del retardo. La distorsi\'on arm\'onica es una medida de cuanto se distorsiona o cambia la forma de una onda de su forma convencional debido a los diferentes componentes en frecuencia de la misma. Por otro lado, se define al jitter como la desviaci\'on en la periodicidad de una senhal, con respecto a una referencia fija. 
+
+
 En la siguiente figura puede verse un diagram del circuito utilizado:
 
 \begin{figure}[H]
@@ -228,7 +230,6 @@ Existen diversor métodos para transformar una señal triangular a senoidal, en 
 	\draw (out1) to[open] ++(7, -0.5) node[op amp, label = center:$AO1$](U1){};
 	\draw (out1) to[short]  (U1.-);
 	
-	\draw (U1.+) to[short, -*] (U1.+ -| Q2.C);
 	
 	\draw (U1.+) to[short] ++(0, -1.5) node[ground]{};
 	\draw (U1.-) to[short] ++(0, 1) node[](leftR9){};
@@ -258,9 +259,24 @@ En total, el circuito posee 4 potenciómetros que deben ajustarse para calibrar 
 \end{itemize}
 
 
-\subsection{Simulaciones}
+\subsection{Resultados Experimentales}
+\subsubsection{}
 
-\subsection{Mediciones}
+
+\subsubsection{VCO}
+
+\begin{table}[H]
+\centering
+\begin{tabular}{ll}\hline
+\multicolumn{1}{c}{Frecuencia fundamental (kHz)} & THD (\%) \\ \hline
+1.1                                              & 0.51     \\
+3.3                                              & 0.72     \\
+5.29                                             & 1.442    \\
+7.2                                              & 1.128    \\
+9                                                & 1.376    \\
+10.8                                             & 1.446   \\ \hline
+\end{tabular}
+\end{table}
 
 \subsection{Conclusiones}
 

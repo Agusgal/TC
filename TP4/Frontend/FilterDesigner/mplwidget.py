@@ -18,6 +18,7 @@ from scipy import signal
 
 from analog.filters import Chebyshev1
 
+from Frontend.FilterDesigner.Lista_Filtros import listaf
 
 class MplWidget(QWidget):
 
@@ -58,28 +59,34 @@ class MplWidget(QWidget):
                             self.canvas.axes.fill(s[0], s[1], '1', lw=0)  # Set line-
                             self.canvas.draw()
                     elif key == 'Attenuation' and self.check_compatibility(filtro, key):
-                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), -filtro.get_mag())
+                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), -filtro.get_mag(), label = filtro.get_name())
+                        self.canvas.axes.legend()
                         self.canvas.draw()
                     elif key == 'Magnitude' and self.check_compatibility(filtro, key):
-                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_mag())
+                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_mag(),  label = filtro.get_name())
+                        self.canvas.axes.legend()
                         self.canvas.draw()
                     elif key == 'Phase' and self.check_compatibility(filtro, key):
-                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_pha())
+                        self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_pha(),  label = filtro.get_name())
+                        self.canvas.axes.legend()
                         self.canvas.draw()
                     elif key == 'Group Delay' and self.check_compatibility(filtro, key):
                         w, gdelay = filtro.get_gdelay()
-                        self.canvas.axes.semilogx(np.divide(w, gdelay))
+                        self.canvas.axes.semilogx(np.divide(w, gdelay), label =  filtro.get_name())
+                        self.canvas.axes.legend()
                         self.canvas.draw()
                     elif key == 'Maximun Q' and self.check_compatibility(filtro, key):
                         pass
                     elif key == 'Impulse Response' and self.check_compatibility(filtro, key):
                         T, yout = filtro.get_impulse_response()
-                        self.canvas.axes.plot(T, yout)
+                        self.canvas.axes.plot(T, yout, label =  filtro.get_name())
+                        self.canvas.axes.legend()
                         self.canvas.draw()
                         pass
                     elif key == 'Step Response' and self.check_compatibility(filtro, key):
                         T, yout = filtro.get_step()
-                        self.canvas.axes.plot(T, yout)
+                        self.canvas.axes.plot(T, yout, label =  filtro.get_name())
+                        self.canvas.axes.legend()
                         self.canvas.draw()
                     elif key == 'Poles and Zeroes':
                         for z in filtro.zeros:

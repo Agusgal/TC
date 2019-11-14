@@ -11,7 +11,7 @@ from analog.cusfunc.cusfunc import maprange
 
 
 class Butterworth(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None, name=None):
         """
         Parameters
         ----------
@@ -42,7 +42,7 @@ class Butterworth(AnalogFilter):
         N: int
         Order filter. If this N is None the order will be calculated (recommended)
     """
-        super().__init__(ftype,  wp, ws, Ap, As, k=k, N=N)
+        super().__init__(ftype,  wp, ws, Ap, As, k=k, N=N,name=None)
 
     def compute_order(self):
         """
@@ -122,7 +122,7 @@ class Butterworth(AnalogFilter):
 
 
 class Chebyshev1(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None, name=None):
         """
         Parameters
         ----------
@@ -153,7 +153,7 @@ class Chebyshev1(AnalogFilter):
         N: int
         Order filter. If this N is None the order will be calculated (recommended)
     """
-        super().__init__(ftype,  wp, ws, Ap, As, rp=Ap, k=k, N=N)
+        super().__init__(ftype,  wp, ws, Ap, As, rp=Ap, k=k, N=N, name=None)
 
     def compute_order(self):
         print(self.wp, self.ws, self.Ap, self.As,)
@@ -226,7 +226,7 @@ class Chebyshev1(AnalogFilter):
 
 
 class Chebyshev2(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None, name=None):
         """
         Chebyshev 2 analog filter
         
@@ -259,7 +259,7 @@ class Chebyshev2(AnalogFilter):
         N: int
         Order filter. If this N is None the order will be calculated (recommended)
     """
-        super().__init__(ftype,  wp, ws, Ap, As, rp=Ap, k=k, N=N)
+        super().__init__(ftype,  wp, ws, Ap, As, rp=Ap, k=k, N=N, name=None)
 
     def compute_order(self):
         if self.N is None:
@@ -332,7 +332,7 @@ class Chebyshev2(AnalogFilter):
 
 
 class Cauer(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None, name=None):
         """
         Cauer analog filter
         
@@ -365,7 +365,7 @@ class Cauer(AnalogFilter):
         N: int
         Order filter. If this N is None the order will be calculated (recommended)
     """
-        super().__init__(ftype,  wp, ws, Ap, As,gain=gain, rp=Ap, k=k, N=N)
+        super().__init__(ftype,  wp, ws, Ap, As,gain=gain, rp=Ap, k=k, N=N, name=None)
 
     def compute_order(self):
         """
@@ -438,7 +438,7 @@ class Cauer(AnalogFilter):
             pass
 
 class Bessel(AnalogFilter):
-    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
+    def __init__(self, ftype,  wp, ws, Ap, As, gain=0, rp=0, k=0, N=None, name=None):
         """
         Chebyshev 2 analog filter
         
@@ -471,7 +471,7 @@ class Bessel(AnalogFilter):
         N: int
         Order filter. If this N is None the order will be calculated (recommended)
     """
-        super().__init__(ftype,  wp, ws, Ap, As,gain=gain, rp=Ap, k=k, N=N)
+        super().__init__(ftype,  wp, ws, Ap, As,gain=gain, rp=Ap, k=k, N=N, name=None)
 
     def compute_order(self):
         """
