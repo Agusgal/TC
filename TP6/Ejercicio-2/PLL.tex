@@ -24,14 +24,27 @@ El comparador emite una señal de error proporcional a la diferencia de frecuenc
 \begin{figure}[H]
 	\centering
 	\includegraphics[scale=0.3]{ImagenesVarias/PLL_range2.png}
-	\caption{Rango de bloque y enganche}
+	\caption{Rango de bloqueo(enganche) y captura}
 	\label{blockLockRange}
 \end{figure}
 
 Como podemos observar en la figura \ref{blockLockRange}. Existe la ya antes mencionada \textbf{zona de captura}. Una señal que se encuentre en este rango de frecuencias forzara al PLL a sincronizar la frecuencia de oscilación de su VCO interno con la frecuencia de la señal entrante. U na vez dentro de esta zona es posible utilizar el PLL dentro de la llamada \textbf{zona de bloqueo}. En esta zona el PLL mantendrá la frecuencia de oscilación sincronizada. Notemos que el rango de bloqueo es más grande que el rango de captura.
 
 \subsubsection{Diseño y configuración}
+El circuito integrado CD4046 puede ser configurado de varias maneras dependiendo de su finalidad.
+En la figura \ref{configuraciones} podemos ver los componentes internos del integrado. 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale=0.5]{ImagenesVarias/PLL_innerblockdiagram.png}
+	\caption{Configuraciones del CD4046 }
+	\label{configuraciones}
+\end{figure}
+
+En nuestro caso, nos es de interés configurar el PLL de tal forma de obtener un rango de bloque que comience en los $4.5KHz$ y termine a los $96KHz$. Además deseamos poder observar el efecto del rango de captura por lo que este se configurara para capturar frecuencias en un rango de \textcolor{red}{COMPLETAR} 
+
+Para alcanzar esta configuración se hizo referencia a la hoja de datos (ver adjunto) de Texas Instruments. \footnote{Durante el desarrollo de este trabajo se encontraron discrepancias en las formulas provistas por los diversos fabricantes. No obstante, coincidían en los circuitos de aplicación planteados}.
+En la misma se hace referencia a 4 configuraciones posibles de la cuales solo 1 de ellas nos permite regular el rango de captura de la señal entrante. Las demás establecen un rango de captura de igual ancho que el rango de bloqueo.
 
 
 \subsubsection{Síntesis de frecuencias}
