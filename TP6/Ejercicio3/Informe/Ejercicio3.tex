@@ -1,21 +1,18 @@
-\input{Header.tex}
-\begin{document}
-
 \subsection{Introducción}
 
-Un oscilador es un circuito electrónico capaz de producir una señal oscilante periódica, a menudo senoidal o cuadrada. Existen dos tipos de oscialdors: los osciladores armónicos y los osciladores de relajación. Los primeros producen una señal sinusoidal a la salida y se rijen por el criterio de Barkhausen. En cambio, los osciladores de relajación u osciladores no lienales, producen una señal no sinusoidal, como por ejemplo una triangular, un diente de sierra o un tren de pulsos. Basicamente consisten de dos partes: un elemento que almacena energía (por lo general un capacitor) y un dispositivo de switching no lineal, ambos conectados por algún tipo de realimentación. El dispositivo switching se encarga de cargar y descargar el capacitor periodicamente, ocasionando cambios abruptos en la salida del circuito. 
+Un oscilador es un circuito electrónico capaz de producir una señal oscilante periódica, a menudo senoidal o cuadrada. Existen dos tipos de oscialdores: los osciladores armónicos y los de relajación. Los primeros producen una señal sinusoidal a la salida y se rijen por el criterio de Barkhausen. En cambio, los osciladores de relajación u osciladores no lienales, producen una señal no sinusoidal, como por ejemplo una triangular, un diente de sierra o un tren de pulsos. Basicamente consisten de dos partes: un elemento que almacena energía (por lo general un capacitor) y un dispositivo de switching no lineal, ambos conectados por algún tipo de realimentación. El dispositivo switching se encarga de cargar y descargar el capacitor periodicamente, ocasionando cambios abruptos en la salida del circuito. 
 
 
 \subsection{Oscilador controlado por tension}
 
-Un tipo especial de osciladores de relajación son los VCO u osciladores controlados por voltaje por sus siglas en inglés. La función principal de los mismos es la de convertir una señal DC de entrada a una frecuencia de señal a la salida, por lo genera sinusoidal o triangular. Al ser un tipo de osciladores los VCOs poseen dos partes, una activa que actúa como amplificador y una red de retroalimentación que provee retroalimentación positiva al sistema. Esta red de retroalimentación contiene por lo general un elemento de reactancia variable, el cuál controla la frecuencia de salida del circuito. 
+Un tipo especial de osciladores de relajación son los VCO u osciladores controlados por voltaje, por sus siglas en inglés. La función principal de los mismos es la de convertir una señal DC de entrada a una frecuencia de señal a la salida, por lo general sinusoidal o triangular. Al ser un tipo de osciladores los VCOs poseen dos partes, una activa que actúa como amplificador y una red de retroalimentación que provee retroalimentación positiva al sistema. Esta red de retroalimentación contiene por lo general un elemento de reactancia variable, el cuál controla la frecuencia de salida del circuito. 
 Los VCOs poseen infinidad de aplicaciones, entre ellas son componentes fundamentales de los circuitos amarradores de fase (PLL), sirven de sintetizadores de frecuencia controlables, son usados también como entrada de frecuencia de la portadora para moduladores, etc.
 
 
-Existen dos par\'ametros que definen el funcionamiento correcto de un VCO: la distoris\'on arm\'onica y el jitter o fluctuaci\'on del retardo. La distorsi\'on arm\'onica es una medida de cuanto se distorsiona o cambia la forma de una onda de su forma convencional debido a los diferentes componentes en frecuencia de la misma. Por otro lado, se define al jitter como la desviaci\'on en la periodicidad de una senhal, con respecto a una referencia fija. 
+Existen dos par\'ametros que definen el funcionamiento correcto de un VCO: la distoris\'on arm\'onica y el jitter o fluctuaci\'on del retardo. La distorsi\'on arm\'onica es una medida de cuanto se distorsiona o cambia la forma de una onda de su forma convencional debido a los diferentes componentes en frecuencia de la misma. Por otro lado, se define al jitter como la desviaci\'on en la periodicidad de una señal, con respecto a una referencia fija. 
 
 
-En la siguiente figura puede verse un diagram del circuito utilizado:
+En la siguiente figura puede verse un diagram del circuito implementado:
 
 \begin{figure}[H]
 \begin{center}
@@ -61,7 +58,7 @@ En la siguiente figura puede verse un diagram del circuito utilizado:
 \end{center}
 \end{figure}
 
-Como se mencionó anteriormente el circuito consta de dos partes que logran tener una señal triangular a la salida con frecuencia dependiente de la tension $V_{in}$. Más precisamente la frecuencia final de la señal de salida se comportará de la siguiente manera:
+Como se mencionó anteriormente el circuito consta de dos partes que logran tener una señal triangular a la salida con frecuencia dependiente de la tensioó $V_{in}$. Más precisamente, la frecuencia final de la señal de salida se comportará de la siguiente manera:
 
 \begin{equation}
 f_0 = kV_{in}  \qquad  V_{in} > 0
@@ -70,7 +67,7 @@ f_0 = kV_{in}  \qquad  V_{in} > 0
 donde $k$ es la sensibilidad del VCO en Hertz por Volt. \newline
 
 
-El primer amplificador operacional se comporta como convertidor $V-I$ y obliga al capacitor a conducir una corriente linelamente proporcional a $V_{in}$. Pero para conseguir una onda triangular a la salida, el capacitor debe cargarse y descargarse y, por ende, alternar entre polaridades opuestas. Dicha polaridad se controla mediante el transsitor MOSFET tipo n que esta actuando de interruptor en este circuito. Si el transistor conduce por al resistencia R circula una corriente igual a $\frac{V_{in}}{2R}$, pero solo la mitad de esta corriente es suministrada por la resistencia $2R$, por ende, la mitad restante la suministra el capacitor. En el caso que el transistor este apagado y no conduzca, toda la corriente que llega al terminal no inversor debe fluir por el capacitor pero con sentido contrario al anterior. 
+El primer amplificador operacional se comporta como convertidor $V-I$ y obliga al capacitor a conducir una corriente linelamente proporcional a $V_{in}$. Pero para conseguir una onda triangular a la salida, el capacitor debe cargarse y descargarse y, por ende, alternar entre polaridades opuestas. Dicha polaridad se controla mediante el transsitor MOSFET tipo n que esta actuando de interruptor en este circuito. Si el transistor conduce por al resistencia R circula una corriente igual a $\frac{V_{in}}{2R}$, pero solo la mitad de esta corriente es suministrada por la resistencia $2R$, por ende, la mitad restante la entrega el capacitor. En el caso que el transistor este apagado y no conduzca, toda la corriente que llega al terminal no inversor debe fluir por el capacitor pero con sentido contrario al anterior. 
 
 
 A partir de la ecuación fundamental de carga y descarga del capacitor:
@@ -201,7 +198,7 @@ Los siguientes valores comerciales cumplen a la perfección ambas igualdades:
 \newpage
 
 \subsection{Conversion onda triangular a senoidal}
-Existen diversor métodos para transformar una señal triangular a senoidal, en este caso se optó por la utilización de un par diferencial, ya que si se hubiera utilizado algún tipo de filtro la respuesta en frecuencia podría afectar la trasnformación.
+Existen diversor métodos para transformar una señal triangular a senoidal, en este caso se optó por la utilización de un par diferencial, ya que si se hubiera utilizado algún tipo de filtro la respuesta en frecuencia podría afectar la transformación. 
 
 
 \begin{figure}[H]
@@ -243,8 +240,16 @@ Existen diversor métodos para transformar una señal triangular a senoidal, en 
 \end{center}
 \end{figure}
 
-%%Agregar pequeña explicación
+El preset en la salida del opamp controla la ganancia del circuito asegurando la amplitud adecuada a la salida. El funcionamiento de esta etapa consiste en aprovechar las alinealidades de los transistores para conseguir una señal senoidal a partir de una triangular:
  
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=1\textwidth]{Imagenes_Ej3/func.png}
+	\caption{Transferencias etapa de conversion}
+	\label{fig:linealizacion}
+\end{figure}
+
+Cuando se aplica una onda triangular de amplitud apropiada la transferencia del par diferencial redondea y achata las curvas de salida de la señal. Los dos resistores variables sirven para controlar la transferencia con tal de lograr una mejor forma en la onda. 
 
 \subsection{Calibración}
 
@@ -260,10 +265,38 @@ En total, el circuito posee 4 potenciómetros que deben ajustarse para calibrar 
 
 
 \subsection{Resultados Experimentales}
-\subsubsection{}
+\subsubsection{Sumador}
+En un principio se analizó como se comporta la etapa de transformación lineal del circuito. Para eso se lo estimuló con una señal continua de 0 a 5 Volts. En la siguiente imagen se muestra la transferencia de la etapa de transformación lineal, los puntos azules son los datos medidos mientras que la recta naranja representa la ecuación ideal:
 
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=1\textwidth]{Imagenes_Ej3/linealizacion.png}
+	\caption{Transferencia primera etapa}
+	\label{fig:linealizacion}
+\end{figure}
 
+El circuito cumple bien con la ecuación de la recta teórica a excepción del inicio, donde comienza aproximadamente 100 mV por encima del valor requerido.
 \subsubsection{VCO}
+
+Para Probar el VCO se lo estimuló nuevamente con una señal continua en el rango $0-5$ Volts, y en el modo estadítico del osciloscopio se esperaron al menos 2500 mediciones para tener un valor representativo de la desviación estándar de las mediciones. 
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lllll}\hline
+Vin (V) &  Media (kHz) &  Mínima (kHz) &  Máxima (kHz) & Desviación Estándar (kHz) \\ \hline
+0       & 1.12                   & 1.11                    & 1.14                    & $3X10^{-3}$                   \\
+1       & 3.27                   & 3.26                    & 3.29                    & $8X10^{-3}$                         \\
+2       & 5.26                   & 5.25                    & 5.27                    & $9X10^{-3}$                         \\
+3       & 7.18                   & 7.14                    & 7.19                    & $1.1X10^{-2}$                         \\
+4       & 9.01                   & 8.97                    & 9.05                    & $1.4X10^{-2}$                         \\
+5       & 10.4                   & 10.39                   & 10.81                   & $1.9X10^{-2}$                        \\ \hline
+\end{tabular}
+\caption{Jitter etapa de conversion}
+\end{table}
+
+Salta a la vista que el valor de la desviación es varios ordenes de magnitud más pequeño que la media, entonces se habla de una baja dispersión de los datos, lo que significa una señal con bajo jitter. Además se ve que tanto la frecuencia a 0 Volts como la frecuencia a 5 Volts son mayores a las calculadas. A pesar de lo anterior, se cumple la relación lineal deseada entre la tensión de entrada y la frecuencia de salida del circuito. 
+
+Por último se procedió a medir la distorsión armónica de la señal de salida con la función FFT del osciloscopio para corroborar que la forma sea la adecuada:
 
 \begin{table}[H]
 \centering
@@ -276,16 +309,26 @@ En total, el circuito posee 4 potenciómetros que deben ajustarse para calibrar 
 9                                                & 1.376    \\
 10.8                                             & 1.446   \\ \hline
 \end{tabular}
+\caption{Distorsion armónica}
 \end{table}
 
-\subsection{Conclusiones}
+En todos los casos la distorsión fue menor al 1,5\% pero se ve que es creciente respecto a la frecuencia. Si se calibrara el circuito para trabajar en cada frecuencia en específico, en vez de hacerlo una vez al principio se lograrían resultados mejores. En la siguiente imagen se observa la señal de salida, en los máximos y mínimos se ve una distorsion en la onda que ocaciona un aumento del THD:
+
+\begin{figure}[H]	
+	\centering
+	\includegraphics[width=1\textwidth]{Imagenes_Ej3/senoidal.png}
+	\caption{Señal de salida}
+	\label{fig:senoidal}
+\end{figure}
 
 
+\subsection{Conclusión}
+
+En el presente ejercicio de logró diseñar e implementar un oscilador controlado por tensión para una entrada de 0 a 5 Volts y una frecuencia de salida de 1 a 10kHZ. Aunque los valores de tensiones y frecuencias no son exactamente los pedidos, están en el rango de error de calibración y tolerancia de los componentes. Se logró un THD menor al 1.5\% para todas las frecuencias, y un jitter relativamente bajo. No obstante, existen varias mejoras aplicables:
 
 
-
-
-
-
-
-\end{document}
+\begin{itemize}
+\item Podría utilizarse un transistor tipo CMOS como switch en lugar de un BJT para lograr una menor distorsión y un tiempo  switch más rápido.
+\item Para eliminar los armónicos en alta frecuencia puede agregarse algún tipo de filtro pasabajos.
+\item Por último, agregar un filtro pasabanda con el Q adecuado puede ser una posibilidad para reducir el jitter en la señal.
+\end{itemize}
