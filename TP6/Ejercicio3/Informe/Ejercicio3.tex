@@ -1,9 +1,9 @@
 \subsection{Introducción}
 
-Un oscilador es un circuito electrónico capaz de producir una señal oscilante periódica, a menudo senoidal o cuadrada. Existen dos tipos de oscialdores: los osciladores armónicos y los de relajación. Los primeros producen una señal sinusoidal a la salida y se rijen por el criterio de Barkhausen. En cambio, los osciladores de relajación u osciladores no lienales, producen una señal no sinusoidal, como por ejemplo una triangular, un diente de sierra o un tren de pulsos. Basicamente consisten de dos partes: un elemento que almacena energía (por lo general un capacitor) y un dispositivo de switching no lineal, ambos conectados por algún tipo de realimentación. El dispositivo switching se encarga de cargar y descargar el capacitor periodicamente, ocasionando cambios abruptos en la salida del circuito. 
+Un oscilador es un circuito electrónico capaz de producir una señal oscilante periódica, a menudo sinusoidal o cuadrada. Existen dos tipos de osciladores: los osciladores armónicos y los de relajación. Los primeros producen una señal sinusoidal a la salida y se rigen por el criterio de Barkhausen. En cambio, los osciladores de relajación u osciladores no lineales, producen una señal no sinusoidal, como por ejemplo una triangular, un diente de sierra o un tren de pulsos. Basicamente consisten de dos partes: un elemento que almacena energía (por lo general un capacitor) y un dispositivo de switching no lineal, ambos conectados por algún tipo de realimentación. El dispositivo switching se encarga de cargar y descargar el capacitor periódicamente, ocasionando cambios abruptos en la salida del circuito. 
 
 
-\subsection{Oscilador controlado por tension}
+\subsection{Oscilador controlado por tensión}
 
 Un tipo especial de osciladores de relajación son los VCO u osciladores controlados por voltaje, por sus siglas en inglés. La función principal de los mismos es la de convertir una señal DC de entrada a una frecuencia de señal a la salida, por lo general sinusoidal o triangular. Al ser un tipo de osciladores los VCOs poseen dos partes, una activa que actúa como amplificador y una red de retroalimentación que provee retroalimentación positiva al sistema. Esta red de retroalimentación contiene por lo general un elemento de reactancia variable, el cuál controla la frecuencia de salida del circuito. 
 Los VCOs poseen infinidad de aplicaciones, entre ellas son componentes fundamentales de los circuitos amarradores de fase (PLL), sirven de sintetizadores de frecuencia controlables, son usados también como entrada de frecuencia de la portadora para moduladores, etc.
@@ -58,7 +58,7 @@ En la siguiente figura puede verse un diagram del circuito implementado:
 \end{center}
 \end{figure}
 
-Como se mencionó anteriormente el circuito consta de dos partes que logran tener una señal triangular a la salida con frecuencia dependiente de la tensioó $V_{in}$. Más precisamente, la frecuencia final de la señal de salida se comportará de la siguiente manera:
+Como se mencionó anteriormente el circuito consta de dos partes que logran tener una señal triangular a la salida con frecuencia dependiente de la tensión $V_{in}$. Más precisamente, la frecuencia final de la señal de salida se comportará de la siguiente manera:
 
 \begin{equation}
 f_0 = kV_{in}  \qquad  V_{in} > 0
@@ -67,7 +67,7 @@ f_0 = kV_{in}  \qquad  V_{in} > 0
 donde $k$ es la sensibilidad del VCO en Hertz por Volt. \newline
 
 
-El primer amplificador operacional se comporta como convertidor $V-I$ y obliga al capacitor a conducir una corriente linelamente proporcional a $V_{in}$. Pero para conseguir una onda triangular a la salida, el capacitor debe cargarse y descargarse y, por ende, alternar entre polaridades opuestas. Dicha polaridad se controla mediante el transsitor MOSFET tipo n que esta actuando de interruptor en este circuito. Si el transistor conduce por al resistencia R circula una corriente igual a $\frac{V_{in}}{2R}$, pero solo la mitad de esta corriente es suministrada por la resistencia $2R$, por ende, la mitad restante la entrega el capacitor. En el caso que el transistor este apagado y no conduzca, toda la corriente que llega al terminal no inversor debe fluir por el capacitor pero con sentido contrario al anterior. 
+El primer amplificador operacional se comporta como convertidor $V-I$ y obliga al capacitor a conducir una corriente linealmente proporcional a $V_{in}$. Pero para conseguir una onda triangular a la salida, el capacitor debe cargarse y descargarse y, por ende, alternar entre polaridades opuestas. Dicha polaridad se controla mediante el transistor MOSFET tipo n que esta actuando de interruptor en este circuito. Si el transistor conduce por al resistencia R circula una corriente igual a $\frac{V_{in}}{2R}$, pero solo la mitad de esta corriente es suministrada por la resistencia $2R$, por ende, la mitad restante la entrega el capacitor. En el caso que el transistor este apagado y no conduzca, toda la corriente que llega al terminal no inversor debe fluir por el capacitor pero con sentido contrario al anterior. 
 
 
 A partir de la ecuación fundamental de carga y descarga del capacitor:
@@ -82,7 +82,7 @@ y teniendo en cuenta la corriente que circula por el mismo se llega a la siguien
 V_{TR} = \frac{V_{in}}{2} + V_C = \frac{V_{in}}{2}(1 \pm \frac{\Delta t}{2RC})
 \end{equation}
 
-Entonces los cambios en la tension de salida $V_{TR}$ vienen dados por:
+Entonces los cambios en la tensión de salida $V_{TR}$ vienen dados por:
 
 \begin{equation}
 \Delta V_{TR	} = V_{in} \frac{\Delta t}{4RC}
@@ -98,13 +98,13 @@ Por otro lado, el segundo op-amp forma un Schmidtt trigger el cual controla la t
 \end{itemize}
 
 
-En consecuencia, la rampa cambiará de pendiente positiva  negativa cuando $V_{TR} = V_{TH}$ y de pendiente negtaiva a positiva cuando $V_{TR} = V{TL}$. Si se reemplaza $\Delta V_{TR}$ por $V_{TH} - V_{TL}$ y $\Delta t $ por $\frac{1}{2f_0}$ en la ecuación \ref{eq:rampa}:
+En consecuencia, la rampa cambiará de pendiente positiva  negativa cuando $V_{TR} = V_{TH}$ y de pendiente negativa a positiva cuando $V_{TR} = V{TL}$. Si se reemplaza $\Delta V_{TR}$ por $V_{TH} - V_{TL}$ y $\Delta t $ por $\frac{1}{2f_0}$ en la ecuación \ref{eq:rampa}:
 
 \begin{equation}\label{eq:frecuencia}
 f_0 = \frac{V_{in}}{8RC(V_{TH} - V_{TL})}
 \end{equation}
 
-consiguiendose así una frecuecnia variable dependiente de la tensión de entrada. \newline
+consiguiéndose así una frecuencia variable dependiente de la tensión de entrada. \newline
 
 El diseño anterior funciona como VCO pero posee dos complicaciones: \newline
 
@@ -114,7 +114,7 @@ En segundo lugar, el VCO diseñado es un oscilador de relajación, es decir, con
 
 \subsection{Eleccion de componentes}
 
-Los primeros Componentes a tener en cuenta son el capacitor y las resistencias del primer opamp. Deben elegirse dos valores respetandose la tension máxima de saturación del Schmidtt trigger $V_{TH} - V_{TL}$, la cual rondará los 13 Volt. Se hizo la resistencia de realimentación del comparador variable ya que así puede calibrarse la tensión de disparo para los valores de resistencias y capacitor elegidos. Con un capacitor de $10nF$ y resistencias de $1.5k\Omega$ para una tensión de entrada de 1 Volt debe ser igual a $1kHz$:
+Los primeros Componentes a tener en cuenta son el capacitor y las resistencias del primer opamp. Deben elegirse dos valores respetandose la tensión máxima de saturación del Schmidtt trigger $V_{TH} - V_{TL}$, la cual rondará los 13 Volt. Se hizo la resistencia de realimentación del comparador variable ya que así puede calibrarse la tensión de disparo para los valores de resistencias y capacitor elegidos. Con un capacitor de $10nF$ y resistencias de $1.5k\Omega$ para una tensión de entrada de 1 Volt debe ser igual a $1kHz$:
 
 \begin{equation}
 1000 = \frac{1}{8\cdot 1500 \cdot 10^{-8} \cdot (V_{TH} - V_{TL}) } \Rightarrow (V_{TH} - V_{TL}) = 8.33 \; Volt
@@ -125,7 +125,7 @@ Por ende se esta dentro del rango de tensiones adecuado. \newline
 El operacional usado es el TL084, contiene los 4 opamps necesarios para el diseño y posee características deseadas como alto slew-rate ($13 \frac{V}{\ s}$), baja corriente de bias ($30pA$) y baja distorsión armónica (menor al $0.0003\%$).
 
 %%Agregar transistor usado.
-\subsection{Cirucito Sumador}
+\subsection{Circuito Sumador}
 
 El circuito deseado debe cumplir la siguiente ecuación de la recta:
 
