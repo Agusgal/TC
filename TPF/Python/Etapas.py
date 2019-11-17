@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pnd
-# from SpiceParser import SpiceParser
+from SpiceParser import SpiceParser
 # from sympy import *
 
 #TEÓRICO
@@ -33,19 +33,26 @@ for i in range(1,7):
 
     #MEDICION
     df = pnd.read_csv('./FT/' + str(i) + '.csv', sep=',')
-    freq_mt = np.asarray(df["Frequency (Hz)"])
-    mag_mt = np.asarray(df["Channel 2 Magnitude (dB)"])
-    pha_mt = np.asarray(df["Channel 2 Phase (*)"])
+    freq_m = np.asarray(df["Frequency (Hz)"])
+    mag_m = np.asarray(df["Channel 2 Magnitude (dB)"])
+    pha_m = np.asarray(df["Channel 2 Phase (*)"])
+
+    lt_parser = SpiceParser()
+    data = lt_parser.parse('./FT/' + str(i) + '.txt')
+    freq_s = np.array(data[1].index)
+    mag_s = np.array(data[0]["V(v0" + str(i) + ") MAG"])
+    pha_s = np.array(data[1]["V(v0" + str(i) + ") PHA"])
 
     plt.title("Bode de la etapa " + str(i) + " en módulo")
     plt.xlabel("Frecuencia [Hz]")
     plt.ylabel("Amplitud [dB]")
 
-    plt.plot(freq_mt, mag_mt, label = "Medido")
-    # plt.plot(freq_teo, 20*np.log10(np.abs(H[i-1])), label="Simulado")
+    plt.plot(freq_teo, 20 * np.log10(np.abs(H[i - 1])), label="Teórico")
+    plt.plot(freq_s, mag_s, label="Simulado")
+    plt.plot(freq_m, mag_m, label = "Medido")
 
     plt.xscale('log')
-    #plt.legend()
+    plt.legend()
     plt.grid()
     plt.show()
 
@@ -53,10 +60,12 @@ for i in range(1,7):
     # plt.xlabel("Frecuencia [Hz]")
     # plt.ylabel("Fase [°]")
 
-    # plt.semilogx(freq_mt, pha_mt, label = "Medido")
-    # plt.plot(freq_teo, (360 / (2 * np.pi)) * np.arctan((np.imag(H[i-1])) / (np.real(H[i-1]))), label="Simulado")
+    # plt.plot(freq_teo, (360 / (2 * np.pi)) * np.arctan((np.imag(H[i-1])) / (np.real(H[i-1]))), label="Teórico")
+    # plt.plot(freq_s, pha_s, label = "Simulado")
+    # plt.plot(freq_mt, pha_mt, label = "Medido")
 
-    # #plt.legend()
+    # plt.xscale('log')
+    # plt.legend()
     # plt.grid()
     # plt.show()
 

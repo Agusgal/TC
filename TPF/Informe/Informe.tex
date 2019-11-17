@@ -43,7 +43,7 @@ k       & $\frac{1}{3}$ \\
 \label{tabla:caracteristicas1}
 \end{table}
 
-Para ello, se decidió emplear celdas del tipo universal, más específicamente una Fleischer-Tow. Es por ello que se analiza y se explica la selección de dicho tipo de celda a continuación. 
+Para ello, se decidió emplear celdas del tipo universal, más específicamente del tipo Fleischer-Tow. Es por ello que se analiza y se explica la selección de dicha celda a continuación. 
 
 \subsection{Celda universal Fleischer-Tow (FT)}
 En ocasiones es deseable poseer una señal de entrada que alimente varios nodos, obteniendo una única salida. A continuación se presenta la celda Fleischer-Tow, la cual se caracteriza por poder presentar una única transferencia que, dependiendo de los componentes seleccionados, puede ser un pasa bajos, pasa altos, pasa todo, de banda pasante y rechaza banda\footnote{R. Raut and M. N. S. Swamy, Modern Analog Filter Analysis and Design, 1st. ed. Weinheim: John Wiley and Sons, 2010.}, lo cual es una fuerte ventaja frente a los otros tipos de celdas universales, las cuales requieren más de tres operacionales para conseguir dichas salidas.
@@ -119,7 +119,7 @@ Es de interés obtener de esta los factores $\omega_o$ y $Q$ de los polos, siend
 \label{equ:woq-ft}
 \end{equation}
 
-Es así que se destaca la dependencia de $\omega_o$ y $Q$ de los capacitores, mientras que resultan ser independientes de $R_8$. Además, se destaca la que la frecuencia del polo es independiente de la resistencia $R_2$, mientras que $Q$ no, lo que permite modificar la primer variable sin afectar a la segunda.
+Es así que se destaca la dependencia de $\omega_o$ y $Q$ de los capacitores, mientras que resultan ser independientes de $R_8$. Además,resulta de interes que la frecuencia del polo es independiente de la resistencia $R_2$, mientras que $Q$ no, lo que permite modificar la primer variable sin afectar a la segunda.
 
 \subsection{Análisis de sensibilidades}
 En la siguiente sección, se procede a calcular las sensibilidades de $H(s)$, $Q$ y $\omega_o$ con respecto de cada componente, definiéndose la sensibilidad de una función $y$ con respecto de $x$ de la forma:
@@ -230,23 +230,25 @@ $Q$ & 1 & -0.5 & -0.5 & 0 & 0 & 0 & -0.5 & 0.5 & 0.5 & -0.5	\\
 \caption{Sensibilidades de $\omega_o$ y $Q$ con respecto de cada componente}
 \end{table}
 
+\newpage
 \section{Selección de componentes}
-Elección de componentes:
+A continuación se presentan los componentes seleccionados para cada etapa.
+\begin{multicols}{2}
 \begin{table}[H]
 \centering
 \begin{tabular}{ccc}
 \hline
 \multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{Valor} & Composición \\ \hline
-$R_1$                           & 33.68K                     & 680+33K     \\
-$R_2$                           & 334.28K                    & 3.9K+330K   \\
-$R_3$                           & 47K                        & 47K         \\
-$R_4$                           & 334.28K                    & 3.9K+330K   \\
-$R_5$                           & 47K                        & 47K         \\
-$R_6$                           & 49.7K                        & 2.7k+47k         \\
-$R_7$                           & 47K                        & 47K         \\
-$R_8$                           & 50K                        & 47K+3k         \\
-$C_1$                           & 95P                        & 68p//27p     \\
-$C_2$                           & 95P                        & 68p //27p    \\
+$R_1$                           & 33.68 $k\Omega$                     & 680 $k\Omega$ + 33 $k\Omega$     \\
+$R_2$                           & 334.28 $k\Omega$                    & 3.9 $k\Omega$ + 330 $k\Omega$   \\
+$R_3$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_4$                           & 334.28 $k\Omega$                    & 3.9 $k\Omega$ + 330 $k\Omega$   \\
+$R_5$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_6$                           & 49.7 $k\Omega$                        & 2.7 $k\Omega$ + 47 $k\Omega$         \\
+$R_7$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_8$                           & 50 $k\Omega$                        & 47 $k\Omega$+3 $k\Omega$         \\
+$C_1$                           & 95 $pf$                        & 68 $pf$//27 $pf$     \\
+$C_2$                           & 95 $pf$                        & 68 $pf$ //27 $pf$    \\
 \hline
 \end{tabular}
 \caption{Componentes seleccionados de la primer etapa.}
@@ -257,36 +259,38 @@ $C_2$                           & 95P                        & 68p //27p    \\
 \begin{tabular}{ccc}
 \hline
 \multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{Valor} & Composición  \\ \hline
-$R_1$                           & 27.03                      & 27+27K      \\
-$R_2$                           & 371.57k                    & 680k // 820k \\
-$R_3$                           & 47k                        & 47k          \\
-$R_4$                           & 371.57k                    & 680k //820k   \\
-$R_5$                           & 52.5k                      & 56k//820k    \\
-$R_6$                           & 49.77k                     & 2.7k+47k     \\
-$R_7$                           & 47k                        & 47k          \\
-$R_8$                           & 47.5k                        & 47k+500          \\
-$C_1$                           & 100p                       & 100p         \\
-$C_2$  \\
+$R_1$                           & 27.03                      & 27+27 $k\Omega$      \\
+$R_2$                           & 371.57 $k\Omega$                    & 680 $k\Omega$ // 820 $k\Omega$ \\
+$R_3$                           & 47 $k\Omega$                        & 47 $k\Omega$          \\
+$R_4$                           & 371.57 $k\Omega$                    & 680 $k\Omega$ // 820 $k\Omega$   \\
+$R_5$                           & 52.5 $k\Omega$                      & 56 $k\Omega$ // 820 $k\Omega$    \\
+$R_6$                           & 49.77 $k\Omega$                     & 2.7 $k\Omega$ + 47 $k\Omega$     \\
+$R_7$                           & 47 $k\Omega$                        & 47 $k\Omega$          \\
+$R_8$                           & 47.5 $k\Omega$                        & 47 $k\Omega$ + 500 $k\Omega$          \\
+$C_1$                           & 100 $pf$                       & 100 $pf$         \\
+$C_2$ 							& \textcolor{red}{\textbf{XX} $pf$}                       & \textcolor{red}{\textbf{XX} $pf$}          \\
 \hline
 \end{tabular}
 \caption{Componentes seleccionados de la segunda etapa.}
 \end{table}
+\end{multicols}
 
+\begin{multicols}{2}
 \begin{table}[H]
 \centering
 \begin{tabular}{ccc}
 \hline
 \multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{Valor} & Composición \\ \hline
-$R_1$                           & 27.13                      & 120+27k     \\
-$R_2$                           & 465.31k                    & 680k//1.5M  \\
-$R_3$                           & 47k                        & 47k         \\
-$R_4$                           & 465.31k                    & 680k//1.5M  \\
-$R_5$                           & 42.08k                     & 15k+27k     \\
-$R_6$                           & 49.77k                     & 2.7k+47k    \\
-$R_7$                           & 47k                        & 47k         \\
-$R_8$                           & 48k                        & 47k+1k         \\
-$C_1$                           & 100p                       & 100p        \\
-$C_2$                           & 100p                       & 100p        \\
+$R_1$                           & 27.13                      & 120+27 $k\Omega$     \\
+$R_2$                           & 465.31 $k\Omega$                    & 680 $k\Omega$ // 1.5 $M\Omega$  \\
+$R_3$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_4$                           & 465.31 $k\Omega$                    & 680 $k\Omega$ // 1.5 $M\Omega$  \\
+$R_5$                           & 42.08 $k\Omega$                     & 15 $k\Omega$ + 27 $k\Omega$     \\
+$R_6$                           & 49.77 $k\Omega$                     & 2.7 $k\Omega$ + 47 $k\Omega$    \\
+$R_7$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_8$                           & 48 $k\Omega$                        & 47 $k\Omega$ + 1 $k\Omega$         \\
+$C_1$                           & 100 $pf$                       & 100 $pf$        \\
+$C_2$                           & 100 $pf$                       & 100 $pf$        \\
 \hline
 \end{tabular}
 \caption{Componentes seleccionados de la tercer etapa.}
@@ -297,36 +301,38 @@ $C_2$                           & 100p                       & 100p        \\
 \begin{tabular}{ccc}
 \hline
 \multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{Valor} & Composición \\ \hline
-$R_1$                           & 10.29k                     & 4.7k+5.6k   \\
-$R_2$                           & 1.32M                      & 120k+1.2M   \\
-$R_3$                           & 47k                        & 47k         \\
-$R_4$                           & 1.32M                      & 120k+1.2M   \\
-$R_5$                           & 39.44k                     & 470+39k     \\
-$R_6$                           & 49.77K                     & 2.7k+47k    \\
-$R_7$                           & 47k                        & 47k         \\
-$R_8$                           & 48k                        & 47k+1k         \\
-$C_1$                           & 92p                        & 10p // 82p  \\
-$C_2$                           & 92p                        & 10p // 82p  \\
+$R_1$                           & 10.29 $k\Omega$                     & 4.7 $k\Omega$ + 5.6 $k\Omega$   \\
+$R_2$                           & 1.32 $M\Omega$                      & 120 $k\Omega$ + 1.2 $M\Omega$   \\
+$R_3$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_4$                           & 1.32 $M\Omega$                      & 120 $k\Omega$ + 1.2 $M\Omega$   \\
+$R_5$                           & 39.44 $k\Omega$                     & 470 $k\Omega$ + 39 $k\Omega$     \\
+$R_6$                           & 49.77 $k\Omega$                     & 2.7 $k\Omega$ + 47 $k\Omega$    \\
+$R_7$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_8$                           & 48 $k\Omega$                        & 47 $k\Omega$ + 1 $k\Omega$         \\
+$C_1$                           & 92 $pf$                        & 10 $pf$ // 82 $pf$  \\
+$C_2$                           & 92 $pf$                        & 10 $pf$ // 82 $pf$  \\
 \hline
 \end{tabular}
 \caption{Componentes seleccionados de la cuarta etapa.}
 \end{table}
+\end{multicols}
 
+\begin{multicols}{2}
 \begin{table}[H]
 \centering
 \begin{tabular}{ccc}
 \hline
 \multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{Valor} & Composición \\ \hline
-$R_1$                           & 10.19k                     & 12k//68k    \\
-$R_2$                           & 918.2k                     & 100k+820k   \\
-$R_3$                           & 47k                        & 47k         \\
-$R_4$                           & 918.2k                     & 100k+820k   \\
-$R_5$                           & 56k                        & 56k         \\
-$R_6$                           & 49.77k                     & 2.7k+47k    \\
-$R_7$                           & 45k                        & 43k+2k         \\
-$R_8$                           & 55k                        & 12k+43k         \\
-$C_1$                           & 88p                      & 82p//5.6p    \\
-$C_2$                           & 88p                      & 82p//5.6p   \\
+$R_1$                           & 10.19 $k\Omega$                     & 12 $k\Omega$ // 68 $k\Omega$    \\
+$R_2$                           & 918.2 $k\Omega$                     & 100 $k\Omega$ + 820 $k\Omega$   \\
+$R_3$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_4$                           & 918.2 $k\Omega$                     & 100 $k\Omega$ + 820 $k\Omega$   \\
+$R_5$                           & 56 $k\Omega$                        & 56 $k\Omega$         \\
+$R_6$                           & 49.77 $k\Omega$                     & 2.7 $k\Omega$ + 47 $k\Omega$    \\
+$R_7$                           & 45 $k\Omega$                        & 43 $k\Omega$ + 2 $k\Omega$         \\
+$R_8$                           & 55 $k\Omega$                        & 12 $k\Omega$ + 43 $k\Omega$         \\
+$C_1$                           & 88 $pf$                      & 82 $pf$ // 5.6 $pf$    \\
+$C_2$                           & 88 $pf$                      & 82 $pf$ // 5.6 $pf$   \\
 \hline
 \end{tabular}
 \caption{Componentes seleccionados de la quinta etapa.}
@@ -337,19 +343,20 @@ $C_2$                           & 88p                      & 82p//5.6p   \\
 \begin{tabular}{ccc}
 \hline
 \multicolumn{1}{c}{Componente} & \multicolumn{1}{c}{Valor} & Composición \\ \hline
-$R_1$                           & 27.13                      & 120+27k     \\
-$R_2$                           & 465.31k                    & 680k//1.5M  \\
-$R_3$                           & 47k                        & 47k         \\
-$R_4$                           & 465.31k                    & 680k//1.5M  \\
-$R_5$                           & 42.08k                     & 15k+27k     \\
-$R_6$                           & 49.77k                     & 2.7k+47k    \\
-$R_7$                           & 46k                        & 43k+3k         \\
-$R_8$                           & 53k                        & 51k+2k         \\
-$C_1$                           & 70p                       & 68p        \\
-$C_2$                           & 70p                       & 68p  \\
+$R_1$                           & 27.13 $k\Omega$                      & 120 $k\Omega$ + 27 $k\Omega$     \\
+$R_2$                           & 465.31 $k\Omega$                    & 680 $k\Omega$ // 1.5 $M\Omega$  \\
+$R_3$                           & 47 $k\Omega$                        & 47 $k\Omega$         \\
+$R_4$                           & 465.31 $k\Omega$                    & 680 $k\Omega$ // 1.5 $M\Omega$  \\
+$R_5$                           & 42.08 $k\Omega$                     & 15 $k\Omega$ + 27 $k\Omega$     \\
+$R_6$                           & 49.77 $k\Omega$                     & 2.7 $k\Omega$ + 47 $k\Omega$    \\
+$R_7$                           & 46 $k\Omega$                        & 43 $k\Omega$ + 3 $k\Omega$         \\
+$R_8$                           & 53 $k\Omega$                        & 51 $k\Omega$ + 2 $k\Omega$         \\
+$C_1$                           & 70 $pf$                       & 68 $pf$        \\
+$C_2$                           & 70 $pf$                       & 68 $pf$  \\
 \hline
 \end{tabular}
 \caption{Componentes seleccionados de la sexta etapa.}
 \end{table}
+\end{multicols}
 
 \end{document}
