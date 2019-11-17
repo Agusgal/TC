@@ -60,7 +60,7 @@ class SpiceParser:
     AC simulation --> index represents "frequency" in Hz
     """
     #Read data
-    print(f'Este es el path recibido: {path}')
+    #print(f'Este es el path recibido: {path}')
     data = open(path,encoding="latin-1")
     df = pd.read_csv(data,sep="\t")
     #If it is a DC simulation. Just add a time column for graphing. Cast to float and return
