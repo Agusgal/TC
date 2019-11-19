@@ -54,7 +54,7 @@ plt.title("Plantilla del filtro")
 plt.xlabel("Frecuencia [Hz]")
 plt.ylabel("Amplitud [dB]")
 magias2=0.8
-plt.semilogx(freq_m, np.asarray(mag_m) + magias, label = "Medido")
+#plt.semilogx(freq_m, np.asarray(mag_m) , label = "Medido")
 plt.semilogx(freq_mt, np.asarray(mag_mt), label = "Medido Analog")
 plt.legend()
 plt.grid()
