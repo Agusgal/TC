@@ -176,7 +176,7 @@ class AnalogFilter(ABC):
     Analog Filter base class
     """
 
-    def __init__(self, ftype, wp, ws, Ap, As, gain=0, rp=0, k=0, N=None):
+    def __init__(self, ftype, wp, ws, Ap, As, gain=0, rp=0, k=0, N=None, name=None):
         self.filter_types = {'lowpass', 'highpass', 'bandpass', 'bandstop'}
         # self.aprox_types = {'butterworth', 'bessel',
         #                     'chevy1', 'chevy2', 'cauer', 'legendre'}
@@ -274,6 +274,7 @@ class AnalogFilter(ABC):
         self.k = k
         self.N = N  # Filter order
         self.rp = rp
+        self.name = name
         #TODO añadir checks
         self.gain = gain
         # dict that stores if a certain graph is already on the screen nad where it is [is graphed, where]
@@ -650,6 +651,9 @@ class AnalogFilter(ABC):
 
     def get_pha(self):
         return self.pha
+
+    def get_name(self):
+        return self.name
 
     def get_impulse_response(self):
         """
