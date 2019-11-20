@@ -359,4 +359,146 @@ $C_2$                           & 70 $pf$                       & 68 $pf$  \\
 \end{table}
 \end{multicols}
 
+\subsection{Confección del circuito}
+Al momento de elaborar el sistema en PCB se tuvieron ciertas consideraciones. Es común que, dado el factor $Q$ del circuito, un filtro del tipo notch introduzca un sobrepico en una zona previa o posterior a la banda rechazada. Es por ello que se decidió introducir presets que permitan el ajuste adecuado del sistema. Se introdujeron dichas resistencias variables en las impedancias \textcolor{red}{\textbf{XX en las etapas XX, con el objetivo de ...}}.
+
+De esta forma, se confeccionó el siguiente PCB.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/PCB.png}
+	\caption{PCB elaborado.}
+\label{fig:pcb}
+\end{figure}
+
+Además, se decidió colocar terminales junto con jumpers de forma que sea posible desconectar las etapas entre sí, asilandolas para poder medirlas por separado. De esta forma, se procedió a medir cada etapa y contrastar dicho resultado con las curvas teóricas y simuladas, estas últimas obtenidas mediante el software LTSpice.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-1.png}
+	\caption{Ganancia de tensión de la primer etápa en módulo.}
+	\label{fig:mod1}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-2.png}
+	\caption{Diagrama de Bode de la segunda etápa en módulo.}
+	\label{fig:mod2}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-3.png}
+	\caption{Diagrama de Bode de la tercer etápa en módulo.}
+	\label{fig:mod3}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-4.png}
+	\caption{Diagrama de Bode de la cuarta etápa en módulo.}
+	\label{fig:mod4}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-5.png}
+	\caption{Diagrama de Bode de la quinta etápa en módulo.}
+	\label{fig:mod5}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-6.png}
+	\caption{Diagrama de Bode de la sexta etápa en módulo.}
+	\label{fig:mod6}
+\end{subfigure}
+\caption{Comparación de los Bodes de las etapas en módulo.}
+\label{fig:bode-mag}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Pha-1.png}
+	\caption{Diagrama de Bode de la primer etápa en fase.}
+	\label{fig:pha1}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Pha-2.png}
+	\caption{Diagrama de Bode de la segunda etápa en fase.}
+	\label{fig:pha2}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Pha-3.png}
+	\caption{Diagrama de Bode de la tercer etápa en fase.}
+	\label{fig:pha3}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Pha-4.png}
+	\caption{Diagrama de Bode de la cuarta etápa en fase.}
+	\label{fig:pha4}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Pha-5.png}
+	\caption{Diagrama de Bode de la quinta etápa en fase.}
+	\label{fig:pha5}
+\end{subfigure}
+\centering
+\begin{subfigure}{.49\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Pha-6.png}
+	\caption{Diagrama de Bode de la sexta etápa en fase.}
+	\label{fig:pha6}
+\end{subfigure}
+\caption{Comparación de los Bodes de las etapas en fase.}
+\label{fig:bode-pha}
+\end{figure}
+
+Finalmente, se optó por medir la ganancia de tensión del sistema y contrastarla con la plantilla deseada, de esta forma se puede corroborar con mayor facilidad el logro del objetivo deseado.
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.7\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-Plantilla-1.png}
+	\caption{Totalidad del filtro medido.}
+	\label{fig:filtro1}
+\end{subfigure}
+\centering
+\begin{subfigure}{.7\textwidth}
+\centering
+	\includegraphics[width=\textwidth]{Imagenes/Mod-Plantilla-2.png}
+	\caption{Banda atenuante.}
+	\label{fig:filtro2}
+\end{subfigure}
+\caption{Medición del filtro y su respectiva plantilla.}
+\label{fig:filtro}
+\end{figure}
+
+\subsection{Rango dinámico}
+
+\subsection{Máxima carga}
+
+\subsection{Ganancia de lazo}
+Se simuló la ganancia de lazo del sistema. Ya que para cada etapa, el resultado obtenído es para cada caso el mismo, presentando pequeñas diferencias propias de los componentes seleccionados. Esto se debe a que todas las empleadas son celdas universales del tipo Fleischer-Tow, por lo que es epserable dicho resultado. Es así se optó por presentar la simulación de la primer etápa y generalizar para las demás.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/GananciaDeLazo.png}
+	\caption{Ganancia de lazo de cada etapa.}
+\label{fig:lazo}
+\end{figure}
+
+Se observa de este que, dado que la frecuencia nunca alcanza los $180^o$ de desfazaje, el sistema cumple con la condiciíon de \textcolor{red}{\textbf{XX}} demostrando estabilidad.
+
+
 \end{document}
