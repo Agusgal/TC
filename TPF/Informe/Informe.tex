@@ -360,7 +360,7 @@ $C_2$                           & 70 $pf$                       & 68 $pf$  \\
 \end{multicols}
 
 \subsection{Confección del circuito}
-Al momento de elaborar el sistema en PCB se tuvieron ciertas consideraciones. Es común que, dado el factor $Q$ del circuito, un filtro del tipo notch introduzca un sobrepico en una zona previa o posterior a la banda rechazada. Es por ello que se decidió introducir presets que permitan el ajuste adecuado del sistema. Se introdujeron dichas resistencias variables en las impedancias \textcolor{red}{\textbf{XX en las etapas XX, con el objetivo de ...}}.
+Al momento de elaborar el sistema en PCB se tuvieron ciertas consideraciones. Es común que, dado el factor $Q$ del circuito, un filtro del tipo notch introduzca un sobrepico en una zona previa o posterior a la banda rechazada. Es por ello que se decidió introducir presets que permitan el ajuste adecuado del sistema. Se introdujeron dichas resistencias variables en las impedancias $R_2$ de las etapas 1 y 5 y $R_7$ de las etapas 5 y 6. $R_2$ permite modificar la ganancia de banda pasante y el factor $Q$ de los polos, mientras que $R_7$ el $\omega_o$ de los ceros y la ganancia de banda pasante. De esta forma se pudo configurar el sistema para que se presente el menor sobre pico en banda pasante y garantizar la atenuación máxima de $1 \ dB$ en dicha etapa.
 
 De esta forma, se confeccionó el siguiente PCB.
 \begin{figure}[H]
@@ -498,7 +498,7 @@ Se simuló la ganancia de lazo del sistema. Ya que para cada etapa, el resultado
 \label{fig:lazo}
 \end{figure}
 
-Se observa de este que, dado que la frecuencia nunca alcanza los $180^o$ de desfazaje, el sistema cumple con la condiciíon de \textcolor{red}{\textbf{XX}} demostrando estabilidad.
+Se observa de este que, dado que la frecuencia nunca alcanza los $180^o$ de desfazaje, el sistema cumple con la condición de Barkhausen demostrando estabilidad.
 
 
 \end{document}
