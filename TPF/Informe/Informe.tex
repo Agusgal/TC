@@ -509,9 +509,10 @@ Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se puede d
 \end{equation}
 
 \subsection{Máxima carga}
+Para la estimación de la máxima carga, se tomó la máxima corriente que el operacional puede brindar, siendo esta de $2.8 \ mA$. Considerando la tensión máxima de entrada, y que esta no es amplificada, se estima la carga máxima del sistema como $R_{max} = \frac{V_{in_{max}}}{I_{o_{max}}} = \frac{2 \ V}{ 2.8 \ mA} \approx 714.3 \ \Omega$.
 
 \subsection{Ganancia de lazo}
-Se simuló la ganancia de lazo del sistema. Ya que para cada etapa, el resultado obtenído es para cada caso el mismo, presentando pequeñas diferencias propias de los componentes seleccionados. Esto se debe a que todas las empleadas son celdas universales del tipo Fleischer-Tow, por lo que es epserable dicho resultado. Es así se optó por presentar la simulación de la primer etápa y generalizar para las demás.
+Se simuló la ganancia de lazo del sistema. Ya que para cada etapa, el resultado obtenido es para cada caso el mismo, presentando pequeñas diferencias propias de los componentes seleccionados. Esto se debe a que todas las empleadas son celdas universales del tipo Fleischer-Tow, por lo que es epserable dicho resultado. Es así se optó por presentar la simulación de la primer etapa y generalizar para las demás.
 \begin{figure}[H]
 \centering
 	\includegraphics[width=0.5\textwidth]{Imagenes/GananciaDeLazo.png}
