@@ -370,7 +370,17 @@ De esta forma, se confeccionó el siguiente PCB.
 \label{fig:pcb}
 \end{figure}
 
-Además, se decidió colocar terminales junto con jumpers de forma que sea posible desconectar las etapas entre sí, asilandolas para poder medirlas por separado. De esta forma, se procedió a medir cada etapa y contrastar dicho resultado con las curvas teóricas y simuladas, estas últimas obtenidas mediante el software LTSpice.
+Se decidió además confeccionar un diagrama de polos y ceros del circuito completo. De esta forma, se sabe que si los diagramas de Bode medidos y teóricos se corresponden, entonces los polos y ceros también lo harán.
+\begin{figure}[H]
+\centering
+	\includegraphics[width=0.5\textwidth]{Imagenes/PolosyCeros.png}
+	\caption{Diagrama de polos y ceros del circuito total.}
+\label{fig:pyc}
+\end{figure}
+
+Se remarca que, recorriendo de derecha a izquierda, los tres primeros ceros son ceros dobles, los cuales se encuentran superpuestos, dificultando su visualización.
+
+Luego, al momento de confeccionar la placa, se decidió colocar terminales junto con jumpers de forma que sea posible desconectar las etapas entre sí, asilandolas para poder medirlas por separado. De esta forma, se procedió a medir cada etapa y contrastar dicho resultado con las curvas teóricas y simuladas, estas últimas obtenidas mediante el software LTSpice.
 \begin{figure}[H]
 \centering
 \begin{subfigure}{.49\textwidth}
@@ -417,6 +427,8 @@ Además, se decidió colocar terminales junto con jumpers de forma que sea posib
 \caption{Comparación de los Bodes de las etapas en módulo.}
 \label{fig:bode-mag}
 \end{figure}
+
+Se atribuyen las pequeñas discrepancias entre las curvas a los presets puestos, ya que no se pudo determinar su valor con exactitud.
 
 \begin{figure}[H]
 \centering
@@ -486,6 +498,15 @@ Finalmente, se optó por medir la ganancia de tensión del sistema y contrastarl
 \end{figure}
 
 \subsection{Rango dinámico}
+El rango dinámico se define como la razón entre el máximo y el mínimo valor que puede tomar el observable de interés. Para el caso en cuestión queda definido de la siguiente manera:
+\begin{equation}
+	R_d = 20 \log_{10} \left( \frac{V_{in_{max}}}{V_{in_{min}}} \right)
+\end{equation}
+
+Para definir $V_{in_{min}}$ se tuvo en cuenta la tensión mínima que se puede distinguir respecto al piso de ruido, la cual es determinada como $V_{in_{min}} \approx 10 \ mV$. Luego, para el caso de $V_{in_{max}}$, se consideró la máxima tensión previa a la aparición de distorsiones o alinealidades del amplificador operacional, siendo el cross-over, slew-rate y saturación del mismo algunos de estos efectos. Tanto el cross-over como el slew-rate son aspectos de poco interés, dado que, como para este filtro se seleccionó el amplificador \href{http://www.ti.com/lit/ds/symlink/tl082.pdf}{LM833}, ya que posee un elevado slew-rate y, dada su etapa de salida, el efecto de cross-over no genera problemas. Es así que, dada los sobre picos existentes, se determinó que esta tensión máxima es de $2 \ V$, de esta forma se determina el rango dinámico:
+\begin{equation}
+	R_d = 20 log \left( \frac{V_{max}}{V_{min}} \right) = 46.02 \ dB 
+\end{equation}
 
 \subsection{Máxima carga}
 
