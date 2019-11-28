@@ -95,6 +95,7 @@ class MainWindow(QtWidgets.QMainWindow):
             except:
                 if n == 0:
                     n = None
+
             #Este try comprueba que el usuario haya creado bien el filtro
             try:
                 if aprox == 'Butterworth':
@@ -113,9 +114,9 @@ class MainWindow(QtWidgets.QMainWindow):
                     listaf.cambiar_label(label)
                     self.ui.lista_filtros.addItem(str(listaf.indice) + ')' + aprox + ' ' + tipo + ' orden ' + str(filtro.get_order()))
                 elif aprox == 'Legendre':
-                    pass
+                    self.show_pop_up('not implemented')
                 elif aprox == 'Gauss':
-                    pass
+                    self.show_pop_up('not implemented')
                 elif aprox == 'Cauer':
                     filtro = Cauer(tipo, wp, ws, Ap, As, ganancia, rp=0, k=0, N=n, name=label)
                     self.agregar_filtro_lista(filtro)

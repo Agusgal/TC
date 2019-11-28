@@ -70,7 +70,7 @@ class MplWidget(QWidget):
                         self.canvas.axes.semilogx(np.divide(filtro.get_w(), 2 * np.pi), filtro.get_pha(),  label = filtro.get_name())
                         self.canvas.axes.legend()
                         self.canvas.draw()
-                    elif key == 'Group Delay' and self.check_compatibility(filtro, key):
+                    elif key == 'Group Delay' and self.check_compatibility(filtro, key): #Borrado error, el bug era por una lista que se volvia loca despues de hacer varios filtros
                         w, gdelay = filtro.get_gdelay()
                         self.canvas.axes.semilogx(np.divide(w, gdelay), label =  filtro.get_name())
                         self.canvas.axes.legend()
@@ -79,7 +79,7 @@ class MplWidget(QWidget):
                         pass
                     elif key == 'Impulse Response' and self.check_compatibility(filtro, key):
                         T, yout = filtro.get_impulse_response()
-                        self.canvas.axes.plot(T, yout, label =  filtro.get_name())
+                        self.canvas.axes.plot(T, yout, label= filtro.get_name())
                         self.canvas.axes.legend()
                         self.canvas.draw()
                         pass
